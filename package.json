@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack",
-    "dev": "npx webpack serve",
+    "build": "rm -rf dist && MODE=production webpack",
+    "dev": "MODE=development npx webpack serve",
     "test": "jest"
   },
   "keywords": [],

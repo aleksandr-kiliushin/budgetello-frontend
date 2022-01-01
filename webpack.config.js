@@ -10,7 +10,7 @@ module.exports = {
   },
   devtool: 'source-map',
   entry: './src/index.tsx',
-  mode: 'development',
+  mode: process.env.MODE,
   module: {
     rules: [
       {
@@ -40,6 +40,9 @@ module.exports = {
   plugins: [
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map[query]',
+    }),
+    new webpack.EnvironmentPlugin({
+      MODE: process.env.MODE,
     }),
     new HTMLWebpackPlugin({
       template: 'public/index.html',
