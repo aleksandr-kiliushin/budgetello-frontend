@@ -6,7 +6,7 @@ const webpack = require('webpack')
 module.exports = {
   devServer: {
     historyApiFallback: true,
-    port: process.env.FRONTEND_PORT,
+    port: 3000,
   },
   devtool: 'source-map',
   entry: './src/index.tsx',
@@ -14,8 +14,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
         exclude: /node_modules/,
+        test: /\.ts(x?)$/,
         use: ['babel-loader'],
       },
     ],
@@ -27,7 +27,6 @@ module.exports = {
     sourceMapFilename: '[name].js.map',
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '#components': path.resolve(process.cwd(), 'src/components'),
       '#models': path.resolve(process.cwd(), 'src/models'),
@@ -36,6 +35,7 @@ module.exports = {
       '#utils': path.resolve(process.cwd(), 'src/utils'),
       '#views': path.resolve(process.cwd(), 'src/views'),
     },
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   plugins: [
     new webpack.SourceMapDevToolPlugin({
@@ -43,9 +43,6 @@ module.exports = {
     }),
     new HTMLWebpackPlugin({
       template: 'public/index.html',
-    }),
-    new webpack.EnvironmentPlugin({
-      BACKEND_PORT: process.env.BACKEND_PORT,
     }),
   ],
 }

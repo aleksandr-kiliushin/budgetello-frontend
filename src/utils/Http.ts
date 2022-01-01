@@ -1,3 +1,8 @@
+const mapModeToBackendUrlStart = {
+  development: 'http://localhost:3080',
+  production: 'https://finances-app-backend.herokuapp.com',
+}
+
 class Http {
   private static get requestOptions() {
     return {
@@ -8,7 +13,7 @@ class Http {
     }
   }
   private static getFullUrl(url: string): string {
-    const backendUrlStart = `http://localhost:${process.env.BACKEND_PORT}`
+    const backendUrlStart = mapModeToBackendUrlStart[process.env.MODE ?? 'development']
     return backendUrlStart + url
   }
 
