@@ -13,7 +13,7 @@
     "noEmit": true,
     "paths": {
       "#components/*": ["src/components/*"],
-      "#interfaces/*": ["../backend/src/interfaces/*"],
+      "#interfaces/*": ["src/interfaces/*"],
       "#models/*": ["src/models/*"],
       "#src/*": ["src/*"],
       "#styles/*": ["src/styles/*"],

@@ -1,6 +1,6 @@
 FROM node:16
 
-WORKDIR /app
+WORKDIR /var/app/
 
 RUN apt-get update && apt-get install nano -y
 

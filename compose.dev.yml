@@ -1,44 +1,15 @@
 version: '3.9'
 
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile.dev
-    container_name: finance-backend
-    depends_on:
-      - db
-    env_file:
-      - ./config/dev.env
-    ports:
-      - '3080:3080'
-    restart: on-failure
-    volumes:
-      - ./backend:/app # Named volume for all files.
-      - /app/node_modules # Anonymous volume for node_modules only to fix issue with bcrypt.
-
   frontend:
     build:
-      context: ./frontend
+      context: ./
       dockerfile: ./Dockerfile.dev
-    container_name: finance-frontend
-    depends_on:
-      - backend
+    container_name: finances-frontend
     env_file:
-      - ./config/dev.env
+      - ./dev.env
     ports:
-      - '3000:3000'
+      - 3000:3000
     restart: on-failure
     volumes:
-      - ./frontend:/app
-
-  db:
-    build:
-      context: ./db
-      dockerfile: ./Dockerfile.dev
-    container_name: finance-db
-    env_file:
-      - ./config/dev.env
-    ports:
-      - '5432:5432'
-    restart: on-failure
+      - ./:/var/app/

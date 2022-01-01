@@ -9,7 +9,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
-  "importOrder": ["^@core/(.*)$", "^#", "^[./]"],
+  "importOrder": ["^#", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
