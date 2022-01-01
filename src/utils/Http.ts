@@ -7,19 +7,27 @@ class Http {
       },
     }
   }
+  private static getFullUrl(url: string): string {
+    const backendUrlStart = `http://localhost:${process.env.BACKEND_PORT}`
+    return backendUrlStart + url
+  }
+
   static async delete({ url }: RequestDataWithoutPayload) {
-    const response = await fetch(url, {
+    const fullUrl = this.getFullUrl(url)
+    const response = await fetch(fullUrl, {
       ...this.requestOptions,
       method: 'DELETE',
     })
     return await response.json()
   }
   static async get({ url }: RequestDataWithoutPayload) {
-    const response = await fetch(url, this.requestOptions)
+    const fullUrl = this.getFullUrl(url)
+    const response = await fetch(fullUrl, this.requestOptions)
     return await response.json()
   }
   static async patch({ payload, url }: RequestDataWithPayload) {
-    const response = await fetch(url, {
+    const fullUrl = this.getFullUrl(url)
+    const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
       method: 'PATCH',
@@ -27,7 +35,8 @@ class Http {
     return await response.json()
   }
   static async post({ payload, url }: RequestDataWithPayload) {
-    const response = await fetch(url, {
+    const fullUrl = this.getFullUrl(url)
+    const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
       method: 'POST',

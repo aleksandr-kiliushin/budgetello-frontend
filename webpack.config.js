@@ -7,10 +7,6 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     port: process.env.FRONTEND_PORT,
-    proxy: {
-      // http://[Service name of backend in compose.dev.yml]:[backend port].
-      '/api': `http://backend:${process.env.BACKEND_PORT}`,
-    },
   },
   devtool: 'source-map',
   entry: './src/index.tsx',
@@ -47,6 +43,9 @@ module.exports = {
     }),
     new HTMLWebpackPlugin({
       template: 'public/index.html',
+    }),
+    new webpack.EnvironmentPlugin({
+      BACKEND_PORT: process.env.BACKEND_PORT,
     }),
   ],
 }

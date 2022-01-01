@@ -43,7 +43,7 @@ export const createRecordTc = createAsyncThunk(
   }) =>
     await Http.post({
       payload: { amount, categoryId, date },
-      url: 'api/finance-record',
+      url: '/api/finance-record',
     }),
 )
 
@@ -58,14 +58,14 @@ export const createCategoryTc = createAsyncThunk(
   }) =>
     await Http.post({
       payload: { name, typeId },
-      url: 'api/finance-category',
+      url: '/api/finance-category',
     }),
 )
 
 export const deleteCategoryTc = createAsyncThunk(
   'finance/deleteCategoryTc',
   async ({ categoryId }: { categoryId: IFinanceCategory['id'] }) => {
-    const { id } = await Http.delete({ url: `api/finance-category/${categoryId}` })
+    const { id } = await Http.delete({ url: `/api/finance-category/${categoryId}` })
     return id
   },
 )
@@ -74,10 +74,10 @@ export const deleteRecordTc = createAsyncThunk(
   'finance/deleteRecordTc',
   async ({ id, isTrashed }: IFinanceRecord) => {
     const record = isTrashed
-      ? await Http.delete({ url: `api/finance-record/${id}` })
+      ? await Http.delete({ url: `/api/finance-record/${id}` })
       : await Http.patch({
           payload: { isTrashed: true },
-          url: `api/finance-record/${id}`,
+          url: `/api/finance-record/${id}`,
         })
 
     return { isPermanentDeletion: isTrashed, record }
@@ -89,7 +89,7 @@ export const getCategoriesTc = createAsyncThunk<IFinanceCategory[], void, { stat
   async (_, { getState }) => {
     if (getState().finance.categories.status !== 'idle') return []
 
-    return await Http.get({ url: 'api/finance-category' })
+    return await Http.get({ url: '/api/finance-category' })
   },
 )
 
@@ -100,7 +100,7 @@ export const getCategoryTypesTc = createAsyncThunk<
 >('finance/getCategoryTypesTc', async (_, { getState }) => {
   if (getState().finance.categoryTypes.status !== 'idle') return []
 
-  return await Http.get({ url: 'api/finance-category-type' })
+  return await Http.get({ url: '/api/finance-category-type' })
 })
 
 export const getChartDataTc = createAsyncThunk<IFinanceRecord[], void, { state: RootState }>(
@@ -109,7 +109,7 @@ export const getChartDataTc = createAsyncThunk<IFinanceRecord[], void, { state: 
     if (getState().finance.chartData.status !== 'idle') return []
 
     return await Http.get({
-      url: 'api/finance-record?isTrashed=false&orderingByDate=ASC&orderingById=ASC',
+      url: '/api/finance-record?isTrashed=false&orderingByDate=ASC&orderingById=ASC',
     })
   },
 )
@@ -124,7 +124,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
     dispatch(setRecordsStatus({ isTrash, status: 'loading' }))
 
     const records = await Http.get({
-      url: `api/finance-record?isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
+      url: `/api/finance-record?isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
     })
 
     dispatch(addRecordsItems({ isTrash, items: records }))
@@ -143,7 +143,7 @@ export const restoreRecordTc = createAsyncThunk(
   async ({ recordId }: { recordId: IFinanceRecord['id'] }) =>
     await Http.patch({
       payload: { isTrashed: false },
-      url: `api/finance-record/${recordId}`,
+      url: `/api/finance-record/${recordId}`,
     }),
 )
 
@@ -163,7 +163,7 @@ export const updateCategoryTc = createAsyncThunk(
         name,
         typeId,
       },
-      url: `api/finance-category/${categoryId}`,
+      url: `/api/finance-category/${categoryId}`,
     }),
 )
 
@@ -186,7 +186,7 @@ export const updateRecordTc = createAsyncThunk(
         categoryId,
         date,
       },
-      url: 'api/finance-record/' + id,
+      url: '/api/finance-record/' + id,
     }),
 )
 
