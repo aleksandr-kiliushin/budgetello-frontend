@@ -99,7 +99,7 @@ const RecordFormModal = ({ categories, closeModal, record }: Props) => {
 
 interface Props {
   categories: IFinanceCategory[]
-  closeModal: () => void
+  closeModal(): void
   record: IFinanceRecord | null
 }
 

@@ -36,7 +36,7 @@ const CategoryDeletionModal = ({ category, closeModal }: Props) => {
 
 interface Props {
   category: IFinanceCategory
-  closeModal: () => void
+  closeModal(): void
 }
 
 export default CategoryDeletionModal

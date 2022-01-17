@@ -64,7 +64,7 @@ const CategoryFormModal = ({ category, categoryTypes, closeModal }: Props) => {
 interface Props {
   category: IFinanceCategory | null
   categoryTypes: IFinanceCategoryType[]
-  closeModal: () => void
+  closeModal(): void
 }
 
 export default CategoryFormModal
