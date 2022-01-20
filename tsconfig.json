@@ -11,7 +11,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "paths": {
       "#components/*": ["src/components/*"],
       "#interfaces/*": ["src/interfaces/*"],
@@ -25,6 +25,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictNullChecks": true,
     "target": "es6"
   },
   "exclude": ["node_modules"],
