@@ -1,7 +1,7 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { financeCategories, financeCategoryTypes } from '#utils/test-utils/mocks/constants'
+import { financeCategories, financeCategoryTypes } from '#mocks/constants'
 
 const handlers = [
   rest.get('/api/finance-category', (req, res, ctx) => {
