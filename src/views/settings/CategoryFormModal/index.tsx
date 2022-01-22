@@ -7,15 +7,16 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { FinanceCategory, FinanceCategoryType } from '#interfaces/finance'
 import { createCategoryTc, updateCategoryTc } from '#models/finance'
+import { FinanceCategory, FinanceCategoryType } from '#types/finance'
 import { useAppDispatch } from '#utils/hooks'
 
 import { FormField, FormValues } from './form-helpers'
 
-const CategoryFormModal = ({ category, categoryTypes, closeModal }: Props) => {
+const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
 
   const defaultValues = category
