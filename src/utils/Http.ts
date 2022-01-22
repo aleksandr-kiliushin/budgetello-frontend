@@ -1,5 +1,18 @@
+interface RequestOptions extends RequestInit {
+  headers: {
+    Authorization: string
+    'Content-Type': 'application/json'
+  }
+}
+interface RequestDataWithoutPayload {
+  url: string
+}
+interface RequestDataWithPayload extends RequestDataWithoutPayload {
+  payload: Record<string, unknown>
+}
+
 class Http {
-  private static get requestOptions() {
+  private static get requestOptions(): RequestOptions {
     return {
       headers: {
         Authorization: 'Bearer ' + localStorage.authToken,
@@ -15,7 +28,7 @@ class Http {
     return backendUrlStart + url
   }
 
-  static async delete({ url }: RequestDataWithoutPayload) {
+  static async delete({ url }: RequestDataWithoutPayload): Promise<unknown> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -23,12 +36,12 @@ class Http {
     })
     return await response.json()
   }
-  static async get({ url }: RequestDataWithoutPayload) {
+  static async get({ url }: RequestDataWithoutPayload): Promise<unknown> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     return await response.json()
   }
-  static async patch({ payload, url }: RequestDataWithPayload) {
+  static async patch({ payload, url }: RequestDataWithPayload): Promise<unknown> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -37,7 +50,7 @@ class Http {
     })
     return await response.json()
   }
-  static async post({ payload, url }: RequestDataWithPayload) {
+  static async post({ payload, url }: RequestDataWithPayload): Promise<unknown> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -46,13 +59,6 @@ class Http {
     })
     return await response.json()
   }
-}
-
-interface RequestDataWithoutPayload {
-  url: string
-}
-interface RequestDataWithPayload extends RequestDataWithoutPayload {
-  payload: Record<string, unknown>
 }
 
 export default Http
