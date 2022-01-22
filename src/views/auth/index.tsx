@@ -27,7 +27,7 @@ const Auth: FC = () => {
   })
 
   const onLogout = (): void => {
-    dispatch(logOut)
+    dispatch(logOut())
   }
 
   if (isUserLoggedIn) {
