@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import RowGroup from '#components/RowGroup'
@@ -10,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 import { Container } from './components'
 import { FormField, FormValues } from './form-helpers'
 
-const Auth = () => {
+const Auth: FC = () => {
   const dispatch = useAppDispatch()
 
   const { isUserLoggedIn, userData } = useAppSelector((state) => state.user)

@@ -8,10 +8,4 @@ module.exports = {
     '^#utils(.*)$': '<rootDir>/src/utils$1',
     '^#views(.*)$': '<rootDir>/src/views$1',
   },
-  // preset: 'ts-jest',
-  // testEnvironment: 'node',
-  // transform: {
-  //   'node_modules/variables/.+\\.(j|t)sx?$': 'ts-jest',
-  // },
-  // transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 }
