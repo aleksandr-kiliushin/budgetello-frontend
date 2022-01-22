@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom'
-import { RenderOptions, render } from '@testing-library/react'
+import { RenderOptions, RenderResult, render } from '@testing-library/react'
 import fetchMock from 'jest-fetch-mock'
 import { FC, ReactElement } from 'react'
 import { Provider } from 'react-redux'
@@ -10,7 +10,7 @@ const AllTheProviders: FC = ({ children }) => {
   return <Provider store={store}>{children}</Provider>
 }
 
-const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'wrapper'>): RenderResult =>
   render(ui, { wrapper: AllTheProviders, ...options })
 
 fetchMock.enableMocks()
