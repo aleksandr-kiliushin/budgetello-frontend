@@ -1,6 +1,5 @@
 module.exports = {
   moduleNameMapper: {
-    '\\.css$': '<rootDir>/src/utils/test-utils/__mocks__/style-mock.ts',
     '^#components(.*)$': '<rootDir>/src/components$1',
     '^#models(.*)$': '<rootDir>/src/models$1',
     '^#src(.*)$': '<rootDir>/src$1',
