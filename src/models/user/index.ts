@@ -9,6 +9,7 @@ const initialState: State = {
   isUserLoggedIn: !!localStorage.authToken,
   userData: {
     id: 0,
+    password: '',
     username: '',
   },
 }
@@ -22,7 +23,7 @@ const slice = createSlice({
       state.isUserLoggedIn = false
       state.userData = initialState.userData
     },
-    setCurrentUserData: (state, action: PayloadAction<State['userData']>) => {
+    setCurrentUserData: (state, action: PayloadAction<User>) => {
       state.userData = action.payload
     },
     setIsUserLoggedIn: (state, action: PayloadAction<State['isUserLoggedIn']>) => {
@@ -37,8 +38,7 @@ export const userReducer = slice.reducer
 export const getCurrentUserData =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
-    const currentUserData = await Http.get({ url: '/api/user/me' })
-    delete currentUserData.password
+    const currentUserData = await Http.get<User>({ url: '/api/user/me' })
     dispatch(setCurrentUserData(currentUserData))
   }
 
@@ -58,13 +58,11 @@ export const logIn =
     localStorage.authToken = authToken
 
     dispatch(setIsUserLoggedIn(true))
-
     dispatch(getCurrentUserData())
-
     dispatch(setRedirectPath('/'))
   }
 
 interface State {
   isUserLoggedIn: boolean
-  userData: Pick<User, 'id' | 'username'>
+  userData: User
 }

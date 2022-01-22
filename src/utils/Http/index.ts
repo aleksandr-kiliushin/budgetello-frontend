@@ -1,15 +1,4 @@
-interface RequestOptions extends RequestInit {
-  headers: {
-    Authorization: string
-    'Content-Type': 'application/json'
-  }
-}
-interface RequestDataWithoutPayload {
-  url: string
-}
-interface RequestDataWithPayload extends RequestDataWithoutPayload {
-  payload: Record<string, unknown>
-}
+import { RequestDataWithPayload, RequestDataWithoutPayload, RequestOptions } from './types'
 
 class Http {
   private static get requestOptions(): RequestOptions {
@@ -20,6 +9,7 @@ class Http {
       },
     }
   }
+
   private static getFullUrl(url: string): string {
     const backendUrlStart =
       process.env.MODE === 'production'
@@ -28,7 +18,7 @@ class Http {
     return backendUrlStart + url
   }
 
-  static async delete({ url }: RequestDataWithoutPayload): Promise<object> {
+  static async delete<T>({ url }: RequestDataWithoutPayload): Promise<T> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -36,12 +26,14 @@ class Http {
     })
     return await response.json()
   }
-  static async get({ url }: RequestDataWithoutPayload): Promise<object> {
+
+  static async get<T>({ url }: RequestDataWithoutPayload): Promise<T> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     return await response.json()
   }
-  static async patch({ payload, url }: RequestDataWithPayload): Promise<object> {
+
+  static async patch<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -50,7 +42,8 @@ class Http {
     })
     return await response.json()
   }
-  static async post({ payload, url }: RequestDataWithPayload): Promise<object> {
+
+  static async post<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
