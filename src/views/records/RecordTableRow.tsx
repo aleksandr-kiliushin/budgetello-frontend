@@ -4,32 +4,40 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import RestoreIcon from '@mui/icons-material/Restore'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { Fragment, useState } from 'react'
+import { FC, Fragment } from 'react'
+import { useToggle } from 'react-use'
 
-import { IFinanceCategory, IFinanceRecord } from '#interfaces/finance'
 import { deleteRecordTc, restoreRecordTc } from '#models/finance'
+import { FinanceCategory, FinanceRecord } from '#types/finance'
 import { useAppDispatch } from '#utils/hooks'
 
 import RecordFormModal from './RecordFormModal'
 
-const RecordTableRow = ({ categories, isTrash, record }: Props) => {
+const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
   const dispatch = useAppDispatch()
-  const [isRecordEditingModalShown, setIsRecordEditingModalShown] = useState(false)
+  const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
   const { amount, date, category } = record
+
+  const restoreRecord = (): void => {
+    dispatch(restoreRecordTc({ recordId: record.id }))
+  }
+  const deleteRecord = (): void => {
+    dispatch(deleteRecordTc(record))
+  }
 
   const mapIsTrashToActionCell = new Map([
     [
       false,
       // eslint-disable-next-line react/jsx-key
-      <TableCell onClick={() => setIsRecordEditingModalShown(true)} width="12%">
+      <TableCell onClick={toggleIsRecordEditingModalShown} width="12%">
         <EditOutlinedIcon />
       </TableCell>,
     ],
     [
       true,
       // eslint-disable-next-line react/jsx-key
-      <TableCell onClick={() => dispatch(restoreRecordTc({ recordId: record.id }))} width="12%">
+      <TableCell onClick={restoreRecord} width="12%">
         <RestoreIcon />
       </TableCell>,
     ],
@@ -60,14 +68,14 @@ const RecordTableRow = ({ categories, isTrash, record }: Props) => {
         <TableCell width="29%">{category.name}</TableCell>
         <TableCell width="24%">{date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
-        <TableCell onClick={() => dispatch(deleteRecordTc(record))} width="12%">
+        <TableCell onClick={deleteRecord} width="12%">
           <DeleteOutlineIcon />
         </TableCell>
       </TableRow>
       {isRecordEditingModalShown ? (
         <RecordFormModal
           categories={categories}
-          closeModal={() => setIsRecordEditingModalShown(false)}
+          closeModal={toggleIsRecordEditingModalShown}
           record={record}
         />
       ) : null}
@@ -76,9 +84,9 @@ const RecordTableRow = ({ categories, isTrash, record }: Props) => {
 }
 
 interface Props {
-  categories: IFinanceCategory[]
+  categories: FinanceCategory[]
   isTrash: boolean
-  record: IFinanceRecord
+  record: FinanceRecord
 }
 
 export default RecordTableRow

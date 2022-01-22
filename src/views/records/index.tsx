@@ -10,17 +10,18 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import Loader from '#components/Loader'
 import { getCategoriesTc, getRecordsTc } from '#models/finance'
+import { LoadingStatus } from '#src/constants/shared'
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 import RecordFormModal from './RecordFormModal'
 import RecordTableRow from './RecordTableRow'
 
-const Records = () => {
+const Records: FC = () => {
   const dispatch = useAppDispatch()
   const { search } = useLocation()
   const navigate = useNavigate()
@@ -50,18 +51,18 @@ const Records = () => {
       observer.observe(loaderRef.current)
     }
 
-    return () => {
+    return (): void => {
       if (loaderRef.current !== null) {
         observer.unobserve(loaderRef.current)
       }
     }
   }, [getRecordsTc, isTrash, loaderRef])
 
-  const onIsTrashClick = (event: ChangeEvent<HTMLInputElement>) => {
+  const onIsTrashClick = (event: ChangeEvent<HTMLInputElement>): void => {
     navigate(`/records?isTrash=${event.target.checked}`)
   }
 
-  const openRecordCreationModal = () => {
+  const openRecordCreationModal = (): void => {
     setIsRecordCreatingModalShown(true)
   }
 
@@ -114,7 +115,9 @@ const Records = () => {
                 record={record}
               />
             ))}
-            {records.status === 'completed' ? null : <Loader Component={'tr'} ref={loaderRef} />}
+            {records.status === LoadingStatus.Completed ? null : (
+              <Loader Component={'tr'} ref={loaderRef} />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -122,7 +125,7 @@ const Records = () => {
       {isRecordCreatingModalShown ? (
         <RecordFormModal
           categories={categories.items}
-          closeModal={() => setIsRecordCreatingModalShown(false)}
+          closeModal={(): void => setIsRecordCreatingModalShown(false)}
           record={null}
         />
       ) : null}

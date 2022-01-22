@@ -4,17 +4,23 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
+import { FC } from 'react'
 
-import { IFinanceCategory } from '#interfaces/finance'
 import { deleteCategoryTc } from '#models/finance'
+import { FinanceCategory } from '#types/finance'
 import { useAppDispatch } from '#utils/hooks'
 
-const CategoryDeletionModal = ({ category, closeModal }: Props) => {
+interface Props {
+  category: FinanceCategory
+  closeModal(): void
+}
+
+const CategoryDeletionModal: FC<Props> = ({ category, closeModal }) => {
   const dispatch = useAppDispatch()
 
   const { id, name } = category
 
-  const submitCategoryDeletion = () => {
+  const submitCategoryDeletion = (): void => {
     dispatch(deleteCategoryTc({ categoryId: id }))
   }
 
@@ -32,11 +38,6 @@ const CategoryDeletionModal = ({ category, closeModal }: Props) => {
       </DialogActions>
     </Dialog>
   )
-}
-
-interface Props {
-  category: IFinanceCategory
-  closeModal(): void
 }
 
 export default CategoryDeletionModal

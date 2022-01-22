@@ -1,10 +1,11 @@
 import { Chart, registerables } from 'chart.js'
-import { useEffect, useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
 
 import { getChartDataTc } from '#models/finance'
+import { LoadingStatus } from '#src/constants/shared'
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
-const Stats = () => {
+const Stats: FC = () => {
   const dispatch = useAppDispatch()
 
   const chartData = useAppSelector((state) => state.finance.chartData)
@@ -16,7 +17,7 @@ const Stats = () => {
   }, [])
 
   useEffect(() => {
-    if (chartData.status === 'idle') return
+    if (chartData.status === LoadingStatus.Idle) return
 
     const { items } = chartData
 
@@ -61,7 +62,6 @@ const Stats = () => {
         currentDate.setDate(currentDate.getDate() + 1)
       }
       new Chart(ctx, {
-        type: 'line',
         data: {
           datasets: [
             {
@@ -80,7 +80,7 @@ const Stats = () => {
           scales: {
             x: {
               ticks: {
-                callback: (tickValue) => {
+                callback: (tickValue): number | string => {
                   if (typeof tickValue !== 'number') return 'error'
                   const timeStamp = new Date(items[0].date).setDate(
                     currentDate.getDate() + tickValue,
@@ -97,13 +97,14 @@ const Stats = () => {
             y: {
               beginAtZero: true,
               ticks: {
-                callback: (tickValue) =>
+                callback: (tickValue): number | string =>
                   typeof tickValue === 'number' ? tickValue / 1_000_000 : 'error',
                 padding: 1,
               },
             },
           },
         },
+        type: 'line',
       })
 
       return
@@ -137,7 +138,6 @@ const Stats = () => {
     }
 
     new Chart(ctx, {
-      type: 'line',
       data: {
         datasets: [
           {
@@ -153,9 +153,18 @@ const Stats = () => {
       options: {
         maintainAspectRatio: false, // So chart takes the available height.
         scales: {
+          x: {
+            beginAtZero: true,
+            position: 'top',
+            ticks: {
+              callback: (tickValue): number | string =>
+                typeof tickValue === 'number' ? tickValue / 1_000_000 : 'error',
+            },
+            type: 'linear',
+          },
           y: {
             ticks: {
-              callback: (tickValue) => {
+              callback: (tickValue): number | string => {
                 if (typeof tickValue !== 'number') return 'error'
 
                 const timeStamp = new Date(items[0].date).setDate(currentDate.getDate() + tickValue)
@@ -168,21 +177,13 @@ const Stats = () => {
             },
             type: 'category',
           },
-          x: {
-            beginAtZero: true,
-            position: 'top',
-            ticks: {
-              callback: (tickValue) =>
-                typeof tickValue === 'number' ? tickValue / 1_000_000 : 'error',
-            },
-            type: 'linear',
-          },
         },
       },
+      type: 'line',
     })
   }, [chartData])
 
-  if (chartData.status === 'idle') return null
+  if (chartData.status === LoadingStatus.Idle) return null
 
   return <canvas ref={canvasRef} />
 }

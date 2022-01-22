@@ -9,16 +9,17 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import { format } from 'date-fns'
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import RowGroup from '#components/RowGroup'
-import { IFinanceCategory, IFinanceRecord } from '#interfaces/finance'
 import { createRecordTc, updateRecordTc } from '#models/finance'
+import { FinanceCategory, FinanceRecord } from '#types/finance'
 import { useAppDispatch } from '#utils/hooks'
 
 import { FormField, FormValues } from './form-helpers'
 
-const RecordFormModal = ({ categories, closeModal, record }: Props) => {
+const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
   const dispatch = useAppDispatch()
 
   const defaultValues = record
@@ -98,9 +99,9 @@ const RecordFormModal = ({ categories, closeModal, record }: Props) => {
 }
 
 interface Props {
-  categories: IFinanceCategory[]
+  categories: FinanceCategory[]
   closeModal(): void
-  record: IFinanceRecord | null
+  record: FinanceRecord | null
 }
 
 export default RecordFormModal

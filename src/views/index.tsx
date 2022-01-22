@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { Navigate, Routes, useLocation } from 'react-router'
 import { Route } from 'react-router-dom'
 
@@ -14,7 +14,7 @@ import Records from '#views/records'
 import Settings from '#views/settings'
 import Stats from '#views/stats'
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useAppDispatch()
   const { pathname } = useLocation()
 

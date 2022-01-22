@@ -1,4 +1,4 @@
-import { IFinanceRecord } from '#interfaces/finance'
+import { FinanceRecord } from '#types/finance'
 
 export enum FormField {
   Amount = 'amount',
@@ -7,7 +7,7 @@ export enum FormField {
 }
 
 export interface FormValues {
-  [FormField.Amount]: IFinanceRecord['amount'] | null
-  [FormField.CategoryId]: IFinanceRecord['category']['id'] | null
-  [FormField.Date]: IFinanceRecord['date']
+  [FormField.Amount]: FinanceRecord['amount'] | null
+  [FormField.CategoryId]: FinanceRecord['category']['id'] | null
+  [FormField.Date]: FinanceRecord['date']
 }

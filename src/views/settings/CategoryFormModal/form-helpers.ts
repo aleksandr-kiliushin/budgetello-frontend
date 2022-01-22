@@ -1,4 +1,4 @@
-import { IFinanceCategory, IFinanceCategoryType } from '#interfaces/finance'
+import { FinanceCategory, FinanceCategoryType } from '#types/finance'
 
 export enum FormField {
   Name = 'name',
@@ -6,6 +6,6 @@ export enum FormField {
 }
 
 export interface FormValues {
-  [FormField.Name]: IFinanceCategory['name']
-  [FormField.TypeId]: IFinanceCategoryType['id']
+  [FormField.Name]: FinanceCategory['name']
+  [FormField.TypeId]: FinanceCategoryType['id']
 }

@@ -2,16 +2,22 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import { Fragment, useState } from 'react'
+import { FC, Fragment } from 'react'
+import { useToggle } from 'react-use'
 
-import { IFinanceCategory, IFinanceCategoryType } from '#interfaces/finance'
+import { FinanceCategory, FinanceCategoryType } from '#types/finance'
 
 import CategoryDeletionModal from './CategoryDeletionModal'
 import CategoryFormModal from './CategoryFormModal'
 
-const CategoryTableRow = ({ category, categoryTypes }: Props) => {
-  const [isCategoryEditingModalShown, setIsCategoryEditingModalShown] = useState(false)
-  const [isCategoryDeletionModalShown, setIsCategoryDeletionModalShown] = useState(false)
+interface Props {
+  category: FinanceCategory
+  categoryTypes: FinanceCategoryType[]
+}
+
+const CategoryTableRow: FC<Props> = ({ category, categoryTypes }) => {
+  const [isCategoryEditingModalShown, toggleIsCategoryEditingModalShown] = useToggle(false)
+  const [isCategoryDeletionModalShown, toggleIsCategoryDeletionModalShown] = useToggle(false)
 
   const { name, type } = category
 
@@ -20,10 +26,10 @@ const CategoryTableRow = ({ category, categoryTypes }: Props) => {
       <TableRow>
         <TableCell width="38%">{name}</TableCell>
         <TableCell width="38%">{type.name}</TableCell>
-        <TableCell onClick={() => setIsCategoryEditingModalShown(true)} width="12%">
+        <TableCell onClick={toggleIsCategoryEditingModalShown} width="12%">
           <EditOutlinedIcon />
         </TableCell>
-        <TableCell onClick={() => setIsCategoryDeletionModalShown(true)} width="12%">
+        <TableCell onClick={toggleIsCategoryDeletionModalShown} width="12%">
           <DeleteOutlineIcon />
         </TableCell>
       </TableRow>
@@ -31,22 +37,17 @@ const CategoryTableRow = ({ category, categoryTypes }: Props) => {
         <CategoryFormModal
           category={category}
           categoryTypes={categoryTypes}
-          closeModal={() => setIsCategoryEditingModalShown(false)}
+          closeModal={toggleIsCategoryEditingModalShown}
         />
       )}
       {isCategoryDeletionModalShown && (
         <CategoryDeletionModal
           category={category}
-          closeModal={() => setIsCategoryDeletionModalShown(false)}
+          closeModal={toggleIsCategoryDeletionModalShown}
         />
       )}
     </Fragment>
   )
-}
-
-interface Props {
-  category: IFinanceCategory
-  categoryTypes: IFinanceCategoryType[]
 }
 
 export default CategoryTableRow

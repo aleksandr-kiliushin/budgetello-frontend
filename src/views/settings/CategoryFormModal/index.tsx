@@ -9,7 +9,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
 
-import { IFinanceCategory, IFinanceCategoryType } from '#interfaces/finance'
+import { FinanceCategory, FinanceCategoryType } from '#interfaces/finance'
 import { createCategoryTc, updateCategoryTc } from '#models/finance'
 import { useAppDispatch } from '#utils/hooks'
 
@@ -62,8 +62,8 @@ const CategoryFormModal = ({ category, categoryTypes, closeModal }: Props) => {
 }
 
 interface Props {
-  category: IFinanceCategory | null
-  categoryTypes: IFinanceCategoryType[]
+  category: FinanceCategory | null
+  categoryTypes: FinanceCategoryType[]
   closeModal(): void
 }
 

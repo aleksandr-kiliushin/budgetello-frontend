@@ -1,31 +1,56 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { ILoadingStatus } from '#interfaces/common'
-import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from '#interfaces/finance'
 import { RootState } from '#models/store'
+import { LoadingStatus } from '#src/constants/shared'
+import { FinanceCategory, FinanceCategoryType, FinanceRecord } from '#types/finance'
 import Http from '#utils/Http'
+
+interface State {
+  categories: {
+    items: FinanceCategory[]
+    status: LoadingStatus
+  }
+  categoryTypes: {
+    items: FinanceCategoryType[]
+    status: LoadingStatus
+  }
+  chartData: {
+    items: FinanceRecord[]
+    status: LoadingStatus
+  }
+  records: {
+    notTrashed: {
+      items: FinanceRecord[]
+      status: LoadingStatus
+    }
+    trashed: {
+      items: FinanceRecord[]
+      status: LoadingStatus
+    }
+  }
+}
 
 export const initialState: State = {
   categories: {
     items: [],
-    status: 'idle',
+    status: LoadingStatus.Idle,
   },
   categoryTypes: {
     items: [],
-    status: 'idle',
+    status: LoadingStatus.Idle,
   },
   chartData: {
     items: [],
-    status: 'idle',
+    status: LoadingStatus.Idle,
   },
   records: {
     notTrashed: {
       items: [],
-      status: 'idle',
+      status: LoadingStatus.Idle,
     },
     trashed: {
       items: [],
-      status: 'idle',
+      status: LoadingStatus.Idle,
     },
   },
 }
@@ -37,9 +62,9 @@ export const createRecordTc = createAsyncThunk(
     categoryId,
     date,
   }: {
-    amount: IFinanceRecord['amount']
-    categoryId: IFinanceCategory['id']
-    date: IFinanceRecord['date']
+    amount: FinanceRecord['amount']
+    categoryId: FinanceCategory['id']
+    date: FinanceRecord['date']
   }) =>
     await Http.post({
       payload: { amount, categoryId, date },
@@ -49,13 +74,7 @@ export const createRecordTc = createAsyncThunk(
 
 export const createCategoryTc = createAsyncThunk(
   'finance/createCategoryTc',
-  async ({
-    name,
-    typeId,
-  }: {
-    name: IFinanceCategory['name']
-    typeId: IFinanceCategoryType['id']
-  }) =>
+  async ({ name, typeId }: { name: FinanceCategory['name']; typeId: FinanceCategoryType['id'] }) =>
     await Http.post({
       payload: { name, typeId },
       url: '/api/finance-category',
@@ -64,7 +83,7 @@ export const createCategoryTc = createAsyncThunk(
 
 export const deleteCategoryTc = createAsyncThunk(
   'finance/deleteCategoryTc',
-  async ({ categoryId }: { categoryId: IFinanceCategory['id'] }) => {
+  async ({ categoryId }: { categoryId: FinanceCategory['id'] }) => {
     const { id } = await Http.delete({ url: `/api/finance-category/${categoryId}` })
     return id
   },
@@ -72,7 +91,7 @@ export const deleteCategoryTc = createAsyncThunk(
 
 export const deleteRecordTc = createAsyncThunk(
   'finance/deleteRecordTc',
-  async ({ id, isTrashed }: IFinanceRecord) => {
+  async ({ id, isTrashed }: FinanceRecord) => {
     const record = isTrashed
       ? await Http.delete({ url: `/api/finance-record/${id}` })
       : await Http.patch({
@@ -84,29 +103,29 @@ export const deleteRecordTc = createAsyncThunk(
   },
 )
 
-export const getCategoriesTc = createAsyncThunk<IFinanceCategory[], void, { state: RootState }>(
+export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state: RootState }>(
   'finance/getCategoriesTc',
   async (_, { getState }) => {
-    if (getState().finance.categories.status !== 'idle') return []
+    if (getState().finance.categories.status !== LoadingStatus.Idle) return []
 
     return await Http.get({ url: '/api/finance-category' })
   },
 )
 
 export const getCategoryTypesTc = createAsyncThunk<
-  IFinanceCategoryType[],
+  FinanceCategoryType[],
   void,
   { state: RootState }
 >('finance/getCategoryTypesTc', async (_, { getState }) => {
-  if (getState().finance.categoryTypes.status !== 'idle') return []
+  if (getState().finance.categoryTypes.status !== LoadingStatus.Idle) return []
 
   return await Http.get({ url: '/api/finance-category-type' })
 })
 
-export const getChartDataTc = createAsyncThunk<IFinanceRecord[], void, { state: RootState }>(
+export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: RootState }>(
   'finance/getChartDataTc',
   async (_, { getState }) => {
-    if (getState().finance.chartData.status !== 'idle') return []
+    if (getState().finance.chartData.status !== LoadingStatus.Idle) return []
 
     return await Http.get({
       url: '/api/finance-record?isTrashed=false&orderingByDate=ASC&orderingById=ASC',
@@ -140,7 +159,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
 
 export const restoreRecordTc = createAsyncThunk(
   'finance/restoreRecordTc',
-  async ({ recordId }: { recordId: IFinanceRecord['id'] }) =>
+  async ({ recordId }: { recordId: FinanceRecord['id'] }) =>
     await Http.patch({
       payload: { isTrashed: false },
       url: `/api/finance-record/${recordId}`,
@@ -154,9 +173,9 @@ export const updateCategoryTc = createAsyncThunk(
     name,
     typeId,
   }: {
-    categoryId: IFinanceCategory['id']
-    name: IFinanceCategory['name']
-    typeId: IFinanceCategoryType['id']
+    categoryId: FinanceCategory['id']
+    name: FinanceCategory['name']
+    typeId: FinanceCategoryType['id']
   }) =>
     await Http.patch({
       payload: {
@@ -175,10 +194,10 @@ export const updateRecordTc = createAsyncThunk(
     date,
     id,
   }: {
-    amount: IFinanceRecord['amount']
-    categoryId: IFinanceCategory['id']
-    date: IFinanceRecord['date']
-    id: IFinanceRecord['id']
+    amount: FinanceRecord['amount']
+    categoryId: FinanceCategory['id']
+    date: FinanceRecord['date']
+    id: FinanceRecord['id']
   }) =>
     await Http.patch({
       payload: {
@@ -198,7 +217,7 @@ const slice = createSlice({
       state,
       action: PayloadAction<{
         isTrash: boolean
-        items: IFinanceRecord[]
+        items: FinanceRecord[]
       }>,
     ) => {
       const { isTrash, items } = action.payload
@@ -217,20 +236,17 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     // To do: try addRecordsTc.PENDING,
-    builder.addCase(
-      createCategoryTc.fulfilled,
-      (state, action: PayloadAction<IFinanceCategory>) => {
-        state.categories.items.unshift(action.payload)
-      },
-    )
+    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<FinanceCategory>) => {
+      state.categories.items.unshift(action.payload)
+    })
 
-    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
+    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
       state.records.notTrashed.items.unshift(action.payload)
     })
 
     builder.addCase(
       deleteCategoryTc.fulfilled,
-      (state, action: PayloadAction<IFinanceCategory['id']>) => {
+      (state, action: PayloadAction<FinanceCategory['id']>) => {
         state.categories.items = state.categories.items.filter(
           (category) => category.id !== action.payload,
         )
@@ -243,7 +259,7 @@ const slice = createSlice({
         state,
         action: PayloadAction<{
           isPermanentDeletion: boolean
-          record: IFinanceRecord
+          record: FinanceRecord
         }>,
       ) => {
         const { isPermanentDeletion, record } = action.payload
@@ -263,7 +279,7 @@ const slice = createSlice({
 
     builder.addCase(
       getCategoriesTc.fulfilled,
-      (state, action: PayloadAction<IFinanceCategory[]>) => {
+      (state, action: PayloadAction<FinanceCategory[]>) => {
         if (action.payload.length === 0) return
 
         state.categories = { items: action.payload, status: 'success' }
@@ -272,20 +288,20 @@ const slice = createSlice({
 
     builder.addCase(
       getCategoryTypesTc.fulfilled,
-      (state, action: PayloadAction<IFinanceCategoryType[]>) => {
+      (state, action: PayloadAction<FinanceCategoryType[]>) => {
         if (action.payload.length === 0) return
 
         state.categoryTypes = { items: action.payload, status: 'success' }
       },
     )
 
-    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<IFinanceRecord[]>) => {
+    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<FinanceRecord[]>) => {
       if (action.payload.length === 0) return
 
       state.chartData = { items: action.payload, status: 'success' }
     })
 
-    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
+    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
       state.records.trashed.items = state.records.trashed.items.filter(
         (record) => record.id !== action.payload.id,
       )
@@ -293,18 +309,15 @@ const slice = createSlice({
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(
-      updateCategoryTc.fulfilled,
-      (state, action: PayloadAction<IFinanceCategory>) => {
-        const categoryIndex = state.categories.items.findIndex(
-          (category) => category.id === action.payload.id,
-        )
+    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<FinanceCategory>) => {
+      const categoryIndex = state.categories.items.findIndex(
+        (category) => category.id === action.payload.id,
+      )
 
-        state.categories.items[categoryIndex] = action.payload
-      },
-    )
+      state.categories.items[categoryIndex] = action.payload
+    })
 
-    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
+    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
       const recordIndex = state.records.notTrashed.items.findIndex(
         (record) => record.id === action.payload.id,
       )
@@ -316,28 +329,3 @@ const slice = createSlice({
 
 export const { addRecordsItems, setRecordsStatus } = slice.actions
 export const financeReducer = slice.reducer
-
-interface State {
-  categories: {
-    items: IFinanceCategory[]
-    status: ILoadingStatus
-  }
-  categoryTypes: {
-    items: IFinanceCategoryType[]
-    status: ILoadingStatus
-  }
-  chartData: {
-    items: IFinanceRecord[]
-    status: ILoadingStatus
-  }
-  records: {
-    notTrashed: {
-      items: IFinanceRecord[]
-      status: ILoadingStatus
-    }
-    trashed: {
-      items: IFinanceRecord[]
-      status: ILoadingStatus
-    }
-  }
-}

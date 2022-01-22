@@ -28,7 +28,7 @@ class Http {
     return backendUrlStart + url
   }
 
-  static async delete({ url }: RequestDataWithoutPayload): Promise<unknown> {
+  static async delete({ url }: RequestDataWithoutPayload): Promise<object> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -36,12 +36,12 @@ class Http {
     })
     return await response.json()
   }
-  static async get({ url }: RequestDataWithoutPayload): Promise<unknown> {
+  static async get({ url }: RequestDataWithoutPayload): Promise<object> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     return await response.json()
   }
-  static async patch({ payload, url }: RequestDataWithPayload): Promise<unknown> {
+  static async patch({ payload, url }: RequestDataWithPayload): Promise<object> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
@@ -50,7 +50,7 @@ class Http {
     })
     return await response.json()
   }
-  static async post({ payload, url }: RequestDataWithPayload): Promise<unknown> {
+  static async post({ payload, url }: RequestDataWithPayload): Promise<object> {
     const fullUrl = this.getFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,

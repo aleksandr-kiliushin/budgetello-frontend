@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { IUser } from '#interfaces/user'
 import { setRedirectPath } from '#models/common'
 import { AppThunk } from '#models/store'
+import User from '#types/user'
 import Http from '#utils/Http'
 
 const initialState: State = {
@@ -14,19 +14,19 @@ const initialState: State = {
 }
 
 const slice = createSlice({
-  name: 'user',
   initialState,
+  name: 'user',
   reducers: {
     logOut: (state) => {
       localStorage.removeItem('authToken')
       state.isUserLoggedIn = false
       state.userData = initialState.userData
     },
-    setIsUserLoggedIn: (state, action: PayloadAction<State['isUserLoggedIn']>) => {
-      state.isUserLoggedIn = action.payload
-    },
     setCurrentUserData: (state, action: PayloadAction<State['userData']>) => {
       state.userData = action.payload
+    },
+    setIsUserLoggedIn: (state, action: PayloadAction<State['isUserLoggedIn']>) => {
+      state.isUserLoggedIn = action.payload
     },
   },
 })
@@ -34,15 +34,17 @@ const slice = createSlice({
 export const { logOut, setCurrentUserData, setIsUserLoggedIn } = slice.actions
 export const userReducer = slice.reducer
 
-export const getCurrentUserData = (): AppThunk => async (dispatch) => {
-  const currentUserData = await Http.get({ url: '/api/user/me' })
-  delete currentUserData.password
-  dispatch(setCurrentUserData(currentUserData))
-}
+export const getCurrentUserData =
+  (): AppThunk =>
+  async (dispatch): Promise<void> => {
+    const currentUserData = await Http.get({ url: '/api/user/me' })
+    delete currentUserData.password
+    dispatch(setCurrentUserData(currentUserData))
+  }
 
 export const logIn =
-  ({ password, username }: Pick<IUser, 'password' | 'username'>): AppThunk =>
-  async (dispatch) => {
+  ({ password, username }: Pick<User, 'password' | 'username'>): AppThunk =>
+  async (dispatch): Promise<void> => {
     const { authToken } = await Http.post({
       payload: {
         password,
@@ -64,5 +66,5 @@ export const logIn =
 
 interface State {
   isUserLoggedIn: boolean
-  userData: Pick<IUser, 'id' | 'username'>
+  userData: Pick<User, 'id' | 'username'>
 }

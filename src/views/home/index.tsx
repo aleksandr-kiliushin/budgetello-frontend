@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { Fragment } from 'react'
+import { FC, Fragment } from 'react'
 
-const Home = () => {
+const Home: FC = () => {
   return (
     <Fragment>
       <Typography variant="h1">Home page h1</Typography>

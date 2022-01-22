@@ -26,13 +26,17 @@ const Auth: FC = () => {
     dispatch(logIn({ password, username }))
   })
 
+  const onLogout = (): void => {
+    dispatch(logOut)
+  }
+
   if (isUserLoggedIn) {
     return (
       <Container>
         <Typography textAlign="center">
           You are logged in as <b>{userData.username}</b>.
         </Typography>
-        <Button onClick={() => dispatch(logOut())} size="large" variant="outlined">
+        <Button onClick={onLogout} size="large" variant="outlined">
           Log out
         </Button>
       </Container>

@@ -6,7 +6,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
-import { Fragment, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect } from 'react'
+import { useToggle } from 'react-use'
 
 import { getCategoriesTc, getCategoryTypesTc } from '#models/finance'
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
@@ -14,9 +15,9 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 import CategoryFormModal from './CategoryFormModal'
 import CategoryTableRow from './CategoryTableRow'
 
-const Settings = () => {
+const Settings: FC = () => {
   const dispatch = useAppDispatch()
-  const [isCategoryCreatingModalShown, setIsCategoryCreatingModalShown] = useState(false)
+  const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
   const categories = useAppSelector((state) => state.finance.categories)
   const categoryTypes = useAppSelector((state) => state.finance.categoryTypes)
@@ -25,10 +26,6 @@ const Settings = () => {
     dispatch(getCategoriesTc())
     dispatch(getCategoryTypesTc())
   }, [])
-
-  const showCategoryFormModal = () => {
-    setIsCategoryCreatingModalShown(true)
-  }
 
   return (
     <Fragment>
@@ -45,7 +42,7 @@ const Settings = () => {
                 Type
               </TableCell>
               <TableCell colSpan={2} width="24%">
-                <Button onClick={showCategoryFormModal} variant="outlined">
+                <Button onClick={toggleIsCategoryCreatingModalShown} variant="outlined">
                   +New
                 </Button>
               </TableCell>
@@ -66,7 +63,7 @@ const Settings = () => {
         <CategoryFormModal
           category={null}
           categoryTypes={categoryTypes.items}
-          closeModal={() => setIsCategoryCreatingModalShown(false)}
+          closeModal={toggleIsCategoryCreatingModalShown}
         />
       ) : null}
     </Fragment>
