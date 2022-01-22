@@ -14,6 +14,7 @@
     "noImplicitAny": true,
     "paths": {
       "#components/*": ["src/components/*"],
+      "#mocks/*": ["src/mocks/*"],
       "#models/*": ["src/models/*"],
       "#src/*": ["src/*"],
       "#styles/*": ["src/styles/*"],

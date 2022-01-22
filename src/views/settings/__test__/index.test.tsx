@@ -1,8 +1,8 @@
 /** @jest-environment jsdom */
 import { screen } from '@testing-library/react'
 
-import { financeCategories } from '#utils/test-utils/mocks/constants'
-import render from '#utils/test-utils/render'
+import { financeCategories } from '#mocks/constants'
+import render from '#mocks/render'
 import Settings from '#views/settings'
 
 test('<Settings />', async () => {
