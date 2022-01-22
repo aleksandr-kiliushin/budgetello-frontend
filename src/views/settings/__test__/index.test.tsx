@@ -1,17 +1,14 @@
 /** @jest-environment jsdom */
-import { render, screen } from '#utils/test-utils'
+import { screen } from '@testing-library/react'
+
+import { financeCategories } from '#utils/test-utils/mocks/constants'
+import render from '#utils/test-utils/render'
 import Settings from '#views/settings'
 
-import { categories, categoryTypes } from './constants'
-
 test('<Settings />', async () => {
-  fetchMock
-    .mockResponseOnce(JSON.stringify(categories))
-    .mockResponseOnce(JSON.stringify(categoryTypes))
-
   render(<Settings />)
 
-  expect(await screen.findByText(categories[0].name)).toBeInTheDocument()
-  expect(await screen.findByText(categories[1].name)).toBeInTheDocument()
-  expect(await screen.findByText(categories[2].name)).toBeInTheDocument()
+  expect(await screen.findByText(financeCategories[0].name)).toBeInTheDocument()
+  expect(await screen.findByText(financeCategories[1].name)).toBeInTheDocument()
+  expect(await screen.findByText(financeCategories[2].name)).toBeInTheDocument()
 })

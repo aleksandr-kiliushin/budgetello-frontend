@@ -1,8 +1,9 @@
 /** @jest-environment jsdom */
 // TODO: Check if it works without @jest-... comment.
+import { act, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { act, render, screen } from '#utils/test-utils'
+import render from '#utils/test-utils/render'
 import Auth from '#views/auth'
 
 import { userData } from './constants'
