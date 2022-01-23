@@ -1,17 +1,17 @@
 /** @jest-environment jsdom */
 // TODO: Check if it works without @jest-... comment.
-import { act, screen } from '@testing-library/react'
+import { act, fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-// import { correctAuthToken, userData } from '#mocks/constants'
+import { correctAuthToken, userData } from '#mocks/constants'
 import render from '#mocks/render'
 import Auth from '#views/auth'
 
 test('<Auth />', async () => {
   render(<Auth />)
 
-  const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
-  const logInButton = screen.getByRole('button', { name: 'Log in' })
+  let welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
+  let logInButton = screen.getByRole('button', { name: 'Log in' })
 
   expect(localStorage.authToken).toBeUndefined()
   expect(welcomeHeading).toBeInTheDocument()
@@ -25,32 +25,36 @@ test('<Auth />', async () => {
 
   expect(logInButton).toBeEnabled()
 
-  await act(async () => {
-    await userEvent.click(logInButton)
+  fireEvent.click(logInButton)
+
+  await waitFor(() => {
+    expect(welcomeHeading).not.toBeInTheDocument()
   })
 
-  // expect(welcomeHeading).not.toBeInTheDocument()
-  // expect(localStorage.authToken).toBe(correctAuthToken)
-  // expect(logInButton).not.toBeInTheDocument()
+  expect(localStorage.authToken).toBe(correctAuthToken)
+  expect(logInButton).not.toBeInTheDocument()
 
-  // const logOutButton = screen.getByRole('button', { name: 'Log out' })
-  // const youAreLoggedInParagraph = screen.getByText(
-  //   (_, node) => node?.textContent === `You are logged in as ${userData.username}.`,
-  // )
+  const logOutButton = screen.getByRole('button', { name: 'Log out' })
+  expect(logOutButton).toBeInTheDocument()
 
-  // expect(logOutButton).toBeInTheDocument()
-  // expect(youAreLoggedInParagraph).toBeInTheDocument()
+  await waitFor(() => {
+    const youAreLoggedInParagraph = screen.getByText(
+      (content, node) => node?.textContent === `You are logged in as ${userData.username}.`,
+    )
 
-  // await act(async () => {
-  //   await userEvent.click(logOutButton)
-  // })
+    expect(youAreLoggedInParagraph).toBeInTheDocument()
+  })
 
-  // expect(logOutButton).not.toBeInTheDocument()
+  await act(async () => {
+    await userEvent.click(logOutButton)
+  })
 
-  // welcomeHeader = screen.getByRole('heading', { name: 'Welcome' })
-  // logInButton = screen.getByRole('button', { name: 'Log in' })
+  expect(logOutButton).not.toBeInTheDocument()
 
-  // expect(welcomeHeader).toBeInTheDocument()
-  // expect(logInButton).toBeInTheDocument()
-  // expect(localStorage.authToken).toBeUndefined()
+  welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
+  logInButton = screen.getByRole('button', { name: 'Log in' })
+
+  expect(welcomeHeading).toBeInTheDocument()
+  expect(logInButton).toBeInTheDocument()
+  expect(localStorage.authToken).toBeUndefined()
 })

@@ -5,7 +5,7 @@ import User from '#types/user'
 import Http from '#utils/Http'
 
 const initialState: State = {
-  isUserLoggedIn: !!localStorage.authToken,
+  isUserLoggedIn: Boolean(localStorage.authToken),
   userData: {
     id: 0,
     password: '',
@@ -39,26 +39,6 @@ export const getCurrentUserData =
   async (dispatch): Promise<void> => {
     const currentUserData = await Http.get<User>({ url: '/api/user/me' })
     dispatch(setCurrentUserData(currentUserData))
-  }
-
-export const logIn =
-  ({ password, username }: Pick<User, 'password' | 'username'>): AppThunk =>
-  async (dispatch): Promise<void> => {
-    const { authToken } = await Http.post<{ authToken: string }>({
-      payload: {
-        password,
-        username,
-      },
-      url: '/api/login',
-    })
-
-    if (!authToken) return
-
-    localStorage.authToken = authToken
-
-    dispatch(setIsUserLoggedIn(true))
-    dispatch(getCurrentUserData())
-    // dispatch(setRedirectPath('/'))
   }
 
 interface State {

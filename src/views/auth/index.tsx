@@ -5,7 +5,8 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 
 import RowGroup from '#components/RowGroup'
-import { logIn, logOut } from '#models/user'
+import { getCurrentUserData, logOut, setIsUserLoggedIn } from '#models/user'
+import Http from '#src/utils/Http'
 import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 import { Container } from './components'
@@ -22,8 +23,22 @@ const Auth: FC = () => {
     register,
   } = useForm<FormValues>({ mode: 'onChange' })
 
-  const onSubmit = handleSubmit(({ password, username }) => {
-    dispatch(logIn({ password, username }))
+  const onSubmit = handleSubmit(async ({ password, username }) => {
+    const { authToken } = await Http.post<{ authToken: string }>({
+      payload: {
+        password,
+        username,
+      },
+      url: '/api/login',
+    })
+
+    if (!authToken) return
+
+    localStorage.authToken = authToken
+
+    dispatch(setIsUserLoggedIn(true))
+    dispatch(getCurrentUserData())
+    // dispatch(setRedirectPath('/'))
   })
 
   const onLogout = (): void => {
