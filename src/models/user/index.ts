@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { setRedirectPath } from '#models/common'
+// import { setRedirectPath } from '#models/common'
 import { AppThunk } from '#models/store'
 import User from '#types/user'
 import Http from '#utils/Http'
@@ -59,7 +59,7 @@ export const logIn =
 
     dispatch(setIsUserLoggedIn(true))
     dispatch(getCurrentUserData())
-    dispatch(setRedirectPath('/'))
+    // dispatch(setRedirectPath('/'))
   }
 
 interface State {
