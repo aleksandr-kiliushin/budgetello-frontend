@@ -38,7 +38,6 @@ const Auth: FC = () => {
 
     dispatch(setIsUserLoggedIn(true))
     dispatch(getCurrentUserData())
-    // dispatch(setRedirectPath('/'))
   })
 
   const onLogout = (): void => {
