@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-// import { setRedirectPath } from '#models/common'
 import { AppThunk } from '#models/store'
 import User from '#types/user'
 import Http from '#utils/Http'
@@ -45,7 +44,7 @@ export const getCurrentUserData =
 export const logIn =
   ({ password, username }: Pick<User, 'password' | 'username'>): AppThunk =>
   async (dispatch): Promise<void> => {
-    const { authToken } = await Http.post({
+    const { authToken } = await Http.post<{ authToken: string }>({
       payload: {
         password,
         username,

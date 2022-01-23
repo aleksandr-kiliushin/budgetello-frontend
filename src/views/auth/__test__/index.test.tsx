@@ -1,44 +1,36 @@
 /** @jest-environment jsdom */
 // TODO: Check if it works without @jest-... comment.
-import '@testing-library/react'
-// import { act, screen } from '@testing-library/react'
-// import userEvent from '@testing-library/user-event'
+import { act, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-// import render from '#mocks/render'
-// import Auth from '#views/auth'
-
-// import { userData } from './constants'
+// import { correctAuthToken, userData } from '#mocks/constants'
+import render from '#mocks/render'
+import Auth from '#views/auth'
 
 test('<Auth />', async () => {
-  // render(<Auth />)
+  render(<Auth />)
 
-  // let welcomeHeader = screen.getByRole('heading', { name: 'Welcome' })
-  // let logInButton = screen.getByRole('button', { name: 'Log in' })
+  const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
+  const logInButton = screen.getByRole('button', { name: 'Log in' })
 
-  // expect(welcomeHeader).toBeInTheDocument()
-  // expect(logInButton).toBeInTheDocument()
-  // expect(logInButton).toBeDisabled()
+  expect(localStorage.authToken).toBeUndefined()
+  expect(welcomeHeading).toBeInTheDocument()
+  expect(logInButton).toBeInTheDocument()
+  expect(logInButton).toBeDisabled()
 
-  // await act(async () => {
-  //   userEvent.type(await screen.findByLabelText('Username'), 'john_doe')
-  //   userEvent.type(await screen.findByLabelText('Password'), 's3cret')
-  // })
+  await act(async () => {
+    userEvent.type(await screen.findByLabelText('Username'), 'john_doe')
+    userEvent.type(await screen.findByLabelText('Password'), 's3cret')
+  })
 
-  // expect(logInButton).toBeEnabled()
+  expect(logInButton).toBeEnabled()
 
-  // fetchMock.mockResponses(
-  //   [JSON.stringify({ authToken: 'authToken123' }), { status: 201 }],
-  //   [JSON.stringify(userData), { status: 200 }],
-  // )
+  await act(async () => {
+    await userEvent.click(logInButton)
+  })
 
-  // expect(localStorage.authToken).toBeUndefined()
-
-  // await act(async () => {
-  //   await userEvent.click(logInButton)
-  // })
-
-  // expect(welcomeHeader).not.toBeInTheDocument()
-  // expect(localStorage.authToken).toBeTruthy()
+  // expect(welcomeHeading).not.toBeInTheDocument()
+  // expect(localStorage.authToken).toBe(correctAuthToken)
   // expect(logInButton).not.toBeInTheDocument()
 
   // const logOutButton = screen.getByRole('button', { name: 'Log out' })
