@@ -154,7 +154,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
     dispatch(
       setRecordsStatus({
         isTrash,
-        status: records.length === 0 ? LoadingStatus.Completed : LoadingStatus.Completed,
+        status: records.length === 0 ? LoadingStatus.Completed : LoadingStatus.Success,
       }),
     )
   },
