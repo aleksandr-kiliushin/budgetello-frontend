@@ -10,7 +10,7 @@ class Http {
     }
   }
 
-  private static getFullUrl(url: string): string {
+  static createFullUrl(url: string): string {
     const backendUrlStart =
       process.env.MODE === 'production'
         ? 'https://finances-app-backend.herokuapp.com:443'
@@ -19,7 +19,7 @@ class Http {
   }
 
   static async delete<T>({ url }: RequestDataWithoutPayload): Promise<T> {
-    const fullUrl = this.getFullUrl(url)
+    const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       method: 'DELETE',
@@ -28,13 +28,13 @@ class Http {
   }
 
   static async get<T>({ url }: RequestDataWithoutPayload): Promise<T> {
-    const fullUrl = this.getFullUrl(url)
+    const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     return await response.json()
   }
 
   static async patch<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
-    const fullUrl = this.getFullUrl(url)
+    const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
@@ -44,7 +44,7 @@ class Http {
   }
 
   static async post<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
-    const fullUrl = this.getFullUrl(url)
+    const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
