@@ -1,13 +1,9 @@
-import { css } from '@emotion/react'
-import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from 'react'
@@ -20,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '#utils/hooks'
 
 import RecordFormModal from './RecordFormModal'
 import RecordTableRow from './RecordTableRow'
+import { Header, StyledTableContainer, StyledTableHead } from './components'
 
 const Records: FC = () => {
   const dispatch = useAppDispatch()
@@ -68,14 +65,7 @@ const Records: FC = () => {
 
   return (
     <Fragment>
-      <Box
-        css={css`
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          max-width: 100vw;
-        `}
-      >
+      <Header>
         <Typography variant="h1">Finance records</Typography>
         <FormControlLabel
           control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
@@ -83,10 +73,10 @@ const Records: FC = () => {
           labelPlacement="start"
           sx={{ margin: 0 }}
         />
-      </Box>
-      <TableContainer>
+      </Header>
+      <StyledTableContainer>
         <Table size="small">
-          <TableHead>
+          <StyledTableHead>
             <TableRow>
               <TableCell variant="head" width="23%">
                 Amount
@@ -105,7 +95,7 @@ const Records: FC = () => {
                 )}
               </TableCell>
             </TableRow>
-          </TableHead>
+          </StyledTableHead>
           <TableBody>
             {records.items.map((record) => (
               <RecordTableRow
@@ -120,8 +110,7 @@ const Records: FC = () => {
             )}
           </TableBody>
         </Table>
-      </TableContainer>
-
+      </StyledTableContainer>
       {isRecordCreatingModalShown ? (
         <RecordFormModal
           categories={categories.items}

@@ -17,7 +17,7 @@ import { createRecordTc, updateRecordTc } from '#models/finance'
 import { FinanceCategory, FinanceRecord } from '#types/finance'
 import { useAppDispatch } from '#utils/hooks'
 
-import { FormField, FormValues } from './form-helpers'
+import { FormFieldName, FormValues } from './form-helpers'
 
 const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
   const dispatch = useAppDispatch()
@@ -65,14 +65,14 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
               fullWidth
               label="Amount"
               type="number"
-              {...register(FormField.Amount, { required: true, valueAsNumber: true })}
+              {...register(FormFieldName.Amount, { required: true, valueAsNumber: true })}
             />
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               <Select
                 defaultValue=""
                 label="Category"
-                {...register(FormField.CategoryId, { required: true })}
+                {...register(FormFieldName.CategoryId, { required: true })}
               >
                 {categories.map(({ name, id }) => (
                   <MenuItem key={id} value={id}>
@@ -85,7 +85,7 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
               fullWidth
               label="Date"
               type="date"
-              {...register(FormField.Date, { required: true })}
+              {...register(FormFieldName.Date, { required: true })}
             />
           </RowGroup>
         </DialogContent>
