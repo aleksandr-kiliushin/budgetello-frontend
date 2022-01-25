@@ -1,8 +1,5 @@
 import { FinanceCategory, FinanceCategoryType } from '#types/finance'
 
-export const userData = { id: 3, username: 'sasha' }
-export const correctAuthToken = 'correctAuthToken123'
-
 export const financeCategoryTypes: FinanceCategoryType[] = [
   { id: 1, name: 'expense' },
   { id: 2, name: 'income' },

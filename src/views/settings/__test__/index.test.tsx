@@ -1,7 +1,7 @@
 /** @jest-environment jsdom */
 import { screen } from '@testing-library/react'
 
-import { financeCategories } from '#mocks/constants'
+import { financeCategories } from '#mocks/constants/finance'
 import render from '#mocks/render'
 import Settings from '#views/settings'
 

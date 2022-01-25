@@ -2,7 +2,8 @@
 import { act, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { correctAuthToken, userData } from '#mocks/constants'
+import authConstants from '#mocks/constants/auth'
+import userConstants from '#mocks/constants/user'
 import render from '#mocks/render'
 import Auth from '#views/auth'
 
@@ -47,7 +48,7 @@ describe('Auth service.', () => {
       expect(welcomeHeading).not.toBeInTheDocument()
     })
 
-    expect(localStorage.authToken).toBe(correctAuthToken)
+    expect(localStorage.authToken).toBe(authConstants.validAuthToken)
     expect(logInButton).not.toBeInTheDocument()
 
     logOutButton = screen.getByRole('button', { name: 'Log out' })
@@ -55,7 +56,7 @@ describe('Auth service.', () => {
 
     await waitFor(() => {
       const youAreLoggedInParagraph = screen.getByText(
-        (content, node) => node?.textContent === `You are logged in as ${userData.username}.`,
+        (content, node) => node?.textContent === `You are logged in as ${userConstants.username}.`,
       )
       expect(youAreLoggedInParagraph).toBeInTheDocument()
     })
@@ -65,7 +66,7 @@ describe('Auth service.', () => {
     render(<Auth />)
 
     await waitFor(() => {
-      expect(localStorage.authToken).toBe(correctAuthToken)
+      expect(localStorage.authToken).toBe(authConstants.validAuthToken)
     })
 
     const logOutButton = screen.getByRole('button', { name: 'Log out' })
