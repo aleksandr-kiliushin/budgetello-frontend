@@ -1,24 +1,21 @@
-import { Store, configureStore } from '@reduxjs/toolkit'
+import { Store } from '@reduxjs/toolkit'
 import '@testing-library/jest-dom'
 import { RenderOptions, RenderResult, render as rtlRender } from '@testing-library/react'
 import { FC, ReactElement } from 'react'
 import { Provider } from 'react-redux'
 
-import { commonReducer } from '#models/common'
-import { financeReducer } from '#models/finance'
-import { userReducer } from '#models/user'
+import { RootState } from '#models/store'
 
-let store: Store
+import initializeStore from './hooks/initializeStore'
+import login from './hooks/login'
+
+let store: Store<RootState>
 
 beforeEach(() => {
-  store = configureStore({
-    reducer: {
-      common: commonReducer,
-      finance: financeReducer,
-      user: userReducer,
-    },
-  })
-
+  store = initializeStore()
+  login(store)
+})
+afterEach(() => {
   localStorage.clear()
 })
 

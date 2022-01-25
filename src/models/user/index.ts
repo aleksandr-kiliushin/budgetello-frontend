@@ -4,6 +4,11 @@ import { AppThunk } from '#models/store'
 import User from '#types/user'
 import Http from '#utils/Http'
 
+interface State {
+  isUserLoggedIn: boolean
+  userData: User
+}
+
 const initialState: State = {
   isUserLoggedIn: Boolean(localStorage.authToken),
   userData: {
@@ -31,8 +36,25 @@ const slice = createSlice({
   },
 })
 
-export const { logOut, setCurrentUserData, setIsUserLoggedIn } = slice.actions
-export const userReducer = slice.reducer
+type Login = (credentials: { password: User['password']; username: User['username'] }) => AppThunk
+export const login: Login =
+  ({ password, username }) =>
+  async (dispatch): Promise<void> => {
+    const { authToken } = await Http.post<{ authToken: string }>({
+      payload: {
+        password,
+        username,
+      },
+      url: '/api/login',
+    })
+
+    if (!authToken) return
+
+    localStorage.authToken = authToken
+
+    dispatch(setIsUserLoggedIn(true))
+    dispatch(getCurrentUserData())
+  }
 
 export const getCurrentUserData =
   (): AppThunk =>
@@ -41,7 +63,5 @@ export const getCurrentUserData =
     dispatch(setCurrentUserData(currentUserData))
   }
 
-interface State {
-  isUserLoggedIn: boolean
-  userData: User
-}
+export const { logOut, setCurrentUserData, setIsUserLoggedIn } = slice.actions
+export const userReducer = slice.reducer
