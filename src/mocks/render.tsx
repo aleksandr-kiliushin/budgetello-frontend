@@ -11,9 +11,9 @@ import login from './hooks/login'
 
 let store: Store<RootState>
 
-beforeEach(() => {
+beforeEach(async () => {
   store = initializeStore()
-  login(store)
+  await login(store)
 })
 afterEach(() => {
   localStorage.clear()

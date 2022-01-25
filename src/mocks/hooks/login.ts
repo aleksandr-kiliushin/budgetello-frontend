@@ -5,10 +5,10 @@ import { login as loginThunkCreator } from '#models/user'
 
 type Login = (store: Store<RootState>) => void
 
-const login: Login = (store) => {
+const login: Login = async (store) => {
   const dispatch: AppDispatch = store.dispatch
 
-  dispatch(
+  await dispatch(
     loginThunkCreator({
       password: 'john_doe',
       username: 's3cret',

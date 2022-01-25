@@ -10,6 +10,12 @@ describe('Auth service.', () => {
   test('Login works correctly.', async () => {
     render(<Auth />)
 
+    let logOutButton = screen.getByRole('button', { name: 'Log out' })
+
+    act(() => {
+      userEvent.click(logOutButton)
+    })
+
     expect(localStorage.authToken).toBeUndefined()
 
     const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
@@ -44,7 +50,7 @@ describe('Auth service.', () => {
     expect(localStorage.authToken).toBe(correctAuthToken)
     expect(logInButton).not.toBeInTheDocument()
 
-    const logOutButton = screen.getByRole('button', { name: 'Log out' })
+    logOutButton = screen.getByRole('button', { name: 'Log out' })
     expect(logOutButton).toBeInTheDocument()
 
     await waitFor(() => {
@@ -57,24 +63,6 @@ describe('Auth service.', () => {
 
   test('Logout works correctly.', async () => {
     render(<Auth />)
-
-    let logInButton = screen.getByRole('button', { name: 'Log in' })
-
-    const usernameInput = screen.getByLabelText('Username')
-    const passwordInput = screen.getByLabelText('Password')
-
-    act(() => {
-      userEvent.type(usernameInput, 'john_doe')
-      userEvent.type(passwordInput, 's3cret')
-    })
-
-    await waitFor(() => {
-      expect(logInButton).toBeEnabled()
-    })
-
-    act(() => {
-      userEvent.click(logInButton)
-    })
 
     await waitFor(() => {
       expect(localStorage.authToken).toBe(correctAuthToken)
@@ -94,7 +82,7 @@ describe('Auth service.', () => {
     const welcomeHeading = screen.getByRole('heading', { name: 'Welcome' })
     expect(welcomeHeading).toBeInTheDocument()
 
-    logInButton = screen.getByRole('button', { name: 'Log in' })
+    const logInButton = screen.getByRole('button', { name: 'Log in' })
 
     expect(logInButton).toBeInTheDocument()
   })
