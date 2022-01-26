@@ -87,4 +87,34 @@ describe('Finance categories service.', () => {
     // })
     // expect(modalHeader).not.toBeInTheDocument()
   })
+
+  test('A new category is created correctly.', async () => {
+    render(<Settings />)
+
+    const openModalButton = screen.getByRole('button', { name: '+New' })
+    expect(openModalButton).toBeInTheDocument()
+
+    act(() => {
+      userEvent.click(openModalButton)
+    })
+
+    const submitCreatingButton = screen.getByRole('button', { name: 'Submit' })
+    expect(submitCreatingButton).toBeInTheDocument()
+    expect(submitCreatingButton).toBeDisabled()
+
+    // const nameInput = screen.getByLabelText('Name')
+    // act(() => {
+    //   userEvent.type(nameInput, 'My new category')
+    // })
+
+    // const
+
+    // await waitFor(() => {
+    // expect(logInButton).toBeEnabled()
+    // })
+
+    // act(() => {
+    //   userEvent.click(logInButton)
+    // })
+  })
 })
