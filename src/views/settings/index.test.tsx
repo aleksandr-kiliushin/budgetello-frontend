@@ -1,8 +1,9 @@
 /** @jest-environment jsdom */
-import { act, screen } from '@testing-library/react'
+import { act, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import faker from 'faker'
 
-import { financeCategories, financeCategoryTypes } from '#mocks/constants/finance'
+import { CategoryType, financeCategories, financeCategoryTypes } from '#mocks/constants/finance'
 import render from '#mocks/render'
 import Settings from '#views/settings'
 
@@ -10,9 +11,9 @@ describe('Finance categories service.', () => {
   test('Finance categories come from backend and render correctly.', async () => {
     render(<Settings />)
 
-    financeCategories.forEach(async ({ name }) => {
-      expect(await screen.findByText(name)).toBeInTheDocument()
-    })
+    expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
+    expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
+    expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
   })
 
   test('Modal for new category modal opens correctly.', async () => {
@@ -103,16 +104,25 @@ describe('Finance categories service.', () => {
     expect(submitCreatingButton).toBeDisabled()
 
     const nameInput = screen.getByLabelText('Name')
+    const categoryTypeInput = await screen.findByLabelText(CategoryType.Expense)
+    const newCategoryName = faker.lorem.words(2)
     act(() => {
-      userEvent.type(nameInput, 'My new category')
+      userEvent.type(nameInput, newCategoryName)
+      userEvent.click(categoryTypeInput)
     })
 
-    // await waitFor(() => {
-    // expect(logInButton).toBeEnabled()
-    // })
+    await waitFor(() => {
+      expect(submitCreatingButton).toBeEnabled()
+    })
 
-    // act(() => {
-    //   userEvent.click(logInButton)
-    // })
+    await act(async () => {
+      await userEvent.click(submitCreatingButton)
+    })
+
+    await waitFor(() => {
+      expect(submitCreatingButton).not.toBeInTheDocument()
+    })
+
+    expect(await screen.findByRole('cell', { name: newCategoryName })).toBeInTheDocument()
   })
 })

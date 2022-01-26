@@ -1,6 +1,6 @@
 import { FinanceCategory, FinanceCategoryType } from '#types/finance'
 
-enum CategoryType {
+export enum CategoryType {
   Expense = 'expense',
   Income = 'income',
 }
