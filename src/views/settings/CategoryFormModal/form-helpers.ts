@@ -1,11 +1,15 @@
-import { FinanceCategory, FinanceCategoryType } from '#types/finance'
+import * as yup from 'yup'
 
 export enum FormField {
   Name = 'name',
   TypeId = 'typeId',
 }
 
-export interface FormValues {
-  [FormField.Name]: FinanceCategory['name']
-  [FormField.TypeId]: FinanceCategoryType['id']
-}
+export const validationSchema = yup
+  .object({
+    name: yup.string().required(),
+    typeId: yup.number().required(),
+  })
+  .required()
+
+export type FormValues = yup.InferType<typeof validationSchema>

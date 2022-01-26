@@ -102,12 +102,10 @@ describe('Finance categories service.', () => {
     expect(submitCreatingButton).toBeInTheDocument()
     expect(submitCreatingButton).toBeDisabled()
 
-    // const nameInput = screen.getByLabelText('Name')
-    // act(() => {
-    //   userEvent.type(nameInput, 'My new category')
-    // })
-
-    // const
+    const nameInput = screen.getByLabelText('Name')
+    act(() => {
+      userEvent.type(nameInput, 'My new category')
+    })
 
     // await waitFor(() => {
     // expect(logInButton).toBeEnabled()
