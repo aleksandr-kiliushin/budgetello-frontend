@@ -32,8 +32,8 @@ describe('Auth service.', () => {
     expect(passwordInput).toBeInTheDocument()
 
     act(() => {
-      userEvent.type(usernameInput, 'john_doe')
-      userEvent.type(passwordInput, 's3cret')
+      userEvent.type(usernameInput, authConstants.validUsername)
+      userEvent.type(passwordInput, authConstants.validPassword)
     })
 
     await waitFor(() => {
@@ -72,8 +72,8 @@ describe('Auth service.', () => {
     const logOutButton = screen.getByRole('button', { name: 'Log out' })
     expect(logOutButton).toBeInTheDocument()
 
-    act(() => {
-      userEvent.click(logOutButton)
+    await act(async () => {
+      await userEvent.click(logOutButton)
     })
 
     expect(localStorage.authToken).toBeUndefined()

@@ -1,11 +1,20 @@
-import User from '#types/user'
+import * as yup from 'yup'
 
 export enum FormFieldName {
   Password = 'password',
   Username = 'username',
 }
 
-export interface FormValues {
-  [FormFieldName.Password]: User['password']
-  [FormFieldName.Username]: User['username']
+export const validationSchema = yup
+  .object({
+    [FormFieldName.Password]: yup.string().required(),
+    [FormFieldName.Username]: yup.string().required(),
+  })
+  .required()
+
+export const defaultValues: FormValues = {
+  password: '',
+  username: '',
 }
+
+export type FormValues = yup.InferType<typeof validationSchema>
