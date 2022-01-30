@@ -12,27 +12,30 @@ interface Option {
   value: boolean | number | string
 }
 interface Props {
-  register: UseFormRegister<AssertsShape<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
+  defaultValue: null | number | string | undefined
   label: string
-  options: Option[]
   name: string
+  options: Option[]
+  register: UseFormRegister<AssertsShape<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-const RadioGroup: FC<Props> = ({ label, name, options, register }) => (
-  <FormControl>
-    <FormLabel id={name}>{label}</FormLabel>
-    <MuiRadioGroup aria-labelledby={name}>
-      {options.map(({ label, value }) => (
-        <FormControlLabel
-          control={<Radio />}
-          key={String(value)}
-          label={label}
-          value={value}
-          {...register(name)}
-        />
-      ))}
-    </MuiRadioGroup>
-  </FormControl>
-)
+const RadioGroup: FC<Props> = ({ defaultValue, label, name, options, register }) => {
+  return (
+    <FormControl>
+      <FormLabel id={name}>{label}</FormLabel>
+      <MuiRadioGroup aria-labelledby={name} defaultValue={defaultValue}>
+        {options.map(({ label, value }) => (
+          <FormControlLabel
+            control={<Radio />}
+            key={String(value)}
+            label={label}
+            value={value}
+            {...register(name)}
+          />
+        ))}
+      </MuiRadioGroup>
+    </FormControl>
+  )
+}
 
 export default RadioGroup

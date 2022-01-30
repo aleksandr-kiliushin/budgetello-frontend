@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { act, screen, waitFor } from '@testing-library/react'
+import { act, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import faker from 'faker'
 
@@ -12,8 +12,8 @@ describe('Finance categories service.', () => {
     render(<Settings />)
 
     expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
-    expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
-    expect(await screen.findByRole('cell', { name: financeCategories[0].name })).toBeInTheDocument()
+    expect(await screen.findByRole('cell', { name: financeCategories[1].name })).toBeInTheDocument()
+    expect(await screen.findByRole('cell', { name: financeCategories[4].name })).toBeInTheDocument()
   })
 
   test('Modal for new category modal opens correctly.', async () => {
@@ -124,5 +124,50 @@ describe('Finance categories service.', () => {
     })
 
     expect(await screen.findByRole('cell', { name: newCategoryName })).toBeInTheDocument()
+  })
+
+  test('A category is edited correctly.', async () => {
+    render(<Settings />)
+
+    const category = financeCategories[1]
+    const currentName = category.name
+    const currentType = category.type
+
+    const cellWithCurrentName = await screen.findByRole('cell', { name: currentName })
+    const categoryRow = cellWithCurrentName.parentElement
+    if (!categoryRow) throw new Error('Category table row was not found.')
+    const categoryEditIcon = within(categoryRow).getByTestId('EditOutlinedIcon')
+
+    act(() => {
+      userEvent.click(categoryEditIcon)
+    })
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    const submitButton = await screen.findByRole('button', { name: 'Submit' })
+    expect(submitButton).toBeEnabled()
+
+    const form = screen.getByRole('form', { name: 'finance-category-form' })
+    expect(form).toHaveFormValues({
+      name: currentName,
+      typeId: String(currentType.id),
+    })
+
+    const newName = faker.lorem.words(2)
+
+    const nameInput = screen.getByLabelText('Name')
+    act(() => {
+      userEvent.clear(nameInput)
+      userEvent.type(nameInput, newName)
+    })
+
+    expect(nameInput).toHaveValue(newName)
+
+    act(() => {
+      userEvent.click(submitButton)
+    })
+
+    expect(await screen.findByRole('dialog')).not.toBeInTheDocument()
+    expect(await screen.findByRole('cell', { name: newName })).toBeInTheDocument()
   })
 })

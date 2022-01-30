@@ -19,6 +19,8 @@ import { FormField, FormValues, validationSchema } from './form-helpers'
 const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
 
+  // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
+  // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
   const defaultValues = category ? { name: category.name, typeId: category.type.id } : { name: '' }
 
   const {
@@ -49,11 +51,12 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
   return (
     <Dialog open onClose={closeModal}>
       <DialogTitle>{category ? 'Edit category' : 'Create category'}</DialogTitle>
-      <form onSubmit={submitCategoryForm}>
+      <form aria-label="finance-category-form" onSubmit={submitCategoryForm}>
         <DialogContent>
           <RowGroup>
             <TextField label="Name" {...register(FormField.Name)} />
             <RadioGroup
+              defaultValue={defaultValues.typeId}
               label="Category type"
               name={FormField.TypeId}
               options={categoryTypeOptions}
