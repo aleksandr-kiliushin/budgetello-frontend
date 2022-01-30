@@ -60,6 +60,22 @@ const financeHandlers = [
       return res(ctx.status(200), ctx.json(editedCategory))
     },
   ),
+
+  rest.delete(Http.createFullUrl('/api/finance-category/:categoryId'), (req, res, ctx) => {
+    const { categoryId } = req.params
+
+    if (isNaN(Number(categoryId))) throw Error('Invalid category ID.')
+
+    const category = financeCategories.find(({ id }) => id === Number(categoryId))
+
+    if (category === undefined) {
+      throw new Error(`A category with the specified ID was not found (${categoryId}).`)
+    }
+
+    const deletedCategory: FinanceCategory = category
+
+    return res(ctx.status(200), ctx.json(deletedCategory))
+  }),
 ]
 
 export default financeHandlers

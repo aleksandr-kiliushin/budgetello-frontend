@@ -5,6 +5,7 @@ import faker from 'faker'
 
 import { CategoryType, financeCategories, financeCategoryTypes } from '#mocks/constants/finance'
 import render from '#mocks/render'
+import textContentMatcher from '#utils/testing/textContentMatch'
 import Settings from '#views/settings'
 
 describe('Finance categories service.', () => {
@@ -169,5 +170,40 @@ describe('Finance categories service.', () => {
 
     expect(await screen.findByRole('dialog')).not.toBeInTheDocument()
     expect(await screen.findByRole('cell', { name: newName })).toBeInTheDocument()
+  })
+
+  test('A category is deleted correctly.', async () => {
+    render(<Settings />)
+
+    const categoryName = financeCategories[1].name
+
+    const cellWithCurrentName = await screen.findByRole('cell', { name: categoryName })
+    const categoryRow = cellWithCurrentName.parentElement
+    if (!categoryRow) throw new Error('Category table row was not found.')
+    const categoryDeletionIcon = within(categoryRow).getByTestId('DeleteOutlineIcon')
+
+    act(() => {
+      userEvent.click(categoryDeletionIcon)
+    })
+
+    const dialog = screen.getByRole('dialog')
+    expect(dialog).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Delete category' })).toBeInTheDocument()
+
+    const warning = screen.getByText(
+      textContentMatcher(`Are you sure you want to delete ${categoryName} category?`),
+    )
+    expect(warning).toBeInTheDocument()
+
+    const deleteButton = screen.getByRole('button', { name: 'Delete' })
+
+    act(() => {
+      userEvent.click(deleteButton)
+    })
+
+    await waitFor(async () => {
+      expect(dialog).not.toBeInTheDocument()
+      expect(cellWithCurrentName).not.toBeInTheDocument()
+    })
   })
 })
