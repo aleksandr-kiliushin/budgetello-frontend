@@ -11,6 +11,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
+    "noEmitOnError": true,
     "noImplicitAny": true,
     "paths": {
       "#components/*": ["src/components/*"],
