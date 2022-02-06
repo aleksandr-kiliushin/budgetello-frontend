@@ -11,6 +11,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:react/jsx-runtime',
   ],
+  ignorePatterns: ['dist', 'node_modules'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -20,6 +21,7 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', '@typescript-eslint'],
+  root: true,
   rules: {
     '@typescript-eslint/explicit-function-return-type': ['error'],
     'arrow-parens': 2,

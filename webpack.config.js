@@ -26,17 +26,6 @@ module.exports = {
     publicPath: '/',
     sourceMapFilename: '[name].js.map',
   },
-  resolve: {
-    alias: {
-      '#components': path.resolve(process.cwd(), 'src/components'),
-      '#models': path.resolve(process.cwd(), 'src/models'),
-      '#src': path.resolve(process.cwd(), 'src'),
-      '#styles': path.resolve(process.cwd(), 'src/styles'),
-      '#utils': path.resolve(process.cwd(), 'src/utils'),
-      '#views': path.resolve(process.cwd(), 'src/views'),
-    },
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
   plugins: [
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map[query]',
@@ -48,4 +37,15 @@ module.exports = {
       template: 'public/index.html',
     }),
   ],
+  resolve: {
+    alias: {
+      '#components': path.resolve(process.cwd(), 'src/components'),
+      '#models': path.resolve(process.cwd(), 'src/models'),
+      '#src': path.resolve(process.cwd(), 'src'),
+      '#styles': path.resolve(process.cwd(), 'src/styles'),
+      '#utils': path.resolve(process.cwd(), 'src/utils'),
+      '#views': path.resolve(process.cwd(), 'src/views'),
+    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
 }
