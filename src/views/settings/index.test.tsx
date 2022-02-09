@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { act, screen, waitFor, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import faker from 'faker'
 
@@ -23,9 +23,7 @@ describe('Finance categories service.', () => {
     const openModalButton = screen.getByRole('button', { name: '+New' })
     expect(openModalButton).toBeInTheDocument()
 
-    act(() => {
-      userEvent.click(openModalButton)
-    })
+    userEvent.click(openModalButton)
 
     const modalHeader = screen.getByRole('heading', { name: 'Create category' })
     expect(modalHeader).toBeInTheDocument()
@@ -51,17 +49,13 @@ describe('Finance categories service.', () => {
     const openModalButton = screen.getByRole('button', { name: '+New' })
     expect(openModalButton).toBeInTheDocument()
 
-    act(() => {
-      userEvent.click(openModalButton)
-    })
+    userEvent.click(openModalButton)
 
     const modalHeader = screen.getByRole('heading', { name: 'Create category' })
     expect(modalHeader).toBeInTheDocument()
 
     const closeModalButton = screen.getByRole('button', { name: 'Cancel' })
-    act(() => {
-      userEvent.click(closeModalButton)
-    })
+    userEvent.click(closeModalButton)
     expect(modalHeader).not.toBeInTheDocument()
   })
 
@@ -71,9 +65,7 @@ describe('Finance categories service.', () => {
     const openModalButton = screen.getByRole('button', { name: '+New' })
     expect(openModalButton).toBeInTheDocument()
 
-    act(() => {
-      userEvent.click(openModalButton)
-    })
+    userEvent.click(openModalButton)
 
     const modalHeader = screen.getByRole('heading', { name: 'Create category' })
     expect(modalHeader).toBeInTheDocument()
@@ -96,9 +88,7 @@ describe('Finance categories service.', () => {
     const openModalButton = screen.getByRole('button', { name: '+New' })
     expect(openModalButton).toBeInTheDocument()
 
-    act(() => {
-      userEvent.click(openModalButton)
-    })
+    userEvent.click(openModalButton)
 
     const submitCreatingButton = screen.getByRole('button', { name: 'Submit' })
     expect(submitCreatingButton).toBeInTheDocument()
@@ -107,18 +97,14 @@ describe('Finance categories service.', () => {
     const nameInput = screen.getByLabelText('Name')
     const categoryTypeInput = await screen.findByLabelText(CategoryType.Expense)
     const newCategoryName = faker.lorem.words(2)
-    act(() => {
-      userEvent.type(nameInput, newCategoryName)
-      userEvent.click(categoryTypeInput)
-    })
+    userEvent.type(nameInput, newCategoryName)
+    userEvent.click(categoryTypeInput)
 
     await waitFor(() => {
       expect(submitCreatingButton).toBeEnabled()
     })
 
-    await act(async () => {
-      await userEvent.click(submitCreatingButton)
-    })
+    await userEvent.click(submitCreatingButton)
 
     await waitFor(() => {
       expect(submitCreatingButton).not.toBeInTheDocument()
@@ -139,9 +125,7 @@ describe('Finance categories service.', () => {
     if (!categoryRow) throw new Error('Category table row was not found.')
     const categoryEditIcon = within(categoryRow).getByTestId('EditOutlinedIcon')
 
-    act(() => {
-      userEvent.click(categoryEditIcon)
-    })
+    userEvent.click(categoryEditIcon)
 
     expect(screen.getByRole('dialog')).toBeInTheDocument()
 
@@ -157,16 +141,12 @@ describe('Finance categories service.', () => {
     const newName = faker.lorem.words(2)
 
     const nameInput = screen.getByLabelText('Name')
-    act(() => {
-      userEvent.clear(nameInput)
-      userEvent.type(nameInput, newName)
-    })
+    userEvent.clear(nameInput)
+    userEvent.type(nameInput, newName)
 
     expect(nameInput).toHaveValue(newName)
 
-    act(() => {
-      userEvent.click(submitButton)
-    })
+    userEvent.click(submitButton)
 
     expect(await screen.findByRole('dialog')).not.toBeInTheDocument()
     expect(await screen.findByRole('cell', { name: newName })).toBeInTheDocument()
@@ -182,9 +162,7 @@ describe('Finance categories service.', () => {
     if (!categoryRow) throw new Error('Category table row was not found.')
     const categoryDeletionIcon = within(categoryRow).getByTestId('DeleteOutlineIcon')
 
-    act(() => {
-      userEvent.click(categoryDeletionIcon)
-    })
+    userEvent.click(categoryDeletionIcon)
 
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
@@ -197,9 +175,7 @@ describe('Finance categories service.', () => {
 
     const deleteButton = screen.getByRole('button', { name: 'Delete' })
 
-    act(() => {
-      userEvent.click(deleteButton)
-    })
+    userEvent.click(deleteButton)
 
     await waitFor(async () => {
       expect(dialog).not.toBeInTheDocument()

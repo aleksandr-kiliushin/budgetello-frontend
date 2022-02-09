@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { act, screen, waitFor } from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import authConstants from '#mocks/constants/auth'
@@ -13,9 +13,7 @@ describe('Auth service.', () => {
 
     let logOutButton = screen.getByRole('button', { name: 'Log out' })
 
-    act(() => {
-      userEvent.click(logOutButton)
-    })
+    userEvent.click(logOutButton)
 
     expect(localStorage.authToken).toBeUndefined()
 
@@ -31,18 +29,14 @@ describe('Auth service.', () => {
     expect(usernameInput).toBeInTheDocument()
     expect(passwordInput).toBeInTheDocument()
 
-    act(() => {
-      userEvent.type(usernameInput, authConstants.validUsername)
-      userEvent.type(passwordInput, authConstants.validPassword)
-    })
+    userEvent.type(usernameInput, authConstants.validUsername)
+    userEvent.type(passwordInput, authConstants.validPassword)
 
     await waitFor(() => {
       expect(logInButton).toBeEnabled()
     })
 
-    act(() => {
-      userEvent.click(logInButton)
-    })
+    userEvent.click(logInButton)
 
     await waitFor(() => {
       expect(welcomeHeading).not.toBeInTheDocument()
@@ -72,9 +66,7 @@ describe('Auth service.', () => {
     const logOutButton = screen.getByRole('button', { name: 'Log out' })
     expect(logOutButton).toBeInTheDocument()
 
-    await act(async () => {
-      await userEvent.click(logOutButton)
-    })
+    await userEvent.click(logOutButton)
 
     expect(localStorage.authToken).toBeUndefined()
 
