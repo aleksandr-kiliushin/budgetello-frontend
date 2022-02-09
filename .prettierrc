@@ -2,14 +2,14 @@
   "arrowParens": "always",
   "bracketSpacing": true,
   "editor.formatOnSave": true,
+  "importOrder": ["^#", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
   "jsxBracketSameLine": false,
   "jsxSingleQuote": false,
   "printWidth": 100,
   "semi": false,
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "all",
-  "importOrder": ["^#", "^[./]"],
-  "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "trailingComma": "all"
 }
