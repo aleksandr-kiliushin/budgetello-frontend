@@ -28,6 +28,7 @@
       "#views": ["src/views"],
       "#views/*": ["src/views/*"]
     },
+    "removeComments": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
