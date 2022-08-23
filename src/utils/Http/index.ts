@@ -13,7 +13,7 @@ class Http {
   static createFullUrl(url: string): string {
     const backendUrlStart =
       process.env.MODE === 'production'
-        ? 'https://finances-app-backend.herokuapp.com:443'
+        ? 'https://personal-application-api.herokuapp.com/:443'
         : 'http://localhost:3080'
     return backendUrlStart + url
   }
