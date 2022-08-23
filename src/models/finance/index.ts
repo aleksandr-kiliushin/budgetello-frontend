@@ -68,7 +68,7 @@ export const createRecordTc = createAsyncThunk(
   }) =>
     await Http.post<FinanceRecord>({
       payload: { amount, categoryId, date },
-      url: '/api/finance-record',
+      url: '/api/finances/records',
     }),
 )
 
@@ -77,7 +77,7 @@ export const createCategoryTc = createAsyncThunk(
   async ({ name, typeId }: { name: FinanceCategory['name']; typeId: FinanceCategoryType['id'] }) =>
     await Http.post<FinanceCategory>({
       payload: { name, typeId },
-      url: '/api/finance-category',
+      url: '/api/finances/categories',
     }),
 )
 
@@ -85,7 +85,7 @@ export const deleteCategoryTc = createAsyncThunk(
   'finance/deleteCategoryTc',
   async ({ categoryId }: { categoryId: FinanceCategory['id'] }) => {
     const { id } = await Http.delete<FinanceCategory>({
-      url: `/api/finance-category/${categoryId}`,
+      url: `/api/finances/categories/${categoryId}`,
     })
     return id
   },
@@ -95,10 +95,10 @@ export const deleteRecordTc = createAsyncThunk(
   'finance/deleteRecordTc',
   async ({ id, isTrashed }: FinanceRecord) => {
     const record = isTrashed
-      ? await Http.delete<FinanceRecord>({ url: `/api/finance-record/${id}` })
+      ? await Http.delete<FinanceRecord>({ url: `/api/finances/records/${id}` })
       : await Http.patch<FinanceRecord>({
           payload: { isTrashed: true },
-          url: `/api/finance-record/${id}`,
+          url: `/api/finances/records/${id}`,
         })
 
     return { isPermanentDeletion: isTrashed, record }
@@ -109,8 +109,7 @@ export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state
   'finance/getCategoriesTc',
   async (_, { getState }) => {
     if (getState().finance.categories.status !== LoadingStatus.Idle) return []
-
-    return await Http.get<FinanceCategory[]>({ url: '/api/finance-category' })
+    return await Http.get<FinanceCategory[]>({ url: '/api/finances/categories/search' })
   },
 )
 
@@ -121,7 +120,7 @@ export const getCategoryTypesTc = createAsyncThunk<
 >('finance/getCategoryTypesTc', async (_, { getState }) => {
   if (getState().finance.categoryTypes.status !== LoadingStatus.Idle) return []
 
-  return await Http.get<FinanceCategoryType[]>({ url: '/api/finance-category-type' })
+  return await Http.get<FinanceCategoryType[]>({ url: '/api/finances/category-types' })
 })
 
 export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: RootState }>(
@@ -130,7 +129,7 @@ export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: R
     if (getState().finance.chartData.status !== LoadingStatus.Idle) return []
 
     return await Http.get<FinanceRecord[]>({
-      url: '/api/finance-record?isTrashed=false&orderingByDate=ASC&orderingById=ASC',
+      url: '/api/finances/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC',
     })
   },
 )
@@ -146,7 +145,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
     dispatch(setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
 
     const records = await Http.get<FinanceRecord[]>({
-      url: `/api/finance-record?isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
+      url: `/api/finances/records/search?isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
     })
 
     dispatch(addRecordsItems({ isTrash, items: records }))
@@ -165,7 +164,7 @@ export const restoreRecordTc = createAsyncThunk(
   async ({ recordId }: { recordId: FinanceRecord['id'] }) =>
     await Http.patch<FinanceRecord>({
       payload: { isTrashed: false },
-      url: `/api/finance-record/${recordId}`,
+      url: `/api/finances/records/${recordId}`,
     }),
 )
 
@@ -185,7 +184,7 @@ export const updateCategoryTc = createAsyncThunk(
         name,
         typeId,
       },
-      url: `/api/finance-category/${categoryId}`,
+      url: `/api/finances/categories/${categoryId}`,
     }),
 )
 
@@ -208,7 +207,7 @@ export const updateRecordTc = createAsyncThunk(
         categoryId,
         date,
       },
-      url: '/api/finance-record/' + id,
+      url: '/api/finances/records/' + id,
     }),
 )
 

@@ -4,7 +4,7 @@ class Http {
   private static get requestOptions(): RequestOptions {
     return {
       headers: {
-        Authorization: 'Bearer ' + localStorage.authToken,
+        Authorization: localStorage.authToken,
         'Content-Type': 'application/json',
       },
     }

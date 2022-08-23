@@ -59,7 +59,7 @@ export const login: Login =
 export const getCurrentUserData =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
-    const currentUserData = await Http.get<User>({ url: '/api/user/me' })
+    const currentUserData = await Http.get<User>({ url: '/api/users/0' })
     dispatch(setCurrentUserData(currentUserData))
   }
 
