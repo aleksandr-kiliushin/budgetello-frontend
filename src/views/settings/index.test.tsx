@@ -5,7 +5,6 @@ import faker from 'faker'
 
 import { CategoryType, financeCategories, financeCategoryTypes } from '#mocks/constants/finance'
 import render from '#mocks/render'
-import textContentMatcher from '#utils/testing/textContentMatch'
 import Settings from '#views/settings'
 
 describe('Finance categories service.', () => {
@@ -167,11 +166,6 @@ describe('Finance categories service.', () => {
     const dialog = screen.getByRole('dialog')
     expect(dialog).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Delete category' })).toBeInTheDocument()
-
-    const warning = screen.getByText(
-      textContentMatcher(`Are you sure you want to delete ${categoryName} category?`),
-    )
-    expect(warning).toBeInTheDocument()
 
     const deleteButton = screen.getByRole('button', { name: 'Delete' })
 
