@@ -89,7 +89,7 @@ const Records: FC = () => {
               </TableCell>
               <TableCell colSpan={2} width="24%">
                 {isTrash ? null : (
-                  <Button onClick={openRecordCreationModal} variant="outlined">
+                  <Button id="add-record" onClick={openRecordCreationModal} variant="outlined">
                     +New
                   </Button>
                 )}

@@ -1,14 +1,15 @@
 {
-  "name": "finances-frontend",
+  "name": "personal-app-frontend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist && MODE=production webpack",
-    "dev": "MODE=development npx webpack serve",
-    "test": "jest",
     "check-types": "tsc --noEmit",
-    "check-types:watch": "tsc --noEmit --watch"
+    "check-types:watch": "tsc --noEmit --watch",
+    "cypress:open": "cypress open",
+    "dev": "MODE=development npx webpack serve",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -49,6 +50,7 @@
     "@typescript-eslint/parser": "5.8.0",
     "babel-jest": "27.4.5",
     "babel-loader": "8.2.3",
+    "cypress": "10.6.0",
     "eslint": "8.5.0",
     "eslint-plugin-react": "7.28.0",
     "faker": "5.5.3",
