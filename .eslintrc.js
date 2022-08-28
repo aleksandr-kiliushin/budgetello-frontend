@@ -23,7 +23,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   root: true,
   rules: {
-    '@typescript-eslint/explicit-function-return-type': ['error'],
     'arrow-parens': 2,
     camelcase: 2,
     'no-console': 2,

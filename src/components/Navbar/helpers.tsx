@@ -18,6 +18,7 @@ export const getActiveNavigationIndex = (pathname: string): string | undefined =
   if (/^\/stats/.test(pathname)) return 'stats'
   if (/^\/settings/.test(pathname)) return 'settings'
   if (/^\/auth/.test(pathname)) return 'auth'
+  return undefined
 }
 
 interface Section {

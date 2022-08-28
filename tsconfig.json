@@ -14,9 +14,9 @@
     "noEmit": true,
     "noEmitOnError": true,
     "noImplicitAny": true,
-    "noImplicitReturns": true,
+    "noImplicitReturns": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "paths": {
       "#components/*": ["src/components/*"],
       "#mocks/*": ["src/mocks/*"],

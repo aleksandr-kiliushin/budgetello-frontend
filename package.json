@@ -6,7 +6,9 @@
   "scripts": {
     "build": "rm -rf dist && MODE=production webpack",
     "dev": "MODE=development npx webpack serve",
-    "test": "jest"
+    "test": "jest",
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --noEmit --watch"
   },
   "keywords": [],
   "author": "",
