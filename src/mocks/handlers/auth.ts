@@ -10,7 +10,7 @@ const authHandlers = [
     return res(ctx.status(201), ctx.json({ authToken: authConstants.validAuthToken }))
   }),
 
-  rest.get<User>(Http.createFullUrl("/api/user/me"), (req, res, ctx) => {
+  rest.get<User>(Http.createFullUrl("/api/users/0"), (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

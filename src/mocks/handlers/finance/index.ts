@@ -8,15 +8,15 @@ import Http from "#src/utils/Http"
 import { CreateNewFinanceCategoryRequestBody, EditFinanceCategoryRequestBody } from "./types"
 
 const financeHandlers = [
-  rest.get(Http.createFullUrl("/api/finance-category"), (req, res, ctx) => {
+  rest.get(Http.createFullUrl("/api/finances/categories/search"), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(financeCategories))
   }),
 
-  rest.get(Http.createFullUrl("/api/finance-category-type"), (req, res, ctx) => {
+  rest.get(Http.createFullUrl("/api/finances/category-types"), (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(financeCategoryTypes))
   }),
 
-  rest.post<CreateNewFinanceCategoryRequestBody>(Http.createFullUrl("/api/finance-category"), (req, res, ctx) => {
+  rest.post<CreateNewFinanceCategoryRequestBody>(Http.createFullUrl("/api/finances/categories"), (req, res, ctx) => {
     const { name, typeId } = req.body
 
     const type = financeCategoryTypes.find(({ id }) => id === typeId)
@@ -35,7 +35,7 @@ const financeHandlers = [
   }),
 
   rest.patch<EditFinanceCategoryRequestBody>(
-    Http.createFullUrl("/api/finance-category/:categoryId"),
+    Http.createFullUrl("/api/finances/categories/:categoryId"),
     (req, res, ctx) => {
       const { name, typeId } = req.body
       const { categoryId } = req.params
@@ -58,7 +58,7 @@ const financeHandlers = [
     }
   ),
 
-  rest.delete(Http.createFullUrl("/api/finance-category/:categoryId"), (req, res, ctx) => {
+  rest.delete(Http.createFullUrl("/api/finances/categories/:categoryId"), (req, res, ctx) => {
     const { categoryId } = req.params
 
     if (isNaN(Number(categoryId))) throw Error("Invalid category ID.")
