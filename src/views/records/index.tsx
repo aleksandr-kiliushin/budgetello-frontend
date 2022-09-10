@@ -1,22 +1,22 @@
-import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Switch from '@mui/material/Switch'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
-import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import Button from "@mui/material/Button"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import Switch from "@mui/material/Switch"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableRow from "@mui/material/TableRow"
+import Typography from "@mui/material/Typography"
+import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
-import Loader from '#components/Loader'
-import { getCategoriesTc, getRecordsTc } from '#models/finance'
-import { LoadingStatus } from '#src/constants/shared'
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
+import Loader from "#components/Loader"
+import { getCategoriesTc, getRecordsTc } from "#models/finance"
+import { LoadingStatus } from "#src/constants/shared"
+import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-import RecordFormModal from './RecordFormModal'
-import RecordTableRow from './RecordTableRow'
-import { Header, StyledTableContainer, StyledTableHead } from './components'
+import RecordFormModal from "./RecordFormModal"
+import RecordTableRow from "./RecordTableRow"
+import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
 const Records: FC = () => {
   const dispatch = useAppDispatch()
@@ -24,14 +24,12 @@ const Records: FC = () => {
   const navigate = useNavigate()
 
   const query = new URLSearchParams(search)
-  const isTrash = query.get('isTrash') === 'true'
+  const isTrash = query.get("isTrash") === "true"
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = useState(false)
 
   const categories = useAppSelector((state) => state.finance.categories)
-  const records = useAppSelector(
-    (state) => state.finance.records[isTrash ? 'trashed' : 'notTrashed'],
-  )
+  const records = useAppSelector((state) => state.finance.records[isTrash ? "trashed" : "notTrashed"])
 
   const loaderRef = useRef(null)
 
@@ -98,16 +96,9 @@ const Records: FC = () => {
           </StyledTableHead>
           <TableBody>
             {records.items.map((record) => (
-              <RecordTableRow
-                categories={categories.items}
-                isTrash={isTrash}
-                key={record.id}
-                record={record}
-              />
+              <RecordTableRow categories={categories.items} isTrash={isTrash} key={record.id} record={record} />
             ))}
-            {records.status === LoadingStatus.Completed ? null : (
-              <Loader Component={'tr'} ref={loaderRef} />
-            )}
+            {records.status === LoadingStatus.Completed ? null : <Loader Component={"tr"} ref={loaderRef} />}
           </TableBody>
         </Table>
       </StyledTableContainer>

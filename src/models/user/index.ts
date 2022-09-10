@@ -1,8 +1,8 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-import { AppThunk } from '#models/store'
-import User from '#types/user'
-import Http from '#utils/Http'
+import { AppThunk } from "#models/store"
+import User from "#types/user"
+import Http from "#utils/Http"
 
 interface State {
   isUserLoggedIn: boolean
@@ -13,30 +13,30 @@ const initialState: State = {
   isUserLoggedIn: Boolean(localStorage.authToken),
   userData: {
     id: 0,
-    password: '',
-    username: '',
+    password: "",
+    username: "",
   },
 }
 
 const slice = createSlice({
   initialState,
-  name: 'user',
+  name: "user",
   reducers: {
     logOut: (state) => {
-      localStorage.removeItem('authToken')
+      localStorage.removeItem("authToken")
       state.isUserLoggedIn = false
       state.userData = initialState.userData
     },
     setCurrentUserData: (state, action: PayloadAction<User>) => {
       state.userData = action.payload
     },
-    setIsUserLoggedIn: (state, action: PayloadAction<State['isUserLoggedIn']>) => {
+    setIsUserLoggedIn: (state, action: PayloadAction<State["isUserLoggedIn"]>) => {
       state.isUserLoggedIn = action.payload
     },
   },
 })
 
-type Login = (credentials: { password: User['password']; username: User['username'] }) => AppThunk
+type Login = (credentials: { password: User["password"]; username: User["username"] }) => AppThunk
 export const login: Login =
   ({ password, username }) =>
   async (dispatch): Promise<void> => {
@@ -45,7 +45,7 @@ export const login: Login =
         password,
         username,
       },
-      url: '/api/login',
+      url: "/api/login",
     })
 
     if (!authToken) return
@@ -59,7 +59,7 @@ export const login: Login =
 export const getCurrentUserData =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
-    const currentUserData = await Http.get<User>({ url: '/api/users/0' })
+    const currentUserData = await Http.get<User>({ url: "/api/users/0" })
     dispatch(setCurrentUserData(currentUserData))
   }
 

@@ -1,19 +1,19 @@
-import Button from '@mui/material/Button'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
-import { FC, Fragment, useEffect } from 'react'
-import { useToggle } from 'react-use'
+import Button from "@mui/material/Button"
+import Table from "@mui/material/Table"
+import TableBody from "@mui/material/TableBody"
+import TableCell from "@mui/material/TableCell"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
+import TableRow from "@mui/material/TableRow"
+import Typography from "@mui/material/Typography"
+import { FC, Fragment, useEffect } from "react"
+import { useToggle } from "react-use"
 
-import { getCategoriesTc, getCategoryTypesTc } from '#models/finance'
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
+import { getCategoriesTc, getCategoryTypesTc } from "#models/finance"
+import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-import CategoryFormModal from './CategoryFormModal'
-import CategoryTableRow from './CategoryTableRow'
+import CategoryFormModal from "./CategoryFormModal"
+import CategoryTableRow from "./CategoryTableRow"
 
 const Settings: FC = () => {
   const dispatch = useAppDispatch()
@@ -50,11 +50,7 @@ const Settings: FC = () => {
           </TableHead>
           <TableBody>
             {categories.items.map((category) => (
-              <CategoryTableRow
-                category={category}
-                categoryTypes={categoryTypes.items}
-                key={category.id}
-              />
+              <CategoryTableRow category={category} categoryTypes={categoryTypes.items} key={category.id} />
             ))}
           </TableBody>
         </Table>

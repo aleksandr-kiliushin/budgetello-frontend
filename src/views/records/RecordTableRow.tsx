@@ -1,17 +1,17 @@
-import { css } from '@emotion/react'
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import RestoreIcon from '@mui/icons-material/Restore'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import { FC, Fragment } from 'react'
-import { useToggle } from 'react-use'
+import { css } from "@emotion/react"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
+import RestoreIcon from "@mui/icons-material/Restore"
+import TableCell from "@mui/material/TableCell"
+import TableRow from "@mui/material/TableRow"
+import { FC, Fragment } from "react"
+import { useToggle } from "react-use"
 
-import { deleteRecordTc, restoreRecordTc } from '#models/finance'
-import { FinanceCategory, FinanceRecord } from '#types/finance'
-import { useAppDispatch } from '#utils/hooks'
+import { deleteRecordTc, restoreRecordTc } from "#models/finance"
+import { FinanceCategory, FinanceRecord } from "#types/finance"
+import { useAppDispatch } from "#utils/hooks"
 
-import RecordFormModal from './RecordFormModal'
+import RecordFormModal from "./RecordFormModal"
 
 const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
   const dispatch = useAppDispatch()
@@ -43,12 +43,12 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
     ],
   ])
   const mapCategoryTypeIdToColor = new Map([
-    [1, 'darkred'],
-    [2, 'darkgreen'],
+    [1, "darkred"],
+    [2, "darkgreen"],
   ])
   const mapCategoryTypeIdToPseudoElementContent = new Map([
-    [1, '-'],
-    [2, '+'],
+    [1, "-"],
+    [2, "+"],
   ])
 
   return (
@@ -58,7 +58,7 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
           css={css`
             color: ${mapCategoryTypeIdToColor.get(category.type.id)};
             &::before {
-              content: '${mapCategoryTypeIdToPseudoElementContent.get(category.type.id)}';
+              content: "${mapCategoryTypeIdToPseudoElementContent.get(category.type.id)}";
             }
           `}
           width="23%"
@@ -73,11 +73,7 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
         </TableCell>
       </TableRow>
       {isRecordEditingModalShown ? (
-        <RecordFormModal
-          categories={categories}
-          closeModal={toggleIsRecordEditingModalShown}
-          record={record}
-        />
+        <RecordFormModal categories={categories} closeModal={toggleIsRecordEditingModalShown} record={record} />
       ) : null}
     </Fragment>
   )

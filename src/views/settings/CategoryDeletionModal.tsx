@@ -1,14 +1,14 @@
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import { FC } from 'react'
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+import { FC } from "react"
 
-import { deleteCategoryTc } from '#models/finance'
-import { FinanceCategory } from '#types/finance'
-import { useAppDispatch } from '#utils/hooks'
+import { deleteCategoryTc } from "#models/finance"
+import { FinanceCategory } from "#types/finance"
+import { useAppDispatch } from "#utils/hooks"
 
 interface Props {
   category: FinanceCategory

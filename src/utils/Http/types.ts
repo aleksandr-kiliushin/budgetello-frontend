@@ -1,7 +1,7 @@
 export interface RequestOptions extends RequestInit {
   headers: {
     Authorization: string
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json"
   }
 }
 

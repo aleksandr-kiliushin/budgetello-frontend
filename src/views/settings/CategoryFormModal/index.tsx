@@ -1,27 +1,27 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import Button from '@mui/material/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import TextField from '@mui/material/TextField'
-import { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import { yupResolver } from "@hookform/resolvers/yup"
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogTitle from "@mui/material/DialogTitle"
+import TextField from "@mui/material/TextField"
+import { FC } from "react"
+import { useForm } from "react-hook-form"
 
-import RowGroup from '#components/RowGroup'
-import RadioGroup from '#components/form-contructor/RadioGroup'
-import { createCategoryTc, updateCategoryTc } from '#models/finance'
-import { FinanceCategory, FinanceCategoryType } from '#types/finance'
-import { useAppDispatch } from '#utils/hooks'
+import RowGroup from "#components/RowGroup"
+import RadioGroup from "#components/form-contructor/RadioGroup"
+import { createCategoryTc, updateCategoryTc } from "#models/finance"
+import { FinanceCategory, FinanceCategoryType } from "#types/finance"
+import { useAppDispatch } from "#utils/hooks"
 
-import { FormField, FormValues, validationSchema } from './form-helpers'
+import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
-  const defaultValues = category ? { name: category.name, typeId: category.type.id } : { name: '' }
+  const defaultValues = category ? { name: category.name, typeId: category.type.id } : { name: "" }
 
   const {
     formState: { isValid },
@@ -29,7 +29,7 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
     register,
   } = useForm<FormValues>({
     defaultValues,
-    mode: 'onChange',
+    mode: "onChange",
     resolver: yupResolver(validationSchema),
   })
 
@@ -50,7 +50,7 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
 
   return (
     <Dialog open onClose={closeModal}>
-      <DialogTitle>{category ? 'Edit category' : 'Create category'}</DialogTitle>
+      <DialogTitle>{category ? "Edit category" : "Create category"}</DialogTitle>
       <form aria-label="finance-category-form" onSubmit={submitCategoryForm}>
         <DialogContent>
           <RowGroup>

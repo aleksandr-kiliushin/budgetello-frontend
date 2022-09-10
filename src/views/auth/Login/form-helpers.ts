@@ -1,8 +1,8 @@
-import * as yup from 'yup'
+import * as yup from "yup"
 
 export enum FormFieldName {
-  Password = 'password',
-  Username = 'username',
+  Password = "password",
+  Username = "username",
 }
 
 export const validationSchema = yup
@@ -13,8 +13,8 @@ export const validationSchema = yup
   .required()
 
 export const defaultValues: FormValues = {
-  password: '',
-  username: '',
+  password: "",
+  username: "",
 }
 
 export type FormValues = yup.InferType<typeof validationSchema>

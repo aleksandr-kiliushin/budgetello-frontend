@@ -1,8 +1,8 @@
-import { Store } from '@reduxjs/toolkit'
+import { Store } from "@reduxjs/toolkit"
 
-import authConstants from '#mocks/constants/auth'
-import { AppDispatch, RootState } from '#models/store'
-import { login as loginThunkCreator } from '#models/user'
+import authConstants from "#mocks/constants/auth"
+import { AppDispatch, RootState } from "#models/store"
+import { login as loginThunkCreator } from "#models/user"
 
 type Login = (store: Store<RootState>) => Promise<void>
 
@@ -12,7 +12,7 @@ const login: Login = async (store) => {
     loginThunkCreator({
       password: authConstants.validUsername,
       username: authConstants.validPassword,
-    }),
+    })
   )
 }
 

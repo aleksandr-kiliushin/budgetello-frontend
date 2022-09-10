@@ -1,8 +1,8 @@
-import * as yup from 'yup'
+import * as yup from "yup"
 
 export enum FormField {
-  Name = 'name',
-  TypeId = 'typeId',
+  Name = "name",
+  TypeId = "typeId",
 }
 
 export const validationSchema = yup

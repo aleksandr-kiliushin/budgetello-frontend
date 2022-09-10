@@ -1,14 +1,14 @@
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import { FC, Fragment } from 'react'
-import { useToggle } from 'react-use'
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
+import TableCell from "@mui/material/TableCell"
+import TableRow from "@mui/material/TableRow"
+import { FC, Fragment } from "react"
+import { useToggle } from "react-use"
 
-import { FinanceCategory, FinanceCategoryType } from '#types/finance'
+import { FinanceCategory, FinanceCategoryType } from "#types/finance"
 
-import CategoryDeletionModal from './CategoryDeletionModal'
-import CategoryFormModal from './CategoryFormModal'
+import CategoryDeletionModal from "./CategoryDeletionModal"
+import CategoryFormModal from "./CategoryFormModal"
 
 interface Props {
   category: FinanceCategory
@@ -41,10 +41,7 @@ const CategoryTableRow: FC<Props> = ({ category, categoryTypes }) => {
         />
       )}
       {isCategoryDeletionModalShown && (
-        <CategoryDeletionModal
-          category={category}
-          closeModal={toggleIsCategoryDeletionModalShown}
-        />
+        <CategoryDeletionModal category={category} closeModal={toggleIsCategoryDeletionModalShown} />
       )}
     </Fragment>
   )

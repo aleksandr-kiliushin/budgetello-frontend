@@ -1,10 +1,7 @@
-import { css } from '@emotion/react'
-import { ElementType, ForwardRefRenderFunction, ForwardedRef, forwardRef } from 'react'
+import { css } from "@emotion/react"
+import { ElementType, ForwardRefRenderFunction, ForwardedRef, forwardRef } from "react"
 
-const _Loader: ForwardRefRenderFunction<HTMLDivElement, Props> = (
-  { Component },
-  ref: ForwardedRef<HTMLDivElement>,
-) => (
+const _Loader: ForwardRefRenderFunction<HTMLDivElement, Props> = ({ Component }, ref: ForwardedRef<HTMLDivElement>) => (
   <Component
     css={css`
       height: 20px;

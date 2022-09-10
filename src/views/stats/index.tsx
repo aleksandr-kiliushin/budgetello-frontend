@@ -1,9 +1,9 @@
-import { Chart, registerables } from 'chart.js'
-import { FC, useEffect, useRef } from 'react'
+import { Chart, registerables } from "chart.js"
+import { FC, useEffect, useRef } from "react"
 
-import { getChartDataTc } from '#models/finance'
-import { LoadingStatus } from '#src/constants/shared'
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
+import { getChartDataTc } from "#models/finance"
+import { LoadingStatus } from "#src/constants/shared"
+import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 const Stats: FC = () => {
   const dispatch = useAppDispatch()
@@ -25,7 +25,7 @@ const Stats: FC = () => {
 
     if (canvas === null) return
 
-    const ctx = canvas.getContext('2d')
+    const ctx = canvas.getContext("2d")
 
     if (ctx === null) return
 
@@ -44,11 +44,11 @@ const Stats: FC = () => {
       const currentDate = new Date(items[0].date)
       let currentSum = 1_277_000
       while (currentDate <= endDate) {
-        const stringifiedCurrentDate = currentDate.toISOString().split('T')[0]
+        const stringifiedCurrentDate = currentDate.toISOString().split("T")[0]
         currentSum = items
           .filter((record) => record.date === stringifiedCurrentDate)
           .reduce((dateSum, record) => {
-            if (record.category.type.name === 'expense') {
+            if (record.category.type.name === "expense") {
               return (dateSum -= record.amount)
             }
             return (dateSum += record.amount)
@@ -65,12 +65,12 @@ const Stats: FC = () => {
         data: {
           datasets: [
             {
-              borderColor: 'darkgreen',
+              borderColor: "darkgreen",
               borderWidth: 1,
               data: Object.values(mapSumToDate),
               fill: true,
-              label: 'Your finance, RUB',
-              pointBorderColor: 'darkgreen',
+              label: "Your finance, RUB",
+              pointBorderColor: "darkgreen",
               pointRadius: 0,
             },
           ],
@@ -81,13 +81,11 @@ const Stats: FC = () => {
             x: {
               ticks: {
                 callback: (tickValue): number | string => {
-                  if (typeof tickValue !== 'number') return 'error'
-                  const timeStamp = new Date(items[0].date).setDate(
-                    currentDate.getDate() + tickValue,
-                  )
-                  return new Date(timeStamp).toLocaleString('default', {
-                    month: 'short',
-                    year: '2-digit',
+                  if (typeof tickValue !== "number") return "error"
+                  const timeStamp = new Date(items[0].date).setDate(currentDate.getDate() + tickValue)
+                  return new Date(timeStamp).toLocaleString("default", {
+                    month: "short",
+                    year: "2-digit",
                   })
                 },
                 maxRotation: 90,
@@ -98,13 +96,13 @@ const Stats: FC = () => {
               beginAtZero: true,
               ticks: {
                 callback: (tickValue): number | string =>
-                  typeof tickValue === 'number' ? tickValue / 1_000_000 : 'error',
+                  typeof tickValue === "number" ? tickValue / 1_000_000 : "error",
                 padding: 1,
               },
             },
           },
         },
-        type: 'line',
+        type: "line",
       })
 
       return
@@ -118,12 +116,12 @@ const Stats: FC = () => {
     const currentDate = new Date(items[0].date)
     let currentSum = 1_277_000
     while (currentDate <= endDate) {
-      const stringifiedCurrentDate = currentDate.toISOString().split('T')[0]
+      const stringifiedCurrentDate = currentDate.toISOString().split("T")[0]
 
       currentSum = items
         .filter((record) => record.date === stringifiedCurrentDate)
         .reduce((dateSum, record) => {
-          if (record.category.type.name === 'expense') {
+          if (record.category.type.name === "expense") {
             return (dateSum -= record.amount)
           }
           return (dateSum += record.amount)
@@ -141,11 +139,11 @@ const Stats: FC = () => {
       data: {
         datasets: [
           {
-            borderColor: 'steelblue',
+            borderColor: "steelblue",
             borderWidth: 2,
             data: Object.values(mapSumToDate),
-            label: 'Your finance, RUB',
-            pointBorderColor: 'darkgreen',
+            label: "Your finance, RUB",
+            pointBorderColor: "darkgreen",
             pointRadius: 0,
           },
         ],
@@ -155,31 +153,31 @@ const Stats: FC = () => {
         scales: {
           x: {
             beginAtZero: true,
-            position: 'top',
+            position: "top",
             ticks: {
               callback: (tickValue): number | string =>
-                typeof tickValue === 'number' ? tickValue / 1_000_000 : 'error',
+                typeof tickValue === "number" ? tickValue / 1_000_000 : "error",
             },
-            type: 'linear',
+            type: "linear",
           },
           y: {
             ticks: {
               callback: (tickValue): number | string => {
-                if (typeof tickValue !== 'number') return 'error'
+                if (typeof tickValue !== "number") return "error"
 
                 const timeStamp = new Date(items[0].date).setDate(currentDate.getDate() + tickValue)
 
-                return new Date(timeStamp).toLocaleString('default', {
-                  month: 'short',
-                  year: '2-digit',
+                return new Date(timeStamp).toLocaleString("default", {
+                  month: "short",
+                  year: "2-digit",
                 })
               },
             },
-            type: 'category',
+            type: "category",
           },
         },
       },
-      type: 'line',
+      type: "line",
     })
   }, [chartData])
 

@@ -1,18 +1,18 @@
-import { css } from '@emotion/react'
-import { FC, useEffect } from 'react'
-import { Navigate, Routes, useLocation } from 'react-router'
-import { Route } from 'react-router-dom'
+import { css } from "@emotion/react"
+import { FC, useEffect } from "react"
+import { Navigate, Routes, useLocation } from "react-router"
+import { Route } from "react-router-dom"
 
-import Navbar from '#components/Navbar'
-import { setRedirectPath } from '#models/common'
-import { getCurrentUserData } from '#models/user'
-import { mediaQuery } from '#styles/media-queries'
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
-import Auth from '#views/auth'
-import Home from '#views/home'
-import Records from '#views/records'
-import Settings from '#views/settings'
-import Stats from '#views/stats'
+import Navbar from "#components/Navbar"
+import { setRedirectPath } from "#models/common"
+import { getCurrentUserData } from "#models/user"
+import { mediaQuery } from "#styles/media-queries"
+import { useAppDispatch, useAppSelector } from "#utils/hooks"
+import Auth from "#views/auth"
+import Home from "#views/home"
+import Records from "#views/records"
+import Settings from "#views/settings"
+import Stats from "#views/stats"
 
 const App: FC = () => {
   const dispatch = useAppDispatch()

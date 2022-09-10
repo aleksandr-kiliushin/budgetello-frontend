@@ -1,20 +1,18 @@
-import { RequestDataWithPayload, RequestDataWithoutPayload, RequestOptions } from './types'
+import { RequestDataWithPayload, RequestDataWithoutPayload, RequestOptions } from "./types"
 
 class Http {
   private static get requestOptions(): RequestOptions {
     return {
       headers: {
         Authorization: localStorage.authToken,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     }
   }
 
   static createFullUrl(url: string): string {
     const backendUrlStart =
-      process.env.MODE === 'production'
-        ? 'https://personal-application-api.herokuapp.com:443'
-        : 'http://localhost:3080'
+      process.env.MODE === "production" ? "https://personal-application-api.herokuapp.com:443" : "http://localhost:3080"
     return backendUrlStart + url
   }
 
@@ -22,7 +20,7 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
-      method: 'DELETE',
+      method: "DELETE",
     })
     return await response.json()
   }
@@ -38,7 +36,7 @@ class Http {
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
-      method: 'PATCH',
+      method: "PATCH",
     })
     return await response.json()
   }
@@ -48,7 +46,7 @@ class Http {
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
-      method: 'POST',
+      method: "POST",
     })
     return await response.json()
   }

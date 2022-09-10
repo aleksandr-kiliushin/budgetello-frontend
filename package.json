@@ -9,6 +9,7 @@
     "check-types:watch": "tsc --noEmit --watch",
     "cypress:open": "cypress open",
     "dev": "MODE=development npx webpack serve",
+    "prettier": "prettier --write '**/*.ts' '**/*.tsx'",
     "test": "jest",
     "test:watch": "jest --watch"
   },

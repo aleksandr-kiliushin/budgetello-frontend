@@ -1,8 +1,8 @@
-import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
+import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit"
 
-import { commonReducer } from './common'
-import { financeReducer } from './finance'
-import { userReducer } from './user'
+import { commonReducer } from "./common"
+import { financeReducer } from "./finance"
+import { userReducer } from "./user"
 
 const store = configureStore({
   reducer: {
@@ -14,11 +14,6 @@ const store = configureStore({
 
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>
 
 export default store

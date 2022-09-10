@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
-import Box from '@mui/material/Box'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
+import styled from "@emotion/styled"
+import Box from "@mui/material/Box"
+import TableContainer from "@mui/material/TableContainer"
+import TableHead from "@mui/material/TableHead"
 
 export const Header = styled(Box)`
   display: flex;

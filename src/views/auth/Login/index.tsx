@@ -1,16 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import { yupResolver } from "@hookform/resolvers/yup"
+import Button from "@mui/material/Button"
+import TextField from "@mui/material/TextField"
+import Typography from "@mui/material/Typography"
+import { FC } from "react"
+import { useForm } from "react-hook-form"
 
-import RowGroup from '#components/RowGroup'
-import { login } from '#models/user'
-import { useAppDispatch } from '#utils/hooks'
+import RowGroup from "#components/RowGroup"
+import { login } from "#models/user"
+import { useAppDispatch } from "#utils/hooks"
 
-import { Container } from '../components'
-import { FormFieldName, FormValues, defaultValues, validationSchema } from './form-helpers'
+import { Container } from "../components"
+import { FormFieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
 const Login: FC = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +21,7 @@ const Login: FC = () => {
     register,
   } = useForm<FormValues>({
     defaultValues,
-    mode: 'onChange',
+    mode: "onChange",
     resolver: yupResolver(validationSchema),
   })
 

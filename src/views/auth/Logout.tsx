@@ -1,11 +1,11 @@
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { FC } from 'react'
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography"
+import { FC } from "react"
 
-import { logOut } from '#models/user'
-import { useAppDispatch, useAppSelector } from '#utils/hooks'
+import { logOut } from "#models/user"
+import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-import { Container } from './components'
+import { Container } from "./components"
 
 const Logout: FC = () => {
   const dispatch = useAppDispatch()
