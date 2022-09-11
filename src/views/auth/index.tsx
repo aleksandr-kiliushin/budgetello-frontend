@@ -6,9 +6,9 @@ import Login from "./Login"
 import Logout from "./Logout"
 
 const Auth: FC = () => {
-  const { isUserLoggedIn } = useAppSelector((state) => state.user)
+  const user = useAppSelector((state) => state.user)
 
-  return isUserLoggedIn ? <Logout /> : <Login />
+  return user.isLoggedIn ? <Logout /> : <Login />
 }
 
 export default Auth

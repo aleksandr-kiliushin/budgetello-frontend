@@ -102,7 +102,7 @@ export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state
   "finance/getCategoriesTc",
   async (_, { getState }) => {
     if (getState().finance.categories.status !== LoadingStatus.Idle) return []
-    if (!getState().user.isUserLoggedIn) return []
+    if (!getState().user.isLoggedIn) return []
     const [data] = await Http.get<FinanceCategory[]>({ url: "/api/finances/categories/search" })
     return data
   }
@@ -112,7 +112,7 @@ export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, 
   "finance/getCategoryTypesTc",
   async (_, { getState }) => {
     if (getState().finance.categoryTypes.status !== LoadingStatus.Idle) return []
-    if (!getState().user.isUserLoggedIn) return []
+    if (!getState().user.isLoggedIn) return []
     const [data] = await Http.get<FinanceCategoryType[]>({ url: "/api/finances/category-types" })
     return data
   }

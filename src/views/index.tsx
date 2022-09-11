@@ -5,7 +5,6 @@ import { Navigate, Route, useLocation } from "react-router-dom"
 
 import Navbar from "#components/Navbar"
 import { getCurrentUserData } from "#models/user"
-import { LoadingStatus } from "#src/constants/shared"
 import { mediaQuery } from "#styles/media-queries"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import Auth from "#views/auth"
@@ -17,7 +16,7 @@ import Stats from "#views/stats"
 const App: FC = () => {
   const dispatch = useAppDispatch()
 
-  const user = useAppSelector((state) => state.user.user)
+  const user = useAppSelector((state) => state.user)
 
   const location = useLocation()
 
@@ -25,7 +24,7 @@ const App: FC = () => {
     dispatch(getCurrentUserData())
   }, [])
 
-  if (user.status === LoadingStatus.Error && !location.pathname.startsWith("/auth")) {
+  if (!user.isLoggedIn && !location.pathname.startsWith("/auth")) {
     return <Navigate to="/auth" />
   }
 

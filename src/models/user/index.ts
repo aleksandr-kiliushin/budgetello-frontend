@@ -1,27 +1,20 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 import { AppThunk } from "#models/store"
-import { LoadingStatus } from "#src/constants/shared"
 import { IUser } from "#types/IUser"
 import Http from "#utils/Http"
 
 interface IState {
-  isUserLoggedIn: boolean
-  user: {
-    data: IUser
-    status: LoadingStatus
-  }
+  isLoggedIn: boolean
+  data: IUser
 }
 
 const initialState: IState = {
-  isUserLoggedIn: false,
-  user: {
-    data: {
-      id: 0,
-      password: "",
-      username: "",
-    },
-    status: LoadingStatus.Idle,
+  isLoggedIn: false,
+  data: {
+    id: 0,
+    password: "",
+    username: "",
   },
 }
 
@@ -31,17 +24,14 @@ const userSlice = createSlice({
   reducers: {
     logOut: (state) => {
       localStorage.removeItem("authToken")
-      state.isUserLoggedIn = false
-      state.user = initialState.user
+      state.isLoggedIn = false
+      state.data = initialState.data
     },
     setCurrentUser: (state, action: PayloadAction<IUser>) => {
-      state.user.data = action.payload
+      state.data = action.payload
     },
-    setCurrentUserStatus: (state, action: PayloadAction<LoadingStatus>) => {
-      state.user.status = action.payload
-    },
-    setIsUserLoggedIn: (state, action: PayloadAction<IState["isUserLoggedIn"]>) => {
-      state.isUserLoggedIn = action.payload
+    setIsUserLoggedIn: (state, action: PayloadAction<IState["isLoggedIn"]>) => {
+      state.isLoggedIn = action.payload
     },
   },
 })
@@ -69,10 +59,8 @@ export const getCurrentUserData = (): AppThunk => {
   return async (dispatch): Promise<void> => {
     const [data, response] = await Http.get<IUser>({ url: "/api/users/0" })
     if (response.status === 401) {
-      dispatch(userActions.setCurrentUserStatus(LoadingStatus.Error))
       return
     }
     dispatch(userActions.setCurrentUser(data))
-    dispatch(userActions.setCurrentUserStatus(LoadingStatus.Success))
   }
 }
