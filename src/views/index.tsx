@@ -1,11 +1,11 @@
 import { css } from "@emotion/react"
 import { FC, useEffect } from "react"
-import { Navigate, Routes, useLocation } from "react-router"
-import { Route } from "react-router-dom"
+import { Routes } from "react-router"
+import { Navigate, Route, useLocation } from "react-router-dom"
 
 import Navbar from "#components/Navbar"
-import { setRedirectPath } from "#models/common"
 import { getCurrentUserData } from "#models/user"
+import { LoadingStatus } from "#src/constants/shared"
 import { mediaQuery } from "#styles/media-queries"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import Auth from "#views/auth"
@@ -16,22 +16,17 @@ import Stats from "#views/stats"
 
 const App: FC = () => {
   const dispatch = useAppDispatch()
-  const { pathname } = useLocation()
 
-  const redirectPath = useAppSelector((state) => state.common.redirectPath)
+  const user = useAppSelector((state) => state.user.user)
 
-  useEffect(() => {
-    if (redirectPath !== null) {
-      dispatch(setRedirectPath(null))
-    }
-  }, [redirectPath])
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(getCurrentUserData())
   }, [])
 
-  if (redirectPath !== null && redirectPath !== pathname) {
-    return <Navigate to={redirectPath} />
+  if (user.status === LoadingStatus.Error && !location.pathname.startsWith("/auth")) {
+    return <Navigate to="/auth" />
   }
 
   return (

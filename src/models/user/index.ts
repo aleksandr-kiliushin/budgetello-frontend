@@ -1,71 +1,78 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 import { AppThunk } from "#models/store"
-import User from "#types/user"
+import { LoadingStatus } from "#src/constants/shared"
+import { IUser } from "#types/IUser"
 import Http from "#utils/Http"
 
-interface State {
+interface IState {
   isUserLoggedIn: boolean
-  userData: User
+  user: {
+    data: IUser
+    status: LoadingStatus
+  }
 }
 
-const initialState: State = {
-  isUserLoggedIn: Boolean(localStorage.authToken),
-  userData: {
-    id: 0,
-    password: "",
-    username: "",
+const initialState: IState = {
+  isUserLoggedIn: false,
+  user: {
+    data: {
+      id: 0,
+      password: "",
+      username: "",
+    },
+    status: LoadingStatus.Idle,
   },
 }
 
-const slice = createSlice({
+const userSlice = createSlice({
   initialState,
   name: "user",
   reducers: {
     logOut: (state) => {
       localStorage.removeItem("authToken")
       state.isUserLoggedIn = false
-      state.userData = initialState.userData
+      state.user = initialState.user
     },
-    setCurrentUserData: (state, action: PayloadAction<User>) => {
-      state.userData = action.payload
+    setCurrentUser: (state, action: PayloadAction<IUser>) => {
+      state.user.data = action.payload
     },
-    setIsUserLoggedIn: (state, action: PayloadAction<State["isUserLoggedIn"]>) => {
+    setCurrentUserStatus: (state, action: PayloadAction<LoadingStatus>) => {
+      state.user.status = action.payload
+    },
+    setIsUserLoggedIn: (state, action: PayloadAction<IState["isUserLoggedIn"]>) => {
       state.isUserLoggedIn = action.payload
     },
   },
 })
 
-type Login = (credentials: { password: User["password"]; username: User["username"] }) => AppThunk
-export const login: Login =
-  ({ password, username }) =>
-  async (dispatch): Promise<void> => {
+export const userActions = userSlice.actions
+export const userReducer = userSlice.reducer
+
+type Login = (credentials: { password: IUser["password"]; username: IUser["username"] }) => AppThunk
+export const login: Login = ({ password, username }) => {
+  return async (dispatch): Promise<void> => {
     const [{ authToken }] = await Http.post<{ authToken: string }>({
-      payload: {
-        password,
-        username,
-      },
+      payload: { password, username },
       url: "/api/login",
     })
 
-    if (!authToken) return
-
+    if (authToken === undefined) return
     localStorage.authToken = authToken
 
-    dispatch(setIsUserLoggedIn(true))
+    dispatch(userActions.setIsUserLoggedIn(true))
     dispatch(getCurrentUserData())
   }
+}
 
-export const getCurrentUserData =
-  (): AppThunk =>
-  async (dispatch): Promise<void> => {
-    try {
-      const [data] = await Http.get<User>({ url: "/api/users/0" })
-      dispatch(setCurrentUserData(data))
-    } catch (error) {
-      console.warn(error)
+export const getCurrentUserData = (): AppThunk => {
+  return async (dispatch): Promise<void> => {
+    const [data, response] = await Http.get<IUser>({ url: "/api/users/0" })
+    if (response.status === 401) {
+      dispatch(userActions.setCurrentUserStatus(LoadingStatus.Error))
+      return
     }
+    dispatch(userActions.setCurrentUser(data))
+    dispatch(userActions.setCurrentUserStatus(LoadingStatus.Success))
   }
-
-export const { logOut, setCurrentUserData, setIsUserLoggedIn } = slice.actions
-export const userReducer = slice.reducer
+}
