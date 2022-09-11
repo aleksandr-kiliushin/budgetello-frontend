@@ -3,7 +3,6 @@ import { BrowserHistory, createBrowserHistory } from "history"
 import React from "react"
 import { Provider } from "react-redux"
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
-import "whatwg-fetch"
 
 import { IStore, initializeStore } from "#models/store"
 

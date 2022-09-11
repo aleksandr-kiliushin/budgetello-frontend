@@ -11,11 +11,15 @@ describe("Finance categories service.", () => {
   test.skip("Finance categories come from backend and render correctly.", async () => {
     const { store } = render(<Settings />)
 
-    await store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await waitFor(async () => {
+      await store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    })
 
-    // expect(await screen.findByRole("cell", { name: financeCategories[0].name })).toBeInTheDocument()
-    // expect(await screen.findByRole("cell", { name: financeCategories[1].name })).toBeInTheDocument()
-    // expect(await screen.findByRole("cell", { name: financeCategories[4].name })).toBeInTheDocument()
+    expect(await screen.findByText("clothes")).toBeInTheDocument()
+    // expect(await screen.findByText("education")).toBeInTheDocument()
+    // expect(await screen.findAllByText("gifts")).toHaveLength(2)
+    // expect(await screen.findByText("salary")).toBeInTheDocument()
+    // expect(await screen.findByRole("cell", { name: "clothes" })).toBeInTheDocument()
   })
 
   test("Modal for new category modal opens and renders correctly.", async () => {
