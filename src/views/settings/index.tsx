@@ -21,11 +21,12 @@ const Settings: FC = () => {
 
   const categories = useAppSelector((state) => state.finance.categories)
   const categoryTypes = useAppSelector((state) => state.finance.categoryTypes)
+  const isUserLoggedIn = useAppSelector((state) => state.user.isUserLoggedIn)
 
   useEffect(() => {
     dispatch(getCategoriesTc())
     dispatch(getCategoryTypesTc())
-  }, [])
+  }, [isUserLoggedIn])
 
   return (
     <Fragment>
