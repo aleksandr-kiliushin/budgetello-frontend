@@ -1,10 +1,16 @@
 import "@testing-library/jest-dom"
-// import { exec } from "child_process"
-// import util from "util"
+import { exec } from "child_process"
+import util from "util"
 // TODO: Uninstall and use Node.js fetch instead.
 import "whatwg-fetch"
 
-// const execAsync = util.promisify(exec)
+const execAsync = util.promisify(exec)
+
+beforeAll(async () => {
+  await execAsync(
+    'echo "bash /var/app/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'
+  )
+})
 
 beforeEach(async () => {
   // await execAsync(
