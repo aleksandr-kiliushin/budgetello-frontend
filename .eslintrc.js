@@ -6,37 +6,36 @@ module.exports = {
     node: true,
   },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/jsx-runtime',
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/jsx-runtime",
   ],
-  ignorePatterns: ['dist', 'node_modules'],
-  parser: '@typescript-eslint/parser',
+  ignorePatterns: ["dist", "node_modules"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 13,
-    sourceType: 'module',
+    sourceType: "module",
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ["react", "@typescript-eslint"],
   root: true,
   rules: {
-    'arrow-parens': 2,
+    "arrow-parens": 2,
     camelcase: 2,
-    'no-console': 2,
-    'no-duplicate-imports': 2,
-    'no-tabs': 2,
-    'sort-keys': [
-      'warn',
-      'asc',
-      {
-        caseSensitive: true,
-        minKeys: 2,
-        natural: false,
-      },
-    ],
+    "no-duplicate-imports": 2,
+    "no-tabs": 2,
+    // "sort-keys": [
+    //   "warn",
+    //   "asc",
+    //   {
+    //     caseSensitive: true,
+    //     minKeys: 2,
+    //     natural: false,
+    //   },
+    // ],
     // 'sort-imports': [
     //   'error',
     //   {
