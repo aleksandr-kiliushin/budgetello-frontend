@@ -1,12 +1,12 @@
 /** @jest-environment jsdom */
-import { screen } from "@testing-library/react"
+import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 import { login } from "#models/user"
 import { render } from "#utils/testing/render"
 import Settings from "#views/settings"
 
-describe("Finance categories service.", () => {
+describe("Finance categories service", () => {
   test("Finance categories come from backend and render correctly.", async () => {
     const { store } = render(<Settings />)
     store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
@@ -48,17 +48,16 @@ describe("Finance categories service.", () => {
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Submit")).toBeDisabled()
     userEvent.type(screen.getByLabelText("Name"), "travel")
-    // userEvent.click(await screen.findByLabelText("expense"))
-
-    // expect(screen.getByText("Submit")).toBeEnabled()
-    // act(() => {
-    //   userEvent.click(submitCreatingButton)
-    // })
-
-    // expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
+    await waitFor(async () => {
+      userEvent.click(await screen.findByLabelText("expense"))
+    })
+    expect(screen.getByText("Submit")).toBeEnabled()
+    userEvent.click(screen.getByText("Submit"))
+    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
+    expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
   })
 
-  // test.skip("A category is edited correctly.", async () => {
+  // test("A category is edited correctly.", async () => {
   //   const { store } = render(<Settings />)
   //   store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
