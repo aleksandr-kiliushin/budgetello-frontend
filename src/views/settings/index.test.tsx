@@ -77,24 +77,16 @@ describe("Finance categories service", () => {
     expect(screen.queryByText("salary")).not.toBeInTheDocument()
   })
 
-  // test("A category is deleted correctly.", async () => {
-  //   const { store } = render(<Settings />)
-  //   store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+  test("A category is deleted correctly.", async () => {
+    const { store } = render(<Settings />)
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-  //   expect(await screen.findByRole("cell", { name: "salary" })).toBeInTheDocument()
-
-  //   userEvent.click(screen.getByTestId("salary-income-category-delete-button"))
-  //   await waitFor(() => {
-  //     expect(screen.findByRole("dialog")).toBeInTheDocument()
-  //   })
-  //   // await waitFor(async () => {
-  //   //   expect(screen.getByRole("heading", { name: "Delete category" })).toBeInTheDocument()
-  //   // })
-
-  //   // await waitFor(() => {
-  //   //   expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
-  //   // })
-
-  //   // expect(screen.queryByRole("cell", { name: "salary" })).not.toBeInTheDocument()
-  // })
+    expect(await screen.findByText("salary")).toBeInTheDocument()
+    userEvent.click(screen.getByTestId("salary-income-category-delete-button"))
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByRole("heading", { name: "Delete category" })).toBeInTheDocument()
+    userEvent.click(screen.getByText("Delete"))
+    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
+    expect(screen.queryByText("salary")).not.toBeInTheDocument()
+  })
 })
