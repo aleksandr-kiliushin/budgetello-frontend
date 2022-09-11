@@ -26,26 +26,14 @@ describe("Auth service.", () => {
     })
   })
 
-  test.skip("Logout works correctly.", async () => {
+  test("Logout works correctly.", async () => {
     const { store } = render(<Auth />)
-
     await store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
     expect(localStorage.authToken).toEqual(expect.stringMatching(".+"))
-
-    const logOutButton = screen.getByRole("button", { name: "Log out" })
-
-    await userEvent.click(logOutButton)
-
+    userEvent.click(screen.getByText("Log out"))
     expect(localStorage.authToken).toBeUndefined()
-
-    expect(logOutButton).not.toBeInTheDocument()
-
-    const welcomeHeading = screen.getByRole("heading", { name: "Welcome" })
-    expect(welcomeHeading).toBeInTheDocument()
-
-    const logInButton = screen.getByRole("button", { name: "Log in" })
-
-    expect(logInButton).toBeInTheDocument()
+    expect(screen.queryByText("Log out")).not.toBeInTheDocument()
+    expect(screen.getByText("Log in")).toBeInTheDocument()
   })
 })
