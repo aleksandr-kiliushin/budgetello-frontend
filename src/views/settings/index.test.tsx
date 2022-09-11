@@ -41,22 +41,22 @@ describe("Finance categories service.", () => {
     expect(screen.getByText("Create category")).toBeInTheDocument()
   })
 
-  // test("A new category is created correctly.", async () => {
-  //   const { store } = render(<Settings />)
-  //   store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+  test("A new category is created correctly.", async () => {
+    const { store } = render(<Settings />)
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-  //   userEvent.click(screen.getByText("+New"))
-  //   expect(screen.getByText("Submit")).toBeDisabled()
-  //   userEvent.type(screen.getByLabelText("Name"), "travel")
-  //   userEvent.click(await screen.findByLabelText("expense"))
+    userEvent.click(screen.getByText("+New"))
+    expect(screen.getByText("Submit")).toBeDisabled()
+    userEvent.type(screen.getByLabelText("Name"), "travel")
+    // userEvent.click(await screen.findByLabelText("expense"))
 
-  //   // expect(submitCreatingButton).toBeEnabled()
-  //   // act(() => {
-  //   //   userEvent.click(submitCreatingButton)
-  //   // })
+    // expect(screen.getByText("Submit")).toBeEnabled()
+    // act(() => {
+    //   userEvent.click(submitCreatingButton)
+    // })
 
-  //   // expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
-  // })
+    // expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
+  })
 
   // test.skip("A category is edited correctly.", async () => {
   //   const { store } = render(<Settings />)
