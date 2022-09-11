@@ -11,9 +11,7 @@ describe("Finance categories service.", () => {
   test("Finance categories come from backend and render correctly.", async () => {
     const { store } = render(<Settings />)
 
-    await waitFor(async () => {
-      await store.dispatch(login({ username: "sasha", password: "kiber6" }))
-    })
+    store.dispatch(login({ username: "sasha", password: "kiber6" }))
 
     expect(await screen.findByRole("cell", { name: "clothes" })).toBeInTheDocument()
     expect(await screen.findByRole("cell", { name: "education" })).toBeInTheDocument()
