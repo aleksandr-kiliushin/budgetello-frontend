@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   moduleNameMapper: {
     "^#components(.*)$": "<rootDir>/src/components$1",
     "^#mocks(.*)$": "<rootDir>/src/mocks$1",
@@ -8,5 +8,7 @@ module.exports = {
     "^#utils(.*)$": "<rootDir>/src/utils$1",
     "^#views(.*)$": "<rootDir>/src/views$1",
   },
-  setupFilesAfterEnv: ["./jest.setup.js"],
+  setupFilesAfterEnv: ["./jest.setup.ts"],
 }
+
+export default config
