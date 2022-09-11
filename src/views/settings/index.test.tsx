@@ -48,39 +48,34 @@ describe("Finance categories service", () => {
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Submit")).toBeDisabled()
     userEvent.type(screen.getByLabelText("Name"), "travel")
-    await waitFor(async () => {
-      userEvent.click(await screen.findByLabelText("expense"))
-    })
+    await waitFor(() => userEvent.click(screen.getByLabelText("expense")))
     expect(screen.getByText("Submit")).toBeEnabled()
     userEvent.click(screen.getByText("Submit"))
     await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
     expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
   })
 
-  // test("A category is edited correctly.", async () => {
-  //   const { store } = render(<Settings />)
-  //   store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+  test("A category is edited correctly.", async () => {
+    const { store } = render(<Settings />)
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-  //   expect(await screen.findByRole("cell", { name: "salary" })).toBeInTheDocument()
+    expect(await screen.findByText("salary")).toBeInTheDocument()
+    await waitFor(() => userEvent.click(screen.getByTestId("salary-income-category-edit-button")))
 
-  //   userEvent.click(screen.getByTestId("salary-income-category-edit-button"))
-  //   expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByLabelText("Name")).toHaveValue("salary")
+    expect(await screen.findByLabelText("income")).toBeChecked()
 
-  //   expect(screen.getByLabelText("Name")).toHaveValue("salary")
-  //   expect(await screen.findByLabelText("income")).toBeInTheDocument()
+    await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
+    await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "casino"))
+    await waitFor(() => userEvent.click(screen.getByLabelText("expense")))
+    userEvent.click(screen.getByText("Submit"))
+    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
 
-  //   await userEvent.clear(screen.getByLabelText("Name"))
-  //   userEvent.type(screen.getByLabelText("Name"), "casino")
-  //   userEvent.click(await screen.findByLabelText("expense"))
-  //   userEvent.click(screen.getByRole("button", { name: "Submit" }))
-
-  //   waitFor(async () => {
-  //     expect(await screen.findByRole("dialog")).not.toBeInTheDocument()
-  //   })
-  //   expect(await screen.findByRole("cell", { name: "casino" })).toBeInTheDocument()
-  //   expect(screen.getByTestId("casino-expense-category-edit-button")).toBeInTheDocument()
-  //   expect(screen.queryByRole("cell", { name: "salary" })).not.toBeInTheDocument()
-  // })
+    expect(await screen.findByText("casino")).toBeInTheDocument()
+    expect(screen.getByTestId("casino-expense-category-edit-button")).toBeInTheDocument()
+    expect(screen.queryByText("salary")).not.toBeInTheDocument()
+  })
 
   // test("A category is deleted correctly.", async () => {
   //   const { store } = render(<Settings />)
