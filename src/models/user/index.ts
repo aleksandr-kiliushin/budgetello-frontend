@@ -58,9 +58,8 @@ export const login: Login = ({ password, username }) => {
 export const getCurrentUserData = (): AppThunk => {
   return async (dispatch): Promise<void> => {
     const [data, response] = await Http.get<IUser>({ url: "/api/users/0" })
-    if (response.status === 401) {
-      return
-    }
+    if (response.status === 401) return
     dispatch(userActions.setCurrentUser(data))
+    dispatch(userActions.setIsUserLoggedIn(true))
   }
 }
