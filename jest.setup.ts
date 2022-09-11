@@ -6,16 +6,10 @@ import "whatwg-fetch"
 
 const execAsync = util.promisify(exec)
 
-beforeAll(async () => {
+beforeEach(async () => {
   await execAsync(
     'echo "bash /var/app/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'
   )
-})
-
-beforeEach(async () => {
-  // await execAsync(
-  //   'echo "bash /var/app/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'
-  // )
 })
 
 afterEach(() => {
@@ -23,5 +17,5 @@ afterEach(() => {
 })
 
 afterAll(async () => {
-  // await execAsync('echo "bash /var/app/restore-db-from-dev-template.sh" | docker exec -i personal-app-database bash;')
+  await execAsync('echo "bash /var/app/restore-db-from-dev-template.sh" | docker exec -i personal-app-database bash;')
 })
