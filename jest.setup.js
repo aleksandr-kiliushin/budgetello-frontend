@@ -1,3 +1,4 @@
+import "@testing-library/jest-dom"
 import { execSync } from "child_process"
 // TODO: Uninstall an use Node.js fetch instead.
 import "whatwg-fetch"
