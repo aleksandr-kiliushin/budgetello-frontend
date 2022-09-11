@@ -18,7 +18,7 @@ describe("Finance categories service.", () => {
     // expect(await screen.findByRole("cell", { name: financeCategories[4].name })).toBeInTheDocument()
   })
 
-  test.skip("Modal for new category modal opens correctly.", async () => {
+  test("Modal for new category modal opens correctly.", async () => {
     render(<Settings />)
 
     const openModalButton = screen.getByRole("button", { name: "+New" })
@@ -43,7 +43,7 @@ describe("Finance categories service.", () => {
     expect(submitFormButton).toBeInTheDocument()
   })
 
-  test.skip("Modal for new category creating closes correctly using Cancel button.", async () => {
+  test("Modal for new category creating closes correctly using Cancel button.", async () => {
     render(<Settings />)
 
     const openModalButton = screen.getByRole("button", { name: "+New" })
@@ -59,7 +59,7 @@ describe("Finance categories service.", () => {
     expect(modalHeader).not.toBeInTheDocument()
   })
 
-  test.skip("Modal for new category creating closes correctly using click on its backdrop.", async () => {
+  test("Modal for new category creating closes correctly using click on its backdrop.", async () => {
     render(<Settings />)
 
     const openModalButton = screen.getByRole("button", { name: "+New" })
