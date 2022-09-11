@@ -2,6 +2,7 @@
 import { screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import faker from "faker"
+import { act } from "react-dom/test-utils"
 
 import { login } from "#models/user"
 import { render } from "#utils/testing/render"
@@ -10,7 +11,6 @@ import Settings from "#views/settings"
 describe("Finance categories service.", () => {
   test("Finance categories come from backend and render correctly.", async () => {
     const { store } = render(<Settings />)
-
     store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
     expect(await screen.findByRole("cell", { name: "clothes" })).toBeInTheDocument()
@@ -43,35 +43,25 @@ describe("Finance categories service.", () => {
     expect(modalHeader).toBeInTheDocument()
   })
 
-  test.skip("A new category is created correctly.", async () => {
-    render(<Settings />)
+  test("A new category is created correctly.", async () => {
+    const { store } = render(<Settings />)
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-    const openModalButton = screen.getByRole("button", { name: "+New" })
-    expect(openModalButton).toBeInTheDocument()
-
-    userEvent.click(openModalButton)
-
+    userEvent.click(screen.getByRole("button", { name: "+New" }))
     const submitCreatingButton = screen.getByRole("button", { name: "Submit" })
-    expect(submitCreatingButton).toBeInTheDocument()
     expect(submitCreatingButton).toBeDisabled()
 
-    const nameInput = screen.getByLabelText("Name")
-    const categoryTypeInput = await screen.findByLabelText("CategoryType.Expense")
-    const newCategoryName = faker.lorem.words(2)
-    userEvent.type(nameInput, newCategoryName)
-    userEvent.click(categoryTypeInput)
-
-    await waitFor(() => {
-      expect(submitCreatingButton).toBeEnabled()
+    userEvent.type(screen.getByLabelText("Name"), "travel")
+    await act(async () => {
+      userEvent.click(await screen.findByLabelText("expense"))
     })
 
-    await userEvent.click(submitCreatingButton)
-
-    await waitFor(() => {
-      expect(submitCreatingButton).not.toBeInTheDocument()
+    expect(submitCreatingButton).toBeEnabled()
+    act(() => {
+      userEvent.click(submitCreatingButton)
     })
 
-    expect(await screen.findByRole("cell", { name: newCategoryName })).toBeInTheDocument()
+    expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
   })
 
   test.skip("A category is edited correctly.", async () => {

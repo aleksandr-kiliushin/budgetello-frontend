@@ -115,7 +115,7 @@ export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, 
   "finance/getCategoryTypesTc",
   async (_, { getState }) => {
     if (getState().finance.categoryTypes.status !== LoadingStatus.Idle) return []
-
+    if (!getState().user.isUserLoggedIn) return []
     return await Http.get<FinanceCategoryType[]>({ url: "/api/finances/category-types" })
   }
 )
