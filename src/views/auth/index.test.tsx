@@ -28,9 +28,9 @@ describe("Auth service.", () => {
 
   test("Logout works correctly.", async () => {
     const { store } = render(<Auth />)
-    await store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-    expect(localStorage.authToken).toEqual(expect.stringMatching(".+"))
+    await waitFor(() => expect(localStorage.authToken).toEqual(expect.stringMatching(".+")))
     userEvent.click(screen.getByText("Log out"))
     expect(localStorage.authToken).toBeUndefined()
     expect(screen.queryByText("Log out")).not.toBeInTheDocument()
