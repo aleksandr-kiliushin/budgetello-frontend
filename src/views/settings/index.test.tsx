@@ -1,7 +1,6 @@
 /** @jest-environment jsdom */
 import { screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import faker from "faker"
 import { act } from "react-dom/test-utils"
 
 import { login } from "#models/user"
@@ -64,43 +63,36 @@ describe("Finance categories service.", () => {
     expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
   })
 
-  test.skip("A category is edited correctly.", async () => {
-    render(<Settings />)
+  test.only("A category is edited correctly.", async () => {
+    const { store } = render(<Settings />)
+    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
 
-    // const category = "financeCategories[1]"
-    const currentName = "category.name"
-    // const currentType = "category.type"
-
-    const cellWithCurrentName = await screen.findByRole("cell", { name: currentName })
+    const cellWithCurrentName = await screen.findByRole("cell", { name: "salary" })
     const categoryRow = cellWithCurrentName.parentElement
-    if (!categoryRow) throw new Error("Category table row was not found.")
-    const categoryEditIcon = within(categoryRow).getByTestId("EditOutlinedIcon")
+    if (categoryRow === null) throw new Error("'salary' category row was not found in table.")
 
-    userEvent.click(categoryEditIcon)
+    act(() => {
+      userEvent.click(screen.getByTestId("salary-income-category-edit-button"))
+    })
 
     expect(screen.getByRole("dialog")).toBeInTheDocument()
 
-    const submitButton = await screen.findByRole("button", { name: "Submit" })
-    expect(submitButton).toBeEnabled()
+    expect(screen.getByLabelText("Name")).toHaveValue("salary")
+    expect(await screen.findByLabelText("income")).toBeInTheDocument()
 
-    const form = screen.getByRole("form", { name: "finance-category-form" })
-    expect(form).toHaveFormValues({
-      name: currentName,
-      typeId: String("currentType.id"),
+    await act(async () => {
+      await userEvent.clear(screen.getByLabelText("Name"))
+      userEvent.type(screen.getByLabelText("Name"), "casino")
+      userEvent.click(await screen.findByLabelText("expense"))
+      userEvent.click(screen.getByRole("button", { name: "Submit" }))
     })
 
-    const newName = faker.lorem.words(2)
-
-    const nameInput = screen.getByLabelText("Name")
-    userEvent.clear(nameInput)
-    userEvent.type(nameInput, newName)
-
-    expect(nameInput).toHaveValue(newName)
-
-    userEvent.click(submitButton)
-
-    expect(await screen.findByRole("dialog")).not.toBeInTheDocument()
-    expect(await screen.findByRole("cell", { name: newName })).toBeInTheDocument()
+    waitFor(async () => {
+      expect(await screen.findByRole("dialog")).not.toBeInTheDocument()
+    })
+    expect(await screen.findByRole("cell", { name: "casino" })).toBeInTheDocument()
+    expect(screen.getByTestId("casino-expense-category-edit-button")).toBeInTheDocument()
+    expect(screen.queryByRole("cell", { name: "salary" })).not.toBeInTheDocument()
   })
 
   test.skip("A category is deleted correctly.", async () => {
