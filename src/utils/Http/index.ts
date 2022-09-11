@@ -29,39 +29,39 @@ class Http {
     return backendUrlStartByNodeEnv[process.env.NODE_ENV] + url
   }
 
-  static async delete<T>({ url }: RequestDataWithoutPayload): Promise<T> {
+  static async delete<T>({ url }: RequestDataWithoutPayload): Promise<[T, Response]> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       method: "DELETE",
     })
-    return await response.json()
+    return [await response.json(), response]
   }
 
-  static async get<T>({ url }: RequestDataWithoutPayload): Promise<T> {
+  static async get<T>({ url }: RequestDataWithoutPayload): Promise<[T, Response]> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
-    return await response.json()
+    return [await response.json(), response]
   }
 
-  static async patch<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
+  static async patch<T>({ payload, url }: RequestDataWithPayload): Promise<[T, Response]> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
       method: "PATCH",
     })
-    return await response.json()
+    return [await response.json(), response]
   }
 
-  static async post<T>({ payload, url }: RequestDataWithPayload): Promise<T> {
+  static async post<T>({ payload, url }: RequestDataWithPayload): Promise<[T, Response]> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, {
       ...this.requestOptions,
       body: JSON.stringify(payload),
       method: "POST",
     })
-    return await response.json()
+    return [await response.json(), response]
   }
 }
 

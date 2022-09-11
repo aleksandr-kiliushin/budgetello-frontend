@@ -40,7 +40,7 @@ type Login = (credentials: { password: User["password"]; username: User["usernam
 export const login: Login =
   ({ password, username }) =>
   async (dispatch): Promise<void> => {
-    const { authToken } = await Http.post<{ authToken: string }>({
+    const [{ authToken }] = await Http.post<{ authToken: string }>({
       payload: {
         password,
         username,
@@ -59,8 +59,12 @@ export const login: Login =
 export const getCurrentUserData =
   (): AppThunk =>
   async (dispatch): Promise<void> => {
-    const currentUserData = await Http.get<User>({ url: "/api/users/0" })
-    dispatch(setCurrentUserData(currentUserData))
+    try {
+      const [data] = await Http.get<User>({ url: "/api/users/0" })
+      dispatch(setCurrentUserData(data))
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
 export const { logOut, setCurrentUserData, setIsUserLoggedIn } = slice.actions
