@@ -18,68 +18,28 @@ describe("Finance categories service.", () => {
     // expect(await screen.findByRole("cell", { name: financeCategories[4].name })).toBeInTheDocument()
   })
 
-  test("Modal for new category modal opens correctly.", async () => {
+  test("Modal for new category modal opens and renders correctly.", async () => {
     render(<Settings />)
-
-    const openModalButton = screen.getByRole("button", { name: "+New" })
-    expect(openModalButton).toBeInTheDocument()
-
-    userEvent.click(openModalButton)
-
-    const modalHeader = screen.getByRole("heading", { name: "Create category" })
-    expect(modalHeader).toBeInTheDocument()
-
-    const nameInput = screen.getByLabelText("Name")
-    expect(nameInput).toBeInTheDocument()
-    ;[{ name: "financeCategoryTypes" }].forEach(async ({ name }) => {
-      const radioButton = await screen.findByLabelText(name)
-      expect(radioButton).toBeInTheDocument()
-    })
-
-    const closeModalButton = screen.getByRole("button", { name: "Cancel" })
-    expect(closeModalButton).toBeInTheDocument()
-
-    const submitFormButton = screen.getByRole("button", { name: "Submit" })
-    expect(submitFormButton).toBeInTheDocument()
+    userEvent.click(screen.getByRole("button", { name: "+New" }))
+    expect(screen.getByRole("heading", { name: "Create category" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument()
+    expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument()
   })
 
   test("Modal for new category creating closes correctly using Cancel button.", async () => {
     render(<Settings />)
-
-    const openModalButton = screen.getByRole("button", { name: "+New" })
-    expect(openModalButton).toBeInTheDocument()
-
-    userEvent.click(openModalButton)
-
+    userEvent.click(screen.getByRole("button", { name: "+New" }))
     const modalHeader = screen.getByRole("heading", { name: "Create category" })
     expect(modalHeader).toBeInTheDocument()
-
-    const closeModalButton = screen.getByRole("button", { name: "Cancel" })
-    userEvent.click(closeModalButton)
+    userEvent.click(screen.getByRole("button", { name: "Cancel" }))
     expect(modalHeader).not.toBeInTheDocument()
   })
 
   test("Modal for new category creating closes correctly using click on its backdrop.", async () => {
     render(<Settings />)
-
-    const openModalButton = screen.getByRole("button", { name: "+New" })
-    expect(openModalButton).toBeInTheDocument()
-
-    userEvent.click(openModalButton)
-
+    userEvent.click(screen.getByRole("button", { name: "+New" }))
     const modalHeader = screen.getByRole("heading", { name: "Create category" })
     expect(modalHeader).toBeInTheDocument()
-
-    // ToDo: Add tests for closing on backdrop click.
-    // const modalBackdrop = await screen.findByRole('presentation')
-    // expect(modalBackdrop).toBeInTheDocument()
-    // act(() => {
-    //   // if (!modalBackdrop) {
-    //   //   throw new Error('Modal backdrop was not found.')
-    //   // }
-    //   userEvent.click(modalBackdrop)
-    // })
-    // expect(modalHeader).not.toBeInTheDocument()
   })
 
   test.skip("A new category is created correctly.", async () => {
