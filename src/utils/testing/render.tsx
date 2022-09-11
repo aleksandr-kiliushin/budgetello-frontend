@@ -5,13 +5,21 @@ import { Provider } from "react-redux"
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 
 import { initializeStore } from "#models/store"
+import { login } from "#models/user"
 
+import { passwordByUsername } from "./test-users-credentials"
 import { IRender } from "./types"
 
-export const render: IRender = (component, options) => {
+export const render: IRender = async (component, options) => {
+  const { iAm, initialUrl, ...restOptions } = options
+
   const store = initializeStore()
   const history = createBrowserHistory()
-  history.push(options?.initialUrl ?? "/")
+  history.push(initialUrl ?? "")
+
+  if (iAm !== "guest") {
+    await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
+  }
 
   const AllTheProviders: React.FC = ({ children }) => {
     return (
@@ -22,7 +30,7 @@ export const render: IRender = (component, options) => {
   }
 
   return {
-    ...rtlRender(component, { wrapper: AllTheProviders, ...options }),
+    ...rtlRender(component, { wrapper: AllTheProviders, ...restOptions }),
     history,
     store,
   }

@@ -4,13 +4,16 @@ import React from "react"
 
 import { IStore } from "#models/store"
 
+import { ITestUserUsername } from "./test-users-credentials"
+
 interface IRenderResult extends IRtlRenderResult {
   history: History
   store: IStore
 }
 
 interface IRenderOptions extends Omit<IRtlRenderOptions, "wrapper"> {
+  iAm: ITestUserUsername | "guest"
   initialUrl?: string
 }
 
-export type IRender = (component: React.ReactElement, options?: IRenderOptions) => IRenderResult
+export type IRender = (component: React.ReactElement, options: IRenderOptions) => Promise<IRenderResult>

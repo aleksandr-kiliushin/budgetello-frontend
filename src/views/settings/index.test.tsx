@@ -1,14 +1,12 @@
 import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
-import { login } from "#models/user"
 import { render } from "#utils/testing/render"
 import Settings from "#views/settings"
 
 describe("Finance categories service", () => {
   test("Finance categories come from backend and render correctly.", async () => {
-    const { store } = render(<Settings />)
-    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await render(<Settings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("clothes")).toBeInTheDocument()
     expect(await screen.findByText("education")).toBeInTheDocument()
@@ -17,7 +15,7 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category modal opens and renders correctly.", async () => {
-    render(<Settings />)
+    await render(<Settings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Create category")).toBeInTheDocument()
@@ -26,7 +24,7 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category creating closes correctly using Cancel button.", async () => {
-    render(<Settings />)
+    await render(<Settings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Create category")).toBeInTheDocument()
@@ -35,14 +33,13 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category creating closes correctly using click on its backdrop.", async () => {
-    render(<Settings />)
+    await render(<Settings />, { iAm: "john-doe" })
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Create category")).toBeInTheDocument()
   })
 
   test("A new category is created correctly.", async () => {
-    const { store } = render(<Settings />)
-    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await render(<Settings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(screen.getByText("Submit")).toBeDisabled()
@@ -55,8 +52,7 @@ describe("Finance categories service", () => {
   })
 
   test("A category is edited correctly.", async () => {
-    const { store } = render(<Settings />)
-    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await render(<Settings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("salary-income-category-edit-button")))
@@ -74,8 +70,7 @@ describe("Finance categories service", () => {
   })
 
   test("A category is deleted correctly.", async () => {
-    const { store } = render(<Settings />)
-    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await render(<Settings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     userEvent.click(screen.getByTestId("salary-income-category-delete-button"))

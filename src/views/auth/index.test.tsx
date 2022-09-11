@@ -1,13 +1,13 @@
 import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
-import { login } from "#models/user"
 import { render } from "#utils/testing/render"
-import Auth from "#views/auth"
+
+import Auth from "./index"
 
 describe("Auth service.", () => {
   test("Login works correctly.", async () => {
-    render(<Auth />)
+    render(<Auth />, { iAm: "guest" })
 
     expect(localStorage.authToken).toBeUndefined()
     expect(screen.getByText("Welcome")).toBeInTheDocument()
@@ -26,10 +26,9 @@ describe("Auth service.", () => {
   })
 
   test("Logout works correctly.", async () => {
-    const { store } = render(<Auth />)
-    store.dispatch(login({ username: "john-doe", password: "john-doe-password" }))
+    await render(<Auth />, { iAm: "john-doe" })
 
-    await waitFor(() => expect(localStorage.authToken).toEqual(expect.stringMatching(".+")))
+    expect(localStorage.authToken).toEqual(expect.stringMatching(".+"))
     userEvent.click(screen.getByText("Log out"))
     expect(localStorage.authToken).toBeUndefined()
     expect(screen.queryByText("Log out")).not.toBeInTheDocument()
