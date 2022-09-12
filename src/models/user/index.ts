@@ -5,12 +5,12 @@ import { IUser } from "#types/IUser"
 import Http from "#utils/Http"
 
 interface IState {
-  isLoggedIn: boolean | undefined
+  isAuthorized: boolean | undefined
   data: IUser
 }
 
 const initialState: IState = {
-  isLoggedIn: undefined,
+  isAuthorized: undefined,
   data: {
     id: 0,
     password: "",
@@ -24,14 +24,15 @@ const userSlice = createSlice({
   reducers: {
     logOut: (state) => {
       localStorage.removeItem("authToken")
-      state.isLoggedIn = false
+      state.isAuthorized = false
       state.data = initialState.data
     },
     setCurrentUser: (state, action: PayloadAction<IUser>) => {
       state.data = action.payload
     },
-    setIsUserLoggedIn: (state, action: PayloadAction<IState["isLoggedIn"]>) => {
-      state.isLoggedIn = action.payload
+
+    setIsUserAuthorized: (state, action: PayloadAction<IState["isAuthorized"]>) => {
+      state.isAuthorized = action.payload
     },
   },
 })
@@ -51,16 +52,16 @@ export const login: Login = ({ password, username }) => {
     if (authToken === undefined) return
     localStorage.authToken = authToken
 
-    dispatch(userActions.setIsUserLoggedIn(true))
+    dispatch(userActions.setIsUserAuthorized(true))
   }
 }
 
-// TODO: Rename with fetchAndSetLoggedInUser.
-export const fetchAndSetLoggedInUser = (): AppThunk => {
-  return async (dispatch, getState): Promise<void> => {
-    if (getState().user.isLoggedIn === false) return
+export const fetchAndSetLoggedInUser = (): AppThunk<Promise<boolean>> => {
+  return async (dispatch, getState) => {
+    if (getState().user.isAuthorized === false) return false
     const response = await Http.get({ url: "/api/users/0" })
-    if (response.status !== 200) return
+    if (response.status !== 200) return false
     dispatch(userActions.setCurrentUser(await response.json()))
+    return true
   }
 }

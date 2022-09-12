@@ -4,7 +4,7 @@ import { Routes } from "react-router"
 import { Route } from "react-router-dom"
 
 import Navbar from "#components/Navbar"
-import { fetchAndSetLoggedInUser } from "#models/user"
+import { fetchAndSetLoggedInUser, userActions } from "#models/user"
 import { mediaQuery } from "#styles/media-queries"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import Auth from "#views/auth"
@@ -19,10 +19,12 @@ const App: FC = () => {
   const user = useAppSelector((state) => state.user)
 
   useEffect(() => {
-    dispatch(fetchAndSetLoggedInUser())
+    dispatch(fetchAndSetLoggedInUser()).then((isAuthorized) => {
+      dispatch(userActions.setIsUserAuthorized(isAuthorized))
+    })
   }, [])
 
-  if (user.isLoggedIn === undefined) return <p>Loading ...</p>
+  if (user.isAuthorized === undefined) return <p>Loading ...</p>
 
   return (
     <div
