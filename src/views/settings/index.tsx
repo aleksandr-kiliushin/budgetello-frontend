@@ -19,8 +19,8 @@ const Settings: FC = () => {
   const dispatch = useAppDispatch()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
-  const categories = useAppSelector((state) => state.finance.categories)
-  const categoryTypes = useAppSelector((state) => state.finance.categoryTypes)
+  const categories = useAppSelector((state) => state.finances.categories)
+  const categoryTypes = useAppSelector((state) => state.finances.categoryTypes)
 
   useEffect(() => {
     dispatch(getCategoriesTc())

@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "#utils/hooks"
 const Stats: FC = () => {
   const dispatch = useAppDispatch()
 
-  const chartData = useAppSelector((state) => state.finance.chartData)
+  const chartData = useAppSelector((state) => state.finances.chartData)
 
   const canvasRef = useRef(null)
 

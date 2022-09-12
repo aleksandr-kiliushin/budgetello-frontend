@@ -148,7 +148,7 @@ const financesSlice = createSlice({
 })
 
 export const financeActions = financesSlice.actions
-export const financeReducer = financesSlice.reducer
+export const financesReducer = financesSlice.reducer
 
 export const createRecordTc = createAsyncThunk(
   "finance/createRecordTc",
@@ -199,7 +199,7 @@ export const deleteRecordTc = createAsyncThunk("finance/deleteRecordTc", async (
 export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state: RootState }>(
   "finance/getCategoriesTc",
   async (_, { getState }) => {
-    if (getState().finance.categories.status !== LoadingStatus.Idle) return []
+    if (getState().finances.categories.status !== LoadingStatus.Idle) return []
     if (!getState().user.isLoggedIn) return []
     const response = await Http.get({ url: "/api/finances/categories/search" })
     return await response.json()
@@ -209,7 +209,7 @@ export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state
 export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, { state: RootState }>(
   "finance/getCategoryTypesTc",
   async (_, { getState }) => {
-    if (getState().finance.categoryTypes.status !== LoadingStatus.Idle) return []
+    if (getState().finances.categoryTypes.status !== LoadingStatus.Idle) return []
     if (!getState().user.isLoggedIn) return []
     const response = await Http.get({ url: "/api/finances/category-types" })
     return await response.json()
@@ -219,7 +219,7 @@ export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, 
 export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: RootState }>(
   "finance/getChartDataTc",
   async (_, { getState }) => {
-    if (getState().finance.chartData.status !== LoadingStatus.Idle) return []
+    if (getState().finances.chartData.status !== LoadingStatus.Idle) return []
     const response = await Http.get({
       url: "/api/finances/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
     })
@@ -230,7 +230,7 @@ export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: R
 export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state: RootState }>(
   "finance/getRecordsTc",
   async ({ isTrash }, { getState, dispatch }) => {
-    const existingRecords = getState().finance.records[isTrash ? "trashed" : "notTrashed"]
+    const existingRecords = getState().finances.records[isTrash ? "trashed" : "notTrashed"]
 
     if (existingRecords.status === LoadingStatus.Completed) return
     if (existingRecords.status === LoadingStatus.Loading) return

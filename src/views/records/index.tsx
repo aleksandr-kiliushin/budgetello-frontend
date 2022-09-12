@@ -28,8 +28,8 @@ const Records: FC = () => {
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = useState(false)
 
-  const categories = useAppSelector((state) => state.finance.categories)
-  const records = useAppSelector((state) => state.finance.records[isTrash ? "trashed" : "notTrashed"])
+  const categories = useAppSelector((state) => state.finances.categories)
+  const records = useAppSelector((state) => state.finances.records[isTrash ? "trashed" : "notTrashed"])
 
   const loaderRef = useRef(null)
 
