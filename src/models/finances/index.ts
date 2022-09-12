@@ -200,9 +200,12 @@ export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state
   "finance/getCategoriesTc",
   async (_, { getState }) => {
     if (getState().finances.categories.status !== LoadingStatus.Idle) return []
-    if (!getState().user.isAuthorized) return []
-    const response = await Http.get({ url: "/api/finances/categories/search" })
-    return await response.json()
+    try {
+      const response = await Http.get({ url: "/api/finances/categories/search" })
+      return await response.json()
+    } catch {
+      return []
+    }
   }
 )
 
@@ -210,9 +213,12 @@ export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, 
   "finance/getCategoryTypesTc",
   async (_, { getState }) => {
     if (getState().finances.categoryTypes.status !== LoadingStatus.Idle) return []
-    if (!getState().user.isAuthorized) return []
-    const response = await Http.get({ url: "/api/finances/category-types" })
-    return await response.json()
+    try {
+      const response = await Http.get({ url: "/api/finances/category-types" })
+      return await response.json()
+    } catch {
+      return []
+    }
   }
 )
 
@@ -220,10 +226,14 @@ export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: R
   "finance/getChartDataTc",
   async (_, { getState }) => {
     if (getState().finances.chartData.status !== LoadingStatus.Idle) return []
-    const response = await Http.get({
-      url: "/api/finances/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
-    })
-    return await response.json()
+    try {
+      const response = await Http.get({
+        url: "/api/finances/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
+      })
+      return await response.json()
+    } catch {
+      return []
+    }
   }
 )
 

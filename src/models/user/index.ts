@@ -43,10 +43,13 @@ export const userReducer = userSlice.reducer
 export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
   return async (dispatch, getState) => {
     if (getState().user.isAuthorized === false) return false
-    const response = await Http.get({ url: "/api/users/0" })
-    if (response.status !== 200) return false
-    dispatch(userActions.setCurrentUser(await response.json()))
-    return true
+    try {
+      const response = await Http.get({ url: "/api/users/0" })
+      dispatch(userActions.setCurrentUser(await response.json()))
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }
 
