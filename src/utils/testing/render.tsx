@@ -17,10 +17,11 @@ export const render: IRender = async (component, options) => {
   const history = createBrowserHistory()
   history.push(initialUrl ?? "")
 
-  if (iAm !== "guest") {
-    await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
-  } else {
+  if (iAm === "guest") {
     store.dispatch(userActions.setIsUserAuthorized(false))
+  }
+  if (typeof iAm === "string" && iAm !== "guest") {
+    await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
   }
 
   const AllTheProviders: React.FC = ({ children }) => {

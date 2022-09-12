@@ -1,7 +1,7 @@
 import { css } from "@emotion/react"
 import { FC, useEffect } from "react"
 import { Routes } from "react-router"
-import { Route } from "react-router-dom"
+import { Navigate, Route, useLocation } from "react-router-dom"
 
 import Navbar from "#components/Navbar"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
@@ -15,6 +15,7 @@ import Stats from "#views/stats"
 
 const App: FC = () => {
   const dispatch = useAppDispatch()
+  const location = useLocation()
 
   const user = useAppSelector((state) => state.user)
 
@@ -23,6 +24,10 @@ const App: FC = () => {
       dispatch(userActions.setIsUserAuthorized(isAuthorized))
     })
   }, [])
+
+  if (user.isAuthorized === false && location.pathname !== "/auth") {
+    return <Navigate to="/auth" />
+  }
 
   if (user.isAuthorized === undefined) return <p>Loading ...</p>
 

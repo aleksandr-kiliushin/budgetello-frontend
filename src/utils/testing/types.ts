@@ -12,7 +12,7 @@ interface IRenderResult extends IRtlRenderResult {
 }
 
 interface IRenderOptions extends Omit<IRtlRenderOptions, "wrapper"> {
-  iAm: ITestUserUsername | "guest"
+  iAm: ITestUserUsername | "guest" | undefined
   initialUrl?: string
 }
 

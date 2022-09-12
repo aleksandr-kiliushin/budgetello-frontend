@@ -6,7 +6,7 @@ import { wait } from "#utils/wait"
 import App from "./index"
 
 describe("<App />", () => {
-  test.only("If the user is not authorized, redirect to /auth.", async () => {
+  test("If the user is not authorized, redirect to /auth.", async () => {
     const { history } = await render(<App />, { iAm: "guest", initialUrl: "/settings" })
 
     await waitFor(() => expect(history.location.pathname).toEqual("/auth"))
@@ -27,12 +27,13 @@ describe("<App />", () => {
     })
     const { authToken } = await authorizationResponse.json()
     if (typeof authToken !== "string") {
-      throw new Error(`Authorization failed for the following credentials:
-Username: "john-doe", password: "john-doe-password".`)
+      throw new Error(
+        'Authorization failed for the following credentials: Username: "john-doe", password: "john-doe-password".'
+      )
     }
     localStorage.authToken = authToken
 
-    const { history } = await render(<App />, { iAm: "guest", initialUrl: "/settings" })
+    const { history } = await render(<App />, { iAm: undefined, initialUrl: "/settings" })
 
     await wait(1000)
     expect(history.location.pathname).toEqual("/settings")
