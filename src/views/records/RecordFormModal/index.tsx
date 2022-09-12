@@ -13,7 +13,7 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 
 import RowGroup from "#components/RowGroup"
-import { createRecordTc, updateRecordTc } from "#models/finance"
+import { createRecordTc, updateRecordTc } from "#models/finances"
 import { FinanceCategory, FinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 

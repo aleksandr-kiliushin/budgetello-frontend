@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 
 import RowGroup from "#components/RowGroup"
 import RadioGroup from "#components/form-contructor/RadioGroup"
-import { createCategoryTc, updateCategoryTc } from "#models/finance"
+import { createCategoryTc, updateCategoryTc } from "#models/finances"
 import { FinanceCategory, FinanceCategoryType } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 

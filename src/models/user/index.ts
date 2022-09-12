@@ -42,10 +42,11 @@ export const userReducer = userSlice.reducer
 type Login = (credentials: { password: IUser["password"]; username: IUser["username"] }) => AppThunk
 export const login: Login = ({ password, username }) => {
   return async (dispatch): Promise<void> => {
-    const [{ authToken }] = await Http.post<{ authToken: string }>({
+    const response = await Http.post({
       payload: { password, username },
       url: "/api/login",
     })
+    const { authToken } = await response.json()
 
     if (authToken === undefined) return
     localStorage.authToken = authToken
@@ -57,9 +58,8 @@ export const login: Login = ({ password, username }) => {
 
 export const getCurrentUserData = (): AppThunk => {
   return async (dispatch): Promise<void> => {
-    const [data, response] = await Http.get<IUser>({ url: "/api/users/0" })
-    if (response.status === 401) return
-    dispatch(userActions.setCurrentUser(data))
+    const response = await Http.get({ url: "/api/users/0" })
+    dispatch(userActions.setCurrentUser(await response.json()))
     dispatch(userActions.setIsUserLoggedIn(true))
   }
 }

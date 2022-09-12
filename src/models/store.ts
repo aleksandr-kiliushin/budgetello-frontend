@@ -1,7 +1,7 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit"
 
 import { commonReducer } from "./common"
-import { financeReducer } from "./finance"
+import { financeReducer } from "./finances"
 import { logoutMiddleware } from "./logoutMiddleware"
 import { userReducer } from "./user"
 

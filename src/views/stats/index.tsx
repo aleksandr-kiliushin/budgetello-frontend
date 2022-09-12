@@ -1,7 +1,7 @@
 import { Chart, registerables } from "chart.js"
 import { FC, useEffect, useRef } from "react"
 
-import { getChartDataTc } from "#models/finance"
+import { getChartDataTc } from "#models/finances"
 import { LoadingStatus } from "#src/constants/shared"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 

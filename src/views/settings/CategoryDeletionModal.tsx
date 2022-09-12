@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { FC } from "react"
 
-import { deleteCategoryTc } from "#models/finance"
+import { deleteCategoryTc } from "#models/finances"
 import { FinanceCategory } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 

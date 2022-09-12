@@ -10,7 +10,7 @@ import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
 import Loader from "#components/Loader"
-import { getCategoriesTc, getRecordsTc } from "#models/finance"
+import { getCategoriesTc, getRecordsTc } from "#models/finances"
 import { LoadingStatus } from "#src/constants/shared"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 

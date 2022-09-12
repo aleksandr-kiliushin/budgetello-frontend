@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography"
 import { FC, Fragment, useEffect } from "react"
 import { useToggle } from "react-use"
 
-import { getCategoriesTc, getCategoryTypesTc } from "#models/finance"
+import { getCategoriesTc, getCategoryTypesTc } from "#models/finances"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import CategoryFormModal from "./CategoryFormModal"

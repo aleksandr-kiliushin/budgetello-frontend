@@ -7,7 +7,7 @@ import TableRow from "@mui/material/TableRow"
 import { FC, Fragment } from "react"
 import { useToggle } from "react-use"
 
-import { deleteRecordTc, restoreRecordTc } from "#models/finance"
+import { deleteRecordTc, restoreRecordTc } from "#models/finances"
 import { FinanceCategory, FinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
