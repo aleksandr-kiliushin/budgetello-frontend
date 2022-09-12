@@ -27,6 +27,7 @@ module.exports = {
     camelcase: 2,
     "no-duplicate-imports": 2,
     "no-tabs": 2,
+    "@typescript-eslint/no-unused-vars": "off",
     // "sort-keys": [
     //   "warn",
     //   "asc",
