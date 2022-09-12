@@ -7,7 +7,7 @@ import { userReducer } from "./user"
 
 export const initializeStore = () => {
   return configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(logoutMiddleware),
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logoutMiddleware),
     reducer: {
       common: commonReducer,
       finances: financesReducer,
