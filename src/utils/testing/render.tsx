@@ -5,7 +5,7 @@ import { Provider } from "react-redux"
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 
 import { initializeStore } from "#models/store"
-import { login } from "#models/user"
+import { login, userActions } from "#models/user"
 
 import { passwordByUsername } from "./test-users-credentials"
 import { IRender } from "./types"
@@ -19,6 +19,8 @@ export const render: IRender = async (component, options) => {
 
   if (iAm !== "guest") {
     await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
+  } else {
+    store.dispatch(userActions.setIsUserAuthorized(false))
   }
 
   const AllTheProviders: React.FC = ({ children }) => {

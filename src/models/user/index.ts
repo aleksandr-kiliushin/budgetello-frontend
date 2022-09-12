@@ -40,28 +40,31 @@ const userSlice = createSlice({
 export const userActions = userSlice.actions
 export const userReducer = userSlice.reducer
 
-type Login = (credentials: { password: IUser["password"]; username: IUser["username"] }) => AppThunk
-export const login: Login = ({ password, username }) => {
-  return async (dispatch): Promise<void> => {
-    const response = await Http.post({
-      payload: { password, username },
-      url: "/api/login",
-    })
-    const { authToken } = await response.json()
-
-    if (authToken === undefined) return
-    localStorage.authToken = authToken
-
-    dispatch(userActions.setIsUserAuthorized(true))
-  }
-}
-
-export const fetchAndSetLoggedInUser = (): AppThunk<Promise<boolean>> => {
+export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
   return async (dispatch, getState) => {
     if (getState().user.isAuthorized === false) return false
     const response = await Http.get({ url: "/api/users/0" })
     if (response.status !== 200) return false
     dispatch(userActions.setCurrentUser(await response.json()))
     return true
+  }
+}
+
+type Login = (credentials: { password: IUser["password"]; username: IUser["username"] }) => AppThunk<Promise<void>>
+export const login: Login = ({ password, username }) => {
+  return async (dispatch): Promise<void> => {
+    localStorage.removeItem("authToken")
+    const response = await Http.post({
+      payload: { password, username },
+      url: "/api/login",
+    })
+    const { authToken } = await response.json()
+    if (authToken === undefined) {
+      dispatch(userActions.setIsUserAuthorized(false))
+      return
+    }
+    localStorage.authToken = authToken
+    dispatch(userActions.setIsUserAuthorized(true))
+    await dispatch(fetchAndSetAuthorizedUser())
   }
 }
