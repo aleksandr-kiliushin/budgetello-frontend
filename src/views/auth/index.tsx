@@ -8,7 +8,10 @@ import Logout from "./Logout"
 const Auth: FC = () => {
   const user = useAppSelector((state) => state.user)
 
-  return user.isLoggedIn ? <Logout /> : <Login />
+  if (user.isLoggedIn === undefined) return <p>Loading ...</p>
+  if (user.isLoggedIn === false) return <Login />
+  if (user.isLoggedIn === true) return <Logout />
+  return null
 }
 
 export default Auth

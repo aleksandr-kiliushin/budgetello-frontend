@@ -1,10 +1,10 @@
 import { css } from "@emotion/react"
 import { FC, useEffect } from "react"
 import { Routes } from "react-router"
-import { Navigate, Route, useLocation } from "react-router-dom"
+import { Route } from "react-router-dom"
 
 import Navbar from "#components/Navbar"
-import { getCurrentUserData } from "#models/user"
+import { fetchAndSetLoggedInUser } from "#models/user"
 import { mediaQuery } from "#styles/media-queries"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import Auth from "#views/auth"
@@ -18,15 +18,11 @@ const App: FC = () => {
 
   const user = useAppSelector((state) => state.user)
 
-  const location = useLocation()
-
   useEffect(() => {
-    dispatch(getCurrentUserData())
+    dispatch(fetchAndSetLoggedInUser())
   }, [])
 
-  if (!user.isLoggedIn && !location.pathname.startsWith("/auth")) {
-    return <Navigate to="/auth" />
-  }
+  if (user.isLoggedIn === undefined) return <p>Loading ...</p>
 
   return (
     <div

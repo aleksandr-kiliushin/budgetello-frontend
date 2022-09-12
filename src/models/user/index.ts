@@ -5,12 +5,12 @@ import { IUser } from "#types/IUser"
 import Http from "#utils/Http"
 
 interface IState {
-  isLoggedIn: boolean
+  isLoggedIn: boolean | undefined
   data: IUser
 }
 
 const initialState: IState = {
-  isLoggedIn: false,
+  isLoggedIn: undefined,
   data: {
     id: 0,
     password: "",
@@ -52,14 +52,15 @@ export const login: Login = ({ password, username }) => {
     localStorage.authToken = authToken
 
     dispatch(userActions.setIsUserLoggedIn(true))
-    dispatch(getCurrentUserData())
   }
 }
 
-export const getCurrentUserData = (): AppThunk => {
-  return async (dispatch): Promise<void> => {
+// TODO: Rename with fetchAndSetLoggedInUser.
+export const fetchAndSetLoggedInUser = (): AppThunk => {
+  return async (dispatch, getState): Promise<void> => {
+    if (getState().user.isLoggedIn === false) return
     const response = await Http.get({ url: "/api/users/0" })
+    if (response.status !== 200) return
     dispatch(userActions.setCurrentUser(await response.json()))
-    dispatch(userActions.setIsUserLoggedIn(true))
   }
 }

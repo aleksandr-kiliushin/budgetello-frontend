@@ -31,22 +31,30 @@ class Http {
 
   static async delete({ url }: RequestDataWithoutPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
-    return await fetch(fullUrl, { ...this.requestOptions, method: "DELETE" })
+    const response = await fetch(fullUrl, { ...this.requestOptions, method: "DELETE" })
+    if (response.status === 401) window.history.pushState(undefined, "", "/auth")
+    return response
   }
 
   static async get({ url }: RequestDataWithoutPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
-    return await fetch(fullUrl, this.requestOptions)
+    const response = await fetch(fullUrl, this.requestOptions)
+    if (response.status === 401) window.history.pushState(undefined, "", "/auth")
+    return response
   }
 
   static async patch({ payload, url }: RequestDataWithPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
-    return await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "PATCH" })
+    const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "PATCH" })
+    if (response.status === 401) window.history.pushState(undefined, "", "/auth")
+    return response
   }
 
   static async post({ payload, url }: RequestDataWithPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
-    return await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "POST" })
+    const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "POST" })
+    if (response.status === 401) window.history.pushState(undefined, "", "/auth")
+    return response
   }
 }
 

@@ -2,12 +2,10 @@ import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit"
 
 import { commonReducer } from "./common"
 import { financesReducer } from "./finances"
-import { logoutMiddleware } from "./logoutMiddleware"
 import { userReducer } from "./user"
 
 export const initializeStore = () => {
   return configureStore({
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logoutMiddleware),
     reducer: {
       common: commonReducer,
       finances: financesReducer,
