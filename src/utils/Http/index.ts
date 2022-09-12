@@ -33,7 +33,7 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, method: "DELETE" })
     if (response.status === 401) {
-      window.history.pushState(undefined, "", "/auth")
+      if (window.location.pathname !== "/auth") window.location.pathname = "/auth"
       throw await response.json()
     }
     return response
@@ -43,7 +43,7 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     if (response.status === 401) {
-      window.history.pushState(undefined, "", "/auth")
+      if (window.location.pathname !== "/auth") window.location.pathname = "/auth"
       throw await response.json()
     }
     return response
@@ -53,7 +53,7 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "PATCH" })
     if (response.status === 401) {
-      window.history.pushState(undefined, "", "/auth")
+      if (window.location.pathname !== "/auth") window.location.pathname = "/auth"
       throw await response.json()
     }
     return response
@@ -63,7 +63,7 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "POST" })
     if (response.status === 401) {
-      window.history.pushState(undefined, "", "/auth")
+      if (window.location.pathname !== "/auth") window.location.pathname = "/auth"
       throw await response.json()
     }
     return response
