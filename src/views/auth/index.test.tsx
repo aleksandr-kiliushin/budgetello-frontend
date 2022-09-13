@@ -25,6 +25,22 @@ describe("Auth service.", () => {
     })
   })
 
+  test("Appropriate errors are displayed after invalid input.", async () => {
+    render(<Auth />, { iAm: "guest" })
+
+    expect(localStorage.authToken).toBeUndefined()
+    await waitFor(() => userEvent.type(screen.getByLabelText("Username"), "nonexistent-username"))
+    await waitFor(() => userEvent.type(screen.getByLabelText("Password"), "some-password"))
+    userEvent.click(screen.getByText("Log in"))
+    await waitFor(() => expect(screen.getByText("User not found.")).toBeInTheDocument())
+
+    userEvent.clear(screen.getByLabelText("Username"))
+    await waitFor(() => expect(screen.queryByText("User not found.")).not.toBeInTheDocument())
+    await waitFor(() => userEvent.type(screen.getByLabelText("Username"), "john-doe"))
+    await waitFor(() => userEvent.click(screen.getByText("Log in")))
+    await waitFor(() => expect(screen.getByText("Invalid password.")).toBeInTheDocument())
+  })
+
   test("Logout works correctly.", async () => {
     await render(<Auth />, { iAm: "john-doe" })
 
