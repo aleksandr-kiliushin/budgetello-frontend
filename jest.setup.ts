@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom"
 import { execSync } from "child_process"
-// TODO: Uninstall and use Node.js fetch instead.
 import "whatwg-fetch"
 
 beforeEach(() => {
