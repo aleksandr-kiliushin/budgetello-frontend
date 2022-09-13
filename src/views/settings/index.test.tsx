@@ -32,12 +32,6 @@ describe("Finance categories service", () => {
     expect(screen.queryByText("Create category")).not.toBeInTheDocument()
   })
 
-  test("Modal for new category creating closes correctly using click on its backdrop.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
-    userEvent.click(screen.getByText("+New"))
-    expect(screen.getByText("Create category")).toBeInTheDocument()
-  })
-
   test("A new category is created correctly.", async () => {
     await render(<Settings />, { iAm: "john-doe" })
 
