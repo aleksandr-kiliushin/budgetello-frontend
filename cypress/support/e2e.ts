@@ -17,3 +17,15 @@ import "./commands"
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+beforeEach(() => {
+  cy.exec('echo "bash /var/app/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;')
+})
+
+afterEach(() => {
+  localStorage.removeItem("authToken")
+})
+
+after(() => {
+  cy.exec('echo "bash /var/app/restore-db-from-dev-template.sh" | docker exec -i personal-app-database bash;')
+})
