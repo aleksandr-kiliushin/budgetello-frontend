@@ -45,6 +45,22 @@ describe("Finance categories service", () => {
     expect(await screen.findByRole("cell", { name: "travel" })).toBeInTheDocument()
   })
 
+  test.only("case: try to create category that already exists.", async () => {
+    await render(<Settings />, { iAm: "john-doe" })
+
+    userEvent.click(screen.getByText("+New"))
+    userEvent.type(screen.getByLabelText("Name"), "education")
+    await waitFor(() => userEvent.click(screen.getByLabelText("expense")))
+    userEvent.click(screen.getByText("Submit"))
+    expect(await screen.findAllByText('"education" expense category already exists.')).toHaveLength(1)
+    // userEvent.clear(screen.getByLabelText("Name"))
+    // userEvent.type(screen.getByLabelText("Name"), "teaching")
+    // await waitFor(() => userEvent.click(screen.getByLabelText("teaching")))
+    // userEvent.click(screen.getByText("Submit"))
+    // await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
+    // expect(await screen.findByRole("cell", { name: "teaching" })).toBeInTheDocument()
+  })
+
   test("A category is edited correctly.", async () => {
     await render(<Settings />, { iAm: "john-doe" })
 

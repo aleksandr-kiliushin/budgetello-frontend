@@ -30,9 +30,8 @@ const Login: FC = () => {
     try {
       await dispatch(login({ password, username }))
     } catch (error) {
-      if (error === undefined) return
-      if (error === null) return
       if (typeof error !== "object") return
+      if (error === null) return
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Object.entries((error as any).fields).forEach(([fieldName, error]) => {

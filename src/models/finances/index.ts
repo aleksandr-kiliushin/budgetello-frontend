@@ -171,12 +171,16 @@ export const createRecordTc = createAsyncThunk(
 
 export const createCategoryTc = createAsyncThunk(
   "finance/createCategoryTc",
-  async ({ name, typeId }: { name: FinanceCategory["name"]; typeId: FinanceCategoryType["id"] }) => {
-    const response = await Http.post({
-      payload: { name, typeId },
-      url: "/api/finances/categories",
-    })
-    return await response.json()
+  async ({ name, typeId }: { name: FinanceCategory["name"]; typeId: FinanceCategoryType["id"] }, thunkApi) => {
+    try {
+      const response = await Http.post({
+        payload: { name, typeId },
+        url: "/api/finances/categories",
+      })
+      return await response.json()
+    } catch (error) {
+      return thunkApi.rejectWithValue(error)
+    }
   }
 )
 

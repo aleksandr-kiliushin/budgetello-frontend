@@ -24,29 +24,37 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
   const defaultValues = category ? { name: category.name, typeId: category.type.id } : { name: "" }
 
   const {
-    formState: { isValid },
+    formState: { errors, isValid },
     handleSubmit,
     register,
+    setError,
   } = useForm<FormValues>({
     defaultValues,
     mode: "onChange",
     resolver: yupResolver(validationSchema),
   })
 
-  const submitCategoryForm = handleSubmit(({ name, typeId }) => {
-    if (category) {
-      dispatch(updateCategoryTc({ categoryId: category.id, name, typeId: Number(typeId) }))
-    } else {
-      dispatch(createCategoryTc({ name, typeId }))
+  const submitCategoryForm = handleSubmit(async ({ name, typeId }) => {
+    try {
+      if (category === null) {
+        const error = await dispatch(createCategoryTc({ name, typeId })).unwrap()
+        if (error !== undefined) throw error
+      } else {
+        const error = await dispatch(
+          updateCategoryTc({ categoryId: category.id, name, typeId: Number(typeId) })
+        ).unwrap()
+        if (error !== undefined) throw error
+      }
+      closeModal()
+    } catch (error) {
+      if (typeof error !== "object") return
+      if (error === null) return
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      Object.entries((error as any).fields).forEach(([fieldName, error]) => {
+        setError(fieldName as FormField, { type: "custom", message: error as string })
+      })
     }
-
-    closeModal()
   })
-
-  const categoryTypeOptions = categoryTypes.map(({ id, name }) => ({
-    label: name,
-    value: id,
-  }))
 
   return (
     <Dialog open onClose={closeModal}>
@@ -54,12 +62,19 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
       <form aria-label="finance-category-form" onSubmit={submitCategoryForm}>
         <DialogContent>
           <RowGroup>
-            <TextField label="Name" {...register(FormField.Name)} />
+            <TextField
+              {...register(FormField.Name)}
+              error={errors.name !== undefined}
+              helperText={errors.name?.message}
+              label="Name"
+            />
             <RadioGroup
               defaultValue={defaultValues.typeId}
+              // error={errors.typeId !== undefined}
+              // helperText={errors.typeId?.message}
               label="Category type"
               name={FormField.TypeId}
-              options={categoryTypeOptions}
+              options={categoryTypes.map(({ id, name }) => ({ label: name, value: id }))}
               register={register}
             />
           </RowGroup>

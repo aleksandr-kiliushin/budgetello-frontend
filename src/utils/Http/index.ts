@@ -54,7 +54,6 @@ class Http {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "POST" })
     if (response.status >= 400) throw await response.json()
-
     return response
   }
 }
