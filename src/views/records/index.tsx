@@ -71,6 +71,7 @@ const Records: FC = () => {
           control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
           label="Trash"
           labelPlacement="start"
+          name="isTrash"
           sx={{ margin: 0 }}
         />
       </Header>

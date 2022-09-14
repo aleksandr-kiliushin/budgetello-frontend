@@ -12,7 +12,8 @@
     "dev": "MODE=development npx webpack serve",
     "prettier": "prettier --write '**/*.js' '**/*.ts' '**/*.tsx'",
     "test": "jest --runInBand",
-    "test:watch": "jest --runInBand --watch"
+    "test:watch": "jest --runInBand --watch",
+    "test:e2e": "cypress run --browser chrome"
   },
   "keywords": [],
   "author": "",
