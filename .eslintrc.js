@@ -28,6 +28,7 @@ module.exports = {
     "no-duplicate-imports": 2,
     "no-tabs": 2,
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-extra-semi": "off",
     // "sort-keys": [
     //   "warn",
     //   "asc",
