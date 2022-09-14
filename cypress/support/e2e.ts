@@ -19,11 +19,8 @@ import "./commands"
 // require('./commands')
 
 beforeEach(() => {
+  localStorage.clear()
   cy.exec('echo "bash /var/app/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;')
-})
-
-afterEach(() => {
-  localStorage.removeItem("authToken")
 })
 
 after(() => {

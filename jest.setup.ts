@@ -7,7 +7,7 @@ beforeEach(() => {
 })
 
 afterEach(() => {
-  localStorage.removeItem("authToken")
+  localStorage.clear()
 })
 
 afterAll(() => {
