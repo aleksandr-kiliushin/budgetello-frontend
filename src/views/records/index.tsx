@@ -7,7 +7,7 @@ import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import Typography from "@mui/material/Typography"
 import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
 import Loader from "#components/Loader"
 import { getCategoriesTc, getRecordsTc } from "#models/finances"
@@ -20,11 +20,11 @@ import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
 const Records: FC = () => {
   const dispatch = useAppDispatch()
-  const { search } = useLocation()
+  const location = useLocation()
   const navigate = useNavigate()
 
-  const query = new URLSearchParams(search)
-  const isTrash = query.get("isTrash") === "true"
+  const searchParams = new URLSearchParams(location.search)
+  const isTrash = searchParams.get("isTrash") === "true"
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = useState(false)
 
@@ -41,17 +41,19 @@ const Records: FC = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(() => dispatch(getRecordsTc({ isTrash })))
-
     if (loaderRef.current !== null) {
       observer.observe(loaderRef.current)
     }
-
     return (): void => {
       if (loaderRef.current !== null) {
         observer.unobserve(loaderRef.current)
       }
     }
   }, [getRecordsTc, isTrash, loaderRef])
+
+  if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
+    return <Navigate to="/records?isTrash=false" />
+  }
 
   const onIsTrashClick = (event: ChangeEvent<HTMLInputElement>): void => {
     navigate(`/records?isTrash=${event.target.checked}`)
