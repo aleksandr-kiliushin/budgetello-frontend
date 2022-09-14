@@ -280,20 +280,27 @@ export const restoreRecordTc = createAsyncThunk(
 
 export const updateCategoryTc = createAsyncThunk(
   "finance/updateCategoryTc",
-  async ({
-    categoryId,
-    name,
-    typeId,
-  }: {
-    categoryId: FinanceCategory["id"]
-    name: FinanceCategory["name"]
-    typeId: FinanceCategoryType["id"]
-  }) => {
-    const response = await Http.patch({
-      payload: { name, typeId },
-      url: `/api/finances/categories/${categoryId}`,
-    })
-    return await response.json()
+  async (
+    {
+      categoryId,
+      name,
+      typeId,
+    }: {
+      categoryId: FinanceCategory["id"]
+      name: FinanceCategory["name"]
+      typeId: FinanceCategoryType["id"]
+    },
+    thunkApi
+  ) => {
+    try {
+      const response = await Http.patch({
+        payload: { name, typeId },
+        url: `/api/finances/categories/${categoryId}`,
+      })
+      return await response.json()
+    } catch (error) {
+      return thunkApi.rejectWithValue(error)
+    }
   }
 )
 

@@ -51,6 +51,7 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
     } catch (error) {
       if (typeof error !== "object") return
       if (error === null) return
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       Object.entries((error as any).fields).forEach(([fieldName, error]) => {
         setError(fieldName as FormField, { type: "custom", message: error as string })

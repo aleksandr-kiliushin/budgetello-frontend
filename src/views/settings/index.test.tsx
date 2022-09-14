@@ -83,6 +83,26 @@ describe("Finance categories service", () => {
     expect(screen.queryByText("salary")).not.toBeInTheDocument()
   })
 
+  test("case: user tries to create a category that already exists and then fixes input values.", async () => {
+    await render(<Settings />, { iAm: "john-doe" })
+
+    expect(await screen.findByText("education")).toBeInTheDocument()
+    await waitFor(() => userEvent.click(screen.getByTestId("education-expense-category-edit-button")))
+    expect(screen.getByRole("dialog")).toBeInTheDocument()
+    expect(screen.getByLabelText("Name")).toHaveValue("education")
+    expect(await screen.findByLabelText("expense")).toBeChecked()
+    await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
+    await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "clothes"))
+    userEvent.click(screen.getByText("Submit"))
+    expect(await screen.findAllByText('"clothes" expense category already exists.')).toHaveLength(2)
+    await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
+    await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "shoes"))
+    expect(await screen.findAllByText('"clothes" expense category already exists.')).toHaveLength(1)
+    userEvent.click(screen.getByText("Submit"))
+    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
+    expect(await screen.findByText("shoes")).toBeInTheDocument()
+  })
+
   test("A category is deleted correctly.", async () => {
     await render(<Settings />, { iAm: "john-doe" })
 
