@@ -1,7 +1,6 @@
 const config = {
   moduleNameMapper: {
     "^#components(.*)$": "<rootDir>/src/components$1",
-    "^#mocks(.*)$": "<rootDir>/src/mocks$1",
     "^#models(.*)$": "<rootDir>/src/models$1",
     "^#src(.*)$": "<rootDir>/src$1",
     "^#styles(.*)$": "<rootDir>/src/styles$1",

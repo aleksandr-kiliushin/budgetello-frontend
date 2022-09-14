@@ -19,7 +19,6 @@
     "noUnusedParameters": false,
     "paths": {
       "#components/*": ["src/components/*"],
-      "#mocks/*": ["src/mocks/*"],
       "#models/*": ["src/models/*"],
       "#styles/*": ["src/styles/*"],
       "#types/*": ["src/types/*"],
