@@ -21,13 +21,15 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
-  const defaultValues = category ? { name: category.name, typeId: category.type.id } : { name: "" }
+  const defaultValues = category === null ? { name: "" } : { name: category.name, typeId: category.type.id }
 
   const {
     formState: { errors, isValid },
     handleSubmit,
     register,
     setError,
+    setValue,
+    watch,
   } = useForm<FormValues>({
     defaultValues,
     mode: "onChange",
@@ -38,12 +40,12 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
     try {
       if (category === null) {
         const error = await dispatch(createCategoryTc({ name, typeId })).unwrap()
-        if (error !== undefined) throw error
+        if ("fields" in error) throw error
       } else {
         const error = await dispatch(
           updateCategoryTc({ categoryId: category.id, name, typeId: Number(typeId) })
         ).unwrap()
-        if (error !== undefined) throw error
+        if ("fields" in error) throw error
       }
       closeModal()
     } catch (error) {
@@ -69,13 +71,13 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
               label="Name"
             />
             <RadioGroup
-              defaultValue={defaultValues.typeId}
-              // error={errors.typeId !== undefined}
-              // helperText={errors.typeId?.message}
+              fieldValue={watch("typeId")}
+              helperText={errors.typeId?.message}
               label="Category type"
               name={FormField.TypeId}
               options={categoryTypes.map(({ id, name }) => ({ label: name, value: id }))}
               register={register}
+              setValue={setValue}
             />
           </RowGroup>
         </DialogContent>
