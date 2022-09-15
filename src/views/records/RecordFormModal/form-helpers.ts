@@ -1,3 +1,5 @@
+import * as Yup from "yup"
+
 import { FinanceRecord } from "#types/finance"
 
 export enum FormFieldName {
@@ -11,3 +13,9 @@ export interface FormValues {
   [FormFieldName.CategoryId]: FinanceRecord["category"]["id"] | null
   [FormFieldName.Date]: FinanceRecord["date"]
 }
+
+export const validationSchema = Yup.object({
+  [FormFieldName.Amount]: Yup.number().required().positive(),
+  [FormFieldName.CategoryId]: Yup.number().required(),
+  [FormFieldName.Date]: Yup.string().required(),
+})

@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup"
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
@@ -17,7 +18,7 @@ import { createRecordTc, updateRecordTc } from "#models/finances"
 import { FinanceCategory, FinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
-import { FormFieldName, FormValues } from "./form-helpers"
+import { FormFieldName, FormValues, validationSchema } from "./form-helpers"
 
 const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
   const dispatch = useAppDispatch()
@@ -34,17 +35,17 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
         date: format(new Date(), "yyyy-MM-dd"),
       }
 
-  const { handleSubmit, register } = useForm<FormValues>({ defaultValues })
+  const { handleSubmit, register, formState } = useForm<FormValues>({
+    defaultValues,
+    resolver: yupResolver(validationSchema),
+    mode: "onChange",
+  })
 
   const submitRecordForm = handleSubmit(({ amount, categoryId, date }) => {
     if (amount === null) return
     if (categoryId === null) return
 
-    const payload = {
-      amount,
-      categoryId,
-      date,
-    }
+    const payload = { amount, categoryId, date }
 
     if (record) {
       dispatch(updateRecordTc({ ...payload, id: record.id }))
@@ -62,10 +63,12 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
         <DialogContent>
           <RowGroup>
             <TextField
+              {...register(FormFieldName.Amount, { required: true, valueAsNumber: true })}
+              error={formState.errors.amount !== undefined}
               fullWidth
+              helperText={formState.errors.amount?.message}
               label="Amount"
               type="number"
-              {...register(FormFieldName.Amount, { required: true, valueAsNumber: true })}
             />
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
@@ -77,12 +80,14 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
                 ))}
               </Select>
             </FormControl>
-            <TextField fullWidth label="Date" type="date" {...register(FormFieldName.Date, { required: true })} />
+            <TextField {...register(FormFieldName.Date, { required: true })} label="Date" type="date" />
           </RowGroup>
         </DialogContent>
         <DialogActions>
           <Button onClick={closeModal}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button disabled={!formState.isValid} type="submit">
+            Submit
+          </Button>
         </DialogActions>
       </form>
     </Dialog>
