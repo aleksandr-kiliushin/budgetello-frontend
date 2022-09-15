@@ -35,7 +35,7 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
         date: format(new Date(), "yyyy-MM-dd"),
       }
 
-  const { handleSubmit, register, formState } = useForm<FormValues>({
+  const { formState, handleSubmit, register, watch } = useForm<FormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),
     mode: "onChange",
@@ -56,14 +56,16 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
     closeModal()
   })
 
+  console.log('watch("categoryId") >>', watch("categoryId"))
+
   return (
     <Dialog onClose={closeModal} open>
-      <DialogTitle>Add a record</DialogTitle>
+      <DialogTitle>{record === null ? "Add a record" : "Edit record"}</DialogTitle>
       <form onSubmit={submitRecordForm}>
         <DialogContent>
           <RowGroup>
             <TextField
-              {...register(FormFieldName.Amount, { required: true, valueAsNumber: true })}
+              {...register(FormFieldName.Amount, { valueAsNumber: true })}
               error={formState.errors.amount !== undefined}
               fullWidth
               helperText={formState.errors.amount?.message}
@@ -72,7 +74,8 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
             />
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
-              <Select defaultValue="" label="Category" {...register(FormFieldName.CategoryId, { required: true })}>
+              {/* TODO: Fix converting value to string. */}
+              <Select {...register(FormFieldName.CategoryId, { valueAsNumber: true })} label="Category">
                 {categories.map(({ name, id }) => (
                   <MenuItem key={id} value={id}>
                     {name}

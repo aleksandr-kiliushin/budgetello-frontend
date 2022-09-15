@@ -30,14 +30,22 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
     [
       false,
       // eslint-disable-next-line react/jsx-key
-      <TableCell onClick={toggleIsRecordEditingModalShown} width="12%">
+      <TableCell
+        id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
+        onClick={toggleIsRecordEditingModalShown}
+        width="12%"
+      >
         <EditOutlinedIcon />
       </TableCell>,
     ],
     [
       true,
       // eslint-disable-next-line react/jsx-key
-      <TableCell onClick={restoreRecord} width="12%">
+      <TableCell
+        id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
+        onClick={restoreRecord}
+        width="12%"
+      >
         <RestoreIcon />
       </TableCell>,
     ],
