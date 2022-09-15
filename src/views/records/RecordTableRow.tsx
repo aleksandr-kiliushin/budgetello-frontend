@@ -76,7 +76,11 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
         <TableCell width="29%">{category.name}</TableCell>
         <TableCell width="24%">{date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
-        <TableCell onClick={deleteRecord} width="12%">
+        <TableCell
+          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
+          onClick={deleteRecord}
+          width="12%"
+        >
           <DeleteOutlineIcon />
         </TableCell>
       </TableRow>
