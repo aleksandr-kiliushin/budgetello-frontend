@@ -93,7 +93,7 @@ describe("records", () => {
     cy.get("td").contains("22-08-01")
   })
 
-  it.only("a record is restored correctly", () => {
+  it("a record is restored correctly", () => {
     cy.visit("http://localhost:3000")
     cy.get('input[name="username"]').type("john-doe")
     cy.get('input[name="password"]').type("john-doe-password")
@@ -107,5 +107,17 @@ describe("records", () => {
     cy.get("td").contains("100")
     cy.get("td").contains("clothes")
     cy.get("td").contains("22-08-01")
+  })
+
+  it("a record is deleted from trash correctly", () => {
+    cy.visit("http://localhost:3000")
+    cy.get('input[name="username"]').type("john-doe")
+    cy.get('input[name="password"]').type("john-doe-password")
+    cy.get("button").contains("Log in").click()
+
+    cy.visit("http://localhost:3000/records?isTrash=true")
+    cy.get("#2022-08-01-expense-clothes-100-delete-button").click()
+
+    cy.get("td").contains("100").should("not.exist")
   })
 })
