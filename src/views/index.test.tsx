@@ -1,5 +1,6 @@
 import { waitFor } from "@testing-library/react"
 
+import { getAuthToken } from "#utils/getAuthToken"
 import { render } from "#utils/testing/render"
 import { wait } from "#utils/wait"
 
@@ -20,19 +21,7 @@ describe("<App />", () => {
   })
 
   test("If the user has authToken in localStorage, they is NOT redirected to /auth.", async () => {
-    const authorizationResponse = await fetch("http://localhost:3080/api/login", {
-      body: JSON.stringify({ username: "john-doe", password: "john-doe-password" }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    })
-    const { authToken } = await authorizationResponse.json()
-    if (typeof authToken !== "string") {
-      throw new Error(
-        'Authorization failed for the following credentials: Username: "john-doe", password: "john-doe-password".'
-      )
-    }
-    localStorage.authToken = authToken
-
+    localStorage.authToken = await getAuthToken("john-doe")
     const { history } = await render(<App />, { iAm: undefined, initialUrl: "/settings" })
 
     await wait(1000)

@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+import { getAuthToken } from "#utils/getAuthToken"
+import { ITestUserUsername } from "#utils/testing/test-users-credentials"
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,3 +38,15 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      authorize(username: ITestUserUsername): Promise<void>
+    }
+  }
+}
+
+Cypress.Commands.add("authorize", async (username) => {
+  localStorage.authToken = await getAuthToken(username)
+})

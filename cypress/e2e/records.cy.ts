@@ -1,9 +1,6 @@
 describe("records", () => {
   it("are loaded correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records")
     cy.url().should("include", "/records?isTrash=false")
@@ -36,11 +33,8 @@ describe("records", () => {
     cy.get("td").contains("22-08-01")
   })
 
-  it("a new record created correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+  it("is created correctly", () => {
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records")
     cy.get("button").contains("+New").click()
@@ -58,11 +52,8 @@ describe("records", () => {
     // TODO: Check the date.
   })
 
-  it("a record is edited correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+  it("is edited correctly", () => {
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records")
     cy.get("#2022-08-01-expense-education-25-edit-button").click()
@@ -77,11 +68,8 @@ describe("records", () => {
     cy.get("td").contains("22-08-01")
   })
 
-  it("a record is moved to trash correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+  it("is moved to trash correctly", () => {
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records")
     cy.get("#2022-08-01-expense-education-25-delete-button").click()
@@ -93,11 +81,8 @@ describe("records", () => {
     cy.get("td").contains("22-08-01")
   })
 
-  it("a record is restored correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+  it("is restored correctly", () => {
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-restore-button").click()
@@ -109,11 +94,8 @@ describe("records", () => {
     cy.get("td").contains("22-08-01")
   })
 
-  it("a record is deleted from trash correctly", () => {
-    cy.visit("http://localhost:3000")
-    cy.get('input[name="username"]').type("john-doe")
-    cy.get('input[name="password"]').type("john-doe-password")
-    cy.get("button").contains("Log in").click()
+  it("is deleted from trash correctly", () => {
+    cy.authorize("john-doe")
 
     cy.visit("http://localhost:3000/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-delete-button").click()
