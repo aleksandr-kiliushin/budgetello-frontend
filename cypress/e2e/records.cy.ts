@@ -2,7 +2,7 @@ describe("records", () => {
   it("are loaded correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records")
+    cy.visit("/records")
     cy.url().should("include", "/records?isTrash=false")
 
     cy.get("td").contains("230")
@@ -36,7 +36,7 @@ describe("records", () => {
   it("is created correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records")
+    cy.visit("/records")
     cy.get("button").contains("+New").click()
 
     cy.get("input[name='amount']").type("0")
@@ -55,7 +55,7 @@ describe("records", () => {
   it("is edited correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records")
+    cy.visit("/records")
     cy.get("#2022-08-01-expense-education-25-edit-button").click()
 
     cy.get("input[name='amount']").clear().type("6666")
@@ -71,7 +71,7 @@ describe("records", () => {
   it("is moved to trash correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records")
+    cy.visit("/records")
     cy.get("#2022-08-01-expense-education-25-delete-button").click()
 
     cy.get("input[name='isTrash']").click()
@@ -84,7 +84,7 @@ describe("records", () => {
   it("is restored correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records?isTrash=true")
+    cy.visit("/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-restore-button").click()
 
     cy.get("input[name='isTrash']").click()
@@ -97,7 +97,7 @@ describe("records", () => {
   it("is deleted from trash correctly", () => {
     cy.authorize("john-doe")
 
-    cy.visit("http://localhost:3000/records?isTrash=true")
+    cy.visit("/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-delete-button").click()
 
     cy.get("td").contains("100").should("not.exist")
