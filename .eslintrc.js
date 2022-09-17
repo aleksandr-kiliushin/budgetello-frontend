@@ -30,6 +30,7 @@ module.exports = {
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     // "sort-keys": [
     //   "warn",
     //   "asc",
