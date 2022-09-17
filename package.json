@@ -1,27 +1,5 @@
 {
-  "name": "personal-app-frontend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "rm -rf dist && MODE=production webpack",
-    "check-types": "tsc --noEmit",
-    "check-types:watch": "tsc --noEmit --watch",
-    "check-types:cypress": "tsc --project ./cypress/tsconfig.json --noEmit",
-    "check-types:cypress:watch": "tsc --project ./cypress/tsconfig.json --noEmit --watch",
-    "cypress": "cypress",
-    "dev": "MODE=development npx webpack serve",
-    "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "lint-staged": "lint-staged",
-    "prepare": "husky install",
-    "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
-    "test": "jest --runInBand",
-    "test:watch": "jest --runInBand --watch",
-    "test:e2e": "cypress run --browser chrome"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "aleksandr-kiliushin",
   "dependencies": {
     "@emotion/react": "11.7.1",
     "@emotion/styled": "11.6.0",
@@ -73,5 +51,24 @@
     "webpack-cli": "4.9.1",
     "webpack-dev-server": "4.6.0",
     "whatwg-fetch": "3.6.2"
-  }
+  },
+  "license": "ISC",
+  "name": "personal-app-frontend",
+  "scripts": {
+    "build": "rm -rf dist && MODE=production webpack",
+    "check-types": "tsc --noEmit",
+    "check-types:watch": "tsc --noEmit --watch",
+    "check-types:cypress": "tsc --project ./cypress/tsconfig.json --noEmit",
+    "check-types:cypress:watch": "tsc --project ./cypress/tsconfig.json --noEmit --watch",
+    "cypress": "cypress",
+    "dev": "MODE=development npx webpack serve",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint-staged": "lint-staged",
+    "prepare": "husky install",
+    "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+    "test": "jest --runInBand",
+    "test:watch": "jest --runInBand --watch",
+    "test:e2e": "cypress run --browser chrome"
+  },
+  "version": "1.0.0"
 }
