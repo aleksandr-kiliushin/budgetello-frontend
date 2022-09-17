@@ -15,12 +15,18 @@ import { useForm } from "react-hook-form"
 
 import RowGroup from "#components/RowGroup"
 import { createRecordTc, updateRecordTc } from "#models/finances"
-import { FinanceCategory, FinanceRecord } from "#types/finance"
+import { IFinanceCategory, IFinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
-import { FormFieldName, FormValues, validationSchema } from "./form-helpers"
+import { FormFieldName, IFormValues, validationSchema } from "./form-helpers"
 
-const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
+interface IRecordFormModalProps {
+  categories: IFinanceCategory[]
+  closeModal(): void
+  record: IFinanceRecord | null
+}
+
+const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {
   const dispatch = useAppDispatch()
 
   const defaultValues = record
@@ -35,7 +41,7 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
         date: format(new Date(), "yyyy-MM-dd"),
       }
 
-  const { formState, handleSubmit, register, watch } = useForm<FormValues>({
+  const { formState, handleSubmit, register, watch } = useForm<IFormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),
     mode: "onChange",
@@ -95,12 +101,6 @@ const RecordFormModal: FC<Props> = ({ categories, closeModal, record }) => {
       </form>
     </Dialog>
   )
-}
-
-interface Props {
-  categories: FinanceCategory[]
-  closeModal(): void
-  record: FinanceRecord | null
 }
 
 export default RecordFormModal

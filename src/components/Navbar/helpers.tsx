@@ -4,7 +4,13 @@ import ListIcon from "@mui/icons-material/List"
 import PersonIcon from "@mui/icons-material/Person"
 import SettingsIcon from "@mui/icons-material/Settings"
 
-export const navigationItem: Section[] = [
+interface ISection {
+  icon: React.ReactElement
+  id: string
+  path: string
+}
+
+export const navigationItem: ISection[] = [
   { icon: <HomeIcon />, id: "home", path: "/" },
   { icon: <ListIcon />, id: "records", path: "/records?isTrash=false" },
   { icon: <BarChartIcon />, id: "stats", path: "/stats" },
@@ -19,10 +25,4 @@ export const getActiveNavigationIndex = (pathname: string): string | undefined =
   if (/^\/settings/.test(pathname)) return "settings"
   if (/^\/auth/.test(pathname)) return "auth"
   return undefined
-}
-
-interface Section {
-  icon: React.ReactElement
-  id: string
-  path: string
 }

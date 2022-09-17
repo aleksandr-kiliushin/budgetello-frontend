@@ -2,29 +2,29 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
-import { FinanceCategory, FinanceCategoryType, FinanceRecord } from "#types/finance"
+import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from "#types/finance"
 import Http from "#utils/Http"
 
 interface IState {
   categories: {
-    items: FinanceCategory[]
+    items: IFinanceCategory[]
     status: LoadingStatus
   }
   categoryTypes: {
-    items: FinanceCategoryType[]
+    items: IFinanceCategoryType[]
     status: LoadingStatus
   }
   chartData: {
-    items: FinanceRecord[]
+    items: IFinanceRecord[]
     status: LoadingStatus
   }
   records: {
     notTrashed: {
-      items: FinanceRecord[]
+      items: IFinanceRecord[]
       status: LoadingStatus
     }
     trashed: {
-      items: FinanceRecord[]
+      items: IFinanceRecord[]
       status: LoadingStatus
     }
   }
@@ -58,21 +58,21 @@ export const initialState: IState = {
 const financesSlice = createSlice({
   extraReducers: (builder) => {
     // To do: try addRecordsTc.PENDING,
-    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<FinanceCategory>) => {
+    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<IFinanceCategory>) => {
       state.categories.items.unshift(action.payload)
     })
 
-    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
+    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<FinanceCategory>) => {
+    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<IFinanceCategory>) => {
       state.categories.items = state.categories.items.filter((category) => category.id !== action.payload.id)
     })
 
     builder.addCase(
       deleteRecordTc.fulfilled,
-      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: FinanceRecord }>) => {
+      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: IFinanceRecord }>) => {
         const { isPermanentDeletion, record } = action.payload
         const { id } = record
 
@@ -88,37 +88,37 @@ const financesSlice = createSlice({
       }
     )
 
-    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<FinanceCategory[]>) => {
+    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<IFinanceCategory[]>) => {
       if (action.payload.length === 0) return
 
       state.categories = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<FinanceCategoryType[]>) => {
+    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<IFinanceCategoryType[]>) => {
       if (action.payload.length === 0) return
 
       state.categoryTypes = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<FinanceRecord[]>) => {
+    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<IFinanceRecord[]>) => {
       if (action.payload.length === 0) return
 
       state.chartData = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
+    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
       state.records.trashed.items = state.records.trashed.items.filter((record) => record.id !== action.payload.id)
 
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<FinanceCategory>) => {
+    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<IFinanceCategory>) => {
       const categoryIndex = state.categories.items.findIndex((category) => category.id === action.payload.id)
 
       state.categories.items[categoryIndex] = action.payload
     })
 
-    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<FinanceRecord>) => {
+    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<IFinanceRecord>) => {
       const recordIndex = state.records.notTrashed.items.findIndex((record) => record.id === action.payload.id)
 
       state.records.notTrashed.items[recordIndex] = action.payload
@@ -131,7 +131,7 @@ const financesSlice = createSlice({
       state,
       action: PayloadAction<{
         isTrash: boolean
-        items: FinanceRecord[]
+        items: IFinanceRecord[]
       }>
     ) => {
       const { isTrash, items } = action.payload
@@ -157,9 +157,9 @@ export const createRecordTc = createAsyncThunk(
     categoryId,
     date,
   }: {
-    amount: FinanceRecord["amount"]
-    categoryId: FinanceCategory["id"]
-    date: FinanceRecord["date"]
+    amount: IFinanceRecord["amount"]
+    categoryId: IFinanceCategory["id"]
+    date: IFinanceRecord["date"]
   }) => {
     const response = await Http.post({
       payload: { amount, categoryId, date },
@@ -171,7 +171,7 @@ export const createRecordTc = createAsyncThunk(
 
 export const createCategoryTc = createAsyncThunk(
   "finance/createCategoryTc",
-  async ({ name, typeId }: { name: FinanceCategory["name"]; typeId: FinanceCategoryType["id"] }, thunkApi) => {
+  async ({ name, typeId }: { name: IFinanceCategory["name"]; typeId: IFinanceCategoryType["id"] }, thunkApi) => {
     try {
       const response = await Http.post({
         payload: { name, typeId },
@@ -186,13 +186,13 @@ export const createCategoryTc = createAsyncThunk(
 
 export const deleteCategoryTc = createAsyncThunk(
   "finance/deleteCategoryTc",
-  async ({ categoryId }: { categoryId: FinanceCategory["id"] }) => {
+  async ({ categoryId }: { categoryId: IFinanceCategory["id"] }) => {
     const response = await Http.delete({ url: `/api/finances/categories/${categoryId}` })
     return await response.json()
   }
 )
 
-export const deleteRecordTc = createAsyncThunk("finance/deleteRecordTc", async ({ id, isTrashed }: FinanceRecord) => {
+export const deleteRecordTc = createAsyncThunk("finance/deleteRecordTc", async ({ id, isTrashed }: IFinanceRecord) => {
   const response = isTrashed
     ? await Http.delete({ url: `/api/finances/records/${id}` })
     : await Http.patch({ payload: { isTrashed: true }, url: `/api/finances/records/${id}` })
@@ -200,7 +200,7 @@ export const deleteRecordTc = createAsyncThunk("finance/deleteRecordTc", async (
   return { isPermanentDeletion: isTrashed, record: await response.json() }
 })
 
-export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state: RootState }>(
+export const getCategoriesTc = createAsyncThunk<IFinanceCategory[], void, { state: RootState }>(
   "finance/getCategoriesTc",
   async (_, { getState }) => {
     if (getState().finances.categories.status !== LoadingStatus.Idle) return []
@@ -213,7 +213,7 @@ export const getCategoriesTc = createAsyncThunk<FinanceCategory[], void, { state
   }
 )
 
-export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, { state: RootState }>(
+export const getCategoryTypesTc = createAsyncThunk<IFinanceCategoryType[], void, { state: RootState }>(
   "finance/getCategoryTypesTc",
   async (_, { getState }) => {
     if (getState().finances.categoryTypes.status !== LoadingStatus.Idle) return []
@@ -226,7 +226,7 @@ export const getCategoryTypesTc = createAsyncThunk<FinanceCategoryType[], void, 
   }
 )
 
-export const getChartDataTc = createAsyncThunk<FinanceRecord[], void, { state: RootState }>(
+export const getChartDataTc = createAsyncThunk<IFinanceRecord[], void, { state: RootState }>(
   "finance/getChartDataTc",
   async (_, { getState }) => {
     if (getState().finances.chartData.status !== LoadingStatus.Idle) return []
@@ -269,7 +269,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
 
 export const restoreRecordTc = createAsyncThunk(
   "finance/restoreRecordTc",
-  async ({ recordId }: { recordId: FinanceRecord["id"] }) => {
+  async ({ recordId }: { recordId: IFinanceRecord["id"] }) => {
     const response = await Http.patch({
       payload: { isTrashed: false },
       url: `/api/finances/records/${recordId}`,
@@ -286,9 +286,9 @@ export const updateCategoryTc = createAsyncThunk(
       name,
       typeId,
     }: {
-      categoryId: FinanceCategory["id"]
-      name: FinanceCategory["name"]
-      typeId: FinanceCategoryType["id"]
+      categoryId: IFinanceCategory["id"]
+      name: IFinanceCategory["name"]
+      typeId: IFinanceCategoryType["id"]
     },
     thunkApi
   ) => {
@@ -312,10 +312,10 @@ export const updateRecordTc = createAsyncThunk(
     date,
     id,
   }: {
-    amount: FinanceRecord["amount"]
-    categoryId: FinanceCategory["id"]
-    date: FinanceRecord["date"]
-    id: FinanceRecord["id"]
+    amount: IFinanceRecord["amount"]
+    categoryId: IFinanceCategory["id"]
+    date: IFinanceRecord["date"]
+    id: IFinanceRecord["id"]
   }) => {
     const response = await Http.patch({
       payload: { amount, categoryId, date },

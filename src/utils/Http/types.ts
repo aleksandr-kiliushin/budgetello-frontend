@@ -1,13 +1,13 @@
-export interface RequestOptions extends RequestInit {
+export interface IRequestOptions extends RequestInit {
   headers: {
     Authorization: string
     "Content-Type": "application/json"
   }
 }
 
-export interface RequestDataWithoutPayload {
+export interface IRequestDataWithoutPayload {
   url: string
 }
-export interface RequestDataWithPayload extends RequestDataWithoutPayload {
+export interface IRequestDataWithPayload extends IRequestDataWithoutPayload {
   payload: Record<string, unknown>
 }

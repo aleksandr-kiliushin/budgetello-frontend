@@ -11,12 +11,18 @@ import { useForm } from "react-hook-form"
 import RowGroup from "#components/RowGroup"
 import RadioGroup from "#components/form-contructor/RadioGroup"
 import { createCategoryTc, updateCategoryTc } from "#models/finances"
-import { FinanceCategory, FinanceCategoryType } from "#types/finance"
+import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
-const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) => {
+interface ICategoryFormModalProps {
+  category: IFinanceCategory | null
+  categoryTypes: IFinanceCategoryType[]
+  closeModal(): void
+}
+
+const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
@@ -91,12 +97,6 @@ const CategoryFormModal: FC<Props> = ({ category, categoryTypes, closeModal }) =
       </form>
     </Dialog>
   )
-}
-
-interface Props {
-  category: FinanceCategory | null
-  categoryTypes: FinanceCategoryType[]
-  closeModal(): void
 }
 
 export default CategoryFormModal

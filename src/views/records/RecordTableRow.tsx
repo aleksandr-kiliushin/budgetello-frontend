@@ -8,12 +8,18 @@ import { FC, Fragment } from "react"
 import { useToggle } from "react-use"
 
 import { deleteRecordTc, restoreRecordTc } from "#models/finances"
-import { FinanceCategory, FinanceRecord } from "#types/finance"
+import { IFinanceCategory, IFinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
 import RecordFormModal from "./RecordFormModal"
 
-const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
+interface IRecordTableRowProps {
+  categories: IFinanceCategory[]
+  isTrash: boolean
+  record: IFinanceRecord
+}
+
+const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record }) => {
   const dispatch = useAppDispatch()
   const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
@@ -89,12 +95,6 @@ const RecordTableRow: FC<Props> = ({ categories, isTrash, record }) => {
       ) : null}
     </Fragment>
   )
-}
-
-interface Props {
-  categories: FinanceCategory[]
-  isTrash: boolean
-  record: FinanceRecord
 }
 
 export default RecordTableRow

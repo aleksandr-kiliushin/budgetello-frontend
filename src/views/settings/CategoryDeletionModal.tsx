@@ -7,15 +7,15 @@ import DialogTitle from "@mui/material/DialogTitle"
 import { FC } from "react"
 
 import { deleteCategoryTc } from "#models/finances"
-import { FinanceCategory } from "#types/finance"
+import { IFinanceCategory } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
-interface Props {
-  category: FinanceCategory
+interface ICategoryDeletionModalProps {
+  category: IFinanceCategory
   closeModal(): void
 }
 
-const CategoryDeletionModal: FC<Props> = ({ category, closeModal }) => {
+const CategoryDeletionModal: FC<ICategoryDeletionModalProps> = ({ category, closeModal }) => {
   const dispatch = useAppDispatch()
 
   const { id, name } = category

@@ -1,17 +1,17 @@
-export interface FinanceCategory {
+export interface IFinanceCategory {
   id: number
   name: string
-  type: FinanceCategoryType
+  type: IFinanceCategoryType
 }
 
-export interface FinanceCategoryType {
+export interface IFinanceCategoryType {
   id: number
   name: string
 }
 
-export interface FinanceRecord {
+export interface IFinanceRecord {
   amount: number
-  category: FinanceCategory
+  category: IFinanceCategory
   date: string
   id: number
   isTrashed: boolean

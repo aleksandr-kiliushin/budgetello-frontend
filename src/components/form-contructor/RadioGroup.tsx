@@ -8,21 +8,21 @@ import { FC } from "react"
 import { UseFormRegister } from "react-hook-form"
 import { AssertsShape } from "yup/lib/object"
 
-interface Option {
+interface IRadioGroupOption {
   label: string
   value: number | string
 }
-interface Props {
-  fieldValue: Option["value"]
+interface IRadioGroupProps {
+  fieldValue: IRadioGroupOption["value"]
   helperText: string | undefined
   label: string
   name: string
-  options: Option[]
+  options: IRadioGroupOption[]
   register: UseFormRegister<AssertsShape<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
   setValue(fieldName: string, newValue: string | number): void
 }
 
-const RadioGroup: FC<Props> = ({ fieldValue, helperText, label, name, options, register, setValue }) => {
+const RadioGroup: FC<IRadioGroupProps> = ({ fieldValue, helperText, label, name, options, register, setValue }) => {
   return (
     <FormControl>
       <FormLabel id={name}>{label}</FormLabel>

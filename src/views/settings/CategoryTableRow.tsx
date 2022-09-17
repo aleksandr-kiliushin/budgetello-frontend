@@ -5,17 +5,17 @@ import TableRow from "@mui/material/TableRow"
 import { FC, Fragment } from "react"
 import { useToggle } from "react-use"
 
-import { FinanceCategory, FinanceCategoryType } from "#types/finance"
+import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
 
 import CategoryDeletionModal from "./CategoryDeletionModal"
 import CategoryFormModal from "./CategoryFormModal"
 
-interface Props {
-  category: FinanceCategory
-  categoryTypes: FinanceCategoryType[]
+interface ICategoryTableRowProps {
+  category: IFinanceCategory
+  categoryTypes: IFinanceCategoryType[]
 }
 
-const CategoryTableRow: FC<Props> = ({ category, categoryTypes }) => {
+const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes }) => {
   const [isCategoryEditingModalShown, toggleIsCategoryEditingModalShown] = useToggle(false)
   const [isCategoryDeletionModalShown, toggleIsCategoryDeletionModalShown] = useToggle(false)
 

@@ -41,6 +41,7 @@ import { ITestUserUsername } from "#utils/testing/test-users-credentials"
 
 declare global {
   namespace Cypress {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Chainable {
       authorize(username: ITestUserUsername): Promise<void>
     }

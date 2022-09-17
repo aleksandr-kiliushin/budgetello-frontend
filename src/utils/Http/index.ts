@@ -1,4 +1,4 @@
-import { RequestDataWithPayload, RequestDataWithoutPayload, RequestOptions } from "./types"
+import { IRequestDataWithPayload, IRequestDataWithoutPayload, IRequestOptions } from "./types"
 
 const backendUrlStartByNodeEnv = {
   development: "http://localhost:3080",
@@ -7,7 +7,7 @@ const backendUrlStartByNodeEnv = {
 }
 
 class Http {
-  private static get requestOptions(): RequestOptions {
+  private static get requestOptions(): IRequestOptions {
     return {
       headers: {
         Authorization: localStorage.authToken,
@@ -29,28 +29,28 @@ class Http {
     return backendUrlStartByNodeEnv[process.env.NODE_ENV] + url
   }
 
-  static async delete({ url }: RequestDataWithoutPayload): Promise<Response> {
+  static async delete({ url }: IRequestDataWithoutPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, method: "DELETE" })
     if (response.status >= 400) throw await response.json()
     return response
   }
 
-  static async get({ url }: RequestDataWithoutPayload): Promise<Response> {
+  static async get({ url }: IRequestDataWithoutPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, this.requestOptions)
     if (response.status >= 400) throw await response.json()
     return response
   }
 
-  static async patch({ payload, url }: RequestDataWithPayload): Promise<Response> {
+  static async patch({ payload, url }: IRequestDataWithPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "PATCH" })
     if (response.status >= 400) throw await response.json()
     return response
   }
 
-  static async post({ payload, url }: RequestDataWithPayload): Promise<Response> {
+  static async post({ payload, url }: IRequestDataWithPayload): Promise<Response> {
     const fullUrl = this.createFullUrl(url)
     const response = await fetch(fullUrl, { ...this.requestOptions, body: JSON.stringify(payload), method: "POST" })
     if (response.status >= 400) throw await response.json()
