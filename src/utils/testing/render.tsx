@@ -24,7 +24,7 @@ export const render: IRender = async (component, options) => {
     await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
   }
 
-  const AllTheProviders: React.FC = ({ children }) => {
+  const AllTheProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
       <HistoryRouter history={history}>
         <Provider store={store}>{children}</Provider>

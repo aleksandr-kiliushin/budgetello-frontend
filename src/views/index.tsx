@@ -1,4 +1,5 @@
 import { css } from "@emotion/react"
+import { Box } from "@mui/material"
 import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
@@ -32,13 +33,14 @@ export const App: React.FC = () => {
   if (user.isAuthorized === undefined) return <p>Loading ...</p>
 
   return (
-    <div
+    <Box
       css={css`
         height: 100vh;
         width: 100vw;
       `}
     >
-      <main
+      <Box
+        component="main"
         css={css`
           height: calc(100vh - 60px);
           overflow-y: scroll;
@@ -54,9 +56,9 @@ export const App: React.FC = () => {
           <Route element={<Settings />} path="/settings" />
           <Route element={<Stats />} path="/stats" />
         </Routes>
-      </main>
+      </Box>
 
       <Navbar />
-    </div>
+    </Box>
   )
 }
