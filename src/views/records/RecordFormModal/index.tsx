@@ -13,7 +13,7 @@ import { format } from "date-fns"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
-import RowGroup from "#components/RowGroup"
+import { RowGroup } from "#components/RowGroup"
 import { createRecordTc, updateRecordTc } from "#models/finances"
 import { IFinanceCategory, IFinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
@@ -26,7 +26,7 @@ interface IRecordFormModalProps {
   record: IFinanceRecord | null
 }
 
-const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {
+export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {
   const dispatch = useAppDispatch()
 
   const defaultValues = record
@@ -102,5 +102,3 @@ const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, re
     </Dialog>
   )
 }
-
-export default RecordFormModal

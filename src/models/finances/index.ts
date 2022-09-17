@@ -3,7 +3,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from "#types/finance"
-import Http from "#utils/Http"
+import { Http } from "#utils/Http"
 
 interface IState {
   categories: {

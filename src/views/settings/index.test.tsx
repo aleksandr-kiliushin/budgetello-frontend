@@ -2,7 +2,7 @@ import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
-import Settings from "#views/settings"
+import { Settings } from "#views/settings"
 
 describe("Finance categories service", () => {
   test("Finance categories come from backend and render correctly.", async () => {

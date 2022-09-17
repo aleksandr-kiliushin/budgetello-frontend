@@ -9,16 +9,16 @@ import Typography from "@mui/material/Typography"
 import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from "react"
 import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
-import Loader from "#components/Loader"
+import { Loader } from "#components/Loader"
 import { getCategoriesTc, getRecordsTc } from "#models/finances"
 import { LoadingStatus } from "#src/constants/shared"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-import RecordFormModal from "./RecordFormModal"
-import RecordTableRow from "./RecordTableRow"
+import { RecordFormModal } from "./RecordFormModal"
+import { RecordTableRow } from "./RecordTableRow"
 import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
-const Records: FC = () => {
+export const Records: FC = () => {
   const dispatch = useAppDispatch()
   const location = useLocation()
   const navigate = useNavigate()
@@ -115,5 +115,3 @@ const Records: FC = () => {
     </Fragment>
   )
 }
-
-export default Records

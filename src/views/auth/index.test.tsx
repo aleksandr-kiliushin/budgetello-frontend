@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
 
-import Auth from "./index"
+import { Auth } from "./index"
 
 describe("Auth service.", () => {
   test("Login works correctly.", async () => {

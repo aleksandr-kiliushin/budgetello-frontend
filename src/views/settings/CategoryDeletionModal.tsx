@@ -15,7 +15,7 @@ interface ICategoryDeletionModalProps {
   closeModal(): void
 }
 
-const CategoryDeletionModal: FC<ICategoryDeletionModalProps> = ({ category, closeModal }) => {
+export const CategoryDeletionModal: FC<ICategoryDeletionModalProps> = ({ category, closeModal }) => {
   const dispatch = useAppDispatch()
 
   const { id, name } = category
@@ -39,5 +39,3 @@ const CategoryDeletionModal: FC<ICategoryDeletionModalProps> = ({ category, clos
     </Dialog>
   )
 }
-
-export default CategoryDeletionModal

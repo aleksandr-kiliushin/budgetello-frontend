@@ -2,7 +2,7 @@ import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import { FC, Fragment } from "react"
 
-const Home: FC = () => {
+export const Home: FC = () => {
   return (
     <Fragment>
       <Typography variant="h1">Home page h1</Typography>
@@ -24,5 +24,3 @@ const Home: FC = () => {
     </Fragment>
   )
 }
-
-export default Home

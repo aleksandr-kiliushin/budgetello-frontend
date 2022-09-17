@@ -3,15 +3,15 @@ import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
-import Navbar from "#components/Navbar"
+import { Navbar } from "#components/Navbar"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { mediaQuery } from "#styles/media-queries"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
-import Auth from "#views/auth"
-import Home from "#views/home"
-import Records from "#views/records"
-import Settings from "#views/settings"
-import Stats from "#views/stats"
+import { Auth } from "#views/auth"
+import { Home } from "#views/home"
+import { Records } from "#views/records"
+import { Settings } from "#views/settings"
+import { Stats } from "#views/stats"
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()

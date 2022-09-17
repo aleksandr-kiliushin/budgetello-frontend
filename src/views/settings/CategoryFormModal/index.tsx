@@ -8,8 +8,8 @@ import TextField from "@mui/material/TextField"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
-import RowGroup from "#components/RowGroup"
-import RadioGroup from "#components/form-contructor/RadioGroup"
+import { RowGroup } from "#components/RowGroup"
+import { RadioGroup } from "#components/form-contructor/RadioGroup"
 import { createCategoryTc, updateCategoryTc } from "#models/finances"
 import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
@@ -22,7 +22,7 @@ interface ICategoryFormModalProps {
   closeModal(): void
 }
 
-const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryTypes, closeModal }) => {
+export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
@@ -98,5 +98,3 @@ const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryType
     </Dialog>
   )
 }
-
-export default CategoryFormModal

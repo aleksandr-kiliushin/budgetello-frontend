@@ -12,10 +12,10 @@ import { useToggle } from "react-use"
 import { getCategoriesTc, getCategoryTypesTc } from "#models/finances"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-import CategoryFormModal from "./CategoryFormModal"
-import CategoryTableRow from "./CategoryTableRow"
+import { CategoryFormModal } from "./CategoryFormModal"
+import { CategoryTableRow } from "./CategoryTableRow"
 
-const Settings: FC = () => {
+export const Settings: FC = () => {
   const dispatch = useAppDispatch()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
@@ -65,5 +65,3 @@ const Settings: FC = () => {
     </Fragment>
   )
 }
-
-export default Settings

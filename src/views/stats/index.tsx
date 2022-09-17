@@ -5,7 +5,7 @@ import { getChartDataTc } from "#models/finances"
 import { LoadingStatus } from "#src/constants/shared"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
-const Stats: FC = () => {
+export const Stats: FC = () => {
   const dispatch = useAppDispatch()
 
   const chartData = useAppSelector((state) => state.finances.chartData)
@@ -185,5 +185,3 @@ const Stats: FC = () => {
 
   return <canvas ref={canvasRef} />
 }
-
-export default Stats

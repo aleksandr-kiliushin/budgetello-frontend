@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom"
 import { getActiveNavigationIndex, navigationItem } from "./helpers"
 import { bottomNavigationActionSx, bottomNavigationSx } from "./styles"
 
-const Navbar: FC = () => {
+export const Navbar: FC = () => {
   const { pathname } = useLocation()
 
   return (
@@ -24,5 +24,3 @@ const Navbar: FC = () => {
     </BottomNavigation>
   )
 }
-
-export default Navbar

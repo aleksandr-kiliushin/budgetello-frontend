@@ -7,15 +7,15 @@ import { useToggle } from "react-use"
 
 import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
 
-import CategoryDeletionModal from "./CategoryDeletionModal"
-import CategoryFormModal from "./CategoryFormModal"
+import { CategoryDeletionModal } from "./CategoryDeletionModal"
+import { CategoryFormModal } from "./CategoryFormModal"
 
 interface ICategoryTableRowProps {
   category: IFinanceCategory
   categoryTypes: IFinanceCategoryType[]
 }
 
-const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes }) => {
+export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes }) => {
   const [isCategoryEditingModalShown, toggleIsCategoryEditingModalShown] = useToggle(false)
   const [isCategoryDeletionModalShown, toggleIsCategoryDeletionModalShown] = useToggle(false)
 
@@ -44,5 +44,3 @@ const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes 
     </Fragment>
   )
 }
-
-export default CategoryTableRow

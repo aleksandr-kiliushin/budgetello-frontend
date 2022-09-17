@@ -6,7 +6,7 @@ const backendUrlStartByNodeEnv = {
   test: "http://localhost:3080",
 }
 
-class Http {
+export class Http {
   private static get requestOptions(): IRequestOptions {
     return {
       headers: {
@@ -57,5 +57,3 @@ class Http {
     return response
   }
 }
-
-export default Http

@@ -2,10 +2,10 @@ import { FC } from "react"
 
 import { useAppSelector } from "#utils/hooks"
 
-import Login from "./Login"
-import Logout from "./Logout"
+import { Login } from "./Login"
+import { Logout } from "./Logout"
 
-const Auth: FC = () => {
+export const Auth: FC = () => {
   const user = useAppSelector((state) => state.user)
 
   if (user.isAuthorized === undefined) return <p>Loading ...</p>
@@ -13,5 +13,3 @@ const Auth: FC = () => {
   if (user.isAuthorized === true) return <Logout />
   return null
 }
-
-export default Auth

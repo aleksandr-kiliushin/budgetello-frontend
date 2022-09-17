@@ -5,14 +5,14 @@ import Typography from "@mui/material/Typography"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
-import RowGroup from "#components/RowGroup"
+import { RowGroup } from "#components/RowGroup"
 import { login } from "#models/user"
 import { useAppDispatch } from "#utils/hooks"
 
 import { Container } from "../components"
 import { FormFieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
-const Login: FC = () => {
+export const Login: FC = () => {
   const dispatch = useAppDispatch()
 
   const {
@@ -68,5 +68,3 @@ const Login: FC = () => {
     </Container>
   )
 }
-
-export default Login

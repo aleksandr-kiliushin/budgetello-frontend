@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 import { AppThunk } from "#models/store"
 import { IUser } from "#types/IUser"
-import Http from "#utils/Http"
+import { Http } from "#utils/Http"
 
 interface IState {
   isAuthorized: boolean | undefined

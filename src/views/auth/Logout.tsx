@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import { Container } from "./components"
 
-const Logout: FC = () => {
+export const Logout: FC = () => {
   const dispatch = useAppDispatch()
 
   const user = useAppSelector((state) => state.user)
@@ -27,5 +27,3 @@ const Logout: FC = () => {
     </Container>
   )
 }
-
-export default Logout

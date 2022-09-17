@@ -17,6 +17,4 @@ const _Loader: ForwardRefRenderFunction<HTMLDivElement, ILoaderProps> = (
   />
 )
 
-const Loader = forwardRef(_Loader)
-
-export default Loader
+export const Loader = forwardRef(_Loader)

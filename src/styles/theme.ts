@@ -2,7 +2,7 @@ import createTheme from "@mui/material/styles/createTheme"
 
 import { breakpoints, mediaQuery } from "./media-queries"
 
-const theme = createTheme({
+export const theme = createTheme({
   breakpoints,
   components: {
     MuiButton: {
@@ -111,5 +111,3 @@ const theme = createTheme({
     },
   },
 })
-
-export default theme

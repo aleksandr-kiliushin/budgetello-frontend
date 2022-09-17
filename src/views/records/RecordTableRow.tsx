@@ -11,7 +11,7 @@ import { deleteRecordTc, restoreRecordTc } from "#models/finances"
 import { IFinanceCategory, IFinanceRecord } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
 
-import RecordFormModal from "./RecordFormModal"
+import { RecordFormModal } from "./RecordFormModal"
 
 interface IRecordTableRowProps {
   categories: IFinanceCategory[]
@@ -19,7 +19,7 @@ interface IRecordTableRowProps {
   record: IFinanceRecord
 }
 
-const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record }) => {
+export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record }) => {
   const dispatch = useAppDispatch()
   const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
@@ -96,5 +96,3 @@ const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record 
     </Fragment>
   )
 }
-
-export default RecordTableRow

@@ -22,7 +22,15 @@ interface IRadioGroupProps {
   setValue(fieldName: string, newValue: string | number): void
 }
 
-const RadioGroup: FC<IRadioGroupProps> = ({ fieldValue, helperText, label, name, options, register, setValue }) => {
+export const RadioGroup: FC<IRadioGroupProps> = ({
+  fieldValue,
+  helperText,
+  label,
+  name,
+  options,
+  register,
+  setValue,
+}) => {
   return (
     <FormControl>
       <FormLabel id={name}>{label}</FormLabel>
@@ -43,5 +51,3 @@ const RadioGroup: FC<IRadioGroupProps> = ({ fieldValue, helperText, label, name,
     </FormControl>
   )
 }
-
-export default RadioGroup
