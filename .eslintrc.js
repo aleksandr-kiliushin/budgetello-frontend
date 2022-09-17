@@ -25,6 +25,14 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
   root: true,
   rules: {
+    "arrow-parens": 2,
+    camelcase: 2,
+    "no-duplicate-imports": 2,
+    "no-tabs": 2,
+    "@typescript-eslint/no-extra-semi": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/naming-convention": [
       1,
       {
@@ -42,14 +50,6 @@ module.exports = {
         types: ["boolean"],
       },
     ],
-    "arrow-parens": 2,
-    camelcase: 2,
-    "no-duplicate-imports": 2,
-    "no-tabs": 2,
-    "@typescript-eslint/no-extra-semi": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
     // "sort-keys": [
     //   "warn",
     //   "asc",
