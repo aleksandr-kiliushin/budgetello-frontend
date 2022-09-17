@@ -32,11 +32,11 @@ module.exports = {
           match: true,
           regex: "^I[A-Z]",
         },
-        format: ["PascalCase"],
+        format: ["StrictPascalCase"],
         selector: "interface",
       },
       {
-        format: ["PascalCase"],
+        format: ["StrictPascalCase"],
         prefix: ["can", "did", "has", "is", "should", "will"],
         selector: "variable",
         types: ["boolean"],
