@@ -28,7 +28,7 @@ module.exports = {
       {
         custom: {
           match: true,
-          regex: "^I[A-Z].+",
+          regex: "^I[A-Z]",
         },
         format: ["PascalCase"],
         selector: "interface",
