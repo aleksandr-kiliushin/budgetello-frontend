@@ -36,11 +36,8 @@ module.exports = {
     "@typescript-eslint/naming-convention": [
       1,
       {
-        custom: {
-          match: true,
-          regex: "^I[A-Z]",
-        },
         format: ["StrictPascalCase"],
+        prefix: ["I"],
         selector: "interface",
       },
       {
