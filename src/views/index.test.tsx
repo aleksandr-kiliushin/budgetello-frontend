@@ -4,7 +4,7 @@ import { getAuthToken } from "#utils/getAuthToken"
 import { render } from "#utils/testing/render"
 import { wait } from "#utils/wait"
 
-import App from "./index"
+import { App } from "./index"
 
 describe("<App />", () => {
   test("If the user is not authorized, redirect to /auth.", async () => {

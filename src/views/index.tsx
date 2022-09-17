@@ -1,5 +1,5 @@
 import { css } from "@emotion/react"
-import { FC, useEffect } from "react"
+import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
@@ -13,13 +13,13 @@ import Records from "#views/records"
 import Settings from "#views/settings"
 import Stats from "#views/stats"
 
-const App: FC = () => {
+export const App: React.FC = () => {
   const dispatch = useAppDispatch()
   const location = useLocation()
 
   const user = useAppSelector((state) => state.user)
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(fetchAndSetAuthorizedUser()).then((isAuthorized) => {
       dispatch(userActions.setIsUserAuthorized(isAuthorized))
     })
@@ -60,5 +60,3 @@ const App: FC = () => {
     </div>
   )
 }
-
-export default App
