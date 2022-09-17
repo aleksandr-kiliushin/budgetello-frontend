@@ -11,7 +11,7 @@
     "check-types:cypress:watch": "tsc --project ./cypress/tsconfig.json --noEmit --watch",
     "cypress": "cypress",
     "dev": "MODE=development npx webpack serve",
-    "lint": "eslint \"**/*.{js,ts}\"",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",

@@ -20,9 +20,20 @@ module.exports = {
     ecmaVersion: 13,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
   root: true,
   rules: {
+    "@typescript-eslint/naming-convention": [
+      1,
+      {
+        custom: {
+          match: true,
+          regex: "^I[A-Z].+",
+        },
+        format: ["PascalCase"],
+        selector: "interface",
+      },
+    ],
     "arrow-parens": 2,
     camelcase: 2,
     "no-duplicate-imports": 2,
