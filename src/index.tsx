@@ -10,14 +10,14 @@ import { globalStyles } from "#styles/global"
 import { theme } from "#styles/theme"
 import { App } from "#views"
 
-let container = document.querySelector("#root")
-if (container === null) {
-  container = document.createElement("div")
-  container.setAttribute("id", "root")
-  document.body.append(container)
+let rootNode = document.querySelector("#root")
+if (rootNode === null) {
+  rootNode = document.createElement("div")
+  rootNode.setAttribute("id", "root")
+  document.body.append(rootNode)
 }
 
-const root = createRoot(container)
+const root = createRoot(rootNode)
 
 root.render(
   <StrictMode>

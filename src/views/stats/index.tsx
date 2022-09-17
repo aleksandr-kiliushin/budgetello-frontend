@@ -181,6 +181,8 @@ export const Stats: FC = () => {
     })
   }, [chartData])
 
+  return <h1>Unavailable :(</h1>
+
   if (chartData.status === LoadingStatus.Idle) return null
 
   return <canvas ref={canvasRef} />
