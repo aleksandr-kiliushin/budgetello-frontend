@@ -25,10 +25,17 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
   root: true,
   rules: {
-    "arrow-parens": 2,
-    camelcase: 2,
-    "no-duplicate-imports": 2,
-    "no-tabs": 2,
+    "arrow-parens": 1,
+    camelcase: 1,
+    "no-duplicate-imports": 1,
+    "no-restricted-syntax": [
+      1,
+      {
+        selector: "ExportDefaultDeclaration",
+        message: "Prefer named exports.",
+      },
+    ],
+    "no-tabs": 1,
     "@typescript-eslint/no-extra-semi": "off",
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unused-vars": "off",
