@@ -36,10 +36,9 @@ module.exports = {
       },
     ],
     "no-tabs": 1,
-    "@typescript-eslint/no-extra-semi": "off",
-    "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-extra-semi": 1,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/naming-convention": [
       1,
       {
