@@ -21,10 +21,12 @@ import "./commands"
 beforeEach(() => {
   localStorage.clear()
   cy.exec(
-    'echo "bash /var/app/scripts/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'
+    'echo "bash /var/app/database/scripts/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'
   )
 })
 
 after(() => {
-  cy.exec('echo "bash /var/app/scripts/restore-db-from-dev-template.sh" | docker exec -i personal-app-database bash;')
+  cy.exec(
+    'echo "bash /var/app/database/scripts/restore-db-from-dev-template.sh" | docker exec -i personal-app-database bash;'
+  )
 })
