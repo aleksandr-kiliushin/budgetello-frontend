@@ -28,6 +28,7 @@ module.exports = {
     "arrow-parens": 1,
     camelcase: 1,
     "no-duplicate-imports": 1,
+    "react/jsx-sort-props": ["warn", { ignoreCase: true }],
     "no-restricted-syntax": [
       1,
       {
