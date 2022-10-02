@@ -7,12 +7,14 @@ import DialogTitle from "@mui/material/DialogTitle"
 import TextField from "@mui/material/TextField"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
+import { useParams } from "react-router-dom"
 
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 import { createCategoryTc, updateCategoryTc } from "#models/finances"
 import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
 import { useAppDispatch } from "#utils/hooks"
+import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
@@ -24,6 +26,7 @@ interface ICategoryFormModalProps {
 
 export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryTypes, closeModal }) => {
   const dispatch = useAppDispatch()
+  const params = useParams<IBoardsRouteParams>()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
@@ -43,9 +46,10 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categ
   })
 
   const submitCategoryForm = handleSubmit(async ({ name, typeId }) => {
+    if (params.boardId === undefined) return
     try {
       if (category === null) {
-        const error = await dispatch(createCategoryTc({ name, typeId })).unwrap()
+        const error = await dispatch(createCategoryTc({ boardId: parseInt(params.boardId), name, typeId })).unwrap()
         if ("fields" in error) throw error
       } else {
         const error = await dispatch(

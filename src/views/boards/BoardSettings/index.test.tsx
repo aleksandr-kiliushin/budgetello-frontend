@@ -2,20 +2,18 @@ import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
-import { BoardSettings } from "#views/boards/BoardSettings"
+import { App } from "#views"
 
 describe("Finance categories service", () => {
   test("Finance categories come from backend and render correctly.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
-    expect(await screen.findByText("clothes")).toBeInTheDocument()
-    expect(await screen.findByText("education")).toBeInTheDocument()
-    expect(await screen.findAllByText("gifts")).toHaveLength(2)
-    expect(await screen.findByText("salary")).toBeInTheDocument()
+    expect(() => expect(screen.getByText("clothes")).toBeInTheDocument())
+    expect(() => expect(screen.getByText("education")).toBeInTheDocument())
   })
 
   test("Modal for new category modal opens and renders correctly.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Create category")).toBeInTheDocument()
@@ -24,7 +22,7 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category creating closes correctly using Cancel button.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByRole("dialog")).toBeInTheDocument()
@@ -33,7 +31,7 @@ describe("Finance categories service", () => {
   })
 
   test("A new category is created correctly.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Submit")).toBeDisabled()
@@ -46,26 +44,30 @@ describe("Finance categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "education"))
     await waitFor(() => userEvent.click(screen.getByLabelText("expense")))
     userEvent.click(screen.getByText("Submit"))
-    expect(await screen.findAllByText('"education" expense category already exists.')).toHaveLength(2)
+    expect(await screen.findAllByText('"education" expense category already exists in this board.')).toHaveLength(2)
     expect(screen.getByText("Submit")).toBeDisabled()
     await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
-    await waitFor(() => expect(screen.getAllByText('"education" expense category already exists.')).toHaveLength(1))
+    await waitFor(() => {
+      expect(screen.getAllByText('"education" expense category already exists in this board.')).toHaveLength(1)
+    })
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "teaching"))
     await waitFor(() => userEvent.click(screen.getByLabelText("income")))
-    await waitFor(() => expect(screen.queryAllByText('"education" expense category already exists.')).toHaveLength(0))
+    await waitFor(() => {
+      expect(screen.queryAllByText('"education" expense category already exists in this board.')).toHaveLength(0)
+    })
     await waitFor(() => userEvent.click(screen.getByText("Submit")))
     await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
     expect(await screen.findByRole("cell", { name: "teaching" })).toBeInTheDocument()
   })
 
   test("A category is edited correctly.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "jessica-stark", initialUrl: "/boards/2/settings" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("salary-income-category-edit-button")))
@@ -83,7 +85,7 @@ describe("Finance categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     expect(await screen.findByText("education")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("education-expense-category-edit-button")))
@@ -93,17 +95,17 @@ describe("Finance categories service", () => {
     await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "clothes"))
     userEvent.click(screen.getByText("Submit"))
-    expect(await screen.findAllByText('"clothes" expense category already exists.')).toHaveLength(2)
+    expect(await screen.findAllByText('"clothes" expense category already exists in this board.')).toHaveLength(2)
     await waitFor(() => userEvent.clear(screen.getByLabelText("Name")))
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "shoes"))
-    expect(await screen.findAllByText('"clothes" expense category already exists.')).toHaveLength(1)
+    expect(await screen.findAllByText('"clothes" expense category already exists in this board.')).toHaveLength(1)
     userEvent.click(screen.getByText("Submit"))
     await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
     expect(await screen.findByText("shoes")).toBeInTheDocument()
   })
 
   test("A category is deleted correctly.", async () => {
-    await render(<BoardSettings />, { iAm: "john-doe" })
+    await render(<App />, { iAm: "jessica-stark", initialUrl: "/boards/2/settings" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     userEvent.click(screen.getByTestId("salary-income-category-delete-button"))

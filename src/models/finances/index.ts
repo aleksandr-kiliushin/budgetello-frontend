@@ -172,10 +172,17 @@ export const createRecordTc = createAsyncThunk(
 
 export const createCategoryTc = createAsyncThunk(
   "finance/createCategoryTc",
-  async ({ name, typeId }: { name: IFinanceCategory["name"]; typeId: IFinanceCategoryType["id"] }, thunkApi) => {
+  async (
+    {
+      boardId,
+      name,
+      typeId,
+    }: { boardId: IBoard["id"]; name: IFinanceCategory["name"]; typeId: IFinanceCategoryType["id"] },
+    thunkApi
+  ) => {
     try {
       const response = await Http.post({
-        payload: { name, typeId },
+        payload: { boardId, name, typeId },
         url: "/api/finances/categories",
       })
       return await response.json()

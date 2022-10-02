@@ -15,7 +15,7 @@ export const render: IRender = async (component, options) => {
 
   const store = initializeStore()
   const history = createBrowserHistory()
-  history.push(initialUrl ?? "")
+  history.push(initialUrl ?? "/")
 
   if (iAm === "guest") {
     store.dispatch(userActions.setIsUserAuthorized(false))
