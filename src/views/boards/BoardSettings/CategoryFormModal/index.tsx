@@ -66,7 +66,7 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categ
   })
 
   return (
-    <Dialog open onClose={closeModal}>
+    <Dialog onClose={closeModal} open>
       <DialogTitle>{category ? "Edit category" : "Create category"}</DialogTitle>
       <form aria-label="finance-category-form" onSubmit={submitCategoryForm}>
         <DialogContent>

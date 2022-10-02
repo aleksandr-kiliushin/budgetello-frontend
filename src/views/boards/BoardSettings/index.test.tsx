@@ -2,11 +2,11 @@ import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
-import { Settings } from "#views/settings"
+import { BoardSettings } from "#views/boards/BoardSettings"
 
 describe("Finance categories service", () => {
   test("Finance categories come from backend and render correctly.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("clothes")).toBeInTheDocument()
     expect(await screen.findByText("education")).toBeInTheDocument()
@@ -15,7 +15,7 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category modal opens and renders correctly.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Create category")).toBeInTheDocument()
@@ -24,7 +24,7 @@ describe("Finance categories service", () => {
   })
 
   test("Modal for new category creating closes correctly using Cancel button.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByRole("dialog")).toBeInTheDocument()
@@ -33,7 +33,7 @@ describe("Finance categories service", () => {
   })
 
   test("A new category is created correctly.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Submit")).toBeDisabled()
@@ -46,7 +46,7 @@ describe("Finance categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     userEvent.click(screen.getByText("+New"))
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "education"))
@@ -65,7 +65,7 @@ describe("Finance categories service", () => {
   })
 
   test("A category is edited correctly.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("salary-income-category-edit-button")))
@@ -83,7 +83,7 @@ describe("Finance categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("education")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("education-expense-category-edit-button")))
@@ -103,7 +103,7 @@ describe("Finance categories service", () => {
   })
 
   test("A category is deleted correctly.", async () => {
-    await render(<Settings />, { iAm: "john-doe" })
+    await render(<BoardSettings />, { iAm: "john-doe" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     userEvent.click(screen.getByTestId("salary-income-category-delete-button"))

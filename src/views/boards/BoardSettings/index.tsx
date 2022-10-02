@@ -7,23 +7,27 @@ import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
 import Typography from "@mui/material/Typography"
 import { FC, Fragment, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
 import { getCategoriesTc, getCategoryTypesTc } from "#models/finances"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
+import { IBoardsRouteParams } from "../types"
 import { CategoryFormModal } from "./CategoryFormModal"
 import { CategoryTableRow } from "./CategoryTableRow"
 
-export const Settings: FC = () => {
+export const BoardSettings: FC = () => {
   const dispatch = useAppDispatch()
+  const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
   const categories = useAppSelector((state) => state.finances.categories)
   const categoryTypes = useAppSelector((state) => state.finances.categoryTypes)
 
   useEffect(() => {
-    dispatch(getCategoriesTc())
+    if (params.boardId === undefined) return
+    dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
     dispatch(getCategoryTypesTc())
   }, [])
 

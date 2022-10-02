@@ -2,6 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
+import { IBoard } from "#types/boards"
 import { IFinanceCategory, IFinanceCategoryType, IFinanceRecord } from "#types/finance"
 import { Http } from "#utils/Http"
 
@@ -200,12 +201,12 @@ export const deleteRecordTc = createAsyncThunk("finance/deleteRecordTc", async (
   return { isPermanentDeletion: isTrashed, record: await response.json() }
 })
 
-export const getCategoriesTc = createAsyncThunk<IFinanceCategory[], void, { state: RootState }>(
+export const getCategoriesTc = createAsyncThunk<IFinanceCategory[], { boardId: IBoard["id"] }, { state: RootState }>(
   "finance/getCategoriesTc",
-  async (_, { getState }) => {
+  async ({ boardId }, { getState }) => {
     if (getState().finances.categories.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({ url: "/api/finances/categories/search" })
+      const response = await Http.get({ url: "/api/finances/categories/search?boardId=" + boardId })
       return await response.json()
     } catch {
       return []
@@ -241,9 +242,9 @@ export const getChartDataTc = createAsyncThunk<IFinanceRecord[], void, { state: 
   }
 )
 
-export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state: RootState }>(
+export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTrash: boolean }, { state: RootState }>(
   "finance/getRecordsTc",
-  async ({ isTrash }, { getState, dispatch }) => {
+  async ({ boardId, isTrash }, { getState, dispatch }) => {
     const existingRecords = getState().finances.records[isTrash ? "trashed" : "notTrashed"]
 
     if (existingRecords.status === LoadingStatus.Completed) return
@@ -252,7 +253,7 @@ export const getRecordsTc = createAsyncThunk<void, { isTrash: boolean }, { state
     dispatch(financeActions.setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
 
     const response = await Http.get({
-      url: `/api/finances/records/search?isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
+      url: `/api/finances/records/search?boardId=${boardId}&isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
     })
     const records = await response.json()
 

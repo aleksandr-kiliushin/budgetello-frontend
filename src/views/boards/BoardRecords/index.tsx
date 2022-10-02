@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material"
 import Button from "@mui/material/Button"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Switch from "@mui/material/Switch"
@@ -5,42 +6,57 @@ import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
-import Typography from "@mui/material/Typography"
-import { ChangeEvent, FC, Fragment, useEffect, useRef, useState } from "react"
-import { Navigate, useLocation, useNavigate } from "react-router-dom"
+import React from "react"
+import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { Loader } from "#components/Loader"
 import { getCategoriesTc, getRecordsTc } from "#models/finances"
 import { LoadingStatus } from "#src/constants/shared"
+import { IBoard } from "#types/boards"
+import { Http } from "#utils/Http"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
+import { IBoardsRouteParams } from "#views/boards/types"
 
 import { RecordFormModal } from "./RecordFormModal"
 import { RecordTableRow } from "./RecordTableRow"
 import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
-export const Records: FC = () => {
+export const BoardRecords: React.FC = () => {
+  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
   const dispatch = useAppDispatch()
   const location = useLocation()
   const navigate = useNavigate()
+  const params = useParams<IBoardsRouteParams>()
 
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
 
-  const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = useState(false)
+  const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
 
   const categories = useAppSelector((state) => state.finances.categories)
   const records = useAppSelector((state) => state.finances.records[isTrash ? "trashed" : "notTrashed"])
 
-  const loaderRef = useRef(null)
+  const loaderRef = React.useRef(null)
 
-  useEffect(() => {
-    dispatch(getCategoriesTc())
-    dispatch(getRecordsTc({ isTrash: false }))
-    dispatch(getRecordsTc({ isTrash: true }))
+  React.useEffect(() => {
+    if (params.boardId === undefined) return
+    Http.get({ url: "/api/boards/" + params.boardId })
+      .then((response) => response.json())
+      .then(setBoard)
+  }, [params.boardId])
+
+  React.useEffect(() => {
+    if (params.boardId === undefined) return
+    dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
+    dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: false }))
+    dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: true }))
   }, [])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(() => dispatch(getRecordsTc({ isTrash })))
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(() => {
+      if (params.boardId === undefined) return
+      dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash }))
+    })
     if (loaderRef.current !== null) {
       observer.observe(loaderRef.current)
     }
@@ -51,12 +67,15 @@ export const Records: FC = () => {
     }
   }, [getRecordsTc, isTrash, loaderRef])
 
+  if (params.boardId === undefined) return <Navigate to="/boards" />
+  if (board === undefined) return null
+
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
-    return <Navigate to="/records?isTrash=false" />
+    return <Navigate to={`/boards/${params.boardId}/records?isTrash=false`} />
   }
 
-  const onIsTrashClick = (event: ChangeEvent<HTMLInputElement>): void => {
-    navigate(`/records?isTrash=${event.target.checked}`)
+  const onIsTrashClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    navigate(`/boards/${params.boardId}/records?isTrash=${event.target.checked}`)
   }
 
   const openRecordCreationModal = (): void => {
@@ -64,9 +83,14 @@ export const Records: FC = () => {
   }
 
   return (
-    <Fragment>
+    <>
+      <Link to="/boards">{"<"} Back to boards</Link>
+      <br />
+      <Link to={`/boards/${params.boardId}/settings`}>Board settings</Link>
+      <Typography variant="h1">
+        Board #{board.id}: {board.name}
+      </Typography>
       <Header>
-        <Typography variant="h1">Finance records</Typography>
         <FormControlLabel
           control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
           label="Trash"
@@ -112,6 +136,6 @@ export const Records: FC = () => {
           record={null}
         />
       ) : null}
-    </Fragment>
+    </>
   )
 }
