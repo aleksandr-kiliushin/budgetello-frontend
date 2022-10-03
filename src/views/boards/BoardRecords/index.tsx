@@ -65,7 +65,7 @@ export const BoardRecords: React.FC = () => {
         observer.unobserve(loaderRef.current)
       }
     }
-  }, [getRecordsTc, isTrash, loaderRef])
+  }, [getRecordsTc, isTrash, loaderRef.current])
 
   if (params.boardId === undefined) return <Navigate to="/boards" />
   if (board === undefined) return null
