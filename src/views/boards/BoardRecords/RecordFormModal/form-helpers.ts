@@ -1,6 +1,6 @@
 import * as Yup from "yup"
 
-import { IFinanceRecord } from "#types/finance"
+import { IBudgetingRecord } from "#types/budgeting"
 
 export enum FormFieldName {
   Amount = "amount",
@@ -9,9 +9,9 @@ export enum FormFieldName {
 }
 
 export interface IFormValues {
-  [FormFieldName.Amount]: IFinanceRecord["amount"] | null
-  [FormFieldName.CategoryId]: IFinanceRecord["category"]["id"] | null
-  [FormFieldName.Date]: IFinanceRecord["date"]
+  [FormFieldName.Amount]: IBudgetingRecord["amount"] | null
+  [FormFieldName.CategoryId]: IBudgetingRecord["category"]["id"] | null
+  [FormFieldName.Date]: IBudgetingRecord["date"]
 }
 
 export const validationSchema = Yup.object({

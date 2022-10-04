@@ -1,14 +1,14 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit"
 
+import { budgetingReducer } from "./budgeting"
 import { commonReducer } from "./common"
-import { financesReducer } from "./finances"
 import { userReducer } from "./user"
 
 export const initializeStore = () => {
   return configureStore({
     reducer: {
+      budgeting: budgetingReducer,
       common: commonReducer,
-      finances: financesReducer,
       user: userReducer,
     },
   })

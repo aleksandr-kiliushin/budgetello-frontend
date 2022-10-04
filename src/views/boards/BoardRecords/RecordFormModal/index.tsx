@@ -14,16 +14,16 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 
 import { RowGroup } from "#components/RowGroup"
-import { createRecordTc, updateRecordTc } from "#models/finances"
-import { IFinanceCategory, IFinanceRecord } from "#types/finance"
+import { createRecordTc, updateRecordTc } from "#models/budgeting"
+import { IBudgetingCategory, IBudgetingRecord } from "#types/budgeting"
 import { useAppDispatch } from "#utils/hooks"
 
 import { FormFieldName, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormModalProps {
-  categories: IFinanceCategory[]
+  categories: IBudgetingCategory[]
   closeModal(): void
-  record: IFinanceRecord | null
+  record: IBudgetingRecord | null
 }
 
 export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {

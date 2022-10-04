@@ -5,14 +5,14 @@ import TableRow from "@mui/material/TableRow"
 import { FC, Fragment } from "react"
 import { useToggle } from "react-use"
 
-import { IFinanceCategory, IFinanceCategoryType } from "#types/finance"
+import { IBudgetingCategory, IBudgetingCategoryType } from "#types/budgeting"
 
 import { CategoryDeletionModal } from "./CategoryDeletionModal"
 import { CategoryFormModal } from "./CategoryFormModal"
 
 interface ICategoryTableRowProps {
-  category: IFinanceCategory
-  categoryTypes: IFinanceCategoryType[]
+  category: IBudgetingCategory
+  categoryTypes: IBudgetingCategoryType[]
 }
 
 export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes }) => {

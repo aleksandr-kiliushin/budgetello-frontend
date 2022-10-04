@@ -10,7 +10,7 @@ import { FC, Fragment, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
-import { getCategoriesTc, getCategoryTypesTc } from "#models/finances"
+import { getCategoriesTc, getCategoryTypesTc } from "#models/budgeting"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import { IBoardsRouteParams } from "../types"
@@ -22,8 +22,8 @@ export const BoardSettings: FC = () => {
   const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
-  const categories = useAppSelector((state) => state.finances.categories)
-  const categoryTypes = useAppSelector((state) => state.finances.categoryTypes)
+  const categories = useAppSelector((state) => state.budgeting.categories)
+  const categoryTypes = useAppSelector((state) => state.budgeting.categoryTypes)
 
   useEffect(() => {
     if (params.boardId === undefined) return
@@ -34,7 +34,7 @@ export const BoardSettings: FC = () => {
   return (
     <Fragment>
       <Typography variant="h1">Settings</Typography>
-      <Typography variant="h2">Finance categories</Typography>
+      <Typography variant="h2">Budgeting categories</Typography>
       <TableContainer>
         <Table size="small">
           <TableHead>

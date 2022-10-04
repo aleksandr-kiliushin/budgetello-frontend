@@ -6,12 +6,12 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { FC } from "react"
 
-import { deleteCategoryTc } from "#models/finances"
-import { IFinanceCategory } from "#types/finance"
+import { deleteCategoryTc } from "#models/budgeting"
+import { IBudgetingCategory } from "#types/budgeting"
 import { useAppDispatch } from "#utils/hooks"
 
 interface ICategoryDeletionModalProps {
-  category: IFinanceCategory
+  category: IBudgetingCategory
   closeModal(): void
 }
 

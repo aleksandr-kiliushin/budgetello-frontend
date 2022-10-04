@@ -7,16 +7,16 @@ import TableRow from "@mui/material/TableRow"
 import { FC, Fragment } from "react"
 import { useToggle } from "react-use"
 
-import { deleteRecordTc, restoreRecordTc } from "#models/finances"
-import { IFinanceCategory, IFinanceRecord } from "#types/finance"
+import { deleteRecordTc, restoreRecordTc } from "#models/budgeting"
+import { IBudgetingCategory, IBudgetingRecord } from "#types/budgeting"
 import { useAppDispatch } from "#utils/hooks"
 
 import { RecordFormModal } from "./RecordFormModal"
 
 interface IRecordTableRowProps {
-  categories: IFinanceCategory[]
+  categories: IBudgetingCategory[]
   isTrash: boolean
-  record: IFinanceRecord
+  record: IBudgetingRecord
 }
 
 export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record }) => {
