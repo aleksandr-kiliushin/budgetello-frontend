@@ -45,7 +45,7 @@ export const BoardSettings: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "18px" }}>
         <Link to="/boards">boards</Link>
         <Link to={`/boards/${board.id}/records`}>{board.name}</Link>
         <Link css={{ color: "green" }} to={`/boards/${board.id}/settings`}>
