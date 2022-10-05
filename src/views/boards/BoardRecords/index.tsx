@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { Breadcrumbs, Typography } from "@mui/material"
 import Button from "@mui/material/Button"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Switch from "@mui/material/Switch"
@@ -22,7 +22,6 @@ import { RecordTableRow } from "./RecordTableRow"
 import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
 export const BoardRecords: React.FC = () => {
-  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
   const dispatch = useAppDispatch()
   const location = useLocation()
   const navigate = useNavigate()
@@ -38,6 +37,7 @@ export const BoardRecords: React.FC = () => {
 
   const loaderRef = React.useRef(null)
 
+  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
   React.useEffect(() => {
     if (params.boardId === undefined) return
     Http.get({ url: "/api/boards/" + params.boardId })
@@ -84,9 +84,15 @@ export const BoardRecords: React.FC = () => {
 
   return (
     <>
-      <Link to="/boards">{"<"} Back to boards</Link>
-      <br />
-      <Link to={`/boards/${params.boardId}/settings`}>Board settings</Link>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link to="/boards">boards</Link>
+        <Link css={{ color: "green" }} to={`/boards/${board.id}/records`}>
+          {board.name}
+        </Link>
+      </Breadcrumbs>
+      <Link css={{ display: "block", textAlign: "right" }} to={`/boards/${params.boardId}/settings`}>
+        Board settings
+      </Link>
       <Typography variant="h1">
         Board #{board.id}: {board.name}
       </Typography>

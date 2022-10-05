@@ -1,3 +1,4 @@
+import { Breadcrumbs } from "@mui/material"
 import Button from "@mui/material/Button"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
@@ -5,19 +6,20 @@ import TableCell from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
-import Typography from "@mui/material/Typography"
-import { FC, Fragment, useEffect } from "react"
-import { useParams } from "react-router-dom"
+import React from "react"
+import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
 import { getCategoriesTc, getCategoryTypesTc } from "#models/budgeting"
+import { IBoard } from "#types/boards"
+import { Http } from "#utils/Http"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import { IBoardsRouteParams } from "../types"
 import { CategoryFormModal } from "./CategoryFormModal"
 import { CategoryTableRow } from "./CategoryTableRow"
 
-export const BoardSettings: FC = () => {
+export const BoardSettings: React.FC = () => {
   const dispatch = useAppDispatch()
   const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
@@ -25,16 +27,31 @@ export const BoardSettings: FC = () => {
   const categories = useAppSelector((state) => state.budgeting.categories)
   const categoryTypes = useAppSelector((state) => state.budgeting.categoryTypes)
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (params.boardId === undefined) return
     dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
     dispatch(getCategoryTypesTc())
   }, [])
 
+  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
+  React.useEffect(() => {
+    if (params.boardId === undefined) return
+    Http.get({ url: "/api/boards/" + params.boardId })
+      .then((response) => response.json())
+      .then(setBoard)
+  }, [params.boardId])
+
+  if (board === undefined) return null
+
   return (
-    <Fragment>
-      <Typography variant="h1">Settings</Typography>
-      <Typography variant="h2">Budgeting categories</Typography>
+    <>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link to="/boards">boards</Link>
+        <Link to={`/boards/${board.id}/records`}>{board.name}</Link>
+        <Link css={{ color: "green" }} to={`/boards/${board.id}/settings`}>
+          Settings
+        </Link>
+      </Breadcrumbs>
       <TableContainer>
         <Table size="small">
           <TableHead>
@@ -59,13 +76,13 @@ export const BoardSettings: FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isCategoryCreatingModalShown ? (
+      {isCategoryCreatingModalShown && (
         <CategoryFormModal
           category={null}
           categoryTypes={categoryTypes.items}
           closeModal={toggleIsCategoryCreatingModalShown}
         />
-      ) : null}
-    </Fragment>
+      )}
+    </>
   )
 }
