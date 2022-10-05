@@ -27,8 +27,8 @@ module.exports = {
   rules: {
     "arrow-parens": 1,
     camelcase: 1,
+    "max-params": ["error", 2],
     "no-duplicate-imports": 1,
-    "react/jsx-sort-props": ["warn", { ignoreCase: true }],
     "no-restricted-syntax": [
       1,
       {
@@ -37,6 +37,7 @@ module.exports = {
       },
     ],
     "no-tabs": 1,
+    "react/jsx-sort-props": ["warn", { ignoreCase: true }],
     "@typescript-eslint/no-extra-semi": 1,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/explicit-function-return-type": 0,
