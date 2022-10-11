@@ -4,8 +4,8 @@ import userEvent from "@testing-library/user-event"
 import { render } from "#utils/testing/render"
 import { App } from "#views"
 
-describe("Budgeting categories service", () => {
-  test("Budgeting categories come from backend and render correctly.", async () => {
+describe("Budget categories service", () => {
+  test("come from backend and render correctly.", async () => {
     await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
 
     expect(() => expect(screen.getByText("clothes")).toBeInTheDocument())

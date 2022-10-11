@@ -10,7 +10,7 @@ import React from "react"
 import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
-import { getCategoriesTc, getCategoryTypesTc } from "#models/budgeting"
+import { getCategoriesTc, getCategoryTypesTc } from "#models/budget"
 import { IBoard } from "#types/boards"
 import { Http } from "#utils/Http"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
@@ -24,8 +24,8 @@ export const BoardSettings: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
-  const categories = useAppSelector((state) => state.budgeting.categories)
-  const categoryTypes = useAppSelector((state) => state.budgeting.categoryTypes)
+  const categories = useAppSelector((state) => state.budget.categories)
+  const categoryTypes = useAppSelector((state) => state.budget.categoryTypes)
 
   React.useEffect(() => {
     if (params.boardId === undefined) return

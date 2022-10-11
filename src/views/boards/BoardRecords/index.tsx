@@ -10,7 +10,7 @@ import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { Loader } from "#components/Loader"
-import { getCategoriesTc, getRecordsTc } from "#models/budgeting"
+import { getCategoriesTc, getRecordsTc } from "#models/budget"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
 import { Http } from "#utils/Http"
@@ -32,8 +32,8 @@ export const BoardRecords: React.FC = () => {
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
 
-  const categories = useAppSelector((state) => state.budgeting.categories)
-  const records = useAppSelector((state) => state.budgeting.records[isTrash ? "trashed" : "notTrashed"])
+  const categories = useAppSelector((state) => state.budget.categories)
+  const records = useAppSelector((state) => state.budget.records[isTrash ? "trashed" : "notTrashed"])
 
   const loaderRef = React.useRef(null)
 

@@ -3,29 +3,29 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
-import { IBudgetingCategory, IBudgetingCategoryType, IBudgetingRecord } from "#types/budgeting"
+import { IBudgetCategory, IBudgetCategoryType, IBudgetRecord } from "#types/budget"
 import { Http } from "#utils/Http"
 
 interface IState {
   categories: {
-    items: IBudgetingCategory[]
+    items: IBudgetCategory[]
     status: LoadingStatus
   }
   categoryTypes: {
-    items: IBudgetingCategoryType[]
+    items: IBudgetCategoryType[]
     status: LoadingStatus
   }
   chartData: {
-    items: IBudgetingRecord[]
+    items: IBudgetRecord[]
     status: LoadingStatus
   }
   records: {
     notTrashed: {
-      items: IBudgetingRecord[]
+      items: IBudgetRecord[]
       status: LoadingStatus
     }
     trashed: {
-      items: IBudgetingRecord[]
+      items: IBudgetRecord[]
       status: LoadingStatus
     }
   }
@@ -56,24 +56,24 @@ export const initialState: IState = {
   },
 }
 
-const budgetingSlice = createSlice({
+const budgetSlice = createSlice({
   extraReducers: (builder) => {
     // To do: try addRecordsTc.PENDING,
-    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetingCategory>) => {
+    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
       state.categories.items.unshift(action.payload)
     })
 
-    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<IBudgetingRecord>) => {
+    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetingCategory>) => {
+    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
       state.categories.items = state.categories.items.filter((category) => category.id !== action.payload.id)
     })
 
     builder.addCase(
       deleteRecordTc.fulfilled,
-      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: IBudgetingRecord }>) => {
+      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: IBudgetRecord }>) => {
         const { isPermanentDeletion, record } = action.payload
         const { id } = record
 
@@ -89,50 +89,50 @@ const budgetingSlice = createSlice({
       }
     )
 
-    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<IBudgetingCategory[]>) => {
+    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<IBudgetCategory[]>) => {
       if (action.payload.length === 0) return
 
       state.categories = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<IBudgetingCategoryType[]>) => {
+    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<IBudgetCategoryType[]>) => {
       if (action.payload.length === 0) return
 
       state.categoryTypes = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<IBudgetingRecord[]>) => {
+    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<IBudgetRecord[]>) => {
       if (action.payload.length === 0) return
 
       state.chartData = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<IBudgetingRecord>) => {
+    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
       state.records.trashed.items = state.records.trashed.items.filter((record) => record.id !== action.payload.id)
 
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetingCategory>) => {
+    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
       const categoryIndex = state.categories.items.findIndex((category) => category.id === action.payload.id)
 
       state.categories.items[categoryIndex] = action.payload
     })
 
-    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<IBudgetingRecord>) => {
+    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
       const recordIndex = state.records.notTrashed.items.findIndex((record) => record.id === action.payload.id)
 
       state.records.notTrashed.items[recordIndex] = action.payload
     })
   },
   initialState,
-  name: "budgeting",
+  name: "budget",
   reducers: {
     addRecordsItems: (
       state,
       action: PayloadAction<{
         isTrash: boolean
-        items: IBudgetingRecord[]
+        items: IBudgetRecord[]
       }>
     ) => {
       const { isTrash, items } = action.payload
@@ -148,42 +148,42 @@ const budgetingSlice = createSlice({
   },
 })
 
-export const budgetingActions = budgetingSlice.actions
-export const budgetingReducer = budgetingSlice.reducer
+export const budgetActions = budgetSlice.actions
+export const budgetReducer = budgetSlice.reducer
 
 export const createRecordTc = createAsyncThunk(
-  "budgeting/createRecordTc",
+  "budget/createRecordTc",
   async ({
     amount,
     categoryId,
     date,
   }: {
-    amount: IBudgetingRecord["amount"]
-    categoryId: IBudgetingCategory["id"]
-    date: IBudgetingRecord["date"]
+    amount: IBudgetRecord["amount"]
+    categoryId: IBudgetCategory["id"]
+    date: IBudgetRecord["date"]
   }) => {
     const response = await Http.post({
       payload: { amount, categoryId, date },
-      url: "/api/budgeting/records",
+      url: "/api/budget/records",
     })
     return await response.json()
   }
 )
 
 export const createCategoryTc = createAsyncThunk(
-  "budgeting/createCategoryTc",
+  "budget/createCategoryTc",
   async (
     {
       boardId,
       name,
       typeId,
-    }: { boardId: IBoard["id"]; name: IBudgetingCategory["name"]; typeId: IBudgetingCategoryType["id"] },
+    }: { boardId: IBoard["id"]; name: IBudgetCategory["name"]; typeId: IBudgetCategoryType["id"] },
     thunkApi
   ) => {
     try {
       const response = await Http.post({
         payload: { boardId, name, typeId },
-        url: "/api/budgeting/categories",
+        url: "/api/budget/categories",
       })
       return await response.json()
     } catch (error) {
@@ -193,30 +193,27 @@ export const createCategoryTc = createAsyncThunk(
 )
 
 export const deleteCategoryTc = createAsyncThunk(
-  "budgeting/deleteCategoryTc",
-  async ({ categoryId }: { categoryId: IBudgetingCategory["id"] }) => {
-    const response = await Http.delete({ url: `/api/budgeting/categories/${categoryId}` })
+  "budget/deleteCategoryTc",
+  async ({ categoryId }: { categoryId: IBudgetCategory["id"] }) => {
+    const response = await Http.delete({ url: `/api/budget/categories/${categoryId}` })
     return await response.json()
   }
 )
 
-export const deleteRecordTc = createAsyncThunk(
-  "budgeting/deleteRecordTc",
-  async ({ id, isTrashed }: IBudgetingRecord) => {
-    const response = isTrashed
-      ? await Http.delete({ url: `/api/budgeting/records/${id}` })
-      : await Http.patch({ payload: { isTrashed: true }, url: `/api/budgeting/records/${id}` })
+export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({ id, isTrashed }: IBudgetRecord) => {
+  const response = isTrashed
+    ? await Http.delete({ url: `/api/budget/records/${id}` })
+    : await Http.patch({ payload: { isTrashed: true }, url: `/api/budget/records/${id}` })
 
-    return { isPermanentDeletion: isTrashed, record: await response.json() }
-  }
-)
+  return { isPermanentDeletion: isTrashed, record: await response.json() }
+})
 
-export const getCategoriesTc = createAsyncThunk<IBudgetingCategory[], { boardId: IBoard["id"] }, { state: RootState }>(
-  "budgeting/getCategoriesTc",
+export const getCategoriesTc = createAsyncThunk<IBudgetCategory[], { boardId: IBoard["id"] }, { state: RootState }>(
+  "budget/getCategoriesTc",
   async ({ boardId }, { getState }) => {
-    if (getState().budgeting.categories.status !== LoadingStatus.Idle) return []
+    if (getState().budget.categories.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({ url: "/api/budgeting/categories/search?boardId=" + boardId })
+      const response = await Http.get({ url: "/api/budget/categories/search?boardId=" + boardId })
       return await response.json()
     } catch {
       return []
@@ -224,12 +221,12 @@ export const getCategoriesTc = createAsyncThunk<IBudgetingCategory[], { boardId:
   }
 )
 
-export const getCategoryTypesTc = createAsyncThunk<IBudgetingCategoryType[], void, { state: RootState }>(
-  "budgeting/getCategoryTypesTc",
+export const getCategoryTypesTc = createAsyncThunk<IBudgetCategoryType[], void, { state: RootState }>(
+  "budget/getCategoryTypesTc",
   async (_, { getState }) => {
-    if (getState().budgeting.categoryTypes.status !== LoadingStatus.Idle) return []
+    if (getState().budget.categoryTypes.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({ url: "/api/budgeting/category-types" })
+      const response = await Http.get({ url: "/api/budget/category-types" })
       return await response.json()
     } catch {
       return []
@@ -237,13 +234,13 @@ export const getCategoryTypesTc = createAsyncThunk<IBudgetingCategoryType[], voi
   }
 )
 
-export const getChartDataTc = createAsyncThunk<IBudgetingRecord[], void, { state: RootState }>(
-  "budgeting/getChartDataTc",
+export const getChartDataTc = createAsyncThunk<IBudgetRecord[], void, { state: RootState }>(
+  "budget/getChartDataTc",
   async (_, { getState }) => {
-    if (getState().budgeting.chartData.status !== LoadingStatus.Idle) return []
+    if (getState().budget.chartData.status !== LoadingStatus.Idle) return []
     try {
       const response = await Http.get({
-        url: "/api/budgeting/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
+        url: "/api/budget/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
       })
       return await response.json()
     } catch {
@@ -253,24 +250,24 @@ export const getChartDataTc = createAsyncThunk<IBudgetingRecord[], void, { state
 )
 
 export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTrash: boolean }, { state: RootState }>(
-  "budgeting/getRecordsTc",
+  "budget/getRecordsTc",
   async ({ boardId, isTrash }, { getState, dispatch }) => {
-    const existingRecords = getState().budgeting.records[isTrash ? "trashed" : "notTrashed"]
+    const existingRecords = getState().budget.records[isTrash ? "trashed" : "notTrashed"]
 
     if (existingRecords.status === LoadingStatus.Completed) return
     if (existingRecords.status === LoadingStatus.Loading) return
 
-    dispatch(budgetingActions.setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
+    dispatch(budgetActions.setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
 
     const response = await Http.get({
-      url: `/api/budgeting/records/search?boardId=${boardId}&isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
+      url: `/api/budget/records/search?boardId=${boardId}&isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
     })
     const records = await response.json()
 
-    dispatch(budgetingActions.addRecordsItems({ isTrash, items: records }))
+    dispatch(budgetActions.addRecordsItems({ isTrash, items: records }))
 
     dispatch(
-      budgetingActions.setRecordsStatus({
+      budgetActions.setRecordsStatus({
         isTrash,
         status: records.length === 0 ? LoadingStatus.Completed : LoadingStatus.Success,
       })
@@ -279,34 +276,34 @@ export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTr
 )
 
 export const restoreRecordTc = createAsyncThunk(
-  "budgeting/restoreRecordTc",
-  async ({ recordId }: { recordId: IBudgetingRecord["id"] }) => {
+  "budget/restoreRecordTc",
+  async ({ recordId }: { recordId: IBudgetRecord["id"] }) => {
     const response = await Http.patch({
       payload: { isTrashed: false },
-      url: `/api/budgeting/records/${recordId}`,
+      url: `/api/budget/records/${recordId}`,
     })
     return await response.json()
   }
 )
 
 export const updateCategoryTc = createAsyncThunk(
-  "budgeting/updateCategoryTc",
+  "budget/updateCategoryTc",
   async (
     {
       categoryId,
       name,
       typeId,
     }: {
-      categoryId: IBudgetingCategory["id"]
-      name: IBudgetingCategory["name"]
-      typeId: IBudgetingCategoryType["id"]
+      categoryId: IBudgetCategory["id"]
+      name: IBudgetCategory["name"]
+      typeId: IBudgetCategoryType["id"]
     },
     thunkApi
   ) => {
     try {
       const response = await Http.patch({
         payload: { name, typeId },
-        url: `/api/budgeting/categories/${categoryId}`,
+        url: `/api/budget/categories/${categoryId}`,
       })
       return await response.json()
     } catch (error) {
@@ -316,21 +313,21 @@ export const updateCategoryTc = createAsyncThunk(
 )
 
 export const updateRecordTc = createAsyncThunk(
-  "budgeting/updateRecordTc",
+  "budget/updateRecordTc",
   async ({
     amount,
     categoryId,
     date,
     id,
   }: {
-    amount: IBudgetingRecord["amount"]
-    categoryId: IBudgetingCategory["id"]
-    date: IBudgetingRecord["date"]
-    id: IBudgetingRecord["id"]
+    amount: IBudgetRecord["amount"]
+    categoryId: IBudgetCategory["id"]
+    date: IBudgetRecord["date"]
+    id: IBudgetRecord["id"]
   }) => {
     const response = await Http.patch({
       payload: { amount, categoryId, date },
-      url: "/api/budgeting/records/" + id,
+      url: "/api/budget/records/" + id,
     })
     return await response.json()
   }

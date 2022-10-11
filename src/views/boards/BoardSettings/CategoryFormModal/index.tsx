@@ -11,16 +11,16 @@ import { useParams } from "react-router-dom"
 
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
-import { createCategoryTc, updateCategoryTc } from "#models/budgeting"
-import { IBudgetingCategory, IBudgetingCategoryType } from "#types/budgeting"
+import { createCategoryTc, updateCategoryTc } from "#models/budget"
+import { IBudgetCategory, IBudgetCategoryType } from "#types/budget"
 import { useAppDispatch } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormModalProps {
-  category: IBudgetingCategory | null
-  categoryTypes: IBudgetingCategoryType[]
+  category: IBudgetCategory | null
+  categoryTypes: IBudgetCategoryType[]
   closeModal(): void
 }
 
@@ -72,7 +72,7 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categ
   return (
     <Dialog onClose={closeModal} open>
       <DialogTitle>{category ? "Edit category" : "Create category"}</DialogTitle>
-      <form aria-label="budgeting-category-form" onSubmit={submitCategoryForm}>
+      <form aria-label="budget-category-form" onSubmit={submitCategoryForm}>
         <DialogContent>
           <RowGroup>
             <TextField
