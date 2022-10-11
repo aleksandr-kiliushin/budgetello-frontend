@@ -67,15 +67,15 @@ export const BoardRecords: React.FC = () => {
     }
   }, [getRecordsTc, isTrash, loaderRef.current])
 
-  if (params.boardId === undefined) return <Navigate to="/boards" />
+  if (params.boardId === undefined) return <Navigate replace to="/boards" />
   if (board === undefined) return null
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
-    return <Navigate to={`/boards/${params.boardId}/records?isTrash=false`} />
+    return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />
   }
 
   const onIsTrashClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    navigate(`/boards/${params.boardId}/records?isTrash=${event.target.checked}`)
+    navigate(`/boards/${params.boardId}/records?isTrash=${event.target.checked}`, { replace: true })
   }
 
   const openRecordCreationModal = (): void => {

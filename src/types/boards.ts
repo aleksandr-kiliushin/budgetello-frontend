@@ -6,7 +6,7 @@ interface IBoardSubject {
 }
 
 export interface IBoard {
-  admin: IUser[]
+  admins: IUser[]
   id: number
   members: IUser[]
   name: string
