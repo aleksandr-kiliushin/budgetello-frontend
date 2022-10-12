@@ -33,11 +33,22 @@ export const Members: React.FC = () => {
     setBoard(await updatedBoardResponse.json())
   }
 
+  const removeMemberFromBoard = async ({ userId }: { userId: IUser["id"] }) => {
+    const updatedBoardResponse = await Http.post({
+      payload: {},
+      url: `/api/boards/${params.boardId}/remove-member/${userId}`,
+    })
+    setBoard(await updatedBoardResponse.json())
+  }
+
   return (
     <>
       <h2>Users</h2>
       {board.members.map((member) => (
-        <p key={member.id}>{member.username}</p>
+        <div key={member.id}>
+          <span>{member.username}</span>
+          <button onClick={() => removeMemberFromBoard({ userId: member.id })}>- Remove from board</button>
+        </div>
       ))}
       {allUsers
         .filter((user) => board.members.every((member) => member.id !== user.id))
