@@ -67,7 +67,8 @@
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "test": "jest --runInBand",
     "test:watch": "jest --runInBand --watch",
-    "test:e2e": "cypress run --browser chrome"
+    "test:cypress:e2e": "cypress run --e2e --browser chrome",
+    "test:cypress:components": "MODE=development cypress run --component --browser chrome"
   },
   "version": "1.0.0"
 }
