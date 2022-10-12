@@ -15,7 +15,12 @@
 // Import commands.js using ES2015 syntax:
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+import { Global } from "@emotion/react"
+import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import { mount } from "cypress/react18"
+
+import { globalStyles } from "#styles/global"
+import { theme } from "#styles/theme"
 
 import "./commands"
 
@@ -33,7 +38,11 @@ declare global {
   }
 }
 
-Cypress.Commands.add("mount", mount)
-
-// Example use:
-// cy.mount(<MyComponent />)
+Cypress.Commands.add("mount", (component) => {
+  mount(
+    <ThemeProvider theme={theme}>
+      <Global styles={globalStyles} />
+      {component}
+    </ThemeProvider>
+  )
+})

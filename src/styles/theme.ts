@@ -24,6 +24,15 @@ export const theme = createTheme({
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          "& div[role='dialog']": {
+            backgroundColor: "white",
+          },
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         head: {
