@@ -1,19 +1,19 @@
 import React from "react"
 
-import { DialogBody } from "./Dialog/DialogBody"
-import { DialogFooter } from "./Dialog/DialogFooter"
-import { DialogHeader } from "./Dialog/DialogHeader"
+import { DialogBody } from "./subcomponents/DialogBody"
+import { DialogFooter } from "./subcomponents/DialogFooter"
+import { DialogHeader } from "./subcomponents/DialogHeader"
 
-interface IDialogProps {}
-type IDialogComponent = React.FC<React.PropsWithChildren<IDialogProps>>
+interface IOuterDialogProps {}
+type IOuterDialogComponent = React.FC<React.PropsWithChildren<IOuterDialogProps>>
 
-export interface IDialogWithoutSubcomponents extends IDialogComponent {
+export interface IOuterDialogWithoutSubcomponents extends IOuterDialogComponent {
   Header?: typeof DialogHeader
   Body?: typeof DialogBody
   Footer?: typeof DialogFooter
 }
 
-export interface IDialogWithSubcomponents extends IDialogComponent {
+export interface IOuterDialogWithSubcomponents extends IOuterDialogComponent {
   Header: typeof DialogHeader
   Body: typeof DialogBody
   Footer: typeof DialogFooter
