@@ -38,6 +38,7 @@ module.exports = {
     ],
     "no-tabs": 1,
     "react/jsx-sort-props": ["warn", { ignoreCase: true }],
+    "react/prop-types": 0,
     "@typescript-eslint/no-empty-interface": 0,
     "@typescript-eslint/no-extra-semi": 1,
     "@typescript-eslint/no-unused-vars": 0,

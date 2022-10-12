@@ -1,22 +1,15 @@
-import React, { PropsWithChildren } from "react"
+import React from "react"
 
-interface IDialogProps {}
+import { ClosedDialog } from "./ClosedDialog"
+import { Dialog } from "./Dialog"
 
-const OpenDialog: React.FC<PropsWithChildren<IDialogProps>> = ({ children }) => {
-  return <>{children}</>
-}
-const ClosedDialog: React.FC<PropsWithChildren<IDialogProps>> = () => {
-  return null
-}
-
-type IUseDialog = (params: { isOpenInitially: boolean }) => [typeof OpenDialog, () => void, () => void]
-
-export const useDialog: IUseDialog = ({ isOpenInitially }) => {
+export const useDialog = ({ isOpenInitially }: { isOpenInitially: boolean }) => {
   const [isDialogOpen, setIsDialogOpen] = React.useState(() => isOpenInitially)
 
-  const Dialog = isDialogOpen ? OpenDialog : ClosedDialog
+  const _Dialog = isDialogOpen ? Dialog : ClosedDialog
+
   const openDialog = () => setIsDialogOpen(true)
   const closeDialog = () => setIsDialogOpen(false)
 
-  return [Dialog, openDialog, closeDialog]
+  return [_Dialog, openDialog, closeDialog] as const
 }
