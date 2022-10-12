@@ -1,5 +1,9 @@
 import React from "react"
 
-export const DialogBody: React.FC<React.PropsWithChildren> = ({ children }) => {
+const DialogBody: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <>{children}</>
 }
+
+DialogBody.displayName = "DialogBody"
+
+export { DialogBody }

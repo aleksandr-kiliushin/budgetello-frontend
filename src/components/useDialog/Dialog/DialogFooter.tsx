@@ -1,5 +1,9 @@
 import React from "react"
 
-export const DialogFooter: React.FC<React.PropsWithChildren> = ({ children }) => {
+const DialogFooter: React.FC<React.PropsWithChildren> = ({ children }) => {
   return <>{children}</>
 }
+
+DialogFooter.displayName = "DialogFooter"
+
+export { DialogFooter }
