@@ -1,4 +1,4 @@
-import { Modal as MuiModal } from "@mui/material"
+import { Box, Modal as MuiModal } from "@mui/material"
 import React from "react"
 
 import { getChildByDisplayName } from "#utils/getChildByDisplayName"
@@ -16,11 +16,11 @@ export const InnerDialog: IInnerDialog = ({ children, closeModal, isOpen }) => {
 
   return (
     <MuiModal onClose={closeModal} open={isOpen}>
-      <React.Fragment>
+      <Box role="dialog">
         {header}
         {body}
         {footer}
-      </React.Fragment>
+      </Box>
     </MuiModal>
   )
 }
