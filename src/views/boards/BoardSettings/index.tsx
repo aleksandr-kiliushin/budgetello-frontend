@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import { IBoardsRouteParams } from "../types"
 import { CategoryFormModal } from "./CategoryFormModal"
 import { CategoryTableRow } from "./CategoryTableRow"
+import { Members } from "./Members"
 
 export const BoardSettings: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -52,6 +53,7 @@ export const BoardSettings: React.FC = () => {
           Settings
         </Link>
       </Breadcrumbs>
+      <h2>Budget categories</h2>
       <TableContainer>
         <Table size="small">
           <TableHead>
@@ -83,6 +85,7 @@ export const BoardSettings: React.FC = () => {
           closeModal={toggleIsCategoryCreatingModalShown}
         />
       )}
+      <Members />
     </>
   )
 }
