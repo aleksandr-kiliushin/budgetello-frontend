@@ -1,9 +1,9 @@
-import { Box } from "@mui/material"
-import React from "react"
+import { styled } from "@mui/material"
 
-const DialogHeader: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <Box sx={{ backgroundColor: "linen" }}>{children}</Box>
-}
+const DialogHeader = styled("div")({
+  padding: "16px",
+  backgroundColor: "#ffffff80",
+})
 
 DialogHeader.displayName = "DialogHeader"
 

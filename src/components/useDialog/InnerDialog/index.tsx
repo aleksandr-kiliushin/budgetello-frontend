@@ -3,13 +3,15 @@ import React from "react"
 
 import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 
+import { HeaderWithCloseButton } from "./HeaderWithCloseButton"
+
 const DialogWindow = styled("div")({
   position: "absolute",
   left: "50%",
   top: "50%",
   transform: "translate(-50%, -50%)",
   width: "600px",
-  backgroundColor: "white",
+  backgroundColor: "#262626",
 })
 
 interface IInnerDialogProps {
@@ -24,7 +26,10 @@ export const InnerDialog: React.FC<React.PropsWithChildren<IInnerDialogProps>> =
   return (
     <MuiModal onClose={closeModal} open={isOpen}>
       <DialogWindow role="dialog">
-        {header}
+        <HeaderWithCloseButton>
+          {header}
+          <button onClick={closeModal}>close</button>
+        </HeaderWithCloseButton>
         {body}
         {footer}
       </DialogWindow>

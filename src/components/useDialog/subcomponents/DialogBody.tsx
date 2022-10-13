@@ -1,9 +1,9 @@
-import { Box } from "@mui/material"
-import React from "react"
+import { styled } from "@mui/material"
 
-const DialogBody: React.FC<React.PropsWithChildren> = ({ children }) => {
-  return <Box sx={{ backgroundColor: "burlywood" }}>{children}</Box>
-}
+const DialogBody = styled("div")({
+  padding: "16px",
+  backgroundColor: "#ffffff70",
+})
 
 DialogBody.displayName = "DialogBody"
 
