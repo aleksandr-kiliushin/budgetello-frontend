@@ -1,6 +1,8 @@
 import createTheme from "@mui/material/styles/createTheme"
 
-import { breakpoints, mediaQuery } from "./media-queries"
+import { breakpoints, mediaQuery } from "#styles/media-queries"
+
+import { MuiModal } from "./components/MuiModal"
 
 export const theme = createTheme({
   breakpoints,
@@ -24,15 +26,7 @@ export const theme = createTheme({
         },
       },
     },
-    MuiModal: {
-      styleOverrides: {
-        root: {
-          "& div[role='dialog']": {
-            backgroundColor: "white",
-          },
-        },
-      },
-    },
+    MuiModal,
     MuiTableCell: {
       styleOverrides: {
         head: {
