@@ -5,7 +5,7 @@ const httpLink = createHttpLink({
   uri: "http://localhost:3080/graphql",
 })
 
-const authLink = setContext((_, { headers }) => {
+const authorizationLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
@@ -16,5 +16,5 @@ const authLink = setContext((_, { headers }) => {
 
 export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: authLink.concat(httpLink),
+  link: authorizationLink.concat(httpLink),
 })
