@@ -1,50 +1,38 @@
-import { gql, useQuery } from "@apollo/client"
 import React from "react"
 import { Link } from "react-router-dom"
 
 import { IBoard } from "#types/boards"
+import { Http } from "#utils/Http"
 import { useAppSelector } from "#utils/hooks"
 
 export const BoardsList: React.FC = () => {
   const user = useAppSelector((state) => state.user)
 
-  const { data: participatedBoards } = useQuery<{ boards: IBoard[] }>(gql`
-    query getBoards {
-      boards(iAmMemberOf: true) {
-        admins {
-          id
-        }
-        id
-        name
-      }
-    }
-  `)
-  const { data: notParticipatedBoards } = useQuery<{ boards: IBoard[] }>(gql`
-    query getBoards {
-      boards(iAmMemberOf: false) {
-        admins {
-          id
-        }
-        id
-        name
-      }
-    }
-  `)
+  const [participatedBoards, setParticipatedBoards] = React.useState<IBoard[]>([])
+  React.useEffect(() => {
+    Http.get({ url: "/api/boards/search?iAmMemberOf=true" })
+      .then((response) => response.json())
+      .then(setParticipatedBoards)
+  }, [])
 
-  if (participatedBoards === undefined) return null
-  if (notParticipatedBoards === undefined) return null
+  const [notParticipatedBoards, setNotParticipatedBoards] = React.useState<IBoard[]>([])
+  React.useEffect(() => {
+    Http.get({ url: "/api/boards/search?iAmMemberOf=false" })
+      .then((response) => response.json())
+      .then(setNotParticipatedBoards)
+  }, [])
 
   return (
     <>
       <h2>Your boards</h2>
-      {participatedBoards.boards.map((board) => (
+      {participatedBoards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}
           {board.admins.some((admin) => admin.id === user.data.id) && "(YOU ARE ADMIN)"}
         </Link>
       ))}
       <h2>Other boards</h2>
-      {notParticipatedBoards.boards.map((board) => (
+      {notParticipatedBoards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}
           {board.admins.some((admin) => admin.id === user.data.id) && "(YOU ARE ADMIN)"}
