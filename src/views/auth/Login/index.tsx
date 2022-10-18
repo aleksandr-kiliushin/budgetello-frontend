@@ -1,19 +1,29 @@
+import { gql, useMutation } from "@apollo/client"
 import { yupResolver } from "@hookform/resolvers/yup"
 import Button from "@mui/material/Button"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
-import { FC } from "react"
+import React from "react"
 import { useForm } from "react-hook-form"
 
 import { RowGroup } from "#components/RowGroup"
-import { login } from "#models/user"
+import { userActions } from "#models/user"
+import { apolloClient } from "#src/apolloClient"
 import { useAppDispatch } from "#utils/hooks"
 
 import { Container } from "../components"
 import { FormFieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
-export const Login: FC = () => {
+const AUTHORIZE = gql`
+  mutation authorize($username: String!, $password: String!) {
+    authorize(input: { username: $username, password: $password })
+  }
+`
+
+export const Login: React.FC = () => {
   const dispatch = useAppDispatch()
+
+  const [authorize] = useMutation(AUTHORIZE)
 
   const {
     formState: { isValid, errors },
@@ -28,7 +38,26 @@ export const Login: FC = () => {
 
   const onSubmit = handleSubmit(async ({ password, username }) => {
     try {
-      await dispatch(login({ password, username }))
+      localStorage.removeItem("authToken")
+      const response = await authorize({ variables: { username, password } })
+      const authorizationToken = response.data.authorize
+      if (authorizationToken === undefined) {
+        dispatch(userActions.setIsUserAuthorized(false))
+        return
+      }
+      localStorage.authToken = authorizationToken
+      dispatch(userActions.setIsUserAuthorized(true))
+      const result = await apolloClient.query({
+        query: gql`
+          query getUser {
+            user(id: 0) {
+              id
+              username
+            }
+          }
+        `,
+      })
+      dispatch(userActions.setCurrentUser(result.data.user))
     } catch (error) {
       if (typeof error !== "object") return
       if (error === null) return

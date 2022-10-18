@@ -1,6 +1,20 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client"
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client"
+import { setContext } from "@apollo/client/link/context"
+
+const httpLink = createHttpLink({
+  uri: "http://localhost:3080/graphql",
+})
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      authorization: localStorage.authToken,
+    },
+  }
+})
 
 export const apolloClient = new ApolloClient({
-  uri: "https://flyby-gateway.herokuapp.com/",
   cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
 })
