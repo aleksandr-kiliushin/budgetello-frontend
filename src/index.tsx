@@ -1,3 +1,4 @@
+import { ApolloProvider } from "@apollo/client"
 import { Global } from "@emotion/react"
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import { StrictMode } from "react"
@@ -9,6 +10,8 @@ import { store } from "#models/store"
 import { globalStyles } from "#styles/global"
 import { theme } from "#styles/theme"
 import { App } from "#views"
+
+import { apolloClient } from "./apolloClient"
 
 let rootNode = document.querySelector("#root")
 if (rootNode === null) {
@@ -22,12 +25,14 @@ const root = createRoot(rootNode)
 root.render(
   <StrictMode>
     <BrowserRouter>
-      <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <Global styles={globalStyles} />
-          <App />
-        </ThemeProvider>
-      </Provider>
+      <ApolloProvider client={apolloClient}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <Global styles={globalStyles} />
+            <App />
+          </ThemeProvider>
+        </Provider>
+      </ApolloProvider>
     </BrowserRouter>
   </StrictMode>
 )

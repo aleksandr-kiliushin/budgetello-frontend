@@ -1,3 +1,4 @@
+import { gql, useQuery } from "@apollo/client"
 import { css } from "@emotion/react"
 import { Box } from "@mui/material"
 import React from "react"
@@ -14,9 +15,24 @@ import { BoardSettings } from "#views/boards/BoardSettings"
 import { BoardsList } from "#views/boards/BoardsList"
 import { Home } from "#views/home"
 
+const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`
+
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
   const location = useLocation()
+
+  const { error, data } = useQuery(GET_LOCATIONS)
+  console.log("error >>", error)
+  console.log("data >>", data)
 
   const user = useAppSelector((state) => state.user)
 
