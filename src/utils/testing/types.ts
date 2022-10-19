@@ -4,7 +4,7 @@ import React from "react"
 
 import { IStore } from "#models/store"
 
-import { ITestUserUsername } from "./test-users-credentials"
+import { ITestUser } from "./test-users"
 
 interface IRenderResult extends IRtlRenderResult {
   history: History
@@ -12,7 +12,7 @@ interface IRenderResult extends IRtlRenderResult {
 }
 
 interface IRenderOptions extends Omit<IRtlRenderOptions, "wrapper"> {
-  iAm: ITestUserUsername | "guest" | undefined
+  iAm: ITestUser["id"] | "guest" | undefined
   initialUrl?: string
 }
 

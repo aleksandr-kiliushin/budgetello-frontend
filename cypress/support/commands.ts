@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
-import { getAuthToken } from "#utils/getAuthToken"
-import { ITestUserUsername } from "#utils/testing/test-users-credentials"
+import { getAuthToken } from "#utils/testing/getAuthToken"
+import { ITestUser } from "#utils/testing/test-users"
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -44,11 +44,11 @@ declare global {
   namespace Cypress {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Chainable {
-      authorize(username: ITestUserUsername): Promise<void>
+      authorize(testUserId: ITestUser["id"]): Promise<void>
     }
   }
 }
 
-Cypress.Commands.add("authorize", async (username) => {
-  localStorage.authToken = await getAuthToken(username)
+Cypress.Commands.add("authorize", async (testUserId) => {
+  localStorage.authToken = await getAuthToken(testUserId)
 })
