@@ -1,3 +1,4 @@
+import { gql } from "@apollo/client"
 import { Breadcrumbs } from "@mui/material"
 import Button from "@mui/material/Button"
 import Table from "@mui/material/Table"
@@ -12,7 +13,7 @@ import { useToggle } from "react-use"
 
 import { getCategoriesTc, getCategoryTypesTc } from "#models/budget"
 import { IBoard } from "#types/boards"
-import { Http } from "#utils/Http"
+import { apolloClient } from "#utils/apolloClient"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import { IBoardsRouteParams } from "../types"
@@ -37,9 +38,18 @@ export const BoardSettings: React.FC = () => {
   const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
   React.useEffect(() => {
     if (params.boardId === undefined) return
-    Http.get({ url: "/api/boards/" + params.boardId })
-      .then((response) => response.json())
-      .then(setBoard)
+    apolloClient
+      .query({
+        query: gql`
+          query GET_BOARD {
+            board(id: ${params.boardId}) {
+              id
+              name
+            }
+          }
+        `,
+      })
+      .then((response) => setBoard(response.data.board))
   }, [params.boardId])
 
   if (board === undefined) return null

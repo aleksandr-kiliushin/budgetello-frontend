@@ -1,8 +1,9 @@
+import { gql } from "@apollo/client"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
 import { AppThunk } from "#models/store"
 import { IUser } from "#types/IUser"
-import { Http } from "#utils/Http"
+import { apolloClient } from "#utils/apolloClient"
 
 interface IState {
   isAuthorized: boolean | undefined
@@ -44,8 +45,17 @@ export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
   return async (dispatch, getState) => {
     if (getState().user.isAuthorized === false) return false
     try {
-      const response = await Http.get({ url: "/api/users/0" })
-      dispatch(userActions.setCurrentUser(await response.json()))
+      const response = await apolloClient.query({
+        query: gql`
+          query GET_USER {
+            user(id: 0) {
+              id
+              username
+            }
+          }
+        `,
+      })
+      dispatch(userActions.setCurrentUser(response.data.user))
       return true
     } catch (error) {
       return false
@@ -57,16 +67,19 @@ type Login = (credentials: { password: IUser["password"]; username: IUser["usern
 export const login: Login = ({ password, username }) => {
   return async (dispatch): Promise<void> => {
     localStorage.removeItem("authToken")
-    const response = await Http.post({
-      payload: { password, username },
-      url: "/api/login",
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation AUTHORIZE {
+          authorize(input: { username: "${username}", password: "${password}" })
+        }
+      `,
     })
-    const { authToken } = await response.json()
-    if (authToken === undefined) {
+    const authorizationToken = response.data.authorize
+    if (authorizationToken === undefined) {
       dispatch(userActions.setIsUserAuthorized(false))
       return
     }
-    localStorage.authToken = authToken
+    localStorage.authToken = authorizationToken
     dispatch(userActions.setIsUserAuthorized(true))
     await dispatch(fetchAndSetAuthorizedUser())
   }
