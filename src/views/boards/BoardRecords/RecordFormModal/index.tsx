@@ -18,7 +18,7 @@ import { createRecordTc, updateRecordTc } from "#models/budget"
 import { IBudgetCategory, IBudgetRecord } from "#types/budget"
 import { useAppDispatch } from "#utils/hooks"
 
-import { FormFieldName, IFormValues, validationSchema } from "./form-helpers"
+import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormModalProps {
   categories: IBudgetCategory[]
@@ -71,7 +71,7 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
         <DialogContent>
           <RowGroup>
             <TextField
-              {...register(FormFieldName.Amount, { valueAsNumber: true })}
+              {...register(FormField.Amount, { valueAsNumber: true })}
               error={formState.errors.amount !== undefined}
               fullWidth
               helperText={formState.errors.amount?.message}
@@ -81,7 +81,7 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}
-              <Select {...register(FormFieldName.CategoryId, { valueAsNumber: true })} label="Category">
+              <Select {...register(FormField.CategoryId, { valueAsNumber: true })} label="Category">
                 {categories.map(({ name, id }) => (
                   <MenuItem key={id} value={id}>
                     {name}
@@ -89,7 +89,7 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
                 ))}
               </Select>
             </FormControl>
-            <TextField {...register(FormFieldName.Date, { required: true })} label="Date" type="date" />
+            <TextField {...register(FormField.Date, { required: true })} label="Date" type="date" />
           </RowGroup>
         </DialogContent>
         <DialogActions>
