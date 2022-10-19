@@ -1,10 +1,11 @@
+import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
 import { IBudgetCategory, IBudgetCategoryType, IBudgetRecord } from "#types/budget"
-import { Http } from "#utils/Http"
+import { apolloClient } from "#utils/apolloClient"
 
 interface IState {
   categories: {
@@ -162,11 +163,27 @@ export const createRecordTc = createAsyncThunk(
     categoryId: IBudgetCategory["id"]
     date: IBudgetRecord["date"]
   }) => {
-    const response = await Http.post({
-      payload: { amount, categoryId, date },
-      url: "/api/budget/records",
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation CREATE_BUDGET_RECORD {
+          createBudgetRecord(input: { amount: ${amount}, categoryId: ${categoryId}, date: "${date}" }) {
+            amount
+            category {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+            date
+            id
+            isTrashed
+          }
+        }
+      `,
     })
-    return await response.json()
+    return response.data.createBudgetRecord
   }
 )
 
@@ -181,11 +198,21 @@ export const createCategoryTc = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const response = await Http.post({
-        payload: { boardId, name, typeId },
-        url: "/api/budget/categories",
+      const response = await apolloClient.mutate({
+        mutation: gql`
+          mutation CREATE_BUDGET_CATEGORY {
+            createBudgetCategory(input: { boardId: ${boardId}, name: "${name}", typeId: ${typeId} }) {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+          }
+        `,
       })
-      return await response.json()
+      return response.data.createBudgetCategory
     } catch (error) {
       return thunkApi.rejectWithValue(error)
     }
@@ -195,15 +222,54 @@ export const createCategoryTc = createAsyncThunk(
 export const deleteCategoryTc = createAsyncThunk(
   "budget/deleteCategoryTc",
   async ({ categoryId }: { categoryId: IBudgetCategory["id"] }) => {
-    const response = await Http.delete({ url: `/api/budget/categories/${categoryId}` })
-    return await response.json()
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation DELETE_BUDGET_CATEGORY {
+          deleteBudgetCategory(id: ${categoryId}) {
+            id
+          }
+        }
+      `,
+    })
+    return response.data.deleteBudgetCategory
   }
 )
 
 export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({ id, isTrashed }: IBudgetRecord) => {
   const response = isTrashed
-    ? await Http.delete({ url: `/api/budget/records/${id}` })
-    : await Http.patch({ payload: { isTrashed: true }, url: `/api/budget/records/${id}` })
+    ? await apolloClient
+        .query({
+          query: gql`
+            mutation DELETE_BUDGET_RECORD {
+              deleteBudgetRecord(id: ${id}) {
+                id
+              }
+            }
+          `,
+        })
+        .then((response) => response.data.deleteBudgetRecord)
+    : await apolloClient
+        .query({
+          query: gql`
+            mutation UPDATE_BUDGET_RECORD {
+              updateBudgetRecord(input: { id: ${id}, isTrashed: true }) {
+                amount
+                category {
+                  id
+                  name
+                  type {
+                    id
+                    name
+                  }
+                }
+                date
+                id
+                isTrashed
+              }
+            }
+          `,
+        })
+        .then((response) => response.data.updateBudgetRecord)
 
   return { isPermanentDeletion: isTrashed, record: await response.json() }
 })
@@ -213,8 +279,21 @@ export const getCategoriesTc = createAsyncThunk<IBudgetCategory[], { boardId: IB
   async ({ boardId }, { getState }) => {
     if (getState().budget.categories.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({ url: "/api/budget/categories/search?boardId=" + boardId })
-      return await response.json()
+      const response = await apolloClient.query({
+        query: gql`
+          query GET_BUDGET_CATEGORIES {
+            budgetCategories(boardsIds: [${boardId}]) {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+          }
+        `,
+      })
+      return response.data.budgetCategories
     } catch {
       return []
     }
@@ -226,8 +305,17 @@ export const getCategoryTypesTc = createAsyncThunk<IBudgetCategoryType[], void, 
   async (_, { getState }) => {
     if (getState().budget.categoryTypes.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({ url: "/api/budget/category-types" })
-      return await response.json()
+      const response = await apolloClient.query({
+        query: gql`
+          query GET_BUDGET_CATEGORY_TYPES {
+            budgetCategoryTypes {
+              id
+              name
+            }
+          }
+        `,
+      })
+      return response.data.budgetCategoryTypes
     } catch {
       return []
     }
@@ -239,9 +327,7 @@ export const getChartDataTc = createAsyncThunk<IBudgetRecord[], void, { state: R
   async (_, { getState }) => {
     if (getState().budget.chartData.status !== LoadingStatus.Idle) return []
     try {
-      const response = await Http.get({
-        url: "/api/budget/records/search?isTrashed=false&orderingByDate=ASC&orderingById=ASC",
-      })
+      const response = await fetch("")
       return await response.json()
     } catch {
       return []
@@ -259,17 +345,33 @@ export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTr
 
     dispatch(budgetActions.setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
 
-    const response = await Http.get({
-      url: `/api/budget/records/search?boardId=${boardId}&isTrashed=${isTrash}&orderingByDate=DESC&orderingById=DESC&skip=${existingRecords.items.length}&take=50`,
+    const response = await apolloClient.query({
+      query: gql`
+        query GET_BUDGET_RECORDS {
+          budgetRecords(boardsIds: [${boardId}], isTrashed: ${isTrash}, orderingByDate: "DESC", orderingById: "DESC", skip: ${existingRecords.items.length}, take: 50) {
+            amount
+            category {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+            date
+            id
+            isTrashed
+          }
+        }
+      `,
     })
-    const records = await response.json()
 
-    dispatch(budgetActions.addRecordsItems({ isTrash, items: records }))
+    dispatch(budgetActions.addRecordsItems({ isTrash, items: response.data.budgetRecords }))
 
     dispatch(
       budgetActions.setRecordsStatus({
         isTrash,
-        status: records.length === 0 ? LoadingStatus.Completed : LoadingStatus.Success,
+        status: response.data.budgetRecords.length === 0 ? LoadingStatus.Completed : LoadingStatus.Success,
       })
     )
   }
@@ -278,11 +380,27 @@ export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTr
 export const restoreRecordTc = createAsyncThunk(
   "budget/restoreRecordTc",
   async ({ recordId }: { recordId: IBudgetRecord["id"] }) => {
-    const response = await Http.patch({
-      payload: { isTrashed: false },
-      url: `/api/budget/records/${recordId}`,
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation UPDATE_BUDGET_RECORD {
+          updateBudgetRecord(input: { id: ${recordId}, isTrashed: false }) {
+            amount
+            category {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+            date
+            id
+            isTrashed
+          }
+        }
+      `,
     })
-    return await response.json()
+    return response.data.updateBudgetRecord
   }
 )
 
@@ -301,11 +419,21 @@ export const updateCategoryTc = createAsyncThunk(
     thunkApi
   ) => {
     try {
-      const response = await Http.patch({
-        payload: { name, typeId },
-        url: `/api/budget/categories/${categoryId}`,
+      const response = await apolloClient.mutate({
+        mutation: gql`
+          mutation UPDATE_BUDGET_CATEGORY {
+            updateBudgetCategory(input: { id: ${categoryId}, name: "${name}", typeId: ${typeId} }) {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+          }
+        `,
       })
-      return await response.json()
+      return response.data.updateBudgetCategory
     } catch (error) {
       return thunkApi.rejectWithValue(error)
     }
@@ -325,10 +453,26 @@ export const updateRecordTc = createAsyncThunk(
     date: IBudgetRecord["date"]
     id: IBudgetRecord["id"]
   }) => {
-    const response = await Http.patch({
-      payload: { amount, categoryId, date },
-      url: "/api/budget/records/" + id,
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation UPDATE_BUDGET_RECORD {
+          updateBudgetRecord(input: { id: ${id}, amount: ${amount}, categoryId: ${categoryId}, date: "${date}" }) {
+            amount
+            category {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+            date
+            id
+            isTrashed
+          }
+        }
+      `,
     })
-    return await response.json()
+    return response.data.updateBudgetRecord
   }
 )

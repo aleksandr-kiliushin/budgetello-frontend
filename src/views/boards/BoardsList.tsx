@@ -1,8 +1,9 @@
+import { gql } from "@apollo/client"
 import React from "react"
 import { Link } from "react-router-dom"
 
 import { IBoard } from "#types/boards"
-import { Http } from "#utils/Http"
+import { apolloClient } from "#utils/apolloClient"
 import { useAppSelector } from "#utils/hooks"
 
 export const BoardsList: React.FC = () => {
@@ -10,16 +11,40 @@ export const BoardsList: React.FC = () => {
 
   const [participatedBoards, setParticipatedBoards] = React.useState<IBoard[]>([])
   React.useEffect(() => {
-    Http.get({ url: "/api/boards/search?iAmMemberOf=true" })
-      .then((response) => response.json())
-      .then(setParticipatedBoards)
+    apolloClient
+      .query({
+        query: gql`
+          query GET_BOARDS {
+            boards(iAmMemberOf: true) {
+              admins {
+                id
+              }
+              id
+              name
+            }
+          }
+        `,
+      })
+      .then((response) => setParticipatedBoards(response.data.boards))
   }, [])
 
   const [notParticipatedBoards, setNotParticipatedBoards] = React.useState<IBoard[]>([])
   React.useEffect(() => {
-    Http.get({ url: "/api/boards/search?iAmMemberOf=false" })
-      .then((response) => response.json())
-      .then(setNotParticipatedBoards)
+    apolloClient
+      .query({
+        query: gql`
+          query GET_BOARDS {
+            boards(iAmMemberOf: false) {
+              admins {
+                id
+              }
+              id
+              name
+            }
+          }
+        `,
+      })
+      .then((response) => setNotParticipatedBoards(response.data.boards))
   }, [])
 
   return (
