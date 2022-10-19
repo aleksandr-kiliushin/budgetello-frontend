@@ -2,6 +2,7 @@ import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
+import { testUsers } from "#utils/testing/test-users"
 
 import { Auth } from "./index"
 
@@ -62,7 +63,7 @@ describe("Auth service.", () => {
   })
 
   test("Logout works correctly.", async () => {
-    await render(<Auth />, { iAm: "john-doe" })
+    await render(<Auth />, { iAm: testUsers.johnDoe.id })
 
     expect(localStorage.authToken).toEqual(expect.stringMatching(".+"))
     userEvent.click(screen.getByText("Log out"))

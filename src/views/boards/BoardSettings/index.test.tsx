@@ -2,18 +2,19 @@ import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/rea
 import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
+import { testUsers } from "#utils/testing/test-users"
 import { App } from "#views"
 
 describe("Budget categories service", () => {
   test("come from backend and render correctly.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     expect(() => expect(screen.getByText("clothes")).toBeInTheDocument())
     expect(() => expect(screen.getByText("education")).toBeInTheDocument())
   })
 
   test("Modal for new category modal opens and renders correctly.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Create category")).toBeInTheDocument()
@@ -22,7 +23,7 @@ describe("Budget categories service", () => {
   })
 
   test("Modal for new category creating closes correctly using Cancel button.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByRole("dialog")).toBeInTheDocument()
@@ -31,7 +32,7 @@ describe("Budget categories service", () => {
   })
 
   test("A new category is created correctly.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     expect(await screen.findByText("Submit")).toBeDisabled()
@@ -44,7 +45,7 @@ describe("Budget categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     userEvent.click(screen.getByText("+New"))
     await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "education"))
@@ -67,7 +68,7 @@ describe("Budget categories service", () => {
   })
 
   test("A category is edited correctly.", async () => {
-    await render(<App />, { iAm: "jessica-stark", initialUrl: "/boards/2/settings" })
+    await render(<App />, { iAm: testUsers.jessicaStark.id, initialUrl: "/boards/2/settings" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("salary-income-category-edit-button")))
@@ -85,7 +86,7 @@ describe("Budget categories service", () => {
   })
 
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
-    await render(<App />, { iAm: "john-doe", initialUrl: "/boards/1/settings" })
+    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
     expect(await screen.findByText("education")).toBeInTheDocument()
     await waitFor(() => userEvent.click(screen.getByTestId("education-expense-category-edit-button")))
@@ -105,7 +106,7 @@ describe("Budget categories service", () => {
   })
 
   test("A category is deleted correctly.", async () => {
-    await render(<App />, { iAm: "jessica-stark", initialUrl: "/boards/2/settings" })
+    await render(<App />, { iAm: testUsers.jessicaStark.id, initialUrl: "/boards/2/settings" })
 
     expect(await screen.findByText("salary")).toBeInTheDocument()
     userEvent.click(screen.getByTestId("salary-income-category-delete-button"))

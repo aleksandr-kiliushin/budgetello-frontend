@@ -1,6 +1,8 @@
+import { testUsers } from "#utils/testing/test-users"
+
 describe("records", () => {
   it("are loaded correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records")
     cy.url().should("include", "/records?isTrash=false")
@@ -22,7 +24,7 @@ describe("records", () => {
   })
 
   it("is created correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records")
     cy.get("button").contains("+New").click()
@@ -41,7 +43,7 @@ describe("records", () => {
   })
 
   it("is edited correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records")
     cy.get("#2022-08-01-expense-education-25-edit-button").click()
@@ -57,7 +59,7 @@ describe("records", () => {
   })
 
   it("is moved to trash correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records")
     cy.get("#2022-08-01-expense-education-25-delete-button").click()
@@ -70,7 +72,7 @@ describe("records", () => {
   })
 
   it("is restored correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-restore-button").click()
@@ -83,7 +85,7 @@ describe("records", () => {
   })
 
   it("is deleted from trash correctly", () => {
-    cy.authorize("john-doe")
+    cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-delete-button").click()

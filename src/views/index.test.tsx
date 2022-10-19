@@ -1,7 +1,8 @@
 import { waitFor } from "@testing-library/react"
 
-import { getAuthToken } from "#utils/getAuthToken"
+import { getAuthToken } from "#utils/testing/getAuthToken"
 import { render } from "#utils/testing/render"
+import { testUsers } from "#utils/testing/test-users"
 
 import { App } from "./index"
 
@@ -13,13 +14,13 @@ describe("<App />", () => {
   })
 
   test("If an authorized user open some page, they are NOT redirected to /auth..", async () => {
-    const { history } = await render(<App />, { iAm: "john-doe", initialUrl: "/boards" })
+    const { history } = await render(<App />, { iAm: testUsers.jessicaStark.id, initialUrl: "/boards" })
 
     expect(history.location.pathname).toEqual("/boards")
   })
 
   test("If the user has authToken in localStorage (i. e. was logged in before and refreshes the page), they is NOT redirected to /auth.", async () => {
-    localStorage.authToken = await getAuthToken("john-doe")
+    localStorage.authToken = await getAuthToken(testUsers.johnDoe.id)
     const { history } = await render(<App />, { iAm: undefined, initialUrl: "/boards" })
 
     expect(history.location.pathname).toEqual("/boards")

@@ -7,7 +7,7 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 import { initializeStore } from "#models/store"
 import { login, userActions } from "#models/user"
 
-import { passwordByUsername } from "./test-users-credentials"
+import { credentialsByTestUserId } from "./test-users"
 import { IRender } from "./types"
 
 export const render: IRender = async (component, options) => {
@@ -20,8 +20,10 @@ export const render: IRender = async (component, options) => {
   if (iAm === "guest") {
     store.dispatch(userActions.setIsUserAuthorized(false))
   }
-  if (typeof iAm === "string" && iAm !== "guest") {
-    await store.dispatch(login({ username: iAm, password: passwordByUsername[iAm] }))
+  if (typeof iAm === "number" && iAm in credentialsByTestUserId) {
+    await store.dispatch(
+      login({ username: credentialsByTestUserId[iAm].username, password: credentialsByTestUserId[iAm].password })
+    )
   }
 
   const AllTheProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
