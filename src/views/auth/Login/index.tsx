@@ -30,11 +30,10 @@ export const Login: FC = () => {
     try {
       await dispatch(login({ password, username }))
     } catch (error) {
-      if (typeof error !== "object") return
-      if (error === null) return
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      Object.entries((error as any).fields).forEach(([fieldName, error]) => {
+      const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
+
+      Object.entries(errorFields).forEach(([fieldName, error]) => {
         setError(fieldName as FormFieldName, { type: "custom", message: error as string })
       })
     }
