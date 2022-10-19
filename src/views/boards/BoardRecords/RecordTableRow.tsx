@@ -25,10 +25,10 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, 
 
   const { amount, date, category } = record
 
-  const restoreRecord = (): void => {
+  const restoreRecord = () => {
     dispatch(restoreRecordTc({ recordId: record.id }))
   }
-  const deleteRecord = (): void => {
+  const deleteRecord = () => {
     dispatch(deleteRecordTc(record))
   }
 
