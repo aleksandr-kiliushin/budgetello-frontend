@@ -10,7 +10,7 @@ import { login } from "#models/user"
 import { useAppDispatch } from "#utils/hooks"
 
 import { Container } from "../components"
-import { FormFieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FormField, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch()
@@ -34,7 +34,7 @@ export const Login: FC = () => {
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
 
       Object.entries(errorFields).forEach(([fieldName, error]) => {
-        setError(fieldName as FormFieldName, { type: "custom", message: error as string })
+        setError(fieldName as FormField, { type: "custom", message: error as string })
       })
     }
   })
@@ -47,13 +47,13 @@ export const Login: FC = () => {
       <form onSubmit={onSubmit}>
         <RowGroup>
           <TextField
-            {...register(FormFieldName.Username)}
+            {...register(FormField.Username)}
             error={errors.username !== undefined}
             helperText={errors.username?.message}
             label="Username"
           />
           <TextField
-            {...register(FormFieldName.Password)}
+            {...register(FormField.Password)}
             error={errors.password !== undefined}
             helperText={errors.password?.message}
             label="Password"
