@@ -236,42 +236,52 @@ export const deleteCategoryTc = createAsyncThunk(
 )
 
 export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({ id, isTrashed }: IBudgetRecord) => {
-  const response = isTrashed
-    ? await apolloClient
-        .query({
-          query: gql`
-            mutation DELETE_BUDGET_RECORD {
-              deleteBudgetRecord(id: ${id}) {
-                id
-              }
-            }
-          `,
-        })
-        .then((response) => response.data.deleteBudgetRecord)
-    : await apolloClient
-        .query({
-          query: gql`
-            mutation UPDATE_BUDGET_RECORD {
-              updateBudgetRecord(input: { id: ${id}, isTrashed: true }) {
-                amount
-                category {
-                  id
-                  name
-                  type {
-                    id
-                    name
-                  }
-                }
-                date
-                id
-                isTrashed
-              }
-            }
-          `,
-        })
-        .then((response) => response.data.updateBudgetRecord)
+  let record: IBudgetRecord | undefined
 
-  return { isPermanentDeletion: isTrashed, record: await response.json() }
+  if (isTrashed) {
+    record = await apolloClient
+      .mutate({
+        mutation: gql`
+          mutation DELETE_BUDGET_RECORD {
+            deleteBudgetRecord(id: ${id}) {
+              id
+            }
+          }
+        `,
+      })
+      .then((response) => response.data.deleteBudgetRecord)
+  }
+
+  if (!isTrashed) {
+    const response = await apolloClient.mutate({
+      mutation: gql`
+        mutation UPDATE_BUDGET_RECORD {
+          updateBudgetRecord(input: { id: ${id}, isTrashed: true }) {
+            amount
+            category {
+              id
+              name
+              type {
+                id
+                name
+              }
+            }
+            date
+            id
+            isTrashed
+          }
+        }
+      `,
+    })
+    console.log("response >>", response)
+    record = response.data.updateBudgetRecord
+  }
+
+  if (record === undefined) {
+    throw new Error("Record is undefined.")
+  }
+
+  return { isPermanentDeletion: isTrashed, record }
 })
 
 export const getCategoriesTc = createAsyncThunk<IBudgetCategory[], { boardId: IBoard["id"] }, { state: RootState }>(
