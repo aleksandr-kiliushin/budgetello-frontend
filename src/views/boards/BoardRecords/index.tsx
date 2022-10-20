@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client"
 import { Breadcrumbs, Typography } from "@mui/material"
 import Button from "@mui/material/Button"
 import FormControlLabel from "@mui/material/FormControlLabel"
@@ -10,11 +9,10 @@ import TableRow from "@mui/material/TableRow"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
+import { useGetBoardQuery } from "#api/boards"
 import { Loader } from "#components/Loader"
 import { getCategoriesTc, getRecordsTc } from "#models/budget"
 import { LoadingStatus } from "#src/constants/shared"
-import { IBoard } from "#types/boards"
-import { apolloClient } from "#utils/apolloClient"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
 
@@ -38,22 +36,7 @@ export const BoardRecords: React.FC = () => {
 
   const loaderRef = React.useRef(null)
 
-  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
-  React.useEffect(() => {
-    if (params.boardId === undefined) return
-    apolloClient
-      .query({
-        query: gql`
-          query GET_BOARD {
-            board(id: ${params.boardId}) {
-              id
-              name
-            }
-          }
-        `,
-      })
-      .then((response) => setBoard(response.data.board))
-  }, [params.boardId])
+  const getBoardsResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
 
   React.useEffect(() => {
     if (params.boardId === undefined) return
@@ -78,7 +61,9 @@ export const BoardRecords: React.FC = () => {
   }, [getRecordsTc, isTrash, loaderRef.current])
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
-  if (board === undefined) return null
+  if (getBoardsResponse.data === undefined) return null
+
+  const { board } = getBoardsResponse.data
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
     return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />

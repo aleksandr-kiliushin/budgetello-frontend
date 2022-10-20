@@ -16,3 +16,22 @@ query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name
     }
   }
 }
+
+query GetBoard($id: Int!) {
+  board(id: $id) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}
