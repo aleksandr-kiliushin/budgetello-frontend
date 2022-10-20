@@ -1,4 +1,3 @@
 node_modules
 dist
 src/api/**/*.ts
-src/types/api.ts
