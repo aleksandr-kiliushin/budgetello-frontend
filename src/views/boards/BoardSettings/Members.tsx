@@ -2,76 +2,73 @@ import { gql } from "@apollo/client"
 import React from "react"
 import { useParams } from "react-router-dom"
 
+import { useGetBoardQuery } from "#api/boards"
+import { useGetUsersQuery } from "#api/users"
 import { IUser } from "#types/IUser"
-import { IBoard } from "#types/boards"
 import { apolloClient } from "#utils/apolloClient"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 export const Members: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
-  const [board, setBoard] = React.useState<IBoard | undefined>(undefined)
-  React.useEffect(() => {
-    if (params.boardId === undefined) return
-    apolloClient
-      .query({
-        query: gql`
-          query GET_BOARD {
-            board(id: ${params.boardId}) {
-              members {
-                id
-                username
-              }
-            }
-          }
-        `,
-      })
-      .then((response) => setBoard(response.data.board))
-  }, [params.boardId])
 
-  const [allUsers, setAllUsers] = React.useState<IUser[]>([])
-  React.useEffect(() => {
-    apolloClient
-      .query({
-        query: gql`
-          query GET_USERS {
-            users {
-              id
-              username
-            }
-          }
-        `,
-      })
-      .then((response) => setAllUsers(response.data.users))
-  }, [])
+  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  if (getBoardResponse.data === undefined) return null
+  const board = getBoardResponse.data.board
+
+  const queryAllUsersResponse = useGetUsersQuery()
+  if (queryAllUsersResponse.data === undefined) return null
+  const allUsers = queryAllUsersResponse.data.users
 
   if (board === undefined) return null
 
   const addUserToBoard = async ({ userId }: { userId: IUser["id"] }) => {
-    const response = await apolloClient.mutate({
+    await apolloClient.mutate({
       mutation: gql`
         mutation ADD_BOARD_MEMBER {
           addBoardMember(input: { boardId: ${params.boardId}, userId: ${userId} }) {
+            admins {
+              id
+              username
+            }
             id
-            username
+            members {
+              id
+              username
+            }
+            name
+            subject {
+              id
+              name
+            }
           }
         }
       `,
     })
-    setBoard(response.data.addBoardMember)
   }
 
   const removeMemberFromBoard = async ({ userId }: { userId: IUser["id"] }) => {
-    const response = await apolloClient.mutate({
+    await apolloClient.mutate({
       mutation: gql`
         mutation REMOVE_BOARD_MEMBER {
           removeBoardMember(input: { boardId: ${params.boardId}, memberId: ${userId} }) {
+            admins {
+              id
+              username
+            }
             id
-            username
+            members {
+              id
+              username
+            }
+            name
+            subject {
+              id
+              name
+            }
           }
         }
       `,
     })
-    setBoard(response.data.removeBoardMember)
   }
 
   return (
