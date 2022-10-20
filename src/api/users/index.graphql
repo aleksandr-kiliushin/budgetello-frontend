@@ -1,0 +1,6 @@
+query GetUsers($ids: [Int!], $username: String) {
+  users(ids: $ids, username: $username) {
+    id
+    username
+  }
+}

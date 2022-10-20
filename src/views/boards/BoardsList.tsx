@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import { useGetBoardsQuery } from "#api/index"
+import { useGetBoardsQuery } from "#api/boards"
 import { useAppSelector } from "#utils/hooks"
 
 export const BoardsList: React.FC = () => {
