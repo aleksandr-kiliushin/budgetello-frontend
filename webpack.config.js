@@ -39,6 +39,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      "#api": path.resolve(process.cwd(), "src/api"),
       "#components": path.resolve(process.cwd(), "src/components"),
       "#models": path.resolve(process.cwd(), "src/models"),
       "#src": path.resolve(process.cwd(), "src"),

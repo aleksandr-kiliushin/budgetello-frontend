@@ -1,0 +1,18 @@
+query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
+  boards(iAmAdminOf: $iAmAdminOf, iAmMemberOf: $iAmMemberOf, ids: $ids, name: $name, subjectsIds: $subjectsIds) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}
