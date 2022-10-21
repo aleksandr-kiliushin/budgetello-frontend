@@ -13,6 +13,13 @@ query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
   }
 }
 
+query GetBudgetCategoryTypes {
+  budgetCategoryTypes {
+    id
+    name
+  }
+}
+
 mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: { boardId: $boardId, name: $name, typeId: $typeId }) {
     board {

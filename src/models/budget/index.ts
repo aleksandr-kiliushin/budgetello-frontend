@@ -7,6 +7,7 @@ import {
   DeleteBudgetCategoryDocument,
   DeleteBudgetRecordDocument,
   GetBudgetCategoriesDocument,
+  GetBudgetCategoryTypesDocument,
   UpdateBudgetRecordDocument,
 } from "#api/budget"
 import { RootState } from "#models/store"
@@ -261,16 +262,7 @@ export const getCategoryTypesTc = createAsyncThunk<IBudgetCategoryType[], void, 
   async (_, { getState }) => {
     if (getState().budget.categoryTypes.status !== LoadingStatus.Idle) return []
     try {
-      const response = await apolloClient.query({
-        query: gql`
-          query GET_BUDGET_CATEGORY_TYPES {
-            budgetCategoryTypes {
-              id
-              name
-            }
-          }
-        `,
-      })
+      const response = await apolloClient.query({ query: GetBudgetCategoryTypesDocument })
       return response.data.budgetCategoryTypes
     } catch {
       return []
