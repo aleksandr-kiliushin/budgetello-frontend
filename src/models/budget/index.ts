@@ -321,24 +321,8 @@ export const restoreRecordTc = createAsyncThunk(
   "budget/restoreRecordTc",
   async ({ recordId }: { recordId: IBudgetRecord["id"] }) => {
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation UPDATE_BUDGET_RECORD {
-          updateBudgetRecord(input: { id: ${recordId}, isTrashed: false }) {
-            amount
-            category {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-            date
-            id
-            isTrashed
-          }
-        }
-      `,
+      mutation: UpdateBudgetRecordDocument,
+      variables: { id: recordId, isTrashed: false },
     })
     return response.data.updateBudgetRecord
   }
