@@ -5,6 +5,13 @@ query GetUsers($ids: [Int!], $username: String) {
   }
 }
 
+query GetUser($id: Int, $username: String) {
+  user(id: $id, username: $username) {
+    id
+    username
+  }
+}
+
 mutation CreateAuthorizationToken($username: String!, $password: String!) {
   createAuthorizationToken(input: { username: $username, password: $password })
 }

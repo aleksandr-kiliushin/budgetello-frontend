@@ -1,6 +1,6 @@
-import { gql } from "@apollo/client"
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
+import { GetUserDocument } from "#api/users"
 import { AppThunk } from "#models/store"
 import { IUser } from "#types/IUser"
 import { apolloClient } from "#utils/apolloClient"
@@ -46,14 +46,8 @@ export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
     if (getState().user.isAuthorized === false) return false
     try {
       const response = await apolloClient.query({
-        query: gql`
-          query GET_USER {
-            user(id: 0) {
-              id
-              username
-            }
-          }
-        `,
+        query: GetUserDocument,
+        variables: { id: 0 },
       })
       dispatch(userActions.setCurrentUser(response.data.user))
       return true
