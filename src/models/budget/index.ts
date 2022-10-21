@@ -6,7 +6,6 @@ import {
   DeleteBudgetCategoryDocument,
   DeleteBudgetRecordDocument,
   GetBudgetCategoriesDocument,
-  GetBudgetCategoryTypesDocument,
   GetBudgetRecordsDocument,
   UpdateBudgetCategoryDocument,
   UpdateBudgetRecordDocument,
@@ -19,10 +18,6 @@ import { apolloClient } from "#utils/apolloClient"
 interface IState {
   categories: {
     items: BudgetCategory[]
-    status: LoadingStatus
-  }
-  categoryTypes: {
-    items: BudgetCategoryType[]
     status: LoadingStatus
   }
   records: {
@@ -39,10 +34,6 @@ interface IState {
 
 export const initialState: IState = {
   categories: {
-    items: [],
-    status: LoadingStatus.Idle,
-  },
-  categoryTypes: {
     items: [],
     status: LoadingStatus.Idle,
   },
@@ -95,12 +86,6 @@ const budgetSlice = createSlice({
       if (action.payload.length === 0) return
 
       state.categories = { items: action.payload, status: LoadingStatus.Success }
-    })
-
-    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<BudgetCategoryType[]>) => {
-      if (action.payload.length === 0) return
-
-      state.categoryTypes = { items: action.payload, status: LoadingStatus.Success }
     })
 
     builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
@@ -233,19 +218,6 @@ export const getCategoriesTc = createAsyncThunk<BudgetCategory[], { boardId: Boa
         variables: { boardsIds: [boardId] },
       })
       return response.data.budgetCategories
-    } catch {
-      return []
-    }
-  }
-)
-
-export const getCategoryTypesTc = createAsyncThunk<BudgetCategoryType[], void, { state: RootState }>(
-  "budget/getCategoryTypesTc",
-  async (_, { getState }) => {
-    if (getState().budget.categoryTypes.status !== LoadingStatus.Idle) return []
-    try {
-      const response = await apolloClient.query({ query: GetBudgetCategoryTypesDocument })
-      return response.data.budgetCategoryTypes
     } catch {
       return []
     }

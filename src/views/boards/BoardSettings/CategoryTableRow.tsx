@@ -12,10 +12,9 @@ import { CategoryFormModal } from "./CategoryFormModal"
 
 interface ICategoryTableRowProps {
   category: BudgetCategory
-  categoryTypes: BudgetCategoryType[]
 }
 
-export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categoryTypes }) => {
+export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
   const [isCategoryEditingModalShown, toggleIsCategoryEditingModalShown] = useToggle(false)
   const [isCategoryDeletionModalShown, toggleIsCategoryDeletionModalShown] = useToggle(false)
 
@@ -32,11 +31,7 @@ export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category, categor
         </TableCell>
       </TableRow>
       {isCategoryEditingModalShown && (
-        <CategoryFormModal
-          category={category}
-          categoryTypes={categoryTypes}
-          closeModal={toggleIsCategoryEditingModalShown}
-        />
+        <CategoryFormModal category={category} closeModal={toggleIsCategoryEditingModalShown} />
       )}
       {isCategoryDeletionModalShown && (
         <CategoryDeletionModal category={category} closeModal={toggleIsCategoryDeletionModalShown} />

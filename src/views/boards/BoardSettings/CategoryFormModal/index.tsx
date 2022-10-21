@@ -9,7 +9,8 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
-import { BudgetCategory, BudgetCategoryType } from "#api/types"
+import { useGetBudgetCategoryTypesQuery } from "#api/budget"
+import { BudgetCategory } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 import { createCategoryTc, updateCategoryTc } from "#models/budget"
@@ -20,11 +21,10 @@ import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormModalProps {
   category: BudgetCategory | null
-  categoryTypes: BudgetCategoryType[]
   closeModal(): void
 }
 
-export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categoryTypes, closeModal }) => {
+export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, closeModal }) => {
   const dispatch = useAppDispatch()
   const params = useParams<IBoardsRouteParams>()
 
@@ -44,6 +44,9 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categ
     mode: "onChange",
     resolver: yupResolver(validationSchema),
   })
+
+  const queryBudgetCategoryTypesResponse = useGetBudgetCategoryTypesQuery()
+  if (queryBudgetCategoryTypesResponse.data === undefined) return null
 
   const submitCategoryForm = handleSubmit(async ({ name, typeId }) => {
     if (params.boardId === undefined) return
@@ -85,7 +88,10 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, categ
               helperText={errors.typeId?.message}
               label="Category type"
               name={FormField.TypeId}
-              options={categoryTypes.map(({ id, name }) => ({ label: name, value: id }))}
+              options={queryBudgetCategoryTypesResponse.data.budgetCategoryTypes.map(({ id, name }) => ({
+                label: name,
+                value: id,
+              }))}
               register={register}
               setValue={setValue}
             />

@@ -11,7 +11,7 @@ import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
 import { useGetBoardQuery } from "#api/boards"
-import { getCategoriesTc, getCategoryTypesTc } from "#models/budget"
+import { getCategoriesTc } from "#models/budget"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 
 import { IBoardsRouteParams } from "../types"
@@ -25,12 +25,10 @@ export const BoardSettings: React.FC = () => {
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
   const categories = useAppSelector((state) => state.budget.categories)
-  const categoryTypes = useAppSelector((state) => state.budget.categoryTypes)
 
   React.useEffect(() => {
     if (params.boardId === undefined) return
     dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
-    dispatch(getCategoryTypesTc())
   }, [])
 
   const getBoardsResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
@@ -66,17 +64,13 @@ export const BoardSettings: React.FC = () => {
           </TableHead>
           <TableBody>
             {categories.items.map((category) => (
-              <CategoryTableRow category={category} categoryTypes={categoryTypes.items} key={category.id} />
+              <CategoryTableRow category={category} key={category.id} />
             ))}
           </TableBody>
         </Table>
       </TableContainer>
       {isCategoryCreatingModalShown && (
-        <CategoryFormModal
-          category={null}
-          categoryTypes={categoryTypes.items}
-          closeModal={toggleIsCategoryCreatingModalShown}
-        />
+        <CategoryFormModal category={null} closeModal={toggleIsCategoryCreatingModalShown} />
       )}
       <Members />
     </>
