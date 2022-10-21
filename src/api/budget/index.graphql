@@ -13,6 +13,21 @@ mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   }
 }
 
+mutation DeleteBudgetCategory($categoryId: Int!) {
+  deleteBudgetCategory(id: $categoryId) {
+    board {
+      id
+      name
+    }
+    id
+    name
+    type {
+      id
+      name
+    }
+  }
+}
+
 mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
   createBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date }) {
     amount

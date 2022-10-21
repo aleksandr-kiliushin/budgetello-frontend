@@ -12,6 +12,13 @@ export type CreateBudgetCategoryMutationVariables = Types.Exact<{
 
 export type CreateBudgetCategoryMutation = { __typename?: 'Mutation', createBudgetCategory: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } };
 
+export type DeleteBudgetCategoryMutationVariables = Types.Exact<{
+  categoryId: Types.Scalars['Int'];
+}>;
+
+
+export type DeleteBudgetCategoryMutation = { __typename?: 'Mutation', deleteBudgetCategory: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } };
+
 export type CreateBudgetRecordMutationVariables = Types.Exact<{
   amount: Types.Scalars['Float'];
   categoryId: Types.Scalars['Int'];
@@ -66,6 +73,48 @@ export function useCreateBudgetCategoryMutation(baseOptions?: Apollo.MutationHoo
 export type CreateBudgetCategoryMutationHookResult = ReturnType<typeof useCreateBudgetCategoryMutation>;
 export type CreateBudgetCategoryMutationResult = Apollo.MutationResult<CreateBudgetCategoryMutation>;
 export type CreateBudgetCategoryMutationOptions = Apollo.BaseMutationOptions<CreateBudgetCategoryMutation, CreateBudgetCategoryMutationVariables>;
+export const DeleteBudgetCategoryDocument = gql`
+    mutation DeleteBudgetCategory($categoryId: Int!) {
+  deleteBudgetCategory(id: $categoryId) {
+    board {
+      id
+      name
+    }
+    id
+    name
+    type {
+      id
+      name
+    }
+  }
+}
+    `;
+export type DeleteBudgetCategoryMutationFn = Apollo.MutationFunction<DeleteBudgetCategoryMutation, DeleteBudgetCategoryMutationVariables>;
+
+/**
+ * __useDeleteBudgetCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteBudgetCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteBudgetCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteBudgetCategoryMutation, { data, loading, error }] = useDeleteBudgetCategoryMutation({
+ *   variables: {
+ *      categoryId: // value for 'categoryId'
+ *   },
+ * });
+ */
+export function useDeleteBudgetCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteBudgetCategoryMutation, DeleteBudgetCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteBudgetCategoryMutation, DeleteBudgetCategoryMutationVariables>(DeleteBudgetCategoryDocument, options);
+      }
+export type DeleteBudgetCategoryMutationHookResult = ReturnType<typeof useDeleteBudgetCategoryMutation>;
+export type DeleteBudgetCategoryMutationResult = Apollo.MutationResult<DeleteBudgetCategoryMutation>;
+export type DeleteBudgetCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteBudgetCategoryMutation, DeleteBudgetCategoryMutationVariables>;
 export const CreateBudgetRecordDocument = gql`
     mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
   createBudgetRecord(

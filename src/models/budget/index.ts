@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CreateBudgetCategoryDocument, CreateBudgetRecordDocument } from "#api/budget"
+import { CreateBudgetCategoryDocument, CreateBudgetRecordDocument, DeleteBudgetCategoryDocument } from "#api/budget"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
@@ -198,13 +198,8 @@ export const deleteCategoryTc = createAsyncThunk(
   "budget/deleteCategoryTc",
   async ({ categoryId }: { categoryId: IBudgetCategory["id"] }) => {
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation DELETE_BUDGET_CATEGORY {
-          deleteBudgetCategory(id: ${categoryId}) {
-            id
-          }
-        }
-      `,
+      mutation: DeleteBudgetCategoryDocument,
+      variables: { categoryId },
     })
     return response.data.deleteBudgetCategory
   }
