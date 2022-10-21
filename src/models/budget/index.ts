@@ -1,7 +1,12 @@
 import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CreateBudgetCategoryDocument, CreateBudgetRecordDocument, DeleteBudgetCategoryDocument } from "#api/budget"
+import {
+  CreateBudgetCategoryDocument,
+  CreateBudgetRecordDocument,
+  DeleteBudgetCategoryDocument,
+  DeleteBudgetRecordDocument,
+} from "#api/budget"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
@@ -211,13 +216,8 @@ export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({
   if (isTrashed) {
     record = await apolloClient
       .mutate({
-        mutation: gql`
-          mutation DELETE_BUDGET_RECORD {
-            deleteBudgetRecord(id: ${id}) {
-              id
-            }
-          }
-        `,
+        mutation: DeleteBudgetRecordDocument,
+        variables: { recordId: id },
       })
       .then((response) => response.data.deleteBudgetRecord)
   }

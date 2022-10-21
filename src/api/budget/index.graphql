@@ -48,3 +48,24 @@ mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) 
     isTrashed
   }
 }
+
+mutation DeleteBudgetRecord($recordId: Int!) {
+  deleteBudgetRecord(id: $recordId) {
+    amount
+    category {
+      board {
+        id
+        name
+      }
+      id
+      name
+      type {
+        id
+        name
+      }
+    }
+    date
+    id
+    isTrashed
+  }
+}
