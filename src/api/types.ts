@@ -426,7 +426,9 @@ export type UpdateUserInput = {
 
 export type User = {
   __typename?: 'User';
+  administratedBoards: Array<Board>;
   id: Scalars['Int'];
+  participatedBoards: Array<Board>;
   password: Scalars['String'];
   username: Scalars['String'];
 };

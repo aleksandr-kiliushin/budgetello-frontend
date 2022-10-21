@@ -9,7 +9,7 @@ export type GetUsersQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string }> };
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> }> };
 
 export type GetUserQueryVariables = Types.Exact<{
   id?: Types.InputMaybe<Types.Scalars['Int']>;
@@ -31,6 +31,38 @@ export type CreateAuthorizationTokenMutation = { __typename?: 'Mutation', create
 export const GetUsersDocument = gql`
     query GetUsers($ids: [Int!], $username: String) {
   users(ids: $ids, username: $username) {
+    administratedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
+    administratedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
     id
     username
   }

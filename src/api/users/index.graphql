@@ -1,5 +1,37 @@
 query GetUsers($ids: [Int!], $username: String) {
   users(ids: $ids, username: $username) {
+    administratedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
+    administratedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
     id
     username
   }
