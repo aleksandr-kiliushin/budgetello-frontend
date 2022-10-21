@@ -9,6 +9,7 @@ import {
   GetBudgetCategoriesDocument,
   GetBudgetCategoryTypesDocument,
   GetBudgetRecordsDocument,
+  UpdateBudgetCategoryDocument,
   UpdateBudgetRecordDocument,
 } from "#api/budget"
 import { RootState } from "#models/store"
@@ -344,18 +345,8 @@ export const updateCategoryTc = createAsyncThunk(
   ) => {
     try {
       const response = await apolloClient.mutate({
-        mutation: gql`
-          mutation UPDATE_BUDGET_CATEGORY {
-            updateBudgetCategory(input: { id: ${categoryId}, name: "${name}", typeId: ${typeId} }) {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-          }
-        `,
+        mutation: UpdateBudgetCategoryDocument,
+        variables: { id: categoryId, name, typeId },
       })
       return response.data.updateBudgetCategory
     } catch (error) {
