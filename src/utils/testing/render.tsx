@@ -1,3 +1,4 @@
+import { ApolloProvider } from "@apollo/client"
 import { render as rtlRender } from "@testing-library/react"
 import { createBrowserHistory } from "history"
 import React from "react"
@@ -6,6 +7,7 @@ import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 
 import { initializeStore } from "#models/store"
 import { login, userActions } from "#models/user"
+import { apolloClient } from "#utils/apolloClient"
 
 import { credentialsByTestUserId } from "./test-users"
 import { IRender } from "./types"
@@ -29,7 +31,9 @@ export const render: IRender = async (component, options) => {
   const AllTheProviders: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
       <HistoryRouter history={history}>
-        <Provider store={store}>{children}</Provider>
+        <ApolloProvider client={apolloClient}>
+          <Provider store={store}>{children}</Provider>
+        </ApolloProvider>
       </HistoryRouter>
     )
   }
