@@ -1,0 +1,90 @@
+fragment budgetCategoryTypesFields on BudgetCategoryType {
+  id
+  name
+}
+
+fragment budgetCategoryFields on BudgetCategory {
+  board {
+    id
+    name
+  }
+  id
+  name
+  type {
+    id
+    name
+  }
+}
+
+fragment budgetRecordFields on BudgetRecord {
+  amount
+  category {
+    board {
+      id
+      name
+    }
+    id
+    name
+    type {
+      id
+      name
+    }
+  }
+  date
+  id
+  isTrashed
+}
+
+fragment userFields on User {
+  administratedBoards {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+  id
+  participatedBoards {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+  username
+}
+
+fragment boardFields on Board {
+  admins {
+    id
+    username
+  }
+  id
+  members {
+    id
+    username
+  }
+  name
+  subject {
+    id
+    name
+  }
+}

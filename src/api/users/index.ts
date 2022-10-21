@@ -1,6 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
+import { UserFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetUsersQueryVariables = Types.Exact<{
@@ -23,43 +24,10 @@ export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', 
 export const GetUsersDocument = gql`
     query GetUsers($ids: [Int!], $username: String) {
   users(ids: $ids, username: $username) {
-    administratedBoards {
-      admins {
-        id
-        username
-      }
-      id
-      members {
-        id
-        username
-      }
-      name
-      subject {
-        id
-        name
-      }
-    }
-    id
-    participatedBoards {
-      admins {
-        id
-        username
-      }
-      id
-      members {
-        id
-        username
-      }
-      name
-      subject {
-        id
-        name
-      }
-    }
-    username
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 /**
  * __useGetUsersQuery__
@@ -92,43 +60,10 @@ export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQuer
 export const GetUserDocument = gql`
     query GetUser($id: Int, $username: String) {
   user(id: $id, username: $username) {
-    administratedBoards {
-      admins {
-        id
-        username
-      }
-      id
-      members {
-        id
-        username
-      }
-      name
-      subject {
-        id
-        name
-      }
-    }
-    id
-    participatedBoards {
-      admins {
-        id
-        username
-      }
-      id
-      members {
-        id
-        username
-      }
-      name
-      subject {
-        id
-        name
-      }
-    }
-    username
+    ...userFields
   }
 }
-    `;
+    ${UserFieldsFragmentDoc}`;
 
 /**
  * __useGetUserQuery__

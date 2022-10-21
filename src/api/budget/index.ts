@@ -1,6 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
+import { BudgetCategoryFieldsFragmentDoc, BudgetCategoryTypesFieldsFragmentDoc, BudgetRecordFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetBudgetCategoriesQueryVariables = Types.Exact<{
@@ -83,25 +84,16 @@ export type UpdateBudgetRecordMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
+export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
 
 
 export const GetBudgetCategoriesDocument = gql`
     query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
   budgetCategories(boardsIds: $boardsIds, ids: $ids) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
-    `;
+    ${BudgetCategoryFieldsFragmentDoc}`;
 
 /**
  * __useGetBudgetCategoriesQuery__
@@ -134,11 +126,10 @@ export type GetBudgetCategoriesQueryResult = Apollo.QueryResult<GetBudgetCategor
 export const GetBudgetCategoryTypesDocument = gql`
     query GetBudgetCategoryTypes {
   budgetCategoryTypes {
-    id
-    name
+    ...budgetCategoryTypesFields
   }
 }
-    `;
+    ${BudgetCategoryTypesFieldsFragmentDoc}`;
 
 /**
  * __useGetBudgetCategoryTypesQuery__
@@ -180,25 +171,10 @@ export const GetBudgetRecordsDocument = gql`
     skip: $skip
     take: $take
   ) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
-    `;
+    ${BudgetRecordFieldsFragmentDoc}`;
 
 /**
  * __useGetBudgetRecordsQuery__
@@ -239,19 +215,10 @@ export type GetBudgetRecordsQueryResult = Apollo.QueryResult<GetBudgetRecordsQue
 export const CreateBudgetCategoryDocument = gql`
     mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: {boardId: $boardId, name: $name, typeId: $typeId}) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
-    `;
+    ${BudgetCategoryFieldsFragmentDoc}`;
 export type CreateBudgetCategoryMutationFn = Apollo.MutationFunction<CreateBudgetCategoryMutation, CreateBudgetCategoryMutationVariables>;
 
 /**
@@ -285,25 +252,10 @@ export const CreateBudgetRecordDocument = gql`
   createBudgetRecord(
     input: {amount: $amount, categoryId: $categoryId, date: $date}
   ) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
-    `;
+    ${BudgetRecordFieldsFragmentDoc}`;
 export type CreateBudgetRecordMutationFn = Apollo.MutationFunction<CreateBudgetRecordMutation, CreateBudgetRecordMutationVariables>;
 
 /**
@@ -335,19 +287,10 @@ export type CreateBudgetRecordMutationOptions = Apollo.BaseMutationOptions<Creat
 export const DeleteBudgetCategoryDocument = gql`
     mutation DeleteBudgetCategory($categoryId: Int!) {
   deleteBudgetCategory(id: $categoryId) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
-    `;
+    ${BudgetCategoryFieldsFragmentDoc}`;
 export type DeleteBudgetCategoryMutationFn = Apollo.MutationFunction<DeleteBudgetCategoryMutation, DeleteBudgetCategoryMutationVariables>;
 
 /**
@@ -377,25 +320,10 @@ export type DeleteBudgetCategoryMutationOptions = Apollo.BaseMutationOptions<Del
 export const DeleteBudgetRecordDocument = gql`
     mutation DeleteBudgetRecord($recordId: Int!) {
   deleteBudgetRecord(id: $recordId) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
-    `;
+    ${BudgetRecordFieldsFragmentDoc}`;
 export type DeleteBudgetRecordMutationFn = Apollo.MutationFunction<DeleteBudgetRecordMutation, DeleteBudgetRecordMutationVariables>;
 
 /**
@@ -427,19 +355,10 @@ export const UpdateBudgetCategoryDocument = gql`
   updateBudgetCategory(
     input: {boardId: $boardId, id: $id, name: $name, typeId: $typeId}
   ) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
-    `;
+    ${BudgetCategoryFieldsFragmentDoc}`;
 export type UpdateBudgetCategoryMutationFn = Apollo.MutationFunction<UpdateBudgetCategoryMutation, UpdateBudgetCategoryMutationVariables>;
 
 /**
@@ -474,21 +393,10 @@ export const UpdateBudgetRecordDocument = gql`
   updateBudgetRecord(
     input: {amount: $amount, categoryId: $categoryId, date: $date, id: $id, isTrashed: $isTrashed}
   ) {
-    amount
-    category {
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
-    `;
+    ${BudgetRecordFieldsFragmentDoc}`;
 export type UpdateBudgetRecordMutationFn = Apollo.MutationFunction<UpdateBudgetRecordMutation, UpdateBudgetRecordMutationVariables>;
 
 /**

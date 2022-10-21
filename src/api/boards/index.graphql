@@ -1,75 +1,23 @@
 query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
   boards(iAmAdminOf: $iAmAdminOf, iAmMemberOf: $iAmMemberOf, ids: $ids, name: $name, subjectsIds: $subjectsIds) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
 
 query GetBoard($id: Int!) {
   board(id: $id) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
 
 mutation AddBoardMember($boardId: Int!, $userId: Int!) {
   addBoardMember(input: { boardId: $boardId, userId: $userId }) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
 
 mutation RemoveBoardMember($boardId: Int!, $memberId: Int!) {
   removeBoardMember(input: { boardId: $boardId, memberId: $memberId }) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }

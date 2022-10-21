@@ -15,7 +15,7 @@
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
-    "noUnusedLocals": true,
+    // "noUnusedLocals": true,
     "noUnusedParameters": false,
     "paths": {
       "#api/*": ["src/api/*"],

@@ -1,6 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
+import { BoardFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetBoardsQueryVariables = Types.Exact<{
@@ -47,23 +48,10 @@ export const GetBoardsDocument = gql`
     name: $name
     subjectsIds: $subjectsIds
   ) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
-    `;
+    ${BoardFieldsFragmentDoc}`;
 
 /**
  * __useGetBoardsQuery__
@@ -99,23 +87,10 @@ export type GetBoardsQueryResult = Apollo.QueryResult<GetBoardsQuery, GetBoardsQ
 export const GetBoardDocument = gql`
     query GetBoard($id: Int!) {
   board(id: $id) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
-    `;
+    ${BoardFieldsFragmentDoc}`;
 
 /**
  * __useGetBoardQuery__
@@ -147,23 +122,10 @@ export type GetBoardQueryResult = Apollo.QueryResult<GetBoardQuery, GetBoardQuer
 export const AddBoardMemberDocument = gql`
     mutation AddBoardMember($boardId: Int!, $userId: Int!) {
   addBoardMember(input: {boardId: $boardId, userId: $userId}) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
-    `;
+    ${BoardFieldsFragmentDoc}`;
 export type AddBoardMemberMutationFn = Apollo.MutationFunction<AddBoardMemberMutation, AddBoardMemberMutationVariables>;
 
 /**
@@ -194,23 +156,10 @@ export type AddBoardMemberMutationOptions = Apollo.BaseMutationOptions<AddBoardM
 export const RemoveBoardMemberDocument = gql`
     mutation RemoveBoardMember($boardId: Int!, $memberId: Int!) {
   removeBoardMember(input: {boardId: $boardId, memberId: $memberId}) {
-    admins {
-      id
-      username
-    }
-    id
-    members {
-      id
-      username
-    }
-    name
-    subject {
-      id
-      name
-    }
+    ...boardFields
   }
 }
-    `;
+    ${BoardFieldsFragmentDoc}`;
 export type RemoveBoardMemberMutationFn = Apollo.MutationFunction<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>;
 
 /**

@@ -1,22 +1,12 @@
 query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
   budgetCategories(boardsIds: $boardsIds, ids: $ids) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
 
 query GetBudgetCategoryTypes {
   budgetCategoryTypes {
-    id
-    name
+    ...budgetCategoryTypesFields
   }
 }
 
@@ -44,125 +34,42 @@ query GetBudgetRecords(
     skip: $skip
     take: $take
   ) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
 
 mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: { boardId: $boardId, name: $name, typeId: $typeId }) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
 
 mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
   createBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date }) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
 
 mutation DeleteBudgetCategory($categoryId: Int!) {
   deleteBudgetCategory(id: $categoryId) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
 
 mutation DeleteBudgetRecord($recordId: Int!) {
   deleteBudgetRecord(id: $recordId) {
-    amount
-    category {
-      board {
-        id
-        name
-      }
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
 
 mutation UpdateBudgetCategory($boardId: Int, $id: Int!, $name: String, $typeId: Int) {
   updateBudgetCategory(input: { boardId: $boardId, id: $id, name: $name, typeId: $typeId }) {
-    board {
-      id
-      name
-    }
-    id
-    name
-    type {
-      id
-      name
-    }
+    ...budgetCategoryFields
   }
 }
 
 mutation UpdateBudgetRecord($amount: Float, $categoryId: Int, $date: String, $id: Int!, $isTrashed: Boolean) {
   updateBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date, id: $id, isTrashed: $isTrashed }) {
-    amount
-    category {
-      id
-      name
-      type {
-        id
-        name
-      }
-    }
-    date
-    id
-    isTrashed
+    ...budgetRecordFields
   }
 }
