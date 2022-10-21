@@ -4,4 +4,4 @@
 - Fix issue with number-to-string convertation in form fields.
 - Refactor interfaces and types naming.
 - Put icons to buttons.
-- Upgrade packages.
+- Remove src/types. Use generated types.
