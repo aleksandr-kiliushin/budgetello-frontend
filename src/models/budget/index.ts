@@ -6,6 +6,7 @@ import {
   CreateBudgetRecordDocument,
   DeleteBudgetCategoryDocument,
   DeleteBudgetRecordDocument,
+  UpdateBudgetRecordDocument,
 } from "#api/budget"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
@@ -224,24 +225,8 @@ export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({
 
   if (!isTrashed) {
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation UPDATE_BUDGET_RECORD {
-          updateBudgetRecord(input: { id: ${id}, isTrashed: true }) {
-            amount
-            category {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-            date
-            id
-            isTrashed
-          }
-        }
-      `,
+      mutation: UpdateBudgetRecordDocument,
+      variables: { id, isTrashed: true },
     })
     console.log("response >>", response)
     record = response.data.updateBudgetRecord
