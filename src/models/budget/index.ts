@@ -1,4 +1,3 @@
-import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import {
@@ -369,24 +368,8 @@ export const updateRecordTc = createAsyncThunk(
     id: IBudgetRecord["id"]
   }) => {
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation UPDATE_BUDGET_RECORD {
-          updateBudgetRecord(input: { id: ${id}, amount: ${amount}, categoryId: ${categoryId}, date: "${date}" }) {
-            amount
-            category {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-            date
-            id
-            isTrashed
-          }
-        }
-      `,
+      mutation: UpdateBudgetRecordDocument,
+      variables: { id, amount, categoryId, date },
     })
     return response.data.updateBudgetRecord
   }
