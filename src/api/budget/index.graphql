@@ -1,0 +1,20 @@
+mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
+  createBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date }) {
+    amount
+    category {
+      board {
+        id
+        name
+      }
+      id
+      name
+      type {
+        id
+        name
+      }
+    }
+    date
+    id
+    isTrashed
+  }
+}

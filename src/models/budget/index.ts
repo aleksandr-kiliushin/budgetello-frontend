@@ -1,6 +1,7 @@
 import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
+import { CreateBudgetRecordDocument } from "#api/budget"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
@@ -164,24 +165,8 @@ export const createRecordTc = createAsyncThunk(
     date: IBudgetRecord["date"]
   }) => {
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation CREATE_BUDGET_RECORD {
-          createBudgetRecord(input: { amount: ${amount}, categoryId: ${categoryId}, date: "${date}" }) {
-            amount
-            category {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-            date
-            id
-            isTrashed
-          }
-        }
-      `,
+      mutation: CreateBudgetRecordDocument,
+      variables: { amount, categoryId, date },
     })
     return response.data.createBudgetRecord
   }
