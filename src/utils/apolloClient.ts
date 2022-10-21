@@ -1,8 +1,21 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 
+if (process.env.MODE !== "development" && process.env.MODE !== "production") {
+  throw new Error(`
+    process.env.MODE has invalid value.
+    Allowed values: ['development', 'production'].
+    Received: ${process.env.MODE}.
+  `)
+}
+
+const httpLinkUriByMode = {
+  development: "http://localhost:3080/graphql",
+  production: "https://personal-application-api.herokuapp.com/graphql",
+}
+
 const httpLink = createHttpLink({
-  uri: "http://localhost:3080/graphql",
+  uri: httpLinkUriByMode[process.env.MODE],
 })
 
 const authorizationLink = setContext((_, { headers }) => {
