@@ -1,10 +1,11 @@
-import { ApolloProvider, gql } from "@apollo/client"
+import { ApolloProvider } from "@apollo/client"
 import { render as rtlRender } from "@testing-library/react"
 import { createBrowserHistory } from "history"
 import React from "react"
 import { Provider } from "react-redux"
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 
+import { CreateAuthorizationTokenDocument } from "#api/users"
 import { initializeStore } from "#models/store"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { apolloClient } from "#utils/apolloClient"
@@ -25,11 +26,8 @@ export const render: IRender = async (component, options) => {
   if (typeof iAm === "number" && iAm in credentialsByTestUserId) {
     localStorage.removeItem("authToken")
     const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation CREATE_AUTHORIZATION_TOKEN {
-          createAuthorizationToken(input: { username: "${credentialsByTestUserId[iAm].username}", password: "${credentialsByTestUserId[iAm].password}" })
-        }
-      `,
+      mutation: CreateAuthorizationTokenDocument,
+      variables: { username: credentialsByTestUserId[iAm].username, password: credentialsByTestUserId[iAm].password },
     })
     const authorizationToken = response.data.createAuthorizationToken
     if (typeof authorizationToken !== "string") {
