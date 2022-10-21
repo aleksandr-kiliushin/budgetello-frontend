@@ -43,11 +43,6 @@ export type AddMemberInput = {
   userId: Scalars['Int'];
 };
 
-export type AuthorizeInput = {
-  password: Scalars['String'];
-  username: Scalars['String'];
-};
-
 export type Board = {
   __typename?: 'Board';
   admins: Array<User>;
@@ -101,6 +96,11 @@ export type CreateActivityRecordInput = {
   quantitativeValue?: InputMaybe<Scalars['Float']>;
 };
 
+export type CreateAuthorizationTokenInput = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type CreateBoardInput = {
   name: Scalars['String'];
   subjectId: Scalars['Int'];
@@ -126,9 +126,9 @@ export type CreateUserInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addBoardMember: Board;
-  authorize: Scalars['String'];
   createActivityCategory: ActivityCategory;
   createActivityRecord: ActivityRecord;
+  createAuthorizationToken: Scalars['String'];
   createBoard: Board;
   createBudgetCategory: BudgetCategory;
   createBudgetRecord: BudgetRecord;
@@ -154,11 +154,6 @@ export type MutationAddBoardMemberArgs = {
 };
 
 
-export type MutationAuthorizeArgs = {
-  input: AuthorizeInput;
-};
-
-
 export type MutationCreateActivityCategoryArgs = {
   input: CreateActivityCategoryInput;
 };
@@ -166,6 +161,11 @@ export type MutationCreateActivityCategoryArgs = {
 
 export type MutationCreateActivityRecordArgs = {
   input: CreateActivityRecordInput;
+};
+
+
+export type MutationCreateAuthorizationTokenArgs = {
+  input: CreateAuthorizationTokenInput;
 };
 
 

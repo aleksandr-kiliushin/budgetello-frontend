@@ -69,12 +69,12 @@ export const login: Login = ({ password, username }) => {
     localStorage.removeItem("authToken")
     const response = await apolloClient.mutate({
       mutation: gql`
-        mutation AUTHORIZE {
-          authorize(input: { username: "${username}", password: "${password}" })
+        mutation CREATE_AUTHORIZATION_TOKEN {
+          createAuthorizationToken(input: { username: "${username}", password: "${password}" })
         }
       `,
     })
-    const authorizationToken = response.data.authorize
+    const authorizationToken = response.data.createAuthorizationToken
     if (authorizationToken === undefined) {
       dispatch(userActions.setIsUserAuthorized(false))
       return

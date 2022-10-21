@@ -4,3 +4,7 @@ query GetUsers($ids: [Int!], $username: String) {
     username
   }
 }
+
+mutation CreateAuthorizationToken($username: String!, $password: String!) {
+  createAuthorizationToken(input: { username: $username, password: $password })
+}
