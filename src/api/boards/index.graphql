@@ -35,3 +35,41 @@ query GetBoard($id: Int!) {
     }
   }
 }
+
+mutation AddBoardMember($boardId: Int!, $userId: Int!) {
+  addBoardMember(input: { boardId: $boardId, userId: $userId }) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}
+
+mutation RemoveBoardMember($boardId: Int!, $memberId: Int!) {
+  removeBoardMember(input: { boardId: $boardId, memberId: $memberId }) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}

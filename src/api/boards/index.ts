@@ -21,6 +21,22 @@ export type GetBoardQueryVariables = Types.Exact<{
 
 export type GetBoardQuery = { __typename?: 'Query', board: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
+export type AddBoardMemberMutationVariables = Types.Exact<{
+  boardId: Types.Scalars['Int'];
+  userId: Types.Scalars['Int'];
+}>;
+
+
+export type AddBoardMemberMutation = { __typename?: 'Mutation', addBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+
+export type RemoveBoardMemberMutationVariables = Types.Exact<{
+  boardId: Types.Scalars['Int'];
+  memberId: Types.Scalars['Int'];
+}>;
+
+
+export type RemoveBoardMemberMutation = { __typename?: 'Mutation', removeBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+
 
 export const GetBoardsDocument = gql`
     query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
@@ -128,3 +144,97 @@ export function useGetBoardLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetBoardQueryHookResult = ReturnType<typeof useGetBoardQuery>;
 export type GetBoardLazyQueryHookResult = ReturnType<typeof useGetBoardLazyQuery>;
 export type GetBoardQueryResult = Apollo.QueryResult<GetBoardQuery, GetBoardQueryVariables>;
+export const AddBoardMemberDocument = gql`
+    mutation AddBoardMember($boardId: Int!, $userId: Int!) {
+  addBoardMember(input: {boardId: $boardId, userId: $userId}) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}
+    `;
+export type AddBoardMemberMutationFn = Apollo.MutationFunction<AddBoardMemberMutation, AddBoardMemberMutationVariables>;
+
+/**
+ * __useAddBoardMemberMutation__
+ *
+ * To run a mutation, you first call `useAddBoardMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddBoardMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addBoardMemberMutation, { data, loading, error }] = useAddBoardMemberMutation({
+ *   variables: {
+ *      boardId: // value for 'boardId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAddBoardMemberMutation(baseOptions?: Apollo.MutationHookOptions<AddBoardMemberMutation, AddBoardMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddBoardMemberMutation, AddBoardMemberMutationVariables>(AddBoardMemberDocument, options);
+      }
+export type AddBoardMemberMutationHookResult = ReturnType<typeof useAddBoardMemberMutation>;
+export type AddBoardMemberMutationResult = Apollo.MutationResult<AddBoardMemberMutation>;
+export type AddBoardMemberMutationOptions = Apollo.BaseMutationOptions<AddBoardMemberMutation, AddBoardMemberMutationVariables>;
+export const RemoveBoardMemberDocument = gql`
+    mutation RemoveBoardMember($boardId: Int!, $memberId: Int!) {
+  removeBoardMember(input: {boardId: $boardId, memberId: $memberId}) {
+    admins {
+      id
+      username
+    }
+    id
+    members {
+      id
+      username
+    }
+    name
+    subject {
+      id
+      name
+    }
+  }
+}
+    `;
+export type RemoveBoardMemberMutationFn = Apollo.MutationFunction<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>;
+
+/**
+ * __useRemoveBoardMemberMutation__
+ *
+ * To run a mutation, you first call `useRemoveBoardMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveBoardMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeBoardMemberMutation, { data, loading, error }] = useRemoveBoardMemberMutation({
+ *   variables: {
+ *      boardId: // value for 'boardId'
+ *      memberId: // value for 'memberId'
+ *   },
+ * });
+ */
+export function useRemoveBoardMemberMutation(baseOptions?: Apollo.MutationHookOptions<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>(RemoveBoardMemberDocument, options);
+      }
+export type RemoveBoardMemberMutationHookResult = ReturnType<typeof useRemoveBoardMemberMutation>;
+export type RemoveBoardMemberMutationResult = Apollo.MutationResult<RemoveBoardMemberMutation>;
+export type RemoveBoardMemberMutationOptions = Apollo.BaseMutationOptions<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>;
