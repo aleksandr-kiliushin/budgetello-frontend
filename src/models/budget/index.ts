@@ -11,32 +11,27 @@ import {
   UpdateBudgetCategoryDocument,
   UpdateBudgetRecordDocument,
 } from "#api/budget"
+import { Board, BudgetCategory, BudgetCategoryType, BudgetRecord } from "#api/types"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
-import { IBoard } from "#types/boards"
-import { IBudgetCategory, IBudgetCategoryType, IBudgetRecord } from "#types/budget"
 import { apolloClient } from "#utils/apolloClient"
 
 interface IState {
   categories: {
-    items: IBudgetCategory[]
+    items: BudgetCategory[]
     status: LoadingStatus
   }
   categoryTypes: {
-    items: IBudgetCategoryType[]
-    status: LoadingStatus
-  }
-  chartData: {
-    items: IBudgetRecord[]
+    items: BudgetCategoryType[]
     status: LoadingStatus
   }
   records: {
     notTrashed: {
-      items: IBudgetRecord[]
+      items: BudgetRecord[]
       status: LoadingStatus
     }
     trashed: {
-      items: IBudgetRecord[]
+      items: BudgetRecord[]
       status: LoadingStatus
     }
   }
@@ -48,10 +43,6 @@ export const initialState: IState = {
     status: LoadingStatus.Idle,
   },
   categoryTypes: {
-    items: [],
-    status: LoadingStatus.Idle,
-  },
-  chartData: {
     items: [],
     status: LoadingStatus.Idle,
   },
@@ -70,21 +61,21 @@ export const initialState: IState = {
 const budgetSlice = createSlice({
   extraReducers: (builder) => {
     // To do: try addRecordsTc.PENDING,
-    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
+    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
       state.categories.items.unshift(action.payload)
     })
 
-    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
+    builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
+    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
       state.categories.items = state.categories.items.filter((category) => category.id !== action.payload.id)
     })
 
     builder.addCase(
       deleteRecordTc.fulfilled,
-      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: IBudgetRecord }>) => {
+      (state, action: PayloadAction<{ isPermanentDeletion: boolean; record: BudgetRecord }>) => {
         const { isPermanentDeletion, record } = action.payload
         const { id } = record
 
@@ -100,37 +91,31 @@ const budgetSlice = createSlice({
       }
     )
 
-    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<IBudgetCategory[]>) => {
+    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<BudgetCategory[]>) => {
       if (action.payload.length === 0) return
 
       state.categories = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<IBudgetCategoryType[]>) => {
+    builder.addCase(getCategoryTypesTc.fulfilled, (state, action: PayloadAction<BudgetCategoryType[]>) => {
       if (action.payload.length === 0) return
 
       state.categoryTypes = { items: action.payload, status: LoadingStatus.Success }
     })
 
-    builder.addCase(getChartDataTc.fulfilled, (state, action: PayloadAction<IBudgetRecord[]>) => {
-      if (action.payload.length === 0) return
-
-      state.chartData = { items: action.payload, status: LoadingStatus.Success }
-    })
-
-    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
+    builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
       state.records.trashed.items = state.records.trashed.items.filter((record) => record.id !== action.payload.id)
 
       state.records.notTrashed.items.unshift(action.payload)
     })
 
-    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<IBudgetCategory>) => {
+    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
       const categoryIndex = state.categories.items.findIndex((category) => category.id === action.payload.id)
 
       state.categories.items[categoryIndex] = action.payload
     })
 
-    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<IBudgetRecord>) => {
+    builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
       const recordIndex = state.records.notTrashed.items.findIndex((record) => record.id === action.payload.id)
 
       state.records.notTrashed.items[recordIndex] = action.payload
@@ -143,7 +128,7 @@ const budgetSlice = createSlice({
       state,
       action: PayloadAction<{
         isTrash: boolean
-        items: IBudgetRecord[]
+        items: BudgetRecord[]
       }>
     ) => {
       const { isTrash, items } = action.payload
@@ -169,9 +154,9 @@ export const createRecordTc = createAsyncThunk(
     categoryId,
     date,
   }: {
-    amount: IBudgetRecord["amount"]
-    categoryId: IBudgetCategory["id"]
-    date: IBudgetRecord["date"]
+    amount: BudgetRecord["amount"]
+    categoryId: BudgetCategory["id"]
+    date: BudgetRecord["date"]
   }) => {
     const response = await apolloClient.mutate({
       mutation: CreateBudgetRecordDocument,
@@ -184,11 +169,7 @@ export const createRecordTc = createAsyncThunk(
 export const createCategoryTc = createAsyncThunk(
   "budget/createCategoryTc",
   async (
-    {
-      boardId,
-      name,
-      typeId,
-    }: { boardId: IBoard["id"]; name: IBudgetCategory["name"]; typeId: IBudgetCategoryType["id"] },
+    { boardId, name, typeId }: { boardId: Board["id"]; name: BudgetCategory["name"]; typeId: BudgetCategoryType["id"] },
     thunkApi
   ) => {
     try {
@@ -205,7 +186,7 @@ export const createCategoryTc = createAsyncThunk(
 
 export const deleteCategoryTc = createAsyncThunk(
   "budget/deleteCategoryTc",
-  async ({ categoryId }: { categoryId: IBudgetCategory["id"] }) => {
+  async ({ categoryId }: { categoryId: BudgetCategory["id"] }) => {
     const response = await apolloClient.mutate({
       mutation: DeleteBudgetCategoryDocument,
       variables: { categoryId },
@@ -214,8 +195,8 @@ export const deleteCategoryTc = createAsyncThunk(
   }
 )
 
-export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({ id, isTrashed }: IBudgetRecord) => {
-  let record: IBudgetRecord | undefined
+export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({ id, isTrashed }: BudgetRecord) => {
+  let record: BudgetRecord | undefined
 
   if (isTrashed) {
     record = await apolloClient
@@ -242,7 +223,7 @@ export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({
   return { isPermanentDeletion: isTrashed, record }
 })
 
-export const getCategoriesTc = createAsyncThunk<IBudgetCategory[], { boardId: IBoard["id"] }, { state: RootState }>(
+export const getCategoriesTc = createAsyncThunk<BudgetCategory[], { boardId: Board["id"] }, { state: RootState }>(
   "budget/getCategoriesTc",
   async ({ boardId }, { getState }) => {
     if (getState().budget.categories.status !== LoadingStatus.Idle) return []
@@ -258,7 +239,7 @@ export const getCategoriesTc = createAsyncThunk<IBudgetCategory[], { boardId: IB
   }
 )
 
-export const getCategoryTypesTc = createAsyncThunk<IBudgetCategoryType[], void, { state: RootState }>(
+export const getCategoryTypesTc = createAsyncThunk<BudgetCategoryType[], void, { state: RootState }>(
   "budget/getCategoryTypesTc",
   async (_, { getState }) => {
     if (getState().budget.categoryTypes.status !== LoadingStatus.Idle) return []
@@ -271,20 +252,7 @@ export const getCategoryTypesTc = createAsyncThunk<IBudgetCategoryType[], void, 
   }
 )
 
-export const getChartDataTc = createAsyncThunk<IBudgetRecord[], void, { state: RootState }>(
-  "budget/getChartDataTc",
-  async (_, { getState }) => {
-    if (getState().budget.chartData.status !== LoadingStatus.Idle) return []
-    try {
-      const response = await fetch("")
-      return await response.json()
-    } catch {
-      return []
-    }
-  }
-)
-
-export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTrash: boolean }, { state: RootState }>(
+export const getRecordsTc = createAsyncThunk<void, { boardId: Board["id"]; isTrash: boolean }, { state: RootState }>(
   "budget/getRecordsTc",
   async ({ boardId, isTrash }, { getState, dispatch }) => {
     const existingRecords = getState().budget.records[isTrash ? "trashed" : "notTrashed"]
@@ -319,7 +287,7 @@ export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTr
 
 export const restoreRecordTc = createAsyncThunk(
   "budget/restoreRecordTc",
-  async ({ recordId }: { recordId: IBudgetRecord["id"] }) => {
+  async ({ recordId }: { recordId: BudgetRecord["id"] }) => {
     const response = await apolloClient.mutate({
       mutation: UpdateBudgetRecordDocument,
       variables: { id: recordId, isTrashed: false },
@@ -336,9 +304,9 @@ export const updateCategoryTc = createAsyncThunk(
       name,
       typeId,
     }: {
-      categoryId: IBudgetCategory["id"]
-      name: IBudgetCategory["name"]
-      typeId: IBudgetCategoryType["id"]
+      categoryId: BudgetCategory["id"]
+      name: BudgetCategory["name"]
+      typeId: BudgetCategoryType["id"]
     },
     thunkApi
   ) => {
@@ -362,10 +330,10 @@ export const updateRecordTc = createAsyncThunk(
     date,
     id,
   }: {
-    amount: IBudgetRecord["amount"]
-    categoryId: IBudgetCategory["id"]
-    date: IBudgetRecord["date"]
-    id: IBudgetRecord["id"]
+    amount: BudgetRecord["amount"]
+    categoryId: BudgetCategory["id"]
+    date: BudgetRecord["date"]
+    id: BudgetRecord["id"]
   }) => {
     const response = await apolloClient.mutate({
       mutation: UpdateBudgetRecordDocument,

@@ -10,7 +10,7 @@ import { store } from "#models/store"
 import { globalStyles } from "#styles/global"
 import { theme } from "#styles/theme"
 import { apolloClient } from "#utils/apolloClient"
-import { App } from "#views"
+import { App } from "#views/index"
 
 let rootNode = document.querySelector("#root")
 if (rootNode === null) {

@@ -13,17 +13,17 @@ import { format } from "date-fns"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
+import { BudgetCategory, BudgetRecord } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
 import { createRecordTc, updateRecordTc } from "#models/budget"
-import { IBudgetCategory, IBudgetRecord } from "#types/budget"
 import { useAppDispatch } from "#utils/hooks"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormModalProps {
-  categories: IBudgetCategory[]
+  categories: BudgetCategory[]
   closeModal(): void
-  record: IBudgetRecord | null
+  record: BudgetRecord | null
 }
 
 export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {

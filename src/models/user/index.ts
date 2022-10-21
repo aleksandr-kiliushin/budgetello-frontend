@@ -1,19 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
+import { User } from "#api/types"
 import { GetUserDocument } from "#api/users"
 import { AppThunk } from "#models/store"
-import { IUser } from "#types/IUser"
 import { apolloClient } from "#utils/apolloClient"
 
 interface IState {
   isAuthorized: boolean | undefined
-  data: IUser
+  data: User
 }
 
 const initialState: IState = {
   isAuthorized: undefined,
   data: {
+    administratedBoards: [],
     id: 0,
+    participatedBoards: [],
     password: "",
     username: "",
   },
@@ -28,7 +30,7 @@ const userSlice = createSlice({
       state.isAuthorized = false
       state.data = initialState.data
     },
-    setCurrentUser: (state, action: PayloadAction<IUser>) => {
+    setCurrentUser: (state, action: PayloadAction<User>) => {
       state.data = action.payload
     },
 

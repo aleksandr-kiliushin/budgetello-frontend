@@ -9,18 +9,18 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
+import { BudgetCategory, BudgetCategoryType } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 import { createCategoryTc, updateCategoryTc } from "#models/budget"
-import { IBudgetCategory, IBudgetCategoryType } from "#types/budget"
 import { useAppDispatch } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormModalProps {
-  category: IBudgetCategory | null
-  categoryTypes: IBudgetCategoryType[]
+  category: BudgetCategory | null
+  categoryTypes: BudgetCategoryType[]
   closeModal(): void
 }
 

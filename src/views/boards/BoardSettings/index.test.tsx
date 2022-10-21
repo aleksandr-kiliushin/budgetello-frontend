@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 
 import { render } from "#utils/testing/render"
 import { testUsers } from "#utils/testing/test-users"
-import { App } from "#views"
+import { App } from "#views/index"
 
 describe("Budget categories service", () => {
   test("come from backend and render correctly.", async () => {
