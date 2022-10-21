@@ -20,6 +20,49 @@ query GetBudgetCategoryTypes {
   }
 }
 
+query GetBudgetRecords(
+  $amount: Float
+  $boardsIds: [Int!]
+  $categoriesIds: [Int!]
+  $dates: [String!]
+  $ids: [Int!]
+  $isTrashed: Boolean
+  $orderingByDate: String
+  $orderingById: String
+  $skip: Int
+  $take: Int
+) {
+  budgetRecords(
+    amount: $amount
+    boardsIds: $boardsIds
+    categoriesIds: $categoriesIds
+    dates: $dates
+    ids: $ids
+    isTrashed: $isTrashed
+    orderingByDate: $orderingByDate
+    orderingById: $orderingById
+    skip: $skip
+    take: $take
+  ) {
+    amount
+    category {
+      board {
+        id
+        name
+      }
+      id
+      name
+      type {
+        id
+        name
+      }
+    }
+    date
+    id
+    isTrashed
+  }
+}
+
 mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: { boardId: $boardId, name: $name, typeId: $typeId }) {
     board {

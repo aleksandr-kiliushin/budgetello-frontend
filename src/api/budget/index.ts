@@ -16,6 +16,22 @@ export type GetBudgetCategoryTypesQueryVariables = Types.Exact<{ [key: string]: 
 
 export type GetBudgetCategoryTypesQuery = { __typename?: 'Query', budgetCategoryTypes: Array<{ __typename?: 'BudgetCategoryType', id: number, name: string }> };
 
+export type GetBudgetRecordsQueryVariables = Types.Exact<{
+  amount?: Types.InputMaybe<Types.Scalars['Float']>;
+  boardsIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  categoriesIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  dates?: Types.InputMaybe<Array<Types.Scalars['String']> | Types.Scalars['String']>;
+  ids?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  isTrashed?: Types.InputMaybe<Types.Scalars['Boolean']>;
+  orderingByDate?: Types.InputMaybe<Types.Scalars['String']>;
+  orderingById?: Types.InputMaybe<Types.Scalars['String']>;
+  skip?: Types.InputMaybe<Types.Scalars['Int']>;
+  take?: Types.InputMaybe<Types.Scalars['Int']>;
+}>;
+
+
+export type GetBudgetRecordsQuery = { __typename?: 'Query', budgetRecords: Array<{ __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } }> };
+
 export type CreateBudgetCategoryMutationVariables = Types.Exact<{
   boardId: Types.Scalars['Int'];
   name: Types.Scalars['String'];
@@ -140,6 +156,76 @@ export function useGetBudgetCategoryTypesLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetBudgetCategoryTypesQueryHookResult = ReturnType<typeof useGetBudgetCategoryTypesQuery>;
 export type GetBudgetCategoryTypesLazyQueryHookResult = ReturnType<typeof useGetBudgetCategoryTypesLazyQuery>;
 export type GetBudgetCategoryTypesQueryResult = Apollo.QueryResult<GetBudgetCategoryTypesQuery, GetBudgetCategoryTypesQueryVariables>;
+export const GetBudgetRecordsDocument = gql`
+    query GetBudgetRecords($amount: Float, $boardsIds: [Int!], $categoriesIds: [Int!], $dates: [String!], $ids: [Int!], $isTrashed: Boolean, $orderingByDate: String, $orderingById: String, $skip: Int, $take: Int) {
+  budgetRecords(
+    amount: $amount
+    boardsIds: $boardsIds
+    categoriesIds: $categoriesIds
+    dates: $dates
+    ids: $ids
+    isTrashed: $isTrashed
+    orderingByDate: $orderingByDate
+    orderingById: $orderingById
+    skip: $skip
+    take: $take
+  ) {
+    amount
+    category {
+      board {
+        id
+        name
+      }
+      id
+      name
+      type {
+        id
+        name
+      }
+    }
+    date
+    id
+    isTrashed
+  }
+}
+    `;
+
+/**
+ * __useGetBudgetRecordsQuery__
+ *
+ * To run a query within a React component, call `useGetBudgetRecordsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBudgetRecordsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBudgetRecordsQuery({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *      boardsIds: // value for 'boardsIds'
+ *      categoriesIds: // value for 'categoriesIds'
+ *      dates: // value for 'dates'
+ *      ids: // value for 'ids'
+ *      isTrashed: // value for 'isTrashed'
+ *      orderingByDate: // value for 'orderingByDate'
+ *      orderingById: // value for 'orderingById'
+ *      skip: // value for 'skip'
+ *      take: // value for 'take'
+ *   },
+ * });
+ */
+export function useGetBudgetRecordsQuery(baseOptions?: Apollo.QueryHookOptions<GetBudgetRecordsQuery, GetBudgetRecordsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBudgetRecordsQuery, GetBudgetRecordsQueryVariables>(GetBudgetRecordsDocument, options);
+      }
+export function useGetBudgetRecordsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBudgetRecordsQuery, GetBudgetRecordsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBudgetRecordsQuery, GetBudgetRecordsQueryVariables>(GetBudgetRecordsDocument, options);
+        }
+export type GetBudgetRecordsQueryHookResult = ReturnType<typeof useGetBudgetRecordsQuery>;
+export type GetBudgetRecordsLazyQueryHookResult = ReturnType<typeof useGetBudgetRecordsLazyQuery>;
+export type GetBudgetRecordsQueryResult = Apollo.QueryResult<GetBudgetRecordsQuery, GetBudgetRecordsQueryVariables>;
 export const CreateBudgetCategoryDocument = gql`
     mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: {boardId: $boardId, name: $name, typeId: $typeId}) {

@@ -8,6 +8,7 @@ import {
   DeleteBudgetRecordDocument,
   GetBudgetCategoriesDocument,
   GetBudgetCategoryTypesDocument,
+  GetBudgetRecordsDocument,
   UpdateBudgetRecordDocument,
 } from "#api/budget"
 import { RootState } from "#models/store"
@@ -294,24 +295,15 @@ export const getRecordsTc = createAsyncThunk<void, { boardId: IBoard["id"]; isTr
     dispatch(budgetActions.setRecordsStatus({ isTrash, status: LoadingStatus.Loading }))
 
     const response = await apolloClient.query({
-      query: gql`
-        query GET_BUDGET_RECORDS {
-          budgetRecords(boardsIds: [${boardId}], isTrashed: ${isTrash}, orderingByDate: "DESC", orderingById: "DESC", skip: ${existingRecords.items.length}, take: 50) {
-            amount
-            category {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-            date
-            id
-            isTrashed
-          }
-        }
-      `,
+      query: GetBudgetRecordsDocument,
+      variables: {
+        boardsIds: [boardId],
+        isTrashed: isTrash,
+        orderingByDate: "DESC",
+        orderingById: "DESC",
+        skip: existingRecords.items.length,
+        take: 50,
+      },
     })
 
     dispatch(budgetActions.addRecordsItems({ isTrash, items: response.data.budgetRecords }))
