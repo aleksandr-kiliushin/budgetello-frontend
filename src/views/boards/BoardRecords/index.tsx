@@ -11,7 +11,7 @@ import { Link, Navigate, useLocation, useNavigate, useParams } from "react-route
 
 import { useGetBoardQuery } from "#api/boards"
 import { Loader } from "#components/Loader"
-import { getCategoriesTc, getRecordsTc } from "#models/budget"
+import { getRecordsTc } from "#models/budget"
 import { LoadingStatus } from "#src/constants/shared"
 import { useAppDispatch, useAppSelector } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
@@ -31,7 +31,6 @@ export const BoardRecords: React.FC = () => {
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
 
-  const categories = useAppSelector((state) => state.budget.categories)
   const records = useAppSelector((state) => state.budget.records[isTrash ? "trashed" : "notTrashed"])
 
   const loaderRef = React.useRef(null)
@@ -40,7 +39,6 @@ export const BoardRecords: React.FC = () => {
 
   React.useEffect(() => {
     if (params.boardId === undefined) return
-    dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
     dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: false }))
     dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: true }))
   }, [])
@@ -127,18 +125,14 @@ export const BoardRecords: React.FC = () => {
           </StyledTableHead>
           <TableBody>
             {records.items.map((record) => (
-              <RecordTableRow categories={categories.items} isTrash={isTrash} key={record.id} record={record} />
+              <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
             ))}
             {records.status === LoadingStatus.Completed ? null : <Loader Component={"tr"} ref={loaderRef} />}
           </TableBody>
         </Table>
       </StyledTableContainer>
       {isRecordCreatingModalShown ? (
-        <RecordFormModal
-          categories={categories.items}
-          closeModal={(): void => setIsRecordCreatingModalShown(false)}
-          record={null}
-        />
+        <RecordFormModal closeModal={(): void => setIsRecordCreatingModalShown(false)} record={null} />
       ) : null}
     </>
   )

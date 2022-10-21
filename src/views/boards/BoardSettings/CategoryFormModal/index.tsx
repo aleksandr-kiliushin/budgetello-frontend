@@ -5,27 +5,29 @@ import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogTitle from "@mui/material/DialogTitle"
 import TextField from "@mui/material/TextField"
-import { FC } from "react"
+import React from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
-import { useGetBudgetCategoryTypesQuery } from "#api/budget"
+import {
+  GetBudgetCategoriesDocument,
+  useCreateBudgetCategoryMutation,
+  useGetBudgetCategoryTypesQuery,
+  useUpdateBudgetCategoryMutation,
+} from "#api/budget"
 import { BudgetCategory } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
-import { createCategoryTc, updateCategoryTc } from "#models/budget"
-import { useAppDispatch } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormModalProps {
-  category: BudgetCategory | null
+  category: Pick<BudgetCategory, "id" | "name" | "type"> | null
   closeModal(): void
 }
 
-export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, closeModal }) => {
-  const dispatch = useAppDispatch()
+export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category, closeModal }) => {
   const params = useParams<IBoardsRouteParams>()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
@@ -46,19 +48,35 @@ export const CategoryFormModal: FC<ICategoryFormModalProps> = ({ category, close
   })
 
   const queryBudgetCategoryTypesResponse = useGetBudgetCategoryTypesQuery()
+  const [createCategory] = useCreateBudgetCategoryMutation({
+    refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
+  })
+  const [updateCategory] = useUpdateBudgetCategoryMutation()
+
   if (queryBudgetCategoryTypesResponse.data === undefined) return null
 
-  const submitCategoryForm = handleSubmit(async ({ name, typeId }) => {
+  const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return
     try {
       if (category === null) {
-        const error = await dispatch(createCategoryTc({ boardId: parseInt(params.boardId), name, typeId })).unwrap()
-        if ("fields" in error) throw error
+        const response = await createCategory({
+          variables: {
+            boardId: Number(params.boardId),
+            name: formValues.name,
+            typeId: formValues.typeId,
+          },
+        })
+        if (response.errors !== undefined) throw errors
       } else {
-        const error = await dispatch(
-          updateCategoryTc({ categoryId: category.id, name, typeId: Number(typeId) })
-        ).unwrap()
-        if ("fields" in error) throw error
+        const response = await updateCategory({
+          variables: {
+            boardId: Number(params.boardId),
+            id: category.id,
+            name: formValues.name,
+            typeId: formValues.typeId,
+          },
+        })
+        if (response.errors !== undefined) throw errors
       }
       closeModal()
     } catch (error) {

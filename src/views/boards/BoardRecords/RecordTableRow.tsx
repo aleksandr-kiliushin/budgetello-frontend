@@ -4,22 +4,21 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import RestoreIcon from "@mui/icons-material/Restore"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
-import { FC, Fragment } from "react"
+import React from "react"
 import { useToggle } from "react-use"
 
-import { BudgetCategory, BudgetRecord } from "#api/types"
+import { BudgetRecord } from "#api/types"
 import { deleteRecordTc, restoreRecordTc } from "#models/budget"
 import { useAppDispatch } from "#utils/hooks"
 
 import { RecordFormModal } from "./RecordFormModal"
 
 interface IRecordTableRowProps {
-  categories: BudgetCategory[]
   isTrash: boolean
   record: BudgetRecord
 }
 
-export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, record }) => {
+export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
   const dispatch = useAppDispatch()
   const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
@@ -66,7 +65,7 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, 
   ])
 
   return (
-    <Fragment>
+    <>
       <TableRow>
         <TableCell
           css={css`
@@ -91,8 +90,8 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ categories, isTrash, 
         </TableCell>
       </TableRow>
       {isRecordEditingModalShown ? (
-        <RecordFormModal categories={categories} closeModal={toggleIsRecordEditingModalShown} record={record} />
+        <RecordFormModal closeModal={toggleIsRecordEditingModalShown} record={record} />
       ) : null}
-    </Fragment>
+    </>
   )
 }

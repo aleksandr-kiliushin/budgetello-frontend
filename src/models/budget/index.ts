@@ -1,25 +1,17 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
 import {
-  CreateBudgetCategoryDocument,
   CreateBudgetRecordDocument,
-  DeleteBudgetCategoryDocument,
   DeleteBudgetRecordDocument,
-  GetBudgetCategoriesDocument,
   GetBudgetRecordsDocument,
-  UpdateBudgetCategoryDocument,
   UpdateBudgetRecordDocument,
 } from "#api/budget"
-import { Board, BudgetCategory, BudgetCategoryType, BudgetRecord } from "#api/types"
+import { Board, BudgetRecord } from "#api/types"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { apolloClient } from "#utils/apolloClient"
 
 interface IState {
-  categories: {
-    items: BudgetCategory[]
-    status: LoadingStatus
-  }
   records: {
     notTrashed: {
       items: BudgetRecord[]
@@ -33,10 +25,6 @@ interface IState {
 }
 
 export const initialState: IState = {
-  categories: {
-    items: [],
-    status: LoadingStatus.Idle,
-  },
   records: {
     notTrashed: {
       items: [],
@@ -51,17 +39,8 @@ export const initialState: IState = {
 
 const budgetSlice = createSlice({
   extraReducers: (builder) => {
-    // To do: try addRecordsTc.PENDING,
-    builder.addCase(createCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
-      state.categories.items.unshift(action.payload)
-    })
-
     builder.addCase(createRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
       state.records.notTrashed.items.unshift(action.payload)
-    })
-
-    builder.addCase(deleteCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
-      state.categories.items = state.categories.items.filter((category) => category.id !== action.payload.id)
     })
 
     builder.addCase(
@@ -82,22 +61,10 @@ const budgetSlice = createSlice({
       }
     )
 
-    builder.addCase(getCategoriesTc.fulfilled, (state, action: PayloadAction<BudgetCategory[]>) => {
-      if (action.payload.length === 0) return
-
-      state.categories = { items: action.payload, status: LoadingStatus.Success }
-    })
-
     builder.addCase(restoreRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
       state.records.trashed.items = state.records.trashed.items.filter((record) => record.id !== action.payload.id)
 
       state.records.notTrashed.items.unshift(action.payload)
-    })
-
-    builder.addCase(updateCategoryTc.fulfilled, (state, action: PayloadAction<BudgetCategory>) => {
-      const categoryIndex = state.categories.items.findIndex((category) => category.id === action.payload.id)
-
-      state.categories.items[categoryIndex] = action.payload
     })
 
     builder.addCase(updateRecordTc.fulfilled, (state, action: PayloadAction<BudgetRecord>) => {
@@ -140,7 +107,7 @@ export const createRecordTc = createAsyncThunk(
     date,
   }: {
     amount: BudgetRecord["amount"]
-    categoryId: BudgetCategory["id"]
+    categoryId: BudgetRecord["category"]["id"]
     date: BudgetRecord["date"]
   }) => {
     const response = await apolloClient.mutate({
@@ -148,35 +115,6 @@ export const createRecordTc = createAsyncThunk(
       variables: { amount, categoryId, date },
     })
     return response.data.createBudgetRecord
-  }
-)
-
-export const createCategoryTc = createAsyncThunk(
-  "budget/createCategoryTc",
-  async (
-    { boardId, name, typeId }: { boardId: Board["id"]; name: BudgetCategory["name"]; typeId: BudgetCategoryType["id"] },
-    thunkApi
-  ) => {
-    try {
-      const response = await apolloClient.mutate({
-        mutation: CreateBudgetCategoryDocument,
-        variables: { boardId, name, typeId },
-      })
-      return response.data.createBudgetCategory
-    } catch (error) {
-      return thunkApi.rejectWithValue(error)
-    }
-  }
-)
-
-export const deleteCategoryTc = createAsyncThunk(
-  "budget/deleteCategoryTc",
-  async ({ categoryId }: { categoryId: BudgetCategory["id"] }) => {
-    const response = await apolloClient.mutate({
-      mutation: DeleteBudgetCategoryDocument,
-      variables: { categoryId },
-    })
-    return response.data.deleteBudgetCategory
   }
 )
 
@@ -207,22 +145,6 @@ export const deleteRecordTc = createAsyncThunk("budget/deleteRecordTc", async ({
 
   return { isPermanentDeletion: isTrashed, record }
 })
-
-export const getCategoriesTc = createAsyncThunk<BudgetCategory[], { boardId: Board["id"] }, { state: RootState }>(
-  "budget/getCategoriesTc",
-  async ({ boardId }, { getState }) => {
-    if (getState().budget.categories.status !== LoadingStatus.Idle) return []
-    try {
-      const response = await apolloClient.query({
-        query: GetBudgetCategoriesDocument,
-        variables: { boardsIds: [boardId] },
-      })
-      return response.data.budgetCategories
-    } catch {
-      return []
-    }
-  }
-)
 
 export const getRecordsTc = createAsyncThunk<void, { boardId: Board["id"]; isTrash: boolean }, { state: RootState }>(
   "budget/getRecordsTc",
@@ -268,32 +190,6 @@ export const restoreRecordTc = createAsyncThunk(
   }
 )
 
-export const updateCategoryTc = createAsyncThunk(
-  "budget/updateCategoryTc",
-  async (
-    {
-      categoryId,
-      name,
-      typeId,
-    }: {
-      categoryId: BudgetCategory["id"]
-      name: BudgetCategory["name"]
-      typeId: BudgetCategoryType["id"]
-    },
-    thunkApi
-  ) => {
-    try {
-      const response = await apolloClient.mutate({
-        mutation: UpdateBudgetCategoryDocument,
-        variables: { id: categoryId, name, typeId },
-      })
-      return response.data.updateBudgetCategory
-    } catch (error) {
-      return thunkApi.rejectWithValue(error)
-    }
-  }
-)
-
 export const updateRecordTc = createAsyncThunk(
   "budget/updateRecordTc",
   async ({
@@ -303,7 +199,7 @@ export const updateRecordTc = createAsyncThunk(
     id,
   }: {
     amount: BudgetRecord["amount"]
-    categoryId: BudgetCategory["id"]
+    categoryId: BudgetRecord["category"]["id"]
     date: BudgetRecord["date"]
     id: BudgetRecord["id"]
   }) => {

@@ -11,8 +11,7 @@ import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
 import { useGetBoardQuery } from "#api/boards"
-import { getCategoriesTc } from "#models/budget"
-import { useAppDispatch, useAppSelector } from "#utils/hooks"
+import { useGetBudgetCategoriesQuery } from "#api/budget"
 
 import { IBoardsRouteParams } from "../types"
 import { CategoryFormModal } from "./CategoryFormModal"
@@ -20,20 +19,19 @@ import { CategoryTableRow } from "./CategoryTableRow"
 import { Members } from "./Members"
 
 export const BoardSettings: React.FC = () => {
-  const dispatch = useAppDispatch()
   const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
-  const categories = useAppSelector((state) => state.budget.categories)
+  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  const getBoardBudgetCategoriesResponse = useGetBudgetCategoriesQuery({
+    variables: { boardsIds: [Number(params.boardId)] },
+  })
 
-  React.useEffect(() => {
-    if (params.boardId === undefined) return
-    dispatch(getCategoriesTc({ boardId: parseInt(params.boardId) }))
-  }, [])
+  if (getBoardResponse.data === undefined) return null
+  if (getBoardBudgetCategoriesResponse.data === undefined) return null
 
-  const getBoardsResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-  if (getBoardsResponse.data === undefined) return null
-  const { board } = getBoardsResponse.data
+  const board = getBoardResponse.data.board
+  const boardBudgetCategories = getBoardBudgetCategoriesResponse.data.budgetCategories
 
   return (
     <>
@@ -63,7 +61,7 @@ export const BoardSettings: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categories.items.map((category) => (
+            {boardBudgetCategories.map((category) => (
               <CategoryTableRow category={category} key={category.id} />
             ))}
           </TableBody>

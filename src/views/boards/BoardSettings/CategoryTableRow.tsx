@@ -2,24 +2,24 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
-import { FC, Fragment } from "react"
+import React from "react"
 import { useToggle } from "react-use"
 
-import { BudgetCategory, BudgetCategoryType } from "#api/types"
+import { BudgetCategory } from "#api/types"
 
 import { CategoryDeletionModal } from "./CategoryDeletionModal"
 import { CategoryFormModal } from "./CategoryFormModal"
 
 interface ICategoryTableRowProps {
-  category: BudgetCategory
+  category: Pick<BudgetCategory, "id" | "name" | "type">
 }
 
-export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
+export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category }) => {
   const [isCategoryEditingModalShown, toggleIsCategoryEditingModalShown] = useToggle(false)
   const [isCategoryDeletionModalShown, toggleIsCategoryDeletionModalShown] = useToggle(false)
 
   return (
-    <Fragment>
+    <>
       <TableRow>
         <TableCell width="38%">{category.name}</TableCell>
         <TableCell width="38%">{category.type.name}</TableCell>
@@ -36,6 +36,6 @@ export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
       {isCategoryDeletionModalShown && (
         <CategoryDeletionModal category={category} closeModal={toggleIsCategoryDeletionModalShown} />
       )}
-    </Fragment>
+    </>
   )
 }

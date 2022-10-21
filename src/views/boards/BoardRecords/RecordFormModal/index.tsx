@@ -10,23 +10,25 @@ import MenuItem from "@mui/material/MenuItem"
 import Select from "@mui/material/Select"
 import TextField from "@mui/material/TextField"
 import { format } from "date-fns"
-import { FC } from "react"
 import { useForm } from "react-hook-form"
+import { useParams } from "react-router-dom"
 
-import { BudgetCategory, BudgetRecord } from "#api/types"
+import { useGetBudgetCategoriesQuery } from "#api/budget"
+import { BudgetRecord } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
 import { createRecordTc, updateRecordTc } from "#models/budget"
 import { useAppDispatch } from "#utils/hooks"
+import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormModalProps {
-  categories: BudgetCategory[]
   closeModal(): void
   record: BudgetRecord | null
 }
 
-export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeModal, record }) => {
+export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, record }) => {
+  const params = useParams<IBoardsRouteParams>()
   const dispatch = useAppDispatch()
 
   const defaultValues = record
@@ -41,11 +43,16 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
         date: format(new Date(), "yyyy-MM-dd"),
       }
 
-  const { formState, handleSubmit, register, watch } = useForm<IFormValues>({
+  const { formState, handleSubmit, register } = useForm<IFormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),
     mode: "onChange",
   })
+
+  const getBoardBudgetCategoriesResponse = useGetBudgetCategoriesQuery({
+    variables: { boardsIds: [Number(params.boardId)] },
+  })
+  if (getBoardBudgetCategoriesResponse.data === undefined) return null
 
   const submitRecordForm = handleSubmit(({ amount, categoryId, date }) => {
     if (amount === null) return
@@ -61,8 +68,6 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
 
     closeModal()
   })
-
-  console.log('watch("categoryId") >>', watch("categoryId"))
 
   return (
     <Dialog onClose={closeModal} open>
@@ -82,9 +87,9 @@ export const RecordFormModal: FC<IRecordFormModalProps> = ({ categories, closeMo
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}
               <Select {...register(FormField.CategoryId, { valueAsNumber: true })} label="Category">
-                {categories.map(({ name, id }) => (
-                  <MenuItem key={id} value={id}>
-                    {name}
+                {getBoardBudgetCategoriesResponse.data.budgetCategories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
                   </MenuItem>
                 ))}
               </Select>
