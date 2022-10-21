@@ -1,0 +1,3 @@
+mutation CreateAuthorizationToken($username: String!, $password: String!) {
+  createAuthorizationToken(input: { username: $username, password: $password })
+}

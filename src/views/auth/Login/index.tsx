@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
-import { useCreateAuthorizationTokenMutation } from "#api/users"
+import { useCreateAuthorizationTokenMutation } from "#api/authorization"
 import { RowGroup } from "#components/RowGroup"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { useAppDispatch } from "#utils/hooks"

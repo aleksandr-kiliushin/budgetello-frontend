@@ -5,7 +5,7 @@ import React from "react"
 import { Provider } from "react-redux"
 import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom"
 
-import { CreateAuthorizationTokenDocument } from "#api/users"
+import { CreateAuthorizationTokenDocument } from "#api/authorization"
 import { initializeStore } from "#models/store"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { apolloClient } from "#utils/apolloClient"
