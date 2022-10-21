@@ -9,7 +9,7 @@ export type GetUsersQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> }> };
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }>, participatedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> }> };
 
 export type GetUserQueryVariables = Types.Exact<{
   id?: Types.InputMaybe<Types.Scalars['Int']>;
@@ -17,7 +17,7 @@ export type GetUserQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: number, username: string } };
+export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }>, participatedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> } };
 
 export type CreateAuthorizationTokenMutationVariables = Types.Exact<{
   username: Types.Scalars['String'];
@@ -47,7 +47,8 @@ export const GetUsersDocument = gql`
         name
       }
     }
-    administratedBoards {
+    id
+    participatedBoards {
       admins {
         id
         username
@@ -63,7 +64,6 @@ export const GetUsersDocument = gql`
         name
       }
     }
-    id
     username
   }
 }
@@ -100,7 +100,39 @@ export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQuer
 export const GetUserDocument = gql`
     query GetUser($id: Int, $username: String) {
   user(id: $id, username: $username) {
+    administratedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
     id
+    participatedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
     username
   }
 }

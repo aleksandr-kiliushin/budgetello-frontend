@@ -16,6 +16,29 @@ query GetUsers($ids: [Int!], $username: String) {
         name
       }
     }
+    id
+    participatedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
+    username
+  }
+}
+
+query GetUser($id: Int, $username: String) {
+  user(id: $id, username: $username) {
     administratedBoards {
       admins {
         id
@@ -33,13 +56,22 @@ query GetUsers($ids: [Int!], $username: String) {
       }
     }
     id
-    username
-  }
-}
-
-query GetUser($id: Int, $username: String) {
-  user(id: $id, username: $username) {
-    id
+    participatedBoards {
+      admins {
+        id
+        username
+      }
+      id
+      members {
+        id
+        username
+      }
+      name
+      subject {
+        id
+        name
+      }
+    }
     username
   }
 }
