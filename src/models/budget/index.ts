@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-import { CreateBudgetRecordDocument } from "#api/budget"
+import { CreateBudgetCategoryDocument, CreateBudgetRecordDocument } from "#api/budget"
 import { RootState } from "#models/store"
 import { LoadingStatus } from "#src/constants/shared"
 import { IBoard } from "#types/boards"
@@ -184,18 +184,8 @@ export const createCategoryTc = createAsyncThunk(
   ) => {
     try {
       const response = await apolloClient.mutate({
-        mutation: gql`
-          mutation CREATE_BUDGET_CATEGORY {
-            createBudgetCategory(input: { boardId: ${boardId}, name: "${name}", typeId: ${typeId} }) {
-              id
-              name
-              type {
-                id
-                name
-              }
-            }
-          }
-        `,
+        mutation: CreateBudgetCategoryDocument,
+        variables: { boardId, name, typeId },
       })
       return response.data.createBudgetCategory
     } catch (error) {
