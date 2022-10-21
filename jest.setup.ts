@@ -2,6 +2,8 @@ import "@testing-library/jest-dom"
 import { execSync } from "child_process"
 import "whatwg-fetch"
 
+process.env.MODE = "test"
+
 beforeEach(() => {
   execSync(
     'echo "bash /var/app/database/scripts/restore-db-from-testing-template.sh" | docker exec -i personal-app-database bash;'

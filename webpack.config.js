@@ -27,15 +27,9 @@ module.exports = {
     sourceMapFilename: "[name].js.map",
   },
   plugins: [
-    new webpack.SourceMapDevToolPlugin({
-      filename: "[file].map[query]",
-    }),
-    new webpack.EnvironmentPlugin({
-      MODE: process.env.MODE,
-    }),
-    new HTMLWebpackPlugin({
-      template: "public/index.html",
-    }),
+    new webpack.SourceMapDevToolPlugin({ filename: "[file].map[query]" }),
+    new webpack.EnvironmentPlugin({ MODE: process.env.MODE }),
+    new HTMLWebpackPlugin({ template: "public/index.html" }),
   ],
   resolve: {
     alias: {
