@@ -44,7 +44,7 @@ describe("Auth service.", () => {
     })
   })
 
-  test("Case: User enters unexisting username.", async () => {
+  test("Case: User enters invalid password.", async () => {
     await render(<Auth />, { iAm: "guest" })
 
     expect(localStorage.authToken).toBeUndefined()

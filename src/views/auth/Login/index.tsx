@@ -5,8 +5,9 @@ import Typography from "@mui/material/Typography"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 
+import { useCreateAuthorizationTokenMutation } from "#api/users"
 import { RowGroup } from "#components/RowGroup"
-import { login } from "#models/user"
+import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { useAppDispatch } from "#utils/hooks"
 
 import { Container } from "../components"
@@ -14,6 +15,8 @@ import { FormField, FormValues, defaultValues, validationSchema } from "./form-h
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch()
+
+  const [createAuthToken] = useCreateAuthorizationTokenMutation()
 
   const {
     formState: { isValid, errors },
@@ -28,7 +31,19 @@ export const Login: FC = () => {
 
   const onSubmit = handleSubmit(async ({ password, username }) => {
     try {
-      await dispatch(login({ password, username }))
+      localStorage.removeItem("authToken")
+      const response = await createAuthToken({ variables: { password, username } })
+      if (response.errors !== undefined) throw errors
+      if (response.data === undefined) return
+      if (response.data === null) return
+      const authorizationToken = response.data.createAuthorizationToken
+      if (authorizationToken === undefined) {
+        dispatch(userActions.setIsUserAuthorized(false))
+        return
+      }
+      localStorage.authToken = authorizationToken
+      dispatch(userActions.setIsUserAuthorized(true))
+      await dispatch(fetchAndSetAuthorizedUser())
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
