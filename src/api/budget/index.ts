@@ -3,6 +3,14 @@ import * as Types from '../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
+export type GetBudgetCategoriesQueryVariables = Types.Exact<{
+  boardsIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  ids?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+}>;
+
+
+export type GetBudgetCategoriesQuery = { __typename?: 'Query', budgetCategories: Array<{ __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }> };
+
 export type CreateBudgetCategoryMutationVariables = Types.Exact<{
   boardId: Types.Scalars['Int'];
   name: Types.Scalars['String'];
@@ -47,6 +55,51 @@ export type UpdateBudgetRecordMutationVariables = Types.Exact<{
 export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
 
 
+export const GetBudgetCategoriesDocument = gql`
+    query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
+  budgetCategories(boardsIds: $boardsIds, ids: $ids) {
+    board {
+      id
+      name
+    }
+    id
+    name
+    type {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetBudgetCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetBudgetCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBudgetCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBudgetCategoriesQuery({
+ *   variables: {
+ *      boardsIds: // value for 'boardsIds'
+ *      ids: // value for 'ids'
+ *   },
+ * });
+ */
+export function useGetBudgetCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>(GetBudgetCategoriesDocument, options);
+      }
+export function useGetBudgetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>(GetBudgetCategoriesDocument, options);
+        }
+export type GetBudgetCategoriesQueryHookResult = ReturnType<typeof useGetBudgetCategoriesQuery>;
+export type GetBudgetCategoriesLazyQueryHookResult = ReturnType<typeof useGetBudgetCategoriesLazyQuery>;
+export type GetBudgetCategoriesQueryResult = Apollo.QueryResult<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>;
 export const CreateBudgetCategoryDocument = gql`
     mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   createBudgetCategory(input: {boardId: $boardId, name: $name, typeId: $typeId}) {
