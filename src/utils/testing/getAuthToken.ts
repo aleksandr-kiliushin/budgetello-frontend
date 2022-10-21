@@ -17,8 +17,8 @@ export const getAuthToken = async (testUserId: ITestUser["id"]): Promise<string>
   const authorizationResponseBody = await authorizationResponse.json()
   const authorizationToken = authorizationResponseBody.data.createAuthorizationToken
   if (typeof authorizationToken !== "string") {
-    throw new Error(`Authorization failed for the following credentials.
-Username: [${testUserCredentials.username}], password: [${testUserCredentials.password}].
+    throw new Error(`Authorization failed for the following credentials:
+Username: "${testUserCredentials.username}", password: "${testUserCredentials.password}".
 `)
   }
   return authorizationToken

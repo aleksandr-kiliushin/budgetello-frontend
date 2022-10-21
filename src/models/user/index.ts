@@ -62,25 +62,3 @@ export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
     }
   }
 }
-
-type Login = (credentials: { password: IUser["password"]; username: IUser["username"] }) => AppThunk<Promise<void>>
-export const login: Login = ({ password, username }) => {
-  return async (dispatch): Promise<void> => {
-    localStorage.removeItem("authToken")
-    const response = await apolloClient.mutate({
-      mutation: gql`
-        mutation CREATE_AUTHORIZATION_TOKEN {
-          createAuthorizationToken(input: { username: "${username}", password: "${password}" })
-        }
-      `,
-    })
-    const authorizationToken = response.data.createAuthorizationToken
-    if (authorizationToken === undefined) {
-      dispatch(userActions.setIsUserAuthorized(false))
-      return
-    }
-    localStorage.authToken = authorizationToken
-    dispatch(userActions.setIsUserAuthorized(true))
-    await dispatch(fetchAndSetAuthorizedUser())
-  }
-}
