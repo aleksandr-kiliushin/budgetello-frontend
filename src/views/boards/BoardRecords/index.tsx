@@ -112,6 +112,21 @@ export const BoardRecords: React.FC = () => {
             {records.map((record) => (
               <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
             ))}
+            <tr>
+              <td>
+                <button
+                  onClick={() => {
+                    getRecordsResponse.fetchMore({
+                      variables: {
+                        skip: getRecordsResponse.data === undefined ? 0 : getRecordsResponse.data.budgetRecords.length,
+                      },
+                    })
+                  }}
+                >
+                  Fetch more
+                </button>
+              </td>
+            </tr>
           </TableBody>
         </Table>
       </StyledTableContainer>
