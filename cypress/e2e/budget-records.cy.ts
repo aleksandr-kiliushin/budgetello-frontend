@@ -1,6 +1,6 @@
 import { testUsers } from "#utils/testing/test-users"
 
-describe("records", () => {
+describe("Budget records", () => {
   it("are loaded correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
 
