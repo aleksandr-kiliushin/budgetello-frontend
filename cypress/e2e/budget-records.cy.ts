@@ -32,10 +32,17 @@ describe("Budget records", () => {
     cy.visit("/boards/1/records")
 
     cy.contains("129").should("be.visible")
-    cy.contains("clothes").should("be.visible")
-    cy.contains("22-10-15").should("be.visible")
-
-    // TODO: Test pagination here.
+    cy.contains("80").should("exist").should("not.be.visible")
+    cy.get("main").scrollTo("bottom")
+    cy.contains("80").should("be.visible")
+    cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
+    cy.contains("30").should("exist").should("not.be.visible")
+    cy.get("main").scrollTo("bottom")
+    cy.contains("30").should("be.visible")
+    cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
+    cy.get("td").contains("1").should("exist").should("not.be.visible")
+    cy.get("main").scrollTo("bottom")
+    cy.contains("education").should("be.visible")
   })
 
   it("is created correctly", () => {
