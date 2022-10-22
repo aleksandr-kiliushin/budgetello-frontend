@@ -31,25 +31,14 @@ interface IRecordTableRowProps {
 }
 
 export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
-  const params = useParams<IBoardsRouteParams>()
   const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
   const [deleteBudgetRecord] = useDeleteBudgetRecordMutation({
-    refetchQueries: [
-      {
-        query: GetBudgetRecordsDocument,
-        variables: {
-          boardsIds: [Number(params.boardId)],
-          isTrashed: true,
-          orderingByDate: "DESC",
-          orderingById: "DESC",
-          skip: 0,
-          take: 50,
-        },
-      },
-    ],
+    update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
   })
-  const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
+  const [updateBudgetRecord] = useUpdateBudgetRecordMutation({
+    update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
+  })
 
   const { amount, date, category } = record
 

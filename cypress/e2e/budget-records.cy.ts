@@ -79,6 +79,8 @@ describe("Budget records", () => {
     cy.visit("/boards/1/records")
     cy.get("#2022-08-01-expense-education-25-delete-button").click()
 
+    cy.contains("25").should("not.exist")
+
     cy.get("input[name='isTrash']").click()
 
     cy.contains("25").should("be.visible")
@@ -91,6 +93,8 @@ describe("Budget records", () => {
 
     cy.visit("/boards/1/records?isTrash=true")
     cy.get("#2022-08-01-expense-clothes-100-restore-button").click()
+
+    cy.contains("100").should("not.exist")
 
     cy.get("input[name='isTrash']").click()
 
