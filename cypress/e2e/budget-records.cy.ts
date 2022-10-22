@@ -1,3 +1,5 @@
+import { join } from "node:path"
+
 import { testUsers } from "#utils/testing/test-users"
 
 describe("Budget records", () => {
@@ -21,6 +23,17 @@ describe("Budget records", () => {
     cy.get("td").contains("100").should("be.visible")
     cy.get("td").contains("clothes").should("be.visible")
     cy.get("td").contains("22-08-01").should("be.visible")
+  })
+
+  it("are paginted correctly", () => {
+    cy.exec(`docker exec -i personal-app-database /bin/bash < ${__dirname}/insert-many-records.sh`)
+    cy.authorize(testUsers.johnDoe.id)
+
+    cy.visit("/boards/1/records")
+
+    cy.get("td").contains("129").should("be.visible")
+    cy.get("td").contains("clothes").should("be.visible")
+    cy.get("td").contains("22-10-15").should("be.visible")
   })
 
   it("is created correctly", () => {
