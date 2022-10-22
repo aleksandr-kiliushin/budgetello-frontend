@@ -34,6 +34,8 @@ describe("Budget records", () => {
     cy.get("td").contains("129").should("be.visible")
     cy.get("td").contains("clothes").should("be.visible")
     cy.get("td").contains("22-10-15").should("be.visible")
+
+    // TODO: Test pagination here.
   })
 
   it("is created correctly", () => {
