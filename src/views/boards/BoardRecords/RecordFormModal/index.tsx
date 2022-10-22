@@ -13,23 +13,36 @@ import { format } from "date-fns"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
-import { useGetBudgetCategoriesQuery } from "#api/budget"
-import { BudgetRecord } from "#api/types"
+import {
+  GetBudgetRecordsDocument,
+  useCreateBudgetRecordMutation,
+  useGetBudgetCategoriesQuery,
+  useUpdateBudgetRecordMutation,
+} from "#api/budget"
+import { Board, BudgetCategory, BudgetRecord } from "#api/types"
 import { RowGroup } from "#components/RowGroup"
-import { createRecordTc, updateRecordTc } from "#models/budget"
-import { useAppDispatch } from "#utils/hooks"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormModalProps {
   closeModal(): void
-  record: BudgetRecord | null
+  record: {
+    amount: BudgetRecord["amount"]
+    category: {
+      board: Pick<Board, "id" | "name">
+      id: BudgetCategory["id"]
+      name: BudgetCategory["name"]
+      type: BudgetCategory["type"]
+    }
+    date: BudgetRecord["date"]
+    id: BudgetRecord["id"]
+    isTrashed: BudgetRecord["isTrashed"]
+  } | null // replace with undefined
 }
 
 export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, record }) => {
   const params = useParams<IBoardsRouteParams>()
-  const dispatch = useAppDispatch()
 
   const defaultValues = record
     ? {
@@ -52,18 +65,47 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
   const getBoardBudgetCategoriesResponse = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
   })
+
+  const [createBudgetRecord] = useCreateBudgetRecordMutation({
+    refetchQueries: [
+      {
+        query: GetBudgetRecordsDocument,
+        variables: {
+          boardsIds: [Number(params.boardId)],
+          isTrashed: false,
+          orderingByDate: "DESC",
+          orderingById: "DESC",
+          skip: 0,
+          take: 50,
+        },
+      },
+    ],
+  })
+  const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
+
   if (getBoardBudgetCategoriesResponse.data === undefined) return null
 
-  const submitRecordForm = handleSubmit(({ amount, categoryId, date }) => {
-    if (amount === null) return
-    if (categoryId === null) return
+  const submitRecordForm = handleSubmit((formValues) => {
+    if (formValues.amount === null) return
+    if (formValues.categoryId === null) return
 
-    const payload = { amount, categoryId, date }
-
-    if (record) {
-      dispatch(updateRecordTc({ ...payload, id: record.id }))
+    if (record === null) {
+      createBudgetRecord({
+        variables: {
+          amount: formValues.amount,
+          categoryId: formValues.categoryId,
+          date: formValues.date,
+        },
+      })
     } else {
-      dispatch(createRecordTc(payload))
+      updateBudgetRecord({
+        variables: {
+          amount: formValues.amount,
+          categoryId: formValues.categoryId,
+          date: formValues.date,
+          id: Number(record.id),
+        },
+      })
     }
 
     closeModal()

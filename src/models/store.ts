@@ -1,12 +1,10 @@
 import { Action, ThunkAction, configureStore } from "@reduxjs/toolkit"
 
-import { budgetReducer } from "./budget"
 import { userReducer } from "./user"
 
 export const initializeStore = () => {
   return configureStore({
     reducer: {
-      budget: budgetReducer,
       user: userReducer,
     },
   })

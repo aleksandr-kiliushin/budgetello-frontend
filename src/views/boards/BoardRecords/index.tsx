@@ -10,10 +10,7 @@ import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
-import { Loader } from "#components/Loader"
-import { getRecordsTc } from "#models/budget"
-import { LoadingStatus } from "#src/constants/shared"
-import { useAppDispatch, useAppSelector } from "#utils/hooks"
+import { useGetBudgetRecordsQuery } from "#api/budget"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { RecordFormModal } from "./RecordFormModal"
@@ -21,7 +18,6 @@ import { RecordTableRow } from "./RecordTableRow"
 import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
 export const BoardRecords: React.FC = () => {
-  const dispatch = useAppDispatch()
   const location = useLocation()
   const navigate = useNavigate()
   const params = useParams<IBoardsRouteParams>()
@@ -31,37 +27,26 @@ export const BoardRecords: React.FC = () => {
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
 
-  const records = useAppSelector((state) => state.budget.records[isTrash ? "trashed" : "notTrashed"])
+  const getRecordsResponse = useGetBudgetRecordsQuery({
+    variables: {
+      boardsIds: [Number(params.boardId)],
+      isTrashed: isTrash,
+      orderingByDate: "DESC",
+      orderingById: "DESC",
+      skip: 0,
+      take: 50,
+    },
+  })
 
-  const loaderRef = React.useRef(null)
-
-  const getBoardsResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-
-  React.useEffect(() => {
-    if (params.boardId === undefined) return
-    dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: false }))
-    dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash: true }))
-  }, [])
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(() => {
-      if (params.boardId === undefined) return
-      dispatch(getRecordsTc({ boardId: parseInt(params.boardId), isTrash }))
-    })
-    if (loaderRef.current !== null) {
-      observer.observe(loaderRef.current)
-    }
-    return (): void => {
-      if (loaderRef.current !== null) {
-        observer.unobserve(loaderRef.current)
-      }
-    }
-  }, [getRecordsTc, isTrash, loaderRef.current])
+  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
-  if (getBoardsResponse.data === undefined) return null
 
-  const { board } = getBoardsResponse.data
+  if (getBoardResponse.data === undefined) return null
+  if (getRecordsResponse.data === undefined) return null
+
+  const board = getBoardResponse.data.board
+  const records = getRecordsResponse.data.budgetRecords
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
     return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />
@@ -124,10 +109,9 @@ export const BoardRecords: React.FC = () => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {records.items.map((record) => (
+            {records.map((record) => (
               <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
             ))}
-            {records.status === LoadingStatus.Completed ? null : <Loader Component={"tr"} ref={loaderRef} />}
           </TableBody>
         </Table>
       </StyledTableContainer>

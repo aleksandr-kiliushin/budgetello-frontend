@@ -5,31 +5,53 @@ import RestoreIcon from "@mui/icons-material/Restore"
 import TableCell from "@mui/material/TableCell"
 import TableRow from "@mui/material/TableRow"
 import React from "react"
+import { useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
-import { BudgetRecord } from "#api/types"
-import { deleteRecordTc, restoreRecordTc } from "#models/budget"
-import { useAppDispatch } from "#utils/hooks"
+import { GetBudgetRecordsDocument, useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
+import { Board, BudgetCategory, BudgetRecord } from "#api/types"
 
+import { IBoardsRouteParams } from "../types"
 import { RecordFormModal } from "./RecordFormModal"
 
 interface IRecordTableRowProps {
   isTrash: boolean
-  record: BudgetRecord
+  record: {
+    amount: BudgetRecord["amount"]
+    category: {
+      board: Pick<Board, "id" | "name">
+      id: BudgetCategory["id"]
+      name: BudgetCategory["name"]
+      type: BudgetCategory["type"]
+    }
+    date: BudgetRecord["date"]
+    id: BudgetRecord["id"]
+    isTrashed: BudgetRecord["isTrashed"]
+  }
 }
 
 export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
-  const dispatch = useAppDispatch()
+  const params = useParams<IBoardsRouteParams>()
   const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
 
-  const { amount, date, category } = record
+  const [deleteBudgetRecord] = useDeleteBudgetRecordMutation({
+    refetchQueries: [
+      {
+        query: GetBudgetRecordsDocument,
+        variables: {
+          boardsIds: [Number(params.boardId)],
+          isTrashed: true,
+          orderingByDate: "DESC",
+          orderingById: "DESC",
+          skip: 0,
+          take: 50,
+        },
+      },
+    ],
+  })
+  const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
 
-  const restoreRecord = () => {
-    dispatch(restoreRecordTc({ recordId: record.id }))
-  }
-  const deleteRecord = () => {
-    dispatch(deleteRecordTc(record))
-  }
+  const { amount, date, category } = record
 
   const mapIsTrashToActionCell = new Map([
     [
@@ -48,7 +70,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       // eslint-disable-next-line react/jsx-key
       <TableCell
         id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
-        onClick={restoreRecord}
+        onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
         width="12%"
       >
         <RestoreIcon />
@@ -83,7 +105,14 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
         {mapIsTrashToActionCell.get(isTrash)}
         <TableCell
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
-          onClick={deleteRecord}
+          onClick={() => {
+            // TODO: Replace recordId with id.
+            if (record.isTrashed) {
+              deleteBudgetRecord({ variables: { recordId: record.id } })
+            } else {
+              updateBudgetRecord({ variables: { id: record.id, isTrashed: true } })
+            }
+          }}
           width="12%"
         >
           <DeleteOutlineIcon />
