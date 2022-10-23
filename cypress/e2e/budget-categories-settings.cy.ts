@@ -32,7 +32,7 @@ describe("Budget categories settings", () => {
     cy.contains("travel").should("be.visible")
   })
 
-  it.only("case: user tries to create a category that already exists and then fixes input values", () => {
+  it("case: user tries to create a category that already exists and then fixes input values", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
@@ -61,12 +61,30 @@ describe("Budget categories settings", () => {
     cy.contains("teaching").should("be.visible")
   })
 
+  it("category is edited correctly", () => {
+    cy.authorize(testUsers.jessicaStark.id)
+    cy.visit("/boards/2/settings")
+
+    cy.contains("salary").should("be.visible")
+    cy.get("#salary-income-category-edit-button").click()
+    cy.get('[role="dialog"]').should("be.visible")
+    cy.get('input[name="name"]').should("have.value", "salary")
+    cy.get('input[name="typeId"][value="2"]').should("be.checked") // "Income" category type is selected.
+    cy.get('input[name="name"]').clear().type("casino")
+    cy.get('input[name="typeId"][value="1"]').click() // Select "expense" category type.
+    cy.contains("Submit").click()
+    cy.get('[role="dialog"]').should("not.exist")
+    cy.contains("salary").should("not.exist")
+    cy.contains("casino").should("be.visible")
+    cy.get("#casino-expense-category-edit-button").should("be.visible")
+  })
+
   it("is deleted correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
     cy.contains("clothes").should("be.visible")
-    cy.get('[data-testid="clothes-expense-category-delete-button"]').click()
+    cy.get("#clothes-expense-category-delete-button").click()
     cy.get('[role="dialog"]').should("be.visible")
     cy.contains("Yes, delete").click()
     cy.get('[role="dialog"]').should("not.exist")

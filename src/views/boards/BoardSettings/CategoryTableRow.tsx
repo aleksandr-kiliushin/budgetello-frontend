@@ -24,10 +24,10 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
         <TableCell width="38%">{category.name}</TableCell>
         <TableCell width="38%">{category.type.name}</TableCell>
         <TableCell onClick={toggleIsCategoryEditingModalShown} width="12%">
-          <EditOutlinedIcon data-testid={`${category.name}-${category.type.name}-category-edit-button`} />
+          <EditOutlinedIcon id={`${category.name}-${category.type.name}-category-edit-button`} />
         </TableCell>
         <TableCell onClick={toggleIsCategoryDeletionModalShown} width="12%">
-          <DeleteOutlineIcon data-testid={`${category.name}-${category.type.name}-category-delete-button`} />
+          <DeleteOutlineIcon id={`${category.name}-${category.type.name}-category-delete-button`} />
         </TableCell>
       </TableRow>
       {isCategoryEditingModalShown && (
