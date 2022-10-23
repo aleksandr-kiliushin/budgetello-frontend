@@ -6,24 +6,6 @@ import { testUsers } from "#utils/testing/test-users"
 import { App } from "#views/index"
 
 describe("Budget categories", () => {
-  test("Modal for new category modal opens and renders correctly.", async () => {
-    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
-
-    userEvent.click(await screen.findByText("+New"))
-    expect(await screen.findByText("Create category")).toBeInTheDocument()
-    expect(screen.getByText("Cancel")).toBeInTheDocument()
-    expect(screen.getByText("Submit")).toBeInTheDocument()
-  })
-
-  test("Modal for new category creating closes correctly using Cancel button.", async () => {
-    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
-
-    userEvent.click(await screen.findByText("+New"))
-    expect(await screen.findByRole("dialog")).toBeInTheDocument()
-    userEvent.click(screen.getByText("Cancel"))
-    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
-  })
-
   test("A new category is created correctly.", async () => {
     await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
