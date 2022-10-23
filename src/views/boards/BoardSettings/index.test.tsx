@@ -6,19 +6,6 @@ import { testUsers } from "#utils/testing/test-users"
 import { App } from "#views/index"
 
 describe("Budget categories", () => {
-  test("A new category is created correctly.", async () => {
-    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
-
-    userEvent.click(await screen.findByText("+New"))
-    expect(await screen.findByText("Submit")).toBeDisabled()
-    await waitFor(() => userEvent.type(screen.getByLabelText("Name"), "travel"))
-    await waitFor(() => userEvent.click(screen.getByLabelText("expense")))
-    await waitFor(() => expect(screen.getByText("Submit")).toBeEnabled())
-    userEvent.click(screen.getByText("Submit"))
-    await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
-    await waitFor(() => expect(screen.getByRole("cell", { name: "travel" })).toBeInTheDocument())
-  })
-
   test("case: user tries to create a category that already exists and then fixes input values.", async () => {
     await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 
