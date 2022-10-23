@@ -1,4 +1,4 @@
-import { testUsers } from "#utils/testing/test-users"
+import { testUsers } from "#cypress/constants/test-users"
 
 describe("Budget categories settings", () => {
   it("fetched and rendered correctly", () => {

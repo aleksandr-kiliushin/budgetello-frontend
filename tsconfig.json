@@ -15,7 +15,6 @@
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
-    // "noUnusedLocals": true,
     "noUnusedParameters": false,
     "paths": {
       "#api/*": ["src/api/*"],
@@ -24,6 +23,7 @@
       "#styles/*": ["src/styles/*"],
       "#utils/*": ["src/utils/*"],
       "#views/*": ["src/views/*"],
+      "#cypress/*": ["cypress/*"],
       "#src/*": ["src/*"]
     },
     "removeComments": true,
@@ -33,8 +33,18 @@
     "strictFunctionTypes": true,
     "strictNullChecks": true,
     "suppressExcessPropertyErrors": false,
-    "target": "es6"
+    "target": "es6",
+    "types": ["cypress", "node"]
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    ".eslintrc.js",
+    "codegen.ts",
+    "cypress/**/*.ts",
+    "cypress/**/*.tsx",
+    "cypress.config.ts",
+    "webpack.config.js"
+  ]
 }

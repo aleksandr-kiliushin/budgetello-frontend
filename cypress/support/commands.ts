@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
-import { getAuthToken } from "#utils/testing/getAuthToken"
-import { ITestUser } from "#utils/testing/test-users"
+import { ITestUser, credentialsByTestUserId } from "#cypress/constants/test-users"
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -50,5 +49,28 @@ declare global {
 }
 
 Cypress.Commands.add("authorize", async (testUserId) => {
-  localStorage.authToken = await getAuthToken(testUserId)
+  const testUserCredentials = credentialsByTestUserId[testUserId]
+  const authorizationResponse = await fetch("http://localhost:3080/graphql", {
+    body: JSON.stringify({
+      query: `
+        mutation CREATE_AUTHORIZATION_TOKEN {
+          createAuthorizationToken(input: { username: "${testUserCredentials.username}", password: "${testUserCredentials.password}" })
+        }
+      `,
+    }),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  })
+  const authorizationResponseBody = await authorizationResponse.json()
+  const authorizationToken = authorizationResponseBody.data.createAuthorizationToken
+  if (typeof authorizationToken !== "string") {
+    throw new Error(`
+      Authorization failed for the following credentials:
+      Username: "${testUserCredentials.username}", password: "${testUserCredentials.password}".
+    `)
+  }
+  localStorage.authToken = authorizationToken
 })

@@ -2,7 +2,6 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    jest: true,
     node: true,
   },
   extends: [
@@ -18,7 +17,7 @@ module.exports = {
       jsx: true,
     },
     ecmaVersion: 13,
-    project: "tsconfig.eslint.json",
+    project: "tsconfig.json",
     sourceType: "module",
     tsconfigRootDir: __dirname,
   },
