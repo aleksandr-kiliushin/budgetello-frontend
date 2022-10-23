@@ -30,7 +30,7 @@ export const BoardRecords: React.FC = () => {
 
   const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
 
-  const getRecordsResponse = useGetBudgetRecordsQuery({
+  const getRecordsResult = useGetBudgetRecordsQuery({
     variables: {
       boardsIds: [Number(params.boardId)],
       isTrashed: isTrash,
@@ -41,15 +41,15 @@ export const BoardRecords: React.FC = () => {
     },
   })
 
-  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
 
-  if (getBoardResponse.data === undefined) return null
-  if (getRecordsResponse.data === undefined) return null
+  if (getBoardResult.data === undefined) return null
+  if (getRecordsResult.data === undefined) return null
 
-  const board = getBoardResponse.data.board
-  const records = getRecordsResponse.data.budgetRecords
+  const board = getBoardResult.data.board
+  const records = getRecordsResult.data.budgetRecords
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
     return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />
@@ -119,9 +119,9 @@ export const BoardRecords: React.FC = () => {
               <td>
                 <button
                   onClick={() => {
-                    getRecordsResponse.fetchMore({
+                    getRecordsResult.fetchMore({
                       variables: {
-                        skip: getRecordsResponse.data === undefined ? 0 : getRecordsResponse.data.budgetRecords.length,
+                        skip: getRecordsResult.data === undefined ? 0 : getRecordsResult.data.budgetRecords.length,
                       },
                       updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
                         budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],

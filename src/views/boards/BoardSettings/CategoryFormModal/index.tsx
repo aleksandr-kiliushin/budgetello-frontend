@@ -42,28 +42,28 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
     resolver: yupResolver(validationSchema),
   })
 
-  const queryBudgetCategoryTypesResponse = useGetBudgetCategoryTypesQuery()
+  const getBudgetCategoryTypesResult = useGetBudgetCategoryTypesQuery()
   const [createCategory] = useCreateBudgetCategoryMutation({
     refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
   })
   const [updateCategory] = useUpdateBudgetCategoryMutation()
 
-  if (queryBudgetCategoryTypesResponse.data === undefined) return null
+  if (getBudgetCategoryTypesResult.data === undefined) return null
 
   const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return
     try {
       if (category === undefined) {
-        const response = await createCategory({
+        const result = await createCategory({
           variables: {
             boardId: Number(params.boardId),
             name: formValues.name,
             typeId: formValues.typeId,
           },
         })
-        if (response.errors !== undefined) throw errors
+        if (result.errors !== undefined) throw errors
       } else {
-        const response = await updateCategory({
+        const result = await updateCategory({
           variables: {
             boardId: Number(params.boardId),
             id: category.id,
@@ -71,7 +71,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
             typeId: formValues.typeId,
           },
         })
-        if (response.errors !== undefined) throw errors
+        if (result.errors !== undefined) throw errors
       }
       closeModal()
     } catch (error) {
@@ -101,7 +101,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
               helperText={errors.typeId?.message}
               label="Category type"
               name={FormField.TypeId}
-              options={queryBudgetCategoryTypesResponse.data.budgetCategoryTypes.map(({ id, name }) => ({
+              options={getBudgetCategoryTypesResult.data.budgetCategoryTypes.map(({ id, name }) => ({
                 label: name,
                 value: id,
               }))}

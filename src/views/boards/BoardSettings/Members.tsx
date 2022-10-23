@@ -8,16 +8,16 @@ import { IBoardsRouteParams } from "#views/boards/types"
 export const Members: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
 
-  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-  if (getBoardResponse.data === undefined) return null
-  const board = getBoardResponse.data.board
+  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  if (getBoardResult.data === undefined) return null
+  const board = getBoardResult.data.board
 
   const [addBoardMember] = useAddBoardMemberMutation()
   const [removeBoardMember] = useRemoveBoardMemberMutation()
 
-  const queryAllUsersResponse = useGetUsersQuery()
-  if (queryAllUsersResponse.data === undefined) return null
-  const allUsers = queryAllUsersResponse.data.users
+  const getAllUsersResult = useGetUsersQuery()
+  if (getAllUsersResult.data === undefined) return null
+  const allUsers = getAllUsersResult.data.users
 
   if (board === undefined) return null
 

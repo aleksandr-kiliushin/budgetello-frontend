@@ -30,11 +30,11 @@ export const Login: React.FC = () => {
   const onSubmit = handleSubmit(async ({ password, username }) => {
     try {
       localStorage.removeItem("authToken")
-      const response = await createAuthToken({ variables: { password, username } })
-      if (response.errors !== undefined) throw errors
-      if (response.data === undefined) return
-      if (response.data === null) return
-      const authorizationToken = response.data.createAuthorizationToken
+      const result = await createAuthToken({ variables: { password, username } })
+      if (result.errors !== undefined) throw errors
+      if (result.data === undefined) return
+      if (result.data === null) return
+      const authorizationToken = result.data.createAuthorizationToken
       if (authorizationToken === undefined) {
         dispatch(userActions.setIsUserAuthorized(false))
         return

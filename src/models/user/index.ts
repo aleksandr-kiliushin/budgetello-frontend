@@ -47,11 +47,11 @@ export const fetchAndSetAuthorizedUser = (): AppThunk<Promise<boolean>> => {
   return async (dispatch, getState) => {
     if (getState().user.isAuthorized === false) return false
     try {
-      const response = await apolloClient.query({
+      const result = await apolloClient.query({
         query: GetUserDocument,
         variables: { id: 0 },
       })
-      dispatch(userActions.setCurrentUser(response.data.user))
+      dispatch(userActions.setCurrentUser(result.data.user))
       return true
     } catch (error) {
       return false

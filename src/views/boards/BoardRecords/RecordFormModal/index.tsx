@@ -64,7 +64,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
     mode: "onChange",
   })
 
-  const getBoardBudgetCategoriesResponse = useGetBudgetCategoriesQuery({
+  const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
   })
 
@@ -85,7 +85,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
   })
   const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
 
-  if (getBoardBudgetCategoriesResponse.data === undefined) return null
+  if (getBoardBudgetCategoriesResult.data === undefined) return null
 
   const submitRecordForm = handleSubmit((formValues) => {
     if (formValues.amount === null) return
@@ -131,7 +131,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}
               <Select {...register(FormField.CategoryId, { valueAsNumber: true })} label="Category">
-                {getBoardBudgetCategoriesResponse.data.budgetCategories.map((category) => (
+                {getBoardBudgetCategoriesResult.data.budgetCategories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
                     {category.name}
                   </MenuItem>

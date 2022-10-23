@@ -15,16 +15,16 @@ export const BoardSettings: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
   const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
 
-  const getBoardResponse = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-  const getBoardBudgetCategoriesResponse = useGetBudgetCategoriesQuery({
+  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
   })
 
-  if (getBoardResponse.data === undefined) return null
-  if (getBoardBudgetCategoriesResponse.data === undefined) return null
+  if (getBoardResult.data === undefined) return null
+  if (getBoardBudgetCategoriesResult.data === undefined) return null
 
-  const board = getBoardResponse.data.board
-  const boardBudgetCategories = getBoardBudgetCategoriesResponse.data.budgetCategories
+  const board = getBoardResult.data.board
+  const boardBudgetCategories = getBoardBudgetCategoriesResult.data.budgetCategories
 
   return (
     <>
