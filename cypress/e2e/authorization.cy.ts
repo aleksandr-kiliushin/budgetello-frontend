@@ -41,7 +41,13 @@ describe("Authorization", () => {
     cy.contains("You are logged in as john-doe.").should("be.visible")
   })
 
-  it("logs out successfully", () => {
+  it("logs out successfully", (done) => {
+    cy.on("uncaught:exception", (error) => {
+      expect(error.message).to.include("Invalid token.")
+      done()
+      return false
+    })
+
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/auth")
 
