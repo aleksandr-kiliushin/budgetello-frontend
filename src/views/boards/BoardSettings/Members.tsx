@@ -9,17 +9,15 @@ export const Members: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
 
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-  if (getBoardResult.data === undefined) return null
-  const board = getBoardResult.data.board
+  const getAllUsersResult = useGetUsersQuery()
 
   const [addBoardMember] = useAddBoardMemberMutation()
   const [removeBoardMember] = useRemoveBoardMemberMutation()
 
-  const getAllUsersResult = useGetUsersQuery()
-  if (getAllUsersResult.data === undefined) return null
-  const allUsers = getAllUsersResult.data.users
+  if (!getBoardResult.data) return null
+  if (!getAllUsersResult.data) return null
 
-  if (board === undefined) return null
+  const board = getBoardResult.data.board
 
   return (
     <>
@@ -32,7 +30,7 @@ export const Members: React.FC = () => {
           </button>
         </div>
       ))}
-      {allUsers
+      {getAllUsersResult.data.users
         .filter((user) => board.members.every((member) => member.id !== user.id))
         .map((user) => (
           <p key={user.id}>

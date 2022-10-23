@@ -45,8 +45,8 @@ export const BoardRecords: React.FC = () => {
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
 
-  if (getBoardResult.data === undefined) return null
-  if (getRecordsResult.data === undefined) return null
+  if (!getBoardResult.data) return null
+  if (!getRecordsResult.data) return null
 
   const board = getBoardResult.data.board
   const records = getRecordsResult.data.budgetRecords
@@ -121,7 +121,7 @@ export const BoardRecords: React.FC = () => {
                   onClick={() => {
                     getRecordsResult.fetchMore({
                       variables: {
-                        skip: getRecordsResult.data === undefined ? 0 : getRecordsResult.data.budgetRecords.length,
+                        skip: getRecordsResult.data ? getRecordsResult.data.budgetRecords.length : 0,
                       },
                       updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
                         budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],

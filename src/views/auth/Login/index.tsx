@@ -32,8 +32,7 @@ export const Login: React.FC = () => {
       localStorage.removeItem("authorizationToken")
       const result = await createAuthorizationToken({ variables: { password, username } })
       if (result.errors !== undefined) throw errors
-      if (result.data === undefined) return
-      if (result.data === null) return
+      if (!result.data) return
       const authorizationToken = result.data.createAuthorizationToken
       if (authorizationToken === undefined) {
         dispatch(userActions.setIsUserAuthorized(false))

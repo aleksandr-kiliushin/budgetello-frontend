@@ -48,7 +48,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
   })
   const [updateCategory] = useUpdateBudgetCategoryMutation()
 
-  if (getBudgetCategoryTypesResult.data === undefined) return null
+  if (!getBudgetCategoryTypesResult.data) return null
 
   const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return

@@ -1,15 +1,14 @@
 import React from "react"
 
-import { useAppSelector } from "#utils/hooks"
+import { useGetUserQuery } from "#api/users"
 
 import { Login } from "./Login"
 import { Logout } from "./Logout"
 
 export const Auth: React.FC = () => {
-  const user = useAppSelector((state) => state.user)
+  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (user.isAuthorized === undefined) return <p>Loading ...</p>
-  if (user.isAuthorized === false) return <Login />
-  if (user.isAuthorized === true) return <Logout />
-  return null
+  if (getAuthorizedUserResult.loading) return <p>Loading ...</p>
+  if (getAuthorizedUserResult.error) return <Login />
+  return <Logout />
 }

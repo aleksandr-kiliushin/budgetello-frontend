@@ -3,10 +3,11 @@ import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
+import { useGetUserQuery } from "#api/users"
 import { Navbar } from "#components/Navbar"
 import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
 import { mediaQuery } from "#styles/media-queries"
-import { useAppDispatch, useAppSelector } from "#utils/hooks"
+import { useAppDispatch } from "#utils/hooks"
 import { Auth } from "#views/auth"
 import { BoardRecords } from "#views/boards/BoardRecords"
 import { BoardSettings } from "#views/boards/BoardSettings"
@@ -17,27 +18,22 @@ export const App: React.FC = () => {
   const dispatch = useAppDispatch()
   const location = useLocation()
 
-  const user = useAppSelector((state) => state.user)
+  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
   React.useEffect(() => {
     dispatch(fetchAndSetAuthorizedUser()).then((isAuthorized) => {
       dispatch(userActions.setIsUserAuthorized(isAuthorized))
     })
-  }, [])
+  }, [dispatch])
 
-  if (user.isAuthorized === false && location.pathname !== "/auth") {
+  if (getAuthorizedUserResult.loading) return <p>Loading ...</p>
+
+  if (getAuthorizedUserResult.error !== undefined && location.pathname !== "/auth") {
     return <Navigate to="/auth" />
   }
 
-  if (user.isAuthorized === undefined) return <p>Loading ...</p>
-
   return (
-    <Box
-      css={css`
-        height: 100vh;
-        width: 100vw;
-      `}
-    >
+    <Box sx={{ height: "100vh", width: "100vw" }}>
       <Box
         component="main"
         css={css`

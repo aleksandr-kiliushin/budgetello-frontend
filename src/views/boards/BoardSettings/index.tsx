@@ -20,8 +20,8 @@ export const BoardSettings: React.FC = () => {
     variables: { boardsIds: [Number(params.boardId)] },
   })
 
-  if (getBoardResult.data === undefined) return null
-  if (getBoardBudgetCategoriesResult.data === undefined) return null
+  if (!getBoardResult.data) return null
+  if (!getBoardBudgetCategoriesResult.data) return null
 
   const board = getBoardResult.data.board
   const boardBudgetCategories = getBoardBudgetCategoriesResult.data.budgetCategories

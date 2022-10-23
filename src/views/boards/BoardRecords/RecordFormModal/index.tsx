@@ -85,7 +85,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
   })
   const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
 
-  if (getBoardBudgetCategoriesResult.data === undefined) return null
+  if (!getBoardBudgetCategoriesResult.data) return null
 
   const submitRecordForm = handleSubmit((formValues) => {
     if (formValues.amount === null) return
