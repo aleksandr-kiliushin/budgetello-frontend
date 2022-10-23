@@ -79,6 +79,31 @@ describe("Budget categories settings", () => {
     cy.get("#casino-expense-category-edit-button").should("be.visible")
   })
 
+  it("case: user tries to create a category that already exists and then fixes form values", () => {
+    cy.authorize(testUsers.johnDoe.id)
+    cy.visit("/boards/1/settings")
+
+    cy.contains("education").should("be.visible")
+    cy.get("#education-expense-category-edit-button").click()
+    cy.get('[role="dialog"]').should("be.visible")
+    cy.get('input[name="name"]').should("have.value", "education")
+    cy.get('input[name="typeId"][value="1"]').should("be.checked") // "Expense" category type is selected.
+    cy.get('input[name="name"]').clear().type("clothes")
+    cy.contains("Submit").click()
+    cy.get("body")
+      .find("p")
+      .filter((index, node) => node.innerText === '"clothes" expense category already exists in this board.')
+      .should("have.length", 2)
+    cy.get('input[name="name"]').clear().type("shoes")
+    cy.get("body")
+      .find("p")
+      .filter((index, node) => node.innerText === '"clothes" expense category already exists in this board.')
+      .should("have.length", 1)
+    cy.contains("Submit").click()
+    cy.get('[role="dialog"]').should("not.exist")
+    cy.contains("shoes").should("be.visible")
+  })
+
   it("is deleted correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
