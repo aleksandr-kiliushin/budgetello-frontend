@@ -72,5 +72,5 @@ Cypress.Commands.add("authorize", async (testUserId) => {
       Username: "${testUserCredentials.username}", password: "${testUserCredentials.password}".
     `)
   }
-  localStorage.authToken = authorizationToken
+  localStorage.authorizationToken = authorizationToken
 })

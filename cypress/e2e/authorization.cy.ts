@@ -4,14 +4,14 @@ describe("Authorization", () => {
   it("logs in successfully", () => {
     cy.visit("/auth")
 
-    expect(localStorage.authToken).to.be.equal(undefined)
+    expect(localStorage.authorizationToken).to.be.equal(undefined)
     cy.contains("Welcome").should("be.visible")
     cy.contains("Log in").should("be.disabled")
     cy.get('input[name="username"]').type("john-doe")
     cy.get('input[name="password"]').type("john-doe-password")
     cy.contains("Log in").should("be.enabled").click()
     cy.contains("Welcome").should("not.exist")
-    expect(localStorage.authToken).to.match(/.+/)
+    expect(localStorage.authorizationToken).to.match(/.+/)
     cy.contains("Log in").should("not.exist")
     cy.contains("Log out").should("be.visible")
     cy.contains("You are logged in as john-doe.").should("be.visible")
@@ -45,9 +45,9 @@ describe("Authorization", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/auth")
 
-    expect(localStorage.authToken).to.match(/.+/)
+    expect(localStorage.authorizationToken).to.match(/.+/)
     cy.contains("Log out").click()
     cy.contains("Log in").should("be.visible")
-    expect(localStorage.authToken).to.be.equal(undefined)
+    expect(localStorage.authorizationToken).to.be.equal(undefined)
   })
 })

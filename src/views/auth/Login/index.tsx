@@ -14,7 +14,7 @@ import { FormField, FormValues, defaultValues, validationSchema } from "./form-h
 export const Login: React.FC = () => {
   const dispatch = useAppDispatch()
 
-  const [createAuthToken] = useCreateAuthorizationTokenMutation()
+  const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
   const {
     formState: { isValid, errors },
@@ -29,8 +29,8 @@ export const Login: React.FC = () => {
 
   const onSubmit = handleSubmit(async ({ password, username }) => {
     try {
-      localStorage.removeItem("authToken")
-      const result = await createAuthToken({ variables: { password, username } })
+      localStorage.removeItem("authorizationToken")
+      const result = await createAuthorizationToken({ variables: { password, username } })
       if (result.errors !== undefined) throw errors
       if (result.data === undefined) return
       if (result.data === null) return
@@ -39,7 +39,7 @@ export const Login: React.FC = () => {
         dispatch(userActions.setIsUserAuthorized(false))
         return
       }
-      localStorage.authToken = authorizationToken
+      localStorage.authorizationToken = authorizationToken
       dispatch(userActions.setIsUserAuthorized(true))
       await dispatch(fetchAndSetAuthorizedUser())
     } catch (error) {
