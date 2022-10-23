@@ -5,14 +5,7 @@ import { render } from "#utils/testing/render"
 import { testUsers } from "#utils/testing/test-users"
 import { App } from "#views/index"
 
-describe("Budget categories service", () => {
-  test("come from backend and render correctly.", async () => {
-    await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
-
-    expect(() => expect(screen.getByText("clothes")).toBeInTheDocument())
-    expect(() => expect(screen.getByText("education")).toBeInTheDocument())
-  })
-
+describe("Budget categories", () => {
   test("Modal for new category modal opens and renders correctly.", async () => {
     await render(<App />, { iAm: testUsers.johnDoe.id, initialUrl: "/boards/1/settings" })
 

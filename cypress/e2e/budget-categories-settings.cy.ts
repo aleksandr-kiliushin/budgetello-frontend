@@ -1,6 +1,15 @@
 import { testUsers } from "#utils/testing/test-users"
 
-describe("Budget records", () => {
+describe("Budget categories settings", () => {
+  it("fetched and rendered correctly", async () => {
+    cy.authorize(testUsers.johnDoe.id)
+
+    cy.visit("/boards/1/settings")
+
+    cy.contains("clothes").should("be.visible")
+    cy.contains("education").should("be.visible")
+  })
+
   it("is deleted correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
 
