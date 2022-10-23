@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/client"
 import { Global } from "@emotion/react"
-import ThemeProvider from "@mui/material/styles/ThemeProvider"
+import { ThemeProvider } from "@mui/material"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"

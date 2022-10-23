@@ -1,8 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import Typography from "@mui/material/Typography"
-import { FC } from "react"
+import { Button, TextField, Typography } from "@mui/material"
+import React from "react"
 import { useForm } from "react-hook-form"
 
 import { useCreateAuthorizationTokenMutation } from "#api/authorization"
@@ -13,7 +11,7 @@ import { useAppDispatch } from "#utils/hooks"
 import { Container } from "../components"
 import { FormField, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
-export const Login: FC = () => {
+export const Login: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const [createAuthToken] = useCreateAuthorizationTokenMutation()

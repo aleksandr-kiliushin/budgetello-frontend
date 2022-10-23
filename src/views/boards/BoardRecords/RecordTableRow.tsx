@@ -1,18 +1,25 @@
-import { css } from "@emotion/react"
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
-import RestoreIcon from "@mui/icons-material/Restore"
-import TableCell from "@mui/material/TableCell"
-import TableRow from "@mui/material/TableRow"
+import {
+  DeleteOutline as DeleteOutlineIcon,
+  EditOutlined as EditOutlinedIcon,
+  Restore as RestoreIcon,
+} from "@mui/icons-material"
+import { TableCell, TableRow, css } from "@mui/material"
 import React from "react"
-import { useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
-import { GetBudgetRecordsDocument, useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
+import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord } from "#api/types"
 
-import { IBoardsRouteParams } from "../types"
 import { RecordFormModal } from "./RecordFormModal"
+
+const mapCategoryTypeIdToColor = new Map([
+  [1, "darkred"],
+  [2, "darkgreen"],
+])
+const mapCategoryTypeIdToPseudoElementContent = new Map([
+  [1, "-"],
+  [2, "+"],
+])
 
 interface IRecordTableRowProps {
   isTrash: boolean
@@ -66,14 +73,6 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       </TableCell>,
     ],
   ])
-  const mapCategoryTypeIdToColor = new Map([
-    [1, "darkred"],
-    [2, "darkgreen"],
-  ])
-  const mapCategoryTypeIdToPseudoElementContent = new Map([
-    [1, "-"],
-    [2, "+"],
-  ])
 
   return (
     <>
@@ -107,9 +106,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           <DeleteOutlineIcon />
         </TableCell>
       </TableRow>
-      {isRecordEditingModalShown ? (
-        <RecordFormModal closeModal={toggleIsRecordEditingModalShown} record={record} />
-      ) : null}
+      {isRecordEditingModalShown && <RecordFormModal closeModal={toggleIsRecordEditingModalShown} record={record} />}
     </>
   )
 }

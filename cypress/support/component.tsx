@@ -16,7 +16,7 @@
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 import { Global } from "@emotion/react"
-import ThemeProvider from "@mui/material/styles/ThemeProvider"
+import { ThemeProvider } from "@mui/material"
 import { mount } from "cypress/react18"
 
 import { globalStyles } from "#styles/global"

@@ -1,7 +1,6 @@
-import styled from "@emotion/styled"
-import Box from "@mui/material/Box"
+import { styled } from "@mui/material"
 
-export const RowGroup = styled(Box)`
+export const RowGroup = styled("div")`
   display: flex;
   flex-direction: column;
   row-gap: 12px;

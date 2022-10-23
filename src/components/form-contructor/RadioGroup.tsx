@@ -1,10 +1,11 @@
-import { FormHelperText } from "@mui/material"
-import FormControl from "@mui/material/FormControl"
-import FormControlLabel from "@mui/material/FormControlLabel"
-import FormLabel from "@mui/material/FormLabel"
-import Radio from "@mui/material/Radio"
-import MuiRadioGroup from "@mui/material/RadioGroup"
-import { FC } from "react"
+import {
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  RadioGroup as MuiRadioGroup,
+  Radio,
+} from "@mui/material"
 import { UseFormRegister } from "react-hook-form"
 import { AssertsShape } from "yup/lib/object"
 
@@ -22,7 +23,7 @@ interface IRadioGroupProps {
   setValue(fieldName: string, newValue: string | number): void
 }
 
-export const RadioGroup: FC<IRadioGroupProps> = ({
+export const RadioGroup: React.FC<IRadioGroupProps> = ({
   fieldValue,
   helperText,
   label,

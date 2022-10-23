@@ -8,7 +8,7 @@ interface ISection {
   path: string
 }
 
-export const navigationItem: ISection[] = [
+export const section: ISection[] = [
   { icon: <HomeIcon />, id: "home", path: "/" },
   { icon: <DashboardIcon />, id: "boards", path: "/boards" },
   { icon: <PersonIcon />, id: "auth", path: "/auth" },

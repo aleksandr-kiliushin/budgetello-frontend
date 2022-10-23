@@ -1,10 +1,10 @@
-import styled from "@emotion/styled"
+import { styled } from "@mui/material"
 
-export const Container = styled("div")`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  row-gap: 1rem;
-  height: 100%;
-  padding: 3rem;
-`
+export const Container = styled("div")({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  rowGap: "1rem",
+  height: "100%",
+  padding: "3rem",
+})

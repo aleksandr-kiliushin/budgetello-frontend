@@ -1,9 +1,8 @@
-import BottomNavigation from "@mui/material/BottomNavigation"
-import BottomNavigationAction from "@mui/material/BottomNavigationAction"
+import { BottomNavigation, BottomNavigationAction } from "@mui/material"
 import { FC } from "react"
 import { Link, useLocation } from "react-router-dom"
 
-import { getActiveNavigationIndex, navigationItem } from "./helpers"
+import { getActiveNavigationIndex, section } from "./helpers"
 import { bottomNavigationActionSx, bottomNavigationSx } from "./styles"
 
 export const Navbar: FC = () => {
@@ -11,14 +10,14 @@ export const Navbar: FC = () => {
 
   return (
     <BottomNavigation sx={bottomNavigationSx} value={getActiveNavigationIndex(pathname)}>
-      {navigationItem.map(({ icon, id, path }) => (
+      {section.map((section) => (
         <BottomNavigationAction
           component={Link}
-          icon={icon}
-          key={path}
+          icon={section.icon}
+          key={section.id}
           sx={bottomNavigationActionSx}
-          to={path}
-          value={id}
+          to={section.path}
+          value={section.id}
         />
       ))}
     </BottomNavigation>

@@ -1,10 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogTitle from "@mui/material/DialogTitle"
-import TextField from "@mui/material/TextField"
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
@@ -23,7 +18,7 @@ import { IBoardsRouteParams } from "#views/boards/types"
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormModalProps {
-  category: Pick<BudgetCategory, "id" | "name" | "type"> | null
+  category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
   closeModal(): void
 }
 
@@ -32,7 +27,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
-  const defaultValues = category === null ? { name: "" } : { name: category.name, typeId: category.type.id }
+  const defaultValues = category === undefined ? { name: "" } : { name: category.name, typeId: category.type.id }
 
   const {
     formState: { errors, isValid },
@@ -58,7 +53,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
   const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return
     try {
-      if (category === null) {
+      if (category === undefined) {
         const response = await createCategory({
           variables: {
             boardId: Number(params.boardId),

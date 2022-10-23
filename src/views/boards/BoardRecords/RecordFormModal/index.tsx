@@ -1,15 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import Button from "@mui/material/Button"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogTitle from "@mui/material/DialogTitle"
-import FormControl from "@mui/material/FormControl"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
-import Select from "@mui/material/Select"
-import TextField from "@mui/material/TextField"
-import { format } from "date-fns"
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material"
+import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
@@ -53,7 +55,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
     : {
         amount: null,
         categoryId: null,
-        date: format(new Date(), "yyyy-MM-dd"),
+        date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
   const { formState, handleSubmit, register } = useForm<IFormValues>({

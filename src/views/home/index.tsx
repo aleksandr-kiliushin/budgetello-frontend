@@ -1,10 +1,9 @@
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
-import { FC, Fragment } from "react"
+import { Button, Typography } from "@mui/material"
+import React from "react"
 
-export const Home: FC = () => {
+export const Home: React.FC = () => {
   return (
-    <Fragment>
+    <>
       <Typography variant="h1">Home page h1</Typography>
       <Typography variant="h2">Home page h2</Typography>
       <Typography variant="h3">Home page h3</Typography>
@@ -21,6 +20,6 @@ export const Home: FC = () => {
         Reprehenderit, pariatur. Tempora, nemo?
       </Typography>
       <Button variant="outlined">hehe</Button>
-    </Fragment>
+    </>
   )
 }

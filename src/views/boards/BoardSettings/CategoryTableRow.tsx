@@ -1,7 +1,6 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
-import TableCell from "@mui/material/TableCell"
-import TableRow from "@mui/material/TableRow"
+import { TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { useToggle } from "react-use"
 

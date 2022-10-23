@@ -1,22 +1,19 @@
-import styled from "@emotion/styled"
-import Box from "@mui/material/Box"
-import TableContainer from "@mui/material/TableContainer"
-import TableHead from "@mui/material/TableHead"
+import { TableContainer, TableHead, styled } from "@mui/material"
 
-export const Header = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 100vw;
-`
+export const Header = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  maxWidth: "100vw",
+})
 
 export const StyledTableContainer = styled(TableContainer)`
   overflow-x: visible; // To allow th to be sticky.
 `
 
-export const StyledTableHead = styled(TableHead)`
-  position: sticky;
-  top: 0;
-  background-color: white;
-  box-shadow: 0px 10px 20px -10px lightgray;
-`
+export const StyledTableHead = styled(TableHead)({
+  position: "sticky",
+  top: "0",
+  backgroundColor: "white",
+  boxShadow: "0px 10px 20px -10px lightgray",
+})
