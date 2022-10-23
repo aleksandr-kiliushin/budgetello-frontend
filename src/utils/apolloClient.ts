@@ -29,20 +29,6 @@ const authorizationLink = setContext((_, { headers }) => {
 })
 
 export const apolloClient = new ApolloClient({
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          budgetRecords: {
-            keyArgs: [],
-            merge(existing, incoming) {
-              if (existing === undefined) return incoming
-              return [...existing, ...incoming]
-            },
-          },
-        },
-      },
-    },
-  }),
+  cache: new InMemoryCache(),
   link: authorizationLink.concat(httpLink),
 })

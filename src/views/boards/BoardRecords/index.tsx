@@ -120,6 +120,9 @@ export const BoardRecords: React.FC = () => {
                       variables: {
                         skip: getRecordsResponse.data === undefined ? 0 : getRecordsResponse.data.budgetRecords.length,
                       },
+                      updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
+                        budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],
+                      }),
                     })
                   }}
                 >
