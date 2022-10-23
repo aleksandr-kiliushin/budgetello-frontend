@@ -5,9 +5,12 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import React from "react"
+import { useParams } from "react-router-dom"
 
-import { useDeleteBudgetCategoryMutation } from "#api/budget"
+import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#api/budget"
 import { BudgetCategory } from "#api/types"
+
+import { IBoardsRouteParams } from "../types"
 
 interface ICategoryDeletionModalProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
@@ -15,7 +18,15 @@ interface ICategoryDeletionModalProps {
 }
 
 export const CategoryDeletionModal: React.FC<ICategoryDeletionModalProps> = ({ category, closeModal }) => {
+  const params = useParams<IBoardsRouteParams>()
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
+
+  const onDeleteButtonClick = async () => {
+    await deleteCategory({
+      refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
+      variables: { categoryId: category.id },
+    })
+  }
 
   return (
     <Dialog onClose={closeModal} open>
@@ -27,7 +38,7 @@ export const CategoryDeletionModal: React.FC<ICategoryDeletionModalProps> = ({ c
       </DialogContent>
       <DialogActions>
         <Button onClick={closeModal}>Cancel</Button>
-        <Button onClick={() => deleteCategory({ variables: { categoryId: category.id } })}>Delete</Button>
+        <Button onClick={onDeleteButtonClick}>Yes, delete</Button>
       </DialogActions>
     </Dialog>
   )

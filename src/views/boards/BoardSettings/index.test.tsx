@@ -104,17 +104,4 @@ describe("Budget categories service", () => {
     await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
     expect(await screen.findByText("shoes")).toBeInTheDocument()
   })
-
-  // test("A category is deleted correctly.", async () => {
-  //   await render(<App />, { iAm: testUsers.jessicaStark.id, initialUrl: "/boards/2/settings" })
-
-  //   expect(await screen.findByText("salary")).toBeInTheDocument()
-
-  //   userEvent.click(screen.getByTestId("salary-income-category-delete-button"))
-  //   await waitFor(() => expect(screen.getByRole("dialog")).toBeInTheDocument())
-  //   expect(screen.getByRole("heading", { name: "Delete category" })).toBeInTheDocument()
-  //   userEvent.click(screen.getByText("Delete"))
-  //   await waitForElementToBeRemoved(() => screen.getByRole("dialog"))
-  //   expect(screen.queryByText("salary")).not.toBeInTheDocument()
-  // })
 })
