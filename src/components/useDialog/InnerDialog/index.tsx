@@ -12,6 +12,9 @@ const DialogWindow = styled("div")({
   transform: "translate(-50%, -50%)",
   width: "600px",
   backgroundColor: "#262626",
+  ":focus-visible": {
+    outline: "none",
+  },
 })
 
 interface IInnerDialogProps {
