@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material"
+import { Button, TextField } from "@mui/material"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
@@ -11,6 +11,7 @@ import {
   useUpdateBudgetCategoryMutation,
 } from "#api/budget"
 import { BudgetCategory } from "#api/types"
+import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 import { IBoardsRouteParams } from "#views/boards/types"
@@ -85,10 +86,10 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
   })
 
   return (
-    <Dialog onClose={closeModal} open>
-      <DialogTitle>{category ? "Edit category" : "Create category"}</DialogTitle>
-      <form aria-label="budget-category-form" onSubmit={submitCategoryForm}>
-        <DialogContent>
+    <Dialog closeModal={closeModal}>
+      <Dialog.Header>{category ? "Edit category" : "Create category"}</Dialog.Header>
+      <Dialog.Body>
+        <form>
           <RowGroup>
             <TextField
               {...register(FormField.Name)}
@@ -109,14 +110,14 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
               setValue={setValue}
             />
           </RowGroup>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeModal}>Cancel</Button>
-          <Button disabled={!isValid} type="submit">
-            Submit
-          </Button>
-        </DialogActions>
-      </form>
+        </form>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Button onClick={closeModal}>Cancel</Button>
+        <Button disabled={!isValid} onClick={submitCategoryForm}>
+          Submit
+        </Button>
+      </Dialog.Footer>
     </Dialog>
   )
 }

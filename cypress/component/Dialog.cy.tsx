@@ -1,34 +1,24 @@
 import React from "react"
 
-import { useDialog } from "#components/useDialog"
-
-const MySampleDialogBody = ({ closeMyDialog }: { closeMyDialog(): void }) => {
-  return (
-    <div>
-      <p>My dialog body.</p>
-      <p>You can close the dialog from another component.</p>
-      <button onClick={closeMyDialog}>Close button in dialog body</button>
-    </div>
-  )
-}
+import { Dialog } from "#components/Dialog"
 
 const SampleComponentWithDialog: React.FC = () => {
-  const [MyDialog, openMyDialog, closeMyDialog] = useDialog({ isOpenInitially: false })
+  const [isMyDialogOpen, setIsMyDialogOpen] = React.useState(false)
 
   return (
     <>
-      <button onClick={openMyDialog}>open</button>
-      <MyDialog>
-        <MyDialog.Header>
-          <h2 style={{ margin: 0 }}>My dialog heading</h2>
-        </MyDialog.Header>
-        <MyDialog.Body>
-          <MySampleDialogBody closeMyDialog={closeMyDialog} />
-        </MyDialog.Body>
-        <MyDialog.Footer>
-          <button onClick={closeMyDialog}>Close</button>
-        </MyDialog.Footer>
-      </MyDialog>
+      <button onClick={() => setIsMyDialogOpen(true)}>Open</button>
+      {isMyDialogOpen && (
+        <Dialog closeModal={() => setIsMyDialogOpen(false)}>
+          <Dialog.Header>
+            <h2 style={{ margin: 0 }}>My dialog heading</h2>
+          </Dialog.Header>
+          <Dialog.Body>My dialog body.</Dialog.Body>
+          <Dialog.Footer>
+            <button onClick={() => setIsMyDialogOpen(false)}>Close</button>
+          </Dialog.Footer>
+        </Dialog>
+      )}
     </>
   )
 }
@@ -39,14 +29,14 @@ describe("useDialog", () => {
     cy.mount(<SampleComponentWithDialog />)
     cy.contains("My dialog heading").should("not.exist")
     cy.contains("My dialog body.").should("not.exist")
-    cy.contains("close").should("not.exist")
-    cy.contains("open").click()
+    cy.contains("Close").should("not.exist")
+    cy.contains("Open").click()
     cy.contains("My dialog heading").should("be.visible")
     cy.contains("My dialog body.").should("be.visible")
-    cy.contains("Close button in dialog body").should("be.visible").click()
+    cy.contains("Close").click()
     cy.contains("My dialog heading").should("not.exist")
     cy.contains("My dialog body.").should("not.exist")
     cy.contains("close").should("not.exist")
-    cy.contains("open").click()
+    cy.contains("Open").click()
   })
 })

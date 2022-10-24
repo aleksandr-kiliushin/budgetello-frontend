@@ -65,7 +65,7 @@
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "test:e2e": "cypress run --e2e --browser chrome",
-    "test:components": "MODE=development cypress run --component --browser chrome"
+    "test:component": "MODE=development cypress run --component --browser chrome"
   },
   "version": "1.0.0"
 }
