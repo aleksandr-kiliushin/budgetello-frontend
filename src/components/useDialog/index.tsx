@@ -1,6 +1,4 @@
 import { makeVar, useReactiveVar } from "@apollo/client"
-import React from "react"
-import { string } from "yup"
 
 import { InnerDialog } from "./InnerDialog"
 import { DialogBody } from "./subcomponents/DialogBody"
