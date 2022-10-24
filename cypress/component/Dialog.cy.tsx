@@ -2,14 +2,12 @@ import React from "react"
 
 import { useDialog } from "#components/useDialog"
 
-const MySampleDialogBody = () => {
-  const [, , closeMyDialog] = useDialog({ id: "sample-dialog" })
-
+const MySampleDialogBody = ({ closeMyDialog }: { closeMyDialog(): void }) => {
   return (
     <div>
       <p>My dialog body.</p>
       <p>You can close the dialog from another component.</p>
-      <button onClick={closeMyDialog}>Closing button in dialog body</button>
+      <button onClick={closeMyDialog}>Close button in dialog body</button>
     </div>
   )
 }
@@ -25,7 +23,7 @@ const SampleComponentWithDialog: React.FC = () => {
           <h2 style={{ margin: 0 }}>My dialog heading</h2>
         </MyDialog.Header>
         <MyDialog.Body>
-          <MySampleDialogBody />
+          <MySampleDialogBody closeMyDialog={closeMyDialog} />
         </MyDialog.Body>
         <MyDialog.Footer>
           <button onClick={closeMyDialog}>Close</button>
@@ -45,12 +43,10 @@ describe("useDialog", () => {
     cy.contains("open").click()
     cy.contains("My dialog heading").should("be.visible")
     cy.contains("My dialog body.").should("be.visible")
-    cy.contains("close").should("be.visible")
-    cy.contains("Closing button in dialog body").click()
+    cy.contains("Close button in dialog body").should("be.visible").click()
     cy.contains("My dialog heading").should("not.exist")
     cy.contains("My dialog body.").should("not.exist")
     cy.contains("close").should("not.exist")
-
     cy.contains("open").click()
   })
 })
