@@ -24,17 +24,17 @@ const HeaderWithCloseButton = styled("div")({
   gridAutoFlow: "column",
 })
 
-const _Dialog: IDialogWithoutSubcomponents = ({ children, closeModal }) => {
+const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog }) => {
   const header = getChildByDisplayName({ children, displayName: "DialogHeader" })
   const body = getChildByDisplayName({ children, displayName: "DialogBody" })
   const footer = getChildByDisplayName({ children, displayName: "DialogFooter" })
 
   return (
-    <MuiModal onClose={closeModal} open>
+    <MuiModal onClose={closeDialog} open>
       <DialogWindow role="dialog">
         <HeaderWithCloseButton>
           {header}
-          <button onClick={closeModal}>Close</button>
+          <button onClick={closeDialog}>Close</button>
         </HeaderWithCloseButton>
         {body}
         {footer}

@@ -9,7 +9,7 @@ const SampleComponentWithDialog: React.FC = () => {
     <>
       <button onClick={() => setIsMyDialogOpen(true)}>Open</button>
       {isMyDialogOpen && (
-        <Dialog closeModal={() => setIsMyDialogOpen(false)}>
+        <Dialog closeDialog={() => setIsMyDialogOpen(false)}>
           <Dialog.Header>
             <h2 style={{ margin: 0 }}>My dialog heading</h2>
           </Dialog.Header>

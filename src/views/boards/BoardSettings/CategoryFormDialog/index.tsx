@@ -18,12 +18,12 @@ import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
-interface ICategoryFormModalProps {
+interface ICategoryFormDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
-  closeModal(): void
+  closeDialog(): void
 }
 
-export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category, closeModal }) => {
+export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category, closeDialog }) => {
   const params = useParams<IBoardsRouteParams>()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
@@ -74,7 +74,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
         })
         if (result.errors !== undefined) throw errors
       }
-      closeModal()
+      closeDialog()
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
@@ -86,7 +86,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
   })
 
   return (
-    <Dialog closeModal={closeModal}>
+    <Dialog closeDialog={closeDialog}>
       <Dialog.Header>{category ? "Edit category" : "Create category"}</Dialog.Header>
       <Dialog.Body>
         <form>
@@ -113,7 +113,7 @@ export const CategoryFormModal: React.FC<ICategoryFormModalProps> = ({ category,
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button onClick={closeModal}>Cancel</Button>
+        <Button onClick={closeDialog}>Cancel</Button>
         <Button disabled={!isValid} onClick={submitCategoryForm}>
           Submit
         </Button>

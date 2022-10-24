@@ -8,12 +8,12 @@ import { Dialog } from "#components/Dialog"
 
 import { IBoardsRouteParams } from "../types"
 
-interface ICategoryDeletionModalProps {
+interface ICategoryDeletionDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
-  closeModal(): void
+  closeDialog(): void
 }
 
-export const CategoryDeletionModal: React.FC<ICategoryDeletionModalProps> = ({ category, closeModal }) => {
+export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category, closeDialog }) => {
   const params = useParams<IBoardsRouteParams>()
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
 
@@ -25,13 +25,13 @@ export const CategoryDeletionModal: React.FC<ICategoryDeletionModalProps> = ({ c
   }
 
   return (
-    <Dialog closeModal={closeModal}>
+    <Dialog closeDialog={closeDialog}>
       <Dialog.Header>Delete category</Dialog.Header>
       <Dialog.Body>
         Are you sure you want to delete <b>{category.name}</b> category?
       </Dialog.Body>
       <Dialog.Footer>
-        <Button onClick={closeModal}>Cancel</Button>
+        <Button onClick={closeDialog}>Cancel</Button>
         <Button onClick={onDeleteButtonClick}>Yes, delete</Button>
       </Dialog.Footer>
     </Dialog>

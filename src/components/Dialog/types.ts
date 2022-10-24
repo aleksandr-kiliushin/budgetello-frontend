@@ -5,7 +5,7 @@ import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
 
 interface IDialogProps {
-  closeModal(): void
+  closeDialog(): void
 }
 type IDialogComponent = React.FC<React.PropsWithChildren<IDialogProps>>
 

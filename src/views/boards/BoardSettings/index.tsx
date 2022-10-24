@@ -7,13 +7,13 @@ import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetCategoriesQuery } from "#api/budget"
 
 import { IBoardsRouteParams } from "../types"
-import { CategoryFormModal } from "./CategoryFormModal"
+import { CategoryFormDialog } from "./CategoryFormDialog"
 import { CategoryTableRow } from "./CategoryTableRow"
 import { Members } from "./Members"
 
 export const BoardSettings: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
-  const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
+  const [isCategoryCreatingDialogShown, toggleIsCategoryCreatingDialogShown] = useToggle(false)
 
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
@@ -47,7 +47,7 @@ export const BoardSettings: React.FC = () => {
                 Type
               </TableCell>
               <TableCell colSpan={2} width="24%">
-                <Button onClick={toggleIsCategoryCreatingModalShown} variant="outlined">
+                <Button onClick={toggleIsCategoryCreatingDialogShown} variant="outlined">
                   +New
                 </Button>
               </TableCell>
@@ -60,8 +60,8 @@ export const BoardSettings: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isCategoryCreatingModalShown && (
-        <CategoryFormModal category={undefined} closeModal={toggleIsCategoryCreatingModalShown} />
+      {isCategoryCreatingDialogShown && (
+        <CategoryFormDialog category={undefined} closeDialog={toggleIsCategoryCreatingDialogShown} />
       )}
       <Members />
     </>

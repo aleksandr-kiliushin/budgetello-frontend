@@ -17,8 +17,8 @@ import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
-interface IRecordFormModalProps {
-  closeModal(): void
+interface IRecordFormDialogProps {
+  closeDialog(): void
   record: {
     amount: BudgetRecord["amount"]
     category: {
@@ -33,7 +33,7 @@ interface IRecordFormModalProps {
   } | null // replace with undefined
 }
 
-export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, record }) => {
+export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog, record }) => {
   const params = useParams<IBoardsRouteParams>()
 
   const defaultValues = record
@@ -100,11 +100,11 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
       })
     }
 
-    closeModal()
+    closeDialog()
   })
 
   return (
-    <Dialog closeModal={closeModal}>
+    <Dialog closeDialog={closeDialog}>
       <Dialog.Header>{record === null ? "Add a record" : "Edit record"}</Dialog.Header>
       <Dialog.Body>
         <form>
@@ -133,7 +133,7 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button onClick={closeModal}>Cancel</Button>
+        <Button onClick={closeDialog}>Cancel</Button>
         <Button disabled={!formState.isValid} onClick={submitRecordForm}>
           Submit
         </Button>

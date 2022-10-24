@@ -9,7 +9,7 @@ describe("Budget categories settings", () => {
     cy.contains("education").should("be.visible")
   })
 
-  it("category form modal opens and closes correctly", () => {
+  it("category form dialog opens and closes correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 

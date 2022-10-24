@@ -10,7 +10,7 @@ import { useToggle } from "react-use"
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord } from "#api/types"
 
-import { RecordFormModal } from "./RecordFormModal"
+import { RecordFormDialog } from "./RecordFormDialog"
 
 const mapCategoryTypeIdToColor = new Map([
   [1, "darkred"],
@@ -38,7 +38,7 @@ interface IRecordTableRowProps {
 }
 
 export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
-  const [isRecordEditingModalShown, toggleIsRecordEditingModalShown] = useToggle(false)
+  const [isRecordEditingDialogShown, toggleIsRecordEditingDialogShown] = useToggle(false)
 
   const [deleteBudgetRecord] = useDeleteBudgetRecordMutation({
     update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
@@ -53,7 +53,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       // eslint-disable-next-line react/jsx-key
       <TableCell
         id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
-        onClick={toggleIsRecordEditingModalShown}
+        onClick={toggleIsRecordEditingDialogShown}
         width="12%"
       >
         <EditOutlinedIcon />
@@ -104,7 +104,9 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           <DeleteOutlineIcon />
         </TableCell>
       </TableRow>
-      {isRecordEditingModalShown && <RecordFormModal closeModal={toggleIsRecordEditingModalShown} record={record} />}
+      {isRecordEditingDialogShown && (
+        <RecordFormDialog closeDialog={toggleIsRecordEditingDialogShown} record={record} />
+      )}
     </>
   )
 }

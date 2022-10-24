@@ -16,7 +16,7 @@ import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
 import { IBoardsRouteParams } from "#views/boards/types"
 
-import { RecordFormModal } from "./RecordFormModal"
+import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
 import { Header, StyledTableContainer, StyledTableHead } from "./components"
 
@@ -28,7 +28,7 @@ export const BoardRecords: React.FC = () => {
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
 
-  const [isRecordCreatingModalShown, setIsRecordCreatingModalShown] = React.useState(false)
+  const [isRecordCreatingDialogShown, setIsRecordCreatingDialogShown] = React.useState(false)
 
   const getRecordsResult = useGetBudgetRecordsQuery({
     variables: {
@@ -57,10 +57,6 @@ export const BoardRecords: React.FC = () => {
 
   const onIsTrashClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
     navigate(`/boards/${params.boardId}/records?isTrash=${event.target.checked}`, { replace: true })
-  }
-
-  const openRecordCreationModal = (): void => {
-    setIsRecordCreatingModalShown(true)
   }
 
   return (
@@ -104,7 +100,7 @@ export const BoardRecords: React.FC = () => {
               </TableCell>
               <TableCell colSpan={2} width="24%">
                 {isTrash ? null : (
-                  <Button id="add-record" onClick={openRecordCreationModal} variant="outlined">
+                  <Button id="add-record" onClick={() => setIsRecordCreatingDialogShown(true)} variant="outlined">
                     +New
                   </Button>
                 )}
@@ -136,9 +132,9 @@ export const BoardRecords: React.FC = () => {
           </TableBody>
         </Table>
       </StyledTableContainer>
-      {isRecordCreatingModalShown ? (
-        <RecordFormModal closeModal={(): void => setIsRecordCreatingModalShown(false)} record={null} />
-      ) : null}
+      {isRecordCreatingDialogShown && (
+        <RecordFormDialog closeDialog={() => setIsRecordCreatingDialogShown(false)} record={null} />
+      )}
     </>
   )
 }
