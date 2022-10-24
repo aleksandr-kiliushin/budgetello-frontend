@@ -2,47 +2,11 @@ import { createTheme } from "@mui/material"
 
 import { breakpoints, mediaQuery } from "#styles/media-queries"
 
-import { MuiModal } from "./components/MuiModal"
+import { components } from "./components"
 
 export const theme = createTheme({
   breakpoints,
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        sizeLarge: {
-          padding: "12px 20px",
-        },
-      },
-    },
-    MuiFormControl: {
-      styleOverrides: {
-        root: {
-          ".MuiInputBase-input": {
-            padding: "8px 12px",
-          },
-          ".MuiInputLabel-root:not(.Mui-focused):not(.MuiFormLabel-filled)": {
-            top: "-8px",
-          },
-        },
-      },
-    },
-    MuiModal,
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          fontWeight: "bold",
-        },
-        root: {
-          "&:not(:first-of-type)": {
-            paddingLeft: "4px",
-          },
-          "&:not(:last-of-type)": {
-            paddingRight: "4px",
-          },
-        },
-      },
-    },
-  },
+  components,
   typography: {
     allVariants: {
       fontFamily: "monospace",
