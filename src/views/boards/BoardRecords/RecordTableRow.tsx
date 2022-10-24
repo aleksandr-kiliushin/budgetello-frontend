@@ -79,7 +79,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           sx={{
             color: mapCategoryTypeIdToColor.get(record.category.type.id),
             "&::before": {
-              content: `"mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)"`,
+              content: `"${mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)}"`,
             },
           }}
           width="23%"
