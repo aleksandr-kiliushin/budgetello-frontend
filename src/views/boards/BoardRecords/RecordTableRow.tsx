@@ -47,8 +47,6 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
   })
 
-  const { amount, date, category } = record
-
   const mapIsTrashToActionCell = new Map([
     [
       false,
@@ -78,18 +76,18 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     <>
       <TableRow>
         <TableCell
-          css={css`
-            color: ${mapCategoryTypeIdToColor.get(category.type.id)};
-            &::before {
-              content: "${mapCategoryTypeIdToPseudoElementContent.get(category.type.id)}";
-            }
-          `}
+          sx={{
+            color: mapCategoryTypeIdToColor.get(record.category.type.id),
+            "&::before": {
+              content: `"mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)"`,
+            },
+          }}
           width="23%"
         >
-          {amount}
+          {record.amount}
         </TableCell>
-        <TableCell width="29%">{category.name}</TableCell>
-        <TableCell width="24%">{date.slice(2)}</TableCell>
+        <TableCell width="29%">{record.category.name}</TableCell>
+        <TableCell width="24%">{record.date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
         <TableCell
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}

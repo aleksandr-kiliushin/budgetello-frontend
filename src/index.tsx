@@ -5,7 +5,7 @@ import React from "react"
 import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 
-import { globalStyles } from "#styles/global"
+import { globalStyles } from "#styles/globalStyles"
 import { theme } from "#styles/theme"
 import { apolloClient } from "#utils/apolloClient"
 import { App } from "#views/index"

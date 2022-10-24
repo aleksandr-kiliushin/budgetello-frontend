@@ -45,6 +45,7 @@
     "cypress/**/*.ts",
     "cypress/**/*.tsx",
     "cypress.config.ts",
+    "declarations.d.ts",
     "webpack.config.js"
   ]
 }

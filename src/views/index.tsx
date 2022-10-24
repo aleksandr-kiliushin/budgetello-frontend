@@ -5,7 +5,6 @@ import { Navigate, Route, useLocation } from "react-router-dom"
 
 import { useGetUserQuery } from "#api/users"
 import { Navbar } from "#components/Navbar"
-import { mediaQuery } from "#styles/media-queries"
 import { Auth } from "#views/auth"
 import { BoardRecords } from "#views/boards/BoardRecords"
 import { BoardSettings } from "#views/boards/BoardSettings"
@@ -25,16 +24,7 @@ export const App: React.FC = () => {
 
   return (
     <Box sx={{ height: "100vh", width: "100vw" }}>
-      <Box
-        component="main"
-        css={css`
-          height: calc(100vh - 60px);
-          overflow-y: scroll;
-          ${mediaQuery.below.sm} {
-            height: calc(100vh - 50px);
-          }
-        `}
-      >
+      <Box component="main">
         <Routes>
           <Route element={<Home />} path="/" />
           <Route element={<Auth />} path="/auth" />

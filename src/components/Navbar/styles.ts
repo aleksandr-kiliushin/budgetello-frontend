@@ -1,16 +1,15 @@
 import { SxProps, Theme } from "@mui/material"
 
-import { mediaQuery } from "#styles/media-queries"
-
-export const bottomNavigationSx: SxProps<Theme> = ({ palette }) => ({
-  borderTop: `1px solid ${palette.primary.light}`,
-  boxShadow: `0px -30px 30px ${palette.primary.light}10`,
+export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
+  borderTop: `1px solid ${theme.palette.primary.light}`,
+  boxShadow: `0px -30px 30px ${theme.palette.primary.light}10`,
   height: "60px",
-  [mediaQuery.below.sm]: {
+  [theme.breakpoints.down("s")]: {
     height: "48px",
   },
 })
 
+// TODO: Move to theme.
 export const bottomNavigationActionSx: SxProps<Theme> = ({ palette }) => ({
   "& .MuiSvgIcon-root": {
     fill: palette.primary.light,

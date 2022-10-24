@@ -19,7 +19,7 @@ import { Global } from "@emotion/react"
 import { ThemeProvider } from "@mui/material"
 import { mount } from "cypress/react18"
 
-import { globalStyles } from "#styles/global"
+import { globalStyles } from "#styles/globalStyles"
 import { theme } from "#styles/theme"
 
 import "./commands"

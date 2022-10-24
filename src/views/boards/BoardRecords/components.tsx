@@ -7,9 +7,9 @@ export const Header = styled("div")({
   maxWidth: "100vw",
 })
 
-export const StyledTableContainer = styled(TableContainer)`
-  overflow-x: visible; // To allow th to be sticky.
-`
+export const StyledTableContainer = styled(TableContainer)({
+  overflowX: "visible", // To allow th to be sticky.
+})
 
 export const StyledTableHead = styled(TableHead)({
   position: "sticky",
