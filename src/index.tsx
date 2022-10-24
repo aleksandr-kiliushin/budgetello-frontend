@@ -3,10 +3,8 @@ import { Global } from "@emotion/react"
 import { ThemeProvider } from "@mui/material"
 import React from "react"
 import { createRoot } from "react-dom/client"
-import { Provider } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 
-import { store } from "#models/store"
 import { globalStyles } from "#styles/global"
 import { theme } from "#styles/theme"
 import { apolloClient } from "#utils/apolloClient"
@@ -25,12 +23,10 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <ApolloProvider client={apolloClient}>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <Global styles={globalStyles} />
-            <App />
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <Global styles={globalStyles} />
+          <App />
+        </ThemeProvider>
       </ApolloProvider>
     </BrowserRouter>
   </React.StrictMode>

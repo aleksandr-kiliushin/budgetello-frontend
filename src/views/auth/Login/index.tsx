@@ -4,16 +4,14 @@ import React from "react"
 import { useForm } from "react-hook-form"
 
 import { useCreateAuthorizationTokenMutation } from "#api/authorization"
+import { GetUserDocument } from "#api/users"
 import { RowGroup } from "#components/RowGroup"
-import { fetchAndSetAuthorizedUser, userActions } from "#models/user"
-import { useAppDispatch } from "#utils/hooks"
+import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "../components"
 import { FormField, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Login: React.FC = () => {
-  const dispatch = useAppDispatch()
-
   const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
   const {
@@ -35,12 +33,13 @@ export const Login: React.FC = () => {
       if (!result.data) return
       const authorizationToken = result.data.createAuthorizationToken
       if (authorizationToken === undefined) {
-        dispatch(userActions.setIsUserAuthorized(false))
         return
       }
       localStorage.authorizationToken = authorizationToken
-      dispatch(userActions.setIsUserAuthorized(true))
-      await dispatch(fetchAndSetAuthorizedUser())
+      await apolloClient.query({
+        query: GetUserDocument,
+        variables: { id: 0 },
+      })
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
