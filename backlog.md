@@ -4,4 +4,4 @@
 - Fix issue with number-to-string convertation in form fields.
 - Refactor interfaces and types naming.
 - Put icons to buttons.
-- Store data about open modals in context (react-context, redux, mobx) to avoid passing `openModal`, `closeModal` callback through props.
+- Store data about open modals in context (react-context, redux, mobx, reactiveVariables) to avoid passing `openModal`, `closeModal` callback through props.
