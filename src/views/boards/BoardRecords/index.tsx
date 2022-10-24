@@ -11,6 +11,7 @@ import {
 } from "@mui/material"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
+import { useToggle } from "react-use"
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
@@ -25,10 +26,10 @@ export const BoardRecords: React.FC = () => {
   const navigate = useNavigate()
   const params = useParams<IBoardsRouteParams>()
 
+  const [isRecordCreatingDialogShown, toggleIsRecordCreatingDialogShown] = useToggle(false)
+
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
-
-  const [isRecordCreatingDialogShown, setIsRecordCreatingDialogShown] = React.useState(false)
 
   const getRecordsResult = useGetBudgetRecordsQuery({
     variables: {
@@ -100,7 +101,7 @@ export const BoardRecords: React.FC = () => {
               </TableCell>
               <TableCell colSpan={2} width="24%">
                 {isTrash ? null : (
-                  <Button id="add-record" onClick={() => setIsRecordCreatingDialogShown(true)} variant="outlined">
+                  <Button id="add-record" onClick={toggleIsRecordCreatingDialogShown} variant="outlined">
                     +New
                   </Button>
                 )}
@@ -133,7 +134,7 @@ export const BoardRecords: React.FC = () => {
         </Table>
       </StyledTableContainer>
       {isRecordCreatingDialogShown && (
-        <RecordFormDialog closeDialog={() => setIsRecordCreatingDialogShown(false)} record={null} />
+        <RecordFormDialog closeDialog={toggleIsRecordCreatingDialogShown} record={null} />
       )}
     </>
   )
