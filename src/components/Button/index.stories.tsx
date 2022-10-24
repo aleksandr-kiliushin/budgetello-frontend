@@ -1,4 +1,5 @@
-import { Button } from "@mui/material"
+import { AddReactionOutlined as AddReactionOutlinedIcon } from "@mui/icons-material"
+import { Button, IconButton } from "@mui/material"
 import { ComponentMeta, ComponentStory } from "@storybook/react"
 
 // eslint-disable-next-line no-restricted-syntax
@@ -11,17 +12,40 @@ const ButtonTemplate: ComponentStory<typeof Button> = (args) => {
   return <Button {...args}>Click me</Button>
 }
 
-export const Primary = ButtonTemplate.bind({})
-Primary.args = {
+export const ButtonPrimary = ButtonTemplate.bind({})
+ButtonPrimary.args = {
   color: "primary",
 }
 
-export const Secondary = ButtonTemplate.bind({})
-Secondary.args = {
+export const ButtonSecondary = ButtonTemplate.bind({})
+ButtonSecondary.args = {
   color: "secondary",
 }
 
-export const Error = ButtonTemplate.bind({})
-Error.args = {
+export const ButtonError = ButtonTemplate.bind({})
+ButtonError.args = {
+  color: "error",
+}
+
+const IconButtonTemplate: ComponentStory<typeof Button> = (args) => {
+  return (
+    <IconButton {...args}>
+      <AddReactionOutlinedIcon />
+    </IconButton>
+  )
+}
+
+export const IconButtonPrimary = IconButtonTemplate.bind({})
+IconButtonPrimary.args = {
+  color: "primary",
+}
+
+export const IconButtonSecondary = IconButtonTemplate.bind({})
+IconButtonSecondary.args = {
+  color: "secondary",
+}
+
+export const IconButtonError = IconButtonTemplate.bind({})
+IconButtonError.args = {
   color: "error",
 }
