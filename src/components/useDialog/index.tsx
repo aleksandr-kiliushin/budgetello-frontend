@@ -1,4 +1,6 @@
+import { makeVar, useReactiveVar } from "@apollo/client"
 import React from "react"
+import { string } from "yup"
 
 import { InnerDialog } from "./InnerDialog"
 import { DialogBody } from "./subcomponents/DialogBody"
@@ -6,11 +8,18 @@ import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
 import { IOuterDialogWithSubcomponents, IOuterDialogWithoutSubcomponents } from "./types"
 
-export const useDialog = ({ isOpenInitially }: { isOpenInitially: boolean }) => {
-  const [isDialogOpen, setIsDialogOpen] = React.useState(() => isOpenInitially)
+const dialogsStateVar = makeVar<Record<string, boolean>>({})
 
-  const openDialog = () => setIsDialogOpen(true)
-  const closeDialog = () => setIsDialogOpen(false)
+export const useDialog = ({ id, isOpenInitially = false }: { id: string; isOpenInitially?: boolean }) => {
+  const dialogsState = useReactiveVar(dialogsStateVar)
+  let isDialogOpen = dialogsState[id]
+  if (isDialogOpen === undefined) {
+    dialogsStateVar({ ...dialogsState, [id]: isOpenInitially })
+    isDialogOpen = isOpenInitially
+  }
+
+  const openDialog = () => dialogsStateVar({ ...dialogsState, [id]: true })
+  const closeDialog = () => dialogsStateVar({ ...dialogsState, [id]: false })
 
   const OuterDialog: IOuterDialogWithoutSubcomponents = ({ children }) => {
     return (

@@ -3,7 +3,7 @@ import React from "react"
 import { useDialog } from "#components/useDialog"
 
 const SampleComponentWithDialog: React.FC = () => {
-  const [MyDialog, openMyDialog, closeMyDialog] = useDialog({ isOpenInitially: false })
+  const [MyDialog, openMyDialog, closeMyDialog] = useDialog({ id: "sample-dialog", isOpenInitially: false })
 
   return (
     <>
