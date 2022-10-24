@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { ITestUser, credentialsByTestUserId } from "#cypress/constants/test-users"
+import { ITestUser, credentialsByTestUserId } from "../constants/test-users"
 
 // ***********************************************
 // This example commands.ts shows you how to
