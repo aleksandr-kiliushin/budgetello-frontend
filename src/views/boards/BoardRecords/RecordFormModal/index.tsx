@@ -1,16 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material"
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
 import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
@@ -22,6 +11,7 @@ import {
   useUpdateBudgetRecordMutation,
 } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord } from "#api/types"
+import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { IBoardsRouteParams } from "#views/boards/types"
 
@@ -114,10 +104,10 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
   })
 
   return (
-    <Dialog onClose={closeModal} open>
-      <DialogTitle>{record === null ? "Add a record" : "Edit record"}</DialogTitle>
-      <form onSubmit={submitRecordForm}>
-        <DialogContent>
+    <Dialog closeModal={closeModal}>
+      <Dialog.Header>{record === null ? "Add a record" : "Edit record"}</Dialog.Header>
+      <Dialog.Body>
+        <form>
           <RowGroup>
             <TextField
               {...register(FormField.Amount, { valueAsNumber: true })}
@@ -140,14 +130,14 @@ export const RecordFormModal: React.FC<IRecordFormModalProps> = ({ closeModal, r
             </FormControl>
             <TextField {...register(FormField.Date, { required: true })} label="Date" type="date" />
           </RowGroup>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeModal}>Cancel</Button>
-          <Button disabled={!formState.isValid} type="submit">
-            Submit
-          </Button>
-        </DialogActions>
-      </form>
+        </form>
+      </Dialog.Body>
+      <Dialog.Footer>
+        <Button onClick={closeModal}>Cancel</Button>
+        <Button disabled={!formState.isValid} onClick={submitRecordForm}>
+          Submit
+        </Button>
+      </Dialog.Footer>
     </Dialog>
   )
 }

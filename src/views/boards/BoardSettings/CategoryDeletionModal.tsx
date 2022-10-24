@@ -1,9 +1,10 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
+import { Button } from "@mui/material"
 import React from "react"
 import { useParams } from "react-router-dom"
 
 import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#api/budget"
 import { BudgetCategory } from "#api/types"
+import { Dialog } from "#components/Dialog"
 
 import { IBoardsRouteParams } from "../types"
 
@@ -24,17 +25,15 @@ export const CategoryDeletionModal: React.FC<ICategoryDeletionModalProps> = ({ c
   }
 
   return (
-    <Dialog onClose={closeModal} open>
-      <DialogTitle>Delete category</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Are you sure you want to delete <b>{category.name}</b> category?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
+    <Dialog closeModal={closeModal}>
+      <Dialog.Header>Delete category</Dialog.Header>
+      <Dialog.Body>
+        Are you sure you want to delete <b>{category.name}</b> category?
+      </Dialog.Body>
+      <Dialog.Footer>
         <Button onClick={closeModal}>Cancel</Button>
         <Button onClick={onDeleteButtonClick}>Yes, delete</Button>
-      </DialogActions>
+      </Dialog.Footer>
     </Dialog>
   )
 }
