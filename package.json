@@ -29,6 +29,9 @@
     "@graphql-codegen/typescript": "2.8.0",
     "@graphql-codegen/typescript-operations": "2.5.5",
     "@graphql-codegen/typescript-react-apollo": "3.3.5",
+    "@storybook/addon-essentials": "6.5.13",
+    "@storybook/addon-links": "6.5.13",
+    "@storybook/react": "6.5.13",
     "@trivago/prettier-plugin-sort-imports": "3.4.0",
     "@types/react": "18.0.22",
     "@types/react-dom": "18.0.7",
@@ -64,6 +67,7 @@
     "lint-staged": "lint-staged",
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
+    "storybook": "NODE_OPTIONS=--openssl-legacy-provider start-storybook -p 7007",
     "test:e2e": "cypress run --e2e --browser chrome",
     "test:component": "MODE=development cypress run --component --browser chrome"
   },
