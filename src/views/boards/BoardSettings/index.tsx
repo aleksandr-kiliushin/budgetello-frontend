@@ -1,10 +1,10 @@
 import { Breadcrumbs, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
 import React from "react"
 import { Link, useParams } from "react-router-dom"
-import { useToggle } from "react-use"
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetCategoriesQuery } from "#api/budget"
+import { useDialog } from "#components/useDialog"
 
 import { IBoardsRouteParams } from "../types"
 import { CategoryFormModal } from "./CategoryFormModal"
@@ -13,7 +13,7 @@ import { Members } from "./Members"
 
 export const BoardSettings: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
-  const [isCategoryCreatingModalShown, toggleIsCategoryCreatingModalShown] = useToggle(false)
+  const [, openBudgetCategoryFormDialog] = useDialog({ id: "budget-category-form-dialog" })
 
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
@@ -47,7 +47,7 @@ export const BoardSettings: React.FC = () => {
                 Type
               </TableCell>
               <TableCell colSpan={2} width="24%">
-                <Button onClick={toggleIsCategoryCreatingModalShown} variant="outlined">
+                <Button onClick={openBudgetCategoryFormDialog} variant="outlined">
                   +New
                 </Button>
               </TableCell>
@@ -60,9 +60,7 @@ export const BoardSettings: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isCategoryCreatingModalShown && (
-        <CategoryFormModal category={undefined} closeModal={toggleIsCategoryCreatingModalShown} />
-      )}
+      <CategoryFormModal category={undefined} />
       <Members />
     </>
   )
