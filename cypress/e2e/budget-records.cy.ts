@@ -19,7 +19,7 @@ describe("Budget records", () => {
     cy.contains("22-08-01").should("be.visible")
   })
 
-  it.only("are paginted correctly", () => {
+  it("are paginted correctly", () => {
     cy.exec(`docker exec -i personal-app-database /bin/bash < ${__dirname}/insert-many-records.sh`)
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
