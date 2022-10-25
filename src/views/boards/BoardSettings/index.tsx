@@ -1,4 +1,14 @@
-import { Breadcrumbs, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material"
+import {
+  Breadcrumbs,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material"
 import React from "react"
 import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
@@ -35,7 +45,7 @@ export const BoardSettings: React.FC = () => {
           Settings
         </Link>
       </Breadcrumbs>
-      <h2>Budget categories</h2>
+      <Typography variant="h2">Budget categories</Typography>
       <TableContainer>
         <Table size="small">
           <TableHead>

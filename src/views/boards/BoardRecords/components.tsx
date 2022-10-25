@@ -8,12 +8,12 @@ export const Header = styled("div")({
 })
 
 export const StyledTableContainer = styled(TableContainer)({
-  overflowX: "visible", // To allow th to be sticky.
+  overflowX: "visible", // Make thead sticky.
 })
 
 export const StyledTableHead = styled(TableHead)(({ theme }) => ({
   position: "sticky",
   top: "0",
   backgroundColor: theme.palette.background.default,
-  boxShadow: "0px 10px 20px -10px lightgray",
+  boxShadow: `0px 20px 20px -24px ${theme.palette.text.primary}`,
 }))

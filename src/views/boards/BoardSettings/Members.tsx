@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material"
 import React from "react"
 import { useParams } from "react-router-dom"
 
@@ -21,24 +22,24 @@ export const Members: React.FC = () => {
 
   return (
     <>
-      <h2>Users</h2>
+      <Typography variant="h2">Users</Typography>
       {board.members.map((member) => (
-        <div key={member.id}>
-          <span>{member.username}</span>
+        <Typography key={member.id}>
+          {member.username}
           <button onClick={() => removeBoardMember({ variables: { boardId: board.id, memberId: member.id } })}>
             - Remove from board
           </button>
-        </div>
+        </Typography>
       ))}
       {getAllUsersResult.data.users
         .filter((user) => board.members.every((member) => member.id !== user.id))
         .map((user) => (
-          <p key={user.id}>
-            <span>{user.username}</span>
+          <Typography key={user.id}>
+            {user.username}
             <button onClick={() => addBoardMember({ variables: { boardId: board.id, userId: user.id } })}>
               + Add to board
             </button>
-          </p>
+          </Typography>
         ))}
     </>
   )

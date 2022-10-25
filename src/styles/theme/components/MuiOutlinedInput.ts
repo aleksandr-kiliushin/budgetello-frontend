@@ -1,88 +1,34 @@
 import { Theme } from "@mui/material/styles"
 import { Components } from "@mui/material/styles/components"
 
+import { palette } from "../palette"
+
 export const MuiOutlinedInput: NonNullable<Components<Theme>["MuiOutlinedInput"]> = {
   styleOverrides: {
     input: {
       padding: "0 14px",
-      // borderRadius: "0",
-      // fontSize: "16px",
-      // fontWeight: "600",
+      fontSize: "16px",
       height: "22px",
       "& ~ fieldset": {
         height: "43px",
         transform: "translateY(1px)",
       },
-      // '&:not(.Mui-disabled):not(:disabled):not([aria-invalid="true"]):hover ~ fieldset': {
-      //   boxShadow: "4px 4px 10px rgba(158, 223, 255, 0.2)",
-      // },
-      // '&.Mui-disabled:not(:disabled):not([aria-invalid="true"]):hover ~ fieldset': {
-      //   boxShadow: `0px 0px 4px 1px ${palette.error.light}`,
-      // },
-      // "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
-      //   WebkitAppearance: "none",
-      //   margin: "0",
-      // },
-      // "&[type=number]": {
-      //   MozAppearance: "textfield",
-      // },
+      // A hack to set backgound-color when selected a suggested autofill value.
+      "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active": {
+        boxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
+        "-webkit-box-shadow": `0 0 0 30px ${palette.background.default} inset !important`,
+        "-webkit-text-fill-color": `${palette.text.primary} !important`,
+      },
+      "&:disabled:-webkit-autofill, &:disabled:-webkit-autofill:hover, &:disabled:-webkit-autofill:focus, &:disabled:-webkit-autofill:active":
+        {
+          boxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
+          "-webkit-box-shadow": `0 0 0 30px ${palette.background.default} inset !important`,
+          "-webkit-text-fill-color": `${palette.text.primary} !important`,
+        },
     },
     root: {
       height: "40px",
       borderRadius: "0px",
     },
   },
-  // variants: [
-  //   {
-  //     props: { color: "primary" },
-  //     style: {
-  //       backgroundColor: "white",
-  //       "&:hover > input:not(:disabled) ~ fieldset": {
-  //         borderColor: palette.primary.light,
-  //       },
-  //       "&.Mui-error > input ~ fieldset": {
-  //         borderColor: "#d32f2f !important",
-  //       },
-  //       input: {
-  //         color: palette.primary.main,
-  //         "& ~ fieldset": {
-  //           borderColor: palette.primary.light,
-  //         },
-  //         "&:not(:disabled):not(.Mui-disabled):hover ~ fieldset": {
-  //           borderColor: palette.primary.light,
-  //         },
-  //         "&::placeholder": {
-  //           color: palette.primary.light,
-  //         },
-  //       },
-  //     },
-  //   },
-  //   {
-  //     props: { color: "secondary" },
-  //     style: {
-  //       backgroundColor: palette.secondary.light,
-  //       "&:hover > input:not(:disabled) ~ fieldset": {
-  //         borderColor: "#d8d8d8",
-  //       },
-  //       "&.Mui-error > input ~ fieldset": {
-  //         borderColor: "#000000",
-  //       },
-  //       "&.Mui-focused:not(:disabled):not(.Mui-disabled) > input ~ fieldset": {
-  //         borderColor: "#d8d8d8",
-  //       },
-  //       input: {
-  //         color: palette.secondary.main,
-  //         "& ~ fieldset": {
-  //           borderColor: "#eaeaea",
-  //         },
-  //         "&:not(:disabled):not(.Mui-disabled):hover ~ fieldset": {
-  //           borderColor: "#eaeaea",
-  //         },
-  //         "&::placeholder": {
-  //           color: "#788185",
-  //         },
-  //       },
-  //     },
-  //   },
-  // ],
 }

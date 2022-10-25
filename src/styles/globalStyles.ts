@@ -12,7 +12,7 @@ export const globalStyles = css`
   main {
     height: calc(100vh - 60px);
     overflow-y: scroll;
-    ${[theme.breakpoints.down("s")]} {
+    ${theme.breakpoints.down("s")} {
       height: calc(100vh - 50px);
     }
   }
@@ -20,5 +20,9 @@ export const globalStyles = css`
   * {
     box-sizing: border-box;
     font-family: monospace;
+  }
+
+  a {
+    color: ${theme.palette.text.primary};
   }
 `

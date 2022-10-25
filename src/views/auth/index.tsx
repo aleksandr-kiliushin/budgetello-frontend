@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material"
 import React from "react"
 
 import { useGetUserQuery } from "#api/users"
@@ -8,7 +9,7 @@ import { Logout } from "./Logout"
 export const Auth: React.FC = () => {
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (getAuthorizedUserResult.loading) return <p>Loading ...</p>
+  if (getAuthorizedUserResult.loading) return <Typography>Loading ...</Typography>
   if (getAuthorizedUserResult.error) return <Login />
   return <Logout />
 }

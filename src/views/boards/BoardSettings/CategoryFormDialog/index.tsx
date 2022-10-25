@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, TextField } from "@mui/material"
+import { Button, TextField, Typography } from "@mui/material"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
@@ -87,7 +87,9 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
 
   return (
     <Dialog closeDialog={closeDialog}>
-      <Dialog.Header>{category ? "Edit category" : "Create category"}</Dialog.Header>
+      <Dialog.Header>
+        <Typography variant="h2">{category ? "Edit category" : "Create category"}</Typography>
+      </Dialog.Header>
       <Dialog.Body>
         <form>
           <RowGroup>
@@ -113,9 +115,11 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button onClick={closeDialog}>Cancel</Button>
-        <Button disabled={!isValid} onClick={submitCategoryForm}>
-          Submit
+        <Button color="secondary" onClick={closeDialog} variant="contained">
+          Cancel
+        </Button>
+        <Button disabled={!isValid} onClick={submitCategoryForm} variant="contained">
+          {category === undefined ? "Create" : "Save"}
         </Button>
       </Dialog.Footer>
     </Dialog>

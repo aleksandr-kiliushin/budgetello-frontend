@@ -1,4 +1,4 @@
-import { Box, css } from "@mui/material"
+import { Box, Typography, css } from "@mui/material"
 import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
@@ -16,7 +16,7 @@ export const App: React.FC = () => {
 
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (getAuthorizedUserResult.loading) return <p>Loading ...</p>
+  if (getAuthorizedUserResult.loading) return <Typography>Loading ...</Typography>
 
   if (getAuthorizedUserResult.error !== undefined && location.pathname !== "/auth") {
     return <Navigate to="/auth" />
