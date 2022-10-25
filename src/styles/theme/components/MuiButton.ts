@@ -14,13 +14,13 @@ export const MuiButton: NonNullable<Components<Theme>["MuiButton"]> = {
       },
       "&.MuiButton-sizeSmall": {
         columnGap: "4px",
-        height: "32px",
-        padding: "0 8px",
+        height: "28px",
+        padding: "0 5px",
       },
       "&.MuiButton-sizeMedium": {
         columnGap: "8px",
-        height: "48px",
-        padding: "0 14px",
+        height: "38px",
+        padding: "0 10px",
       },
     },
     startIcon: {

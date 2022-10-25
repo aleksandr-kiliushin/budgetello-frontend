@@ -21,7 +21,7 @@ export const Logout: React.FC = () => {
       <Typography textAlign="center">
         You are logged in as <b>{getAuthorizedUserResult.data.user.username}</b>.
       </Typography>
-      <Button onClick={onLogout} size="large" variant="outlined">
+      <Button onClick={onLogout} variant="outlined">
         Log out
       </Button>
     </Container>
