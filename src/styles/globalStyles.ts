@@ -1,25 +1,24 @@
 import { css } from "@mui/material"
 
-import { breakpoints } from "./theme/breakpoints"
+import { theme } from "./theme"
 
 export const globalStyles = css`
   html,
   body {
     margin: 0;
-    background-color: #262626;
+    background-color: ${theme.palette.background.default};
   }
 
   main {
     height: calc(100vh - 60px);
     overflow-y: scroll;
-    ${[breakpoints.down("s")]} {
+    ${[theme.breakpoints.down("s")]} {
       height: calc(100vh - 50px);
     }
   }
 
   * {
     box-sizing: border-box;
-    font-family: monospace, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-      Droid Sans, Helvetica Neue, sans-serif;
+    font-family: monospace;
   }
 `

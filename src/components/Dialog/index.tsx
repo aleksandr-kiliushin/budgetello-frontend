@@ -8,17 +8,17 @@ import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
 import { IDialogWithSubcomponents, IDialogWithoutSubcomponents } from "./types"
 
-const DialogWindow = styled("div")({
+const DialogWindow = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.default,
   position: "absolute",
   left: "50%",
   top: "50%",
   transform: "translate(-50%, -50%)",
   width: "600px",
-  backgroundColor: "#262626",
   ":focus-visible": {
     outline: "none",
   },
-})
+}))
 
 const HeaderWithCloseButton = styled("div")({
   display: "grid",

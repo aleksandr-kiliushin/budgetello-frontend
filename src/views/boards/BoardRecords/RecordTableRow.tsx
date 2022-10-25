@@ -3,7 +3,7 @@ import {
   EditOutlined as EditOutlinedIcon,
   Restore as RestoreIcon,
 } from "@mui/icons-material"
-import { TableCell, TableRow, css } from "@mui/material"
+import { TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { useToggle } from "react-use"
 

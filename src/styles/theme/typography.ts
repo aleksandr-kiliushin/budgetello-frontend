@@ -7,13 +7,11 @@ export const typography = createTypography(palette, {
   allVariants: {
     fontFamily: "monospace",
     lineHeight: "1",
-    color: palette.text.primary,
   },
   body1: {
     fontSize: "1.1rem",
   },
   h1: {
-    fontFamily: "monospace",
     fontSize: "2.9rem",
     [breakpoints.down("l")]: {
       fontSize: "2.8rem",
