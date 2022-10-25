@@ -6,6 +6,7 @@ export const globalStyles = css`
   html,
   body {
     margin: 0;
+    background-color: #262626;
   }
 
   main {

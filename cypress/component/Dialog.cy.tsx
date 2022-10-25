@@ -15,7 +15,9 @@ const SampleComponentWithDialog: React.FC = () => {
           <Dialog.Header>
             <Typography variant="h2">My dialog heading</Typography>
           </Dialog.Header>
-          <Dialog.Body>My dialog body.</Dialog.Body>
+          <Dialog.Body>
+            <Typography>My dialog body.</Typography>
+          </Dialog.Body>
           <Dialog.Footer>
             <Button color="secondary" onClick={toggleIsMyDialogOpen} variant="contained">
               Close

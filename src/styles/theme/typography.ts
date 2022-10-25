@@ -1,9 +1,13 @@
-import { breakpoints } from "./breakpoints"
+import createTypography from "@mui/material/styles/createTypography"
 
-export const typography = {
+import { breakpoints } from "./breakpoints"
+import { palette } from "./palette"
+
+export const typography = createTypography(palette, {
   allVariants: {
     fontFamily: "monospace",
     lineHeight: "1",
+    color: palette.text.primary,
   },
   body1: {
     fontSize: "1.1rem",
@@ -69,4 +73,4 @@ export const typography = {
       fontSize: "1.3rem",
     },
   },
-}
+})

@@ -4,6 +4,7 @@ interface IPaletteOptions {
   primary: { main: string }
   secondary: { main: string }
   error: { main: string }
+  text: { primary: string }
 }
 
 const paletteOptions: IPaletteOptions = {
@@ -15,6 +16,9 @@ const paletteOptions: IPaletteOptions = {
   },
   error: {
     main: "#da1e28",
+  },
+  text: {
+    primary: "#f4f4f4",
   },
 }
 
