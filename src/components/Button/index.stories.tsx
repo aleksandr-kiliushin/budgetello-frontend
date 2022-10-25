@@ -12,19 +12,25 @@ const ButtonTemplate: ComponentStory<typeof Button> = (args) => {
   return <Button {...args}>Click me</Button>
 }
 
-export const ButtonPrimary = ButtonTemplate.bind({})
-ButtonPrimary.args = {
+export const ButtonPrimarySmallContained = ButtonTemplate.bind({})
+ButtonPrimarySmallContained.args = {
   color: "primary",
+  size: "small",
+  variant: "contained",
 }
 
-export const ButtonSecondary = ButtonTemplate.bind({})
-ButtonSecondary.args = {
+export const ButtonSecondaryMediumContained = ButtonTemplate.bind({})
+ButtonSecondaryMediumContained.args = {
   color: "secondary",
+  size: "medium",
+  variant: "outlined",
 }
 
-export const ButtonError = ButtonTemplate.bind({})
-ButtonError.args = {
+export const ButtonErrorMediumText = ButtonTemplate.bind({})
+ButtonErrorMediumText.args = {
   color: "error",
+  size: "medium",
+  variant: "text",
 }
 
 const IconButtonTemplate: ComponentStory<typeof Button> = (args) => {
@@ -35,17 +41,23 @@ const IconButtonTemplate: ComponentStory<typeof Button> = (args) => {
   )
 }
 
-export const IconButtonPrimary = IconButtonTemplate.bind({})
-IconButtonPrimary.args = {
+export const IconButtonPrimarySmallContained = IconButtonTemplate.bind({})
+IconButtonPrimarySmallContained.args = {
   color: "primary",
+  size: "small",
+  variant: "contained",
 }
 
-export const IconButtonSecondary = IconButtonTemplate.bind({})
-IconButtonSecondary.args = {
+export const IconButtonSecondaryMediumOutlined = IconButtonTemplate.bind({})
+IconButtonSecondaryMediumOutlined.args = {
   color: "secondary",
+  size: "medium",
+  variant: "outlined",
 }
 
-export const IconButtonError = IconButtonTemplate.bind({})
-IconButtonError.args = {
+export const IconButtonErrorMediumText = IconButtonTemplate.bind({})
+IconButtonErrorMediumText.args = {
   color: "error",
+  size: "medium",
+  variant: "text",
 }
