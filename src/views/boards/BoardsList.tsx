@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material"
 import React from "react"
 import { Link } from "react-router-dom"
 
@@ -17,14 +18,14 @@ export const BoardsList: React.FC = () => {
 
   return (
     <>
-      <h2>Your boards</h2>
+      <Typography variant="h3">Your boards</Typography>
       {getParticipatedBoardsResult.data.boards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}
           {board.admins.some((admin) => admin.id === authorizedUser.id) && "(YOU ARE ADMIN)"}
         </Link>
       ))}
-      <h2>Other boards</h2>
+      <Typography variant="h3">Other boards</Typography>
       {getNonParticipatedBoardsResult.data.boards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}

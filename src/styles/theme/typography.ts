@@ -5,6 +5,7 @@ import { palette } from "./palette"
 
 export const typography = createTypography(palette, {
   allVariants: {
+    color: palette.text.primary,
     fontFamily: "monospace",
     lineHeight: "1",
   },

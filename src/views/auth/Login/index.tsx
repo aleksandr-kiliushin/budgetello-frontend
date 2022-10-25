@@ -70,7 +70,7 @@ export const Login: React.FC = () => {
             label="Password"
             type="password"
           />
-          <Button disabled={!isValid} size="large" type="submit" variant="contained">
+          <Button disabled={!isValid} fullWidth sx={{ width: "auto" }} type="submit" variant="contained">
             Log in
           </Button>
         </RowGroup>

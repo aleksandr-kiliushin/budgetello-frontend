@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material"
+import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
@@ -105,7 +105,9 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
 
   return (
     <Dialog closeDialog={closeDialog}>
-      <Dialog.Header>{record === null ? "Add a record" : "Edit record"}</Dialog.Header>
+      <Dialog.Header>
+        <Typography variant="h2">{record === null ? "Add a record" : "Edit record"}</Typography>
+      </Dialog.Header>
       <Dialog.Body>
         <form>
           <RowGroup>
