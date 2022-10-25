@@ -88,7 +88,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
   return (
     <Dialog closeDialog={closeDialog}>
       <Dialog.Header>
-        <Typography variant="h2">{category ? "Edit category" : "Create category"}</Typography>
+        <Typography variant="h2">{category === undefined ? "Add a category" : "Edit category"}</Typography>
       </Dialog.Header>
       <Dialog.Body>
         <form>
@@ -119,7 +119,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
           Cancel
         </Button>
         <Button disabled={!isValid} onClick={submitCategoryForm} variant="contained">
-          {category === undefined ? "Create" : "Save"}
+          {category === undefined ? "Add" : "Save"}
         </Button>
       </Dialog.Footer>
     </Dialog>

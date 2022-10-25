@@ -19,7 +19,7 @@ export const Home: React.FC = () => {
         consequatur repudiandae voluptatum laboriosam, quam impedit, sapiente sit temporibus rerum assumenda?
         Reprehenderit, pariatur. Tempora, nemo?
       </Typography>
-      <Button variant="outlined">hehe</Button>
+      <Button>hehe</Button>
     </>
   )
 }

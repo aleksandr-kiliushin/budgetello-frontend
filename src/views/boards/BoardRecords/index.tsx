@@ -100,7 +100,7 @@ export const BoardRecords: React.FC = () => {
                 Date
               </TableCell>
               <TableCell colSpan={2} width="24%">
-                {isTrash ? null : (
+                {isTrash === false && (
                   <Button id="add-record" onClick={toggleIsRecordCreatingDialogShown} variant="outlined">
                     +New
                   </Button>
@@ -134,7 +134,7 @@ export const BoardRecords: React.FC = () => {
         </Table>
       </StyledTableContainer>
       {isRecordCreatingDialogShown && (
-        <RecordFormDialog closeDialog={toggleIsRecordCreatingDialogShown} record={null} />
+        <RecordFormDialog closeDialog={toggleIsRecordCreatingDialogShown} record={undefined} />
       )}
     </>
   )

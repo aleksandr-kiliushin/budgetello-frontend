@@ -14,9 +14,13 @@ const DialogWindow = styled("div")(({ theme }) => ({
   left: "50%",
   top: "50%",
   transform: "translate(-50%, -50%)",
-  width: "600px",
+  width: "580px",
   ":focus-visible": {
     outline: "none",
+  },
+  [theme.breakpoints.down("s")]: {
+    height: "100vh",
+    width: "100vw",
   },
 }))
 

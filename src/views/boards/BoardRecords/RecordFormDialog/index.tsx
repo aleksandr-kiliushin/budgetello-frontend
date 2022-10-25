@@ -19,18 +19,20 @@ import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
 interface IRecordFormDialogProps {
   closeDialog(): void
-  record: {
-    amount: BudgetRecord["amount"]
-    category: {
-      board: Pick<Board, "id" | "name">
-      id: BudgetCategory["id"]
-      name: BudgetCategory["name"]
-      type: BudgetCategory["type"]
-    }
-    date: BudgetRecord["date"]
-    id: BudgetRecord["id"]
-    isTrashed: BudgetRecord["isTrashed"]
-  } | null // replace with undefined
+  record:
+    | {
+        amount: BudgetRecord["amount"]
+        category: {
+          board: Pick<Board, "id" | "name">
+          id: BudgetCategory["id"]
+          name: BudgetCategory["name"]
+          type: BudgetCategory["type"]
+        }
+        date: BudgetRecord["date"]
+        id: BudgetRecord["id"]
+        isTrashed: BudgetRecord["isTrashed"]
+      }
+    | undefined
 }
 
 export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog, record }) => {
@@ -81,7 +83,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
     if (formValues.amount === null) return
     if (formValues.categoryId === null) return
 
-    if (record === null) {
+    if (record === undefined) {
       createBudgetRecord({
         variables: {
           amount: formValues.amount,
@@ -106,7 +108,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
   return (
     <Dialog closeDialog={closeDialog}>
       <Dialog.Header>
-        <Typography variant="h2">{record === null ? "Add a record" : "Edit record"}</Typography>
+        <Typography variant="h2">{record === undefined ? "Add a record" : "Edit record"}</Typography>
       </Dialog.Header>
       <Dialog.Body>
         <form>
@@ -135,9 +137,11 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button onClick={closeDialog}>Cancel</Button>
-        <Button disabled={!formState.isValid} onClick={submitRecordForm}>
-          Submit
+        <Button color="secondary" onClick={closeDialog} variant="contained">
+          Cancel
+        </Button>
+        <Button color="primary" disabled={!formState.isValid} onClick={submitRecordForm} variant="contained">
+          {record === undefined ? "Add" : "Save"}
         </Button>
       </Dialog.Footer>
     </Dialog>
