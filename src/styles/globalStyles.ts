@@ -6,8 +6,6 @@ export const globalStyles = css`
   html,
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-      Helvetica Neue, sans-serif;
   }
 
   main {
@@ -20,5 +18,7 @@ export const globalStyles = css`
 
   * {
     box-sizing: border-box;
+    font-family: monospace, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+      Droid Sans, Helvetica Neue, sans-serif;
   }
 `

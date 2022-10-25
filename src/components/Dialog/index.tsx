@@ -1,4 +1,5 @@
-import { Modal as MuiModal, styled } from "@mui/material"
+import { CloseOutlined } from "@mui/icons-material"
+import { Button, Modal as MuiModal, styled } from "@mui/material"
 
 import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 
@@ -22,6 +23,7 @@ const DialogWindow = styled("div")({
 const HeaderWithCloseButton = styled("div")({
   display: "grid",
   gridAutoFlow: "column",
+  gridTemplateColumns: "auto min-content",
 })
 
 const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog }) => {
@@ -34,7 +36,13 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog }) => {
       <DialogWindow role="dialog">
         <HeaderWithCloseButton>
           {header}
-          <button onClick={closeDialog}>Close</button>
+          <Button
+            color="secondary"
+            id="close-dialog"
+            onClick={closeDialog}
+            startIcon={<CloseOutlined />}
+            variant="contained"
+          />
         </HeaderWithCloseButton>
         {body}
         {footer}
