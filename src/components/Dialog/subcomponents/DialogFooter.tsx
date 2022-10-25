@@ -1,7 +1,15 @@
 import { styled } from "@mui/material"
 
 const DialogFooter = styled("div")({
-  backgroundColor: "#ffffff80",
+  display: "grid",
+  gridAutoFlow: "column",
+  gridTemplateColumns: "repeat(auto-fill, 1fr)",
+  "& > button": {
+    width: "auto",
+  },
+  "& > button:only-of-type": {
+    marginLeft: "50%",
+  },
 })
 
 DialogFooter.displayName = "DialogFooter"

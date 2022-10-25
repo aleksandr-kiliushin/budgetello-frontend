@@ -1,21 +1,25 @@
+import { Button, Typography } from "@mui/material"
 import React from "react"
+import { useToggle } from "react-use"
 
 import { Dialog } from "#components/Dialog"
 
 const SampleComponentWithDialog: React.FC = () => {
-  const [isMyDialogOpen, setIsMyDialogOpen] = React.useState(false)
+  const [isMyDialogOpen, toggleIsMyDialogOpen] = useToggle(false)
 
   return (
     <>
-      <button onClick={() => setIsMyDialogOpen(true)}>Open</button>
+      <button onClick={toggleIsMyDialogOpen}>Open</button>
       {isMyDialogOpen && (
-        <Dialog closeDialog={() => setIsMyDialogOpen(false)}>
+        <Dialog closeDialog={toggleIsMyDialogOpen}>
           <Dialog.Header>
-            <h2 style={{ margin: 0 }}>My dialog heading</h2>
+            <Typography variant="h2">My dialog heading</Typography>
           </Dialog.Header>
           <Dialog.Body>My dialog body.</Dialog.Body>
           <Dialog.Footer>
-            <button onClick={() => setIsMyDialogOpen(false)}>Close</button>
+            <Button color="secondary" onClick={toggleIsMyDialogOpen} variant="contained">
+              Close
+            </Button>
           </Dialog.Footer>
         </Dialog>
       )}
