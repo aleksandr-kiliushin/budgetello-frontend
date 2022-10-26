@@ -14,7 +14,7 @@ describe("Authorization", () => {
     expect(localStorage.authorizationToken).to.match(/.+/)
     cy.contains("Log in").should("not.exist")
     cy.contains("Log out").should("be.visible")
-    cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.contains("Hello, john-doe.").should("be.visible")
     cy.url().should("equal", "http://localhost:3000/")
   })
 
@@ -27,7 +27,7 @@ describe("Authorization", () => {
     cy.contains("User not found.").should("be.visible")
     cy.get('input[name="username"]').clear().type("john-doe")
     cy.contains("Log in").click()
-    cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.contains("Hello, john-doe.").should("be.visible")
     cy.url().should("equal", "http://localhost:3000/")
   })
 
@@ -40,7 +40,7 @@ describe("Authorization", () => {
     cy.contains("Invalid password.").should("be.visible")
     cy.get('input[name="password"]').clear().type("john-doe-password")
     cy.contains("Log in").click()
-    cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.contains("Hello, john-doe.").should("be.visible")
     cy.url().should("equal", "http://localhost:3000/")
   })
 

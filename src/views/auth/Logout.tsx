@@ -1,3 +1,4 @@
+import { DarkModeSharp as DarkModeSharpIcon } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import React from "react"
 
@@ -19,9 +20,12 @@ export const Logout: React.FC = () => {
   return (
     <Container>
       <Typography textAlign="center">
-        You are logged in as <b>{getAuthorizedUserResult.data.user.username}</b>.
+        Hello, <b>{getAuthorizedUserResult.data.user.username}</b>.
       </Typography>
-      <Button onClick={onLogout} variant="outlined">
+      <Button startIcon={<DarkModeSharpIcon />} variant="outlined">
+        Switch theme
+      </Button>
+      <Button color="error" onClick={onLogout} variant="outlined">
         Log out
       </Button>
     </Container>
