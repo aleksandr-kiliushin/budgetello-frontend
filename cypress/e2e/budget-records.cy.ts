@@ -49,7 +49,7 @@ describe("Budget records", () => {
     cy.get("p").contains("amount must be a positive number").should("be.visible")
     cy.get("input[name='amount']").clear().type("2000")
     // TODO: Enter a date.
-    cy.get("button").contains("Submit").click()
+    cy.get("button").contains("Add").click()
     cy.contains("2000").should("be.visible")
     cy.contains("education").should("be.visible")
     // TODO: Check the date.
@@ -63,7 +63,7 @@ describe("Budget records", () => {
     cy.get("input[name='amount']").clear().type("6666")
     cy.get("#mui-component-select-categoryId").click() // TODO: Now it does not select previously selected value because of storing value as string in form.
     cy.get("[role='option']").contains("clothes").click()
-    cy.get("button").contains("Submit").click()
+    cy.get("button").contains("Save").click()
     cy.contains("6666").should("be.visible")
     cy.contains("clothes").should("be.visible")
     cy.contains("22-08-01").should("be.visible")

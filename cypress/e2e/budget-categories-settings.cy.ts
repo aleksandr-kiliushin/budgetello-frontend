@@ -24,10 +24,10 @@ describe("Budget categories settings", () => {
     cy.visit("/boards/1/settings")
 
     cy.contains("+New").click()
-    cy.contains("Submit").should("be.disabled")
+    cy.get("button").contains("Add").should("be.disabled")
     cy.get('input[name="name"]').type("travel")
     cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
-    cy.contains("Submit").click()
+    cy.get("button").contains("Add").click()
     cy.get('[role="dialog"]').should("not.exist")
     cy.contains("travel").should("be.visible")
   })
@@ -39,12 +39,12 @@ describe("Budget categories settings", () => {
     cy.contains("+New").click()
     cy.get('input[name="name"]').type("education")
     cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
-    cy.contains("Submit").click()
+    cy.get("button").contains("Add").click()
     cy.get("body")
       .find("p")
       .filter((index, node) => node.innerText === '"education" expense category already exists in this board.')
       .should("have.length", 2)
-    cy.contains("Submit").should("be.disabled")
+    cy.get("button").contains("Add").should("be.disabled")
     cy.get('input[name="name"]').clear()
     cy.get("body")
       .find("p")
@@ -56,7 +56,7 @@ describe("Budget categories settings", () => {
       .find("p")
       .filter((index, node) => node.innerText === '"education" expense category already exists in this board.')
       .should("have.length", 0)
-    cy.contains("Submit").click()
+    cy.get("button").contains("Add").click()
     cy.get('[role="dialog"]').should("not.exist")
     cy.contains("teaching").should("be.visible")
   })
@@ -72,14 +72,14 @@ describe("Budget categories settings", () => {
     cy.get('input[name="typeId"][value="2"]').should("be.checked") // "Income" category type is selected.
     cy.get('input[name="name"]').clear().type("casino")
     cy.get('input[name="typeId"][value="1"]').click() // Select "expense" category type.
-    cy.contains("Submit").click()
+    cy.get("button").contains("Save").click()
     cy.get('[role="dialog"]').should("not.exist")
     cy.contains("salary").should("not.exist")
     cy.contains("casino").should("be.visible")
     cy.get("#casino-expense-category-edit-button").should("be.visible")
   })
 
-  it("case: user tries to create a category that already exists and then fixes form values", () => {
+  it("case: user tries to update a category but resulting category already exists, then the user fixes form values", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
@@ -89,7 +89,7 @@ describe("Budget categories settings", () => {
     cy.get('input[name="name"]').should("have.value", "education")
     cy.get('input[name="typeId"][value="1"]').should("be.checked") // "Expense" category type is selected.
     cy.get('input[name="name"]').clear().type("clothes")
-    cy.contains("Submit").click()
+    cy.get("button").contains("Save").click()
     cy.get("body")
       .find("p")
       .filter((index, node) => node.innerText === '"clothes" expense category already exists in this board.')
@@ -99,7 +99,7 @@ describe("Budget categories settings", () => {
       .find("p")
       .filter((index, node) => node.innerText === '"clothes" expense category already exists in this board.')
       .should("have.length", 1)
-    cy.contains("Submit").click()
+    cy.get("button").contains("Save").click()
     cy.get('[role="dialog"]').should("not.exist")
     cy.contains("shoes").should("be.visible")
   })
