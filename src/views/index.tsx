@@ -23,7 +23,7 @@ export const App: React.FC = () => {
   }
 
   return (
-    <Box sx={{ height: "100vh", width: "100vw" }}>
+    <>
       <Box component="main">
         <Routes>
           <Route element={<Home />} path="/" />
@@ -34,6 +34,6 @@ export const App: React.FC = () => {
         </Routes>
       </Box>
       <Navbar />
-    </Box>
+    </>
   )
 }
