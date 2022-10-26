@@ -27,7 +27,9 @@ export const Logout: React.FC = () => {
       <Typography textAlign="center">
         Hello, <b>{getAuthorizedUserResult.data.user.username}</b>.
       </Typography>
-      <Button onClick={switchColorMode} startIcon={<DarkModeSharpIcon />} variant="outlined" />
+      <Button onClick={switchColorMode} startIcon={<DarkModeSharpIcon />} variant="outlined">
+        Switch mode
+      </Button>
       <Button color="error" onClick={logout} variant="outlined">
         Log out
       </Button>
