@@ -2,7 +2,7 @@ import { SxProps, Theme } from "@mui/material"
 
 export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
   borderTop: `1px solid ${theme.palette.primary.light}`,
-  boxShadow: `0px -30px 30px ${theme.palette.primary.light}10`,
+  boxShadow: `0px 20px 20px 8px ${theme.palette.text.primary}`,
   height: "60px",
   [theme.breakpoints.down("s")]: {
     height: "48px",

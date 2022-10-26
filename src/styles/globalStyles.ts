@@ -13,7 +13,7 @@ export const globalStyles = css`
     height: calc(100vh - 60px);
     overflow-y: scroll;
     ${theme.breakpoints.down("s")} {
-      height: calc(100vh - 50px);
+      height: calc(100vh - 48px);
     }
   }
 
