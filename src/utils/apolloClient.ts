@@ -10,9 +10,9 @@ if (process.env.MODE !== "development" && process.env.MODE !== "production" && p
 }
 
 const httpLinkUriByMode = {
-  development: "http://localhost:3080/graphql",
+  development: "/graphql",
   production: "https://personal-application-api.herokuapp.com/graphql",
-  test: "http://localhost:3080/graphql",
+  test: "/graphql",
 }
 
 const httpLink = createHttpLink({

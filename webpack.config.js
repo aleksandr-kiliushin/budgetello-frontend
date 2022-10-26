@@ -7,6 +7,23 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     port: 3000,
+    proxy: {
+      "/graphql": {
+        target: "http://localhost:3080/graphql",
+      },
+      // "/encrypted_data/*": {
+      //   target: "http://127.0.0.1:8180/",
+      //   rewrite: function (req) {
+      //     req.url = "http://127.0.0.1:8180/" + req.url
+      //   },
+      // },
+      // "/media/*": {
+      //   target: "http://127.0.0.1:8585",
+      //   rewrite: function (req) {
+      //     req.url = "http://127.0.0.1:8585" + req.url
+      //   },
+      // },
+    },
   },
   devtool: "source-map",
   entry: "./src/index.tsx",
