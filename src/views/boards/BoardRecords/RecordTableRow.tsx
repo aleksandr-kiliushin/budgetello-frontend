@@ -3,18 +3,24 @@ import {
   EditOutlined as EditOutlinedIcon,
   Restore as RestoreIcon,
 } from "@mui/icons-material"
-import { TableCell, TableRow, useTheme } from "@mui/material"
+import { TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { useToggle } from "react-use"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord } from "#api/types"
+import { theme } from "#styles/theme"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 
 const mapCategoryTypeIdToPseudoElementContent = new Map([
   [1, "-"],
   [2, "+"],
+])
+
+const amountColorByBudgetCategoryType = new Map([
+  [1, theme.palette.error.main],
+  [2, theme.palette.success.main],
 ])
 
 interface IRecordTableRowProps {
@@ -34,8 +40,6 @@ interface IRecordTableRowProps {
 }
 
 export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
-  const theme = useTheme()
-
   const [isRecordEditingDialogShown, toggleIsRecordEditingDialogShown] = useToggle(false)
 
   const [deleteBudgetRecord] = useDeleteBudgetRecordMutation({
@@ -44,11 +48,6 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
   const [updateBudgetRecord] = useUpdateBudgetRecordMutation({
     update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
   })
-
-  const amountColorByBudgetCategoryType = new Map([
-    [1, theme.palette.error.main],
-    [2, theme.palette.success.main],
-  ])
 
   const mapIsTrashToActionCell = new Map([
     [
