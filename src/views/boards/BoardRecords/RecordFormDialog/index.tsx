@@ -10,7 +10,8 @@ import {
   useGetBudgetCategoriesQuery,
   useUpdateBudgetRecordMutation,
 } from "#api/budget"
-import { Board, BudgetCategory, BudgetRecord } from "#api/types"
+import { useGetCurrenciesQuery } from "#api/currencies"
+import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { IBoardsRouteParams } from "#views/boards/types"
@@ -28,6 +29,7 @@ interface IRecordFormDialogProps {
           name: BudgetCategory["name"]
           type: BudgetCategory["type"]
         }
+        currency: Currency
         date: BudgetRecord["date"]
         id: BudgetRecord["id"]
         isTrashed: BudgetRecord["isTrashed"]
@@ -42,11 +44,13 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
     ? {
         amount: record.amount,
         categoryId: record.category.id,
+        currencySlug: record.currency.slug,
         date: record.date,
       }
     : {
         amount: null,
         categoryId: null,
+        currencySlug: "gel",
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
@@ -56,6 +60,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
     mode: "onChange",
   })
 
+  const getCurrenciesResult = useGetCurrenciesQuery()
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
   })
@@ -77,6 +82,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
   })
   const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
 
+  if (!getCurrenciesResult.data) return null
   if (!getBoardBudgetCategoriesResult.data) return null
 
   const submitRecordForm = handleSubmit((formValues) => {
@@ -88,6 +94,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
         variables: {
           amount: formValues.amount,
           categoryId: formValues.categoryId,
+          currencySlug: formValues.currencySlug,
           date: formValues.date,
         },
       })
@@ -96,6 +103,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
         variables: {
           amount: formValues.amount,
           categoryId: formValues.categoryId,
+          currencySlug: formValues.currencySlug,
           date: formValues.date,
           id: Number(record.id),
         },
@@ -121,6 +129,16 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
               label="Amount"
               type="number"
             />
+            <FormControl fullWidth>
+              <InputLabel>Currency</InputLabel>
+              <Select {...register(FormField.CurrencySlug)} label="Currency">
+                {getCurrenciesResult.data.currencies.map((currency) => (
+                  <MenuItem key={currency.slug} value={currency.slug}>
+                    {currency.name} {currency.symbol}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}

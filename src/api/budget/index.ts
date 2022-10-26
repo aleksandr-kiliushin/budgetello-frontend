@@ -1,7 +1,7 @@
 import * as Types from '../types';
 
 import { gql } from '@apollo/client';
-import { BudgetCategoryFieldsFragmentDoc, BudgetCategoryTypesFieldsFragmentDoc, BudgetRecordFieldsFragmentDoc } from '../fragments';
+import { BudgetCategoryFieldsFragmentDoc, BudgetCategoryTypeFieldsFragmentDoc, BudgetRecordFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
 export type GetBudgetCategoriesQueryVariables = Types.Exact<{
@@ -31,7 +31,7 @@ export type GetBudgetRecordsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetBudgetRecordsQuery = { __typename?: 'Query', budgetRecords: Array<{ __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } }> };
+export type GetBudgetRecordsQuery = { __typename?: 'Query', budgetRecords: Array<{ __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } }> };
 
 export type CreateBudgetCategoryMutationVariables = Types.Exact<{
   boardId: Types.Scalars['Int'];
@@ -45,11 +45,12 @@ export type CreateBudgetCategoryMutation = { __typename?: 'Mutation', createBudg
 export type CreateBudgetRecordMutationVariables = Types.Exact<{
   amount: Types.Scalars['Float'];
   categoryId: Types.Scalars['Int'];
+  currencySlug: Types.Scalars['String'];
   date: Types.Scalars['String'];
 }>;
 
 
-export type CreateBudgetRecordMutation = { __typename?: 'Mutation', createBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
+export type CreateBudgetRecordMutation = { __typename?: 'Mutation', createBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } } };
 
 export type DeleteBudgetCategoryMutationVariables = Types.Exact<{
   categoryId: Types.Scalars['Int'];
@@ -63,7 +64,7 @@ export type DeleteBudgetRecordMutationVariables = Types.Exact<{
 }>;
 
 
-export type DeleteBudgetRecordMutation = { __typename?: 'Mutation', deleteBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
+export type DeleteBudgetRecordMutation = { __typename?: 'Mutation', deleteBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } } };
 
 export type UpdateBudgetCategoryMutationVariables = Types.Exact<{
   boardId?: Types.InputMaybe<Types.Scalars['Int']>;
@@ -78,13 +79,14 @@ export type UpdateBudgetCategoryMutation = { __typename?: 'Mutation', updateBudg
 export type UpdateBudgetRecordMutationVariables = Types.Exact<{
   amount?: Types.InputMaybe<Types.Scalars['Float']>;
   categoryId?: Types.InputMaybe<Types.Scalars['Int']>;
+  currencySlug?: Types.InputMaybe<Types.Scalars['String']>;
   date?: Types.InputMaybe<Types.Scalars['String']>;
   id: Types.Scalars['Int'];
   isTrashed?: Types.InputMaybe<Types.Scalars['Boolean']>;
 }>;
 
 
-export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } } };
+export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudgetRecord: { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } } };
 
 
 export const GetBudgetCategoriesDocument = gql`
@@ -126,10 +128,10 @@ export type GetBudgetCategoriesQueryResult = Apollo.QueryResult<GetBudgetCategor
 export const GetBudgetCategoryTypesDocument = gql`
     query GetBudgetCategoryTypes {
   budgetCategoryTypes {
-    ...budgetCategoryTypesFields
+    ...budgetCategoryTypeFields
   }
 }
-    ${BudgetCategoryTypesFieldsFragmentDoc}`;
+    ${BudgetCategoryTypeFieldsFragmentDoc}`;
 
 /**
  * __useGetBudgetCategoryTypesQuery__
@@ -248,9 +250,9 @@ export type CreateBudgetCategoryMutationHookResult = ReturnType<typeof useCreate
 export type CreateBudgetCategoryMutationResult = Apollo.MutationResult<CreateBudgetCategoryMutation>;
 export type CreateBudgetCategoryMutationOptions = Apollo.BaseMutationOptions<CreateBudgetCategoryMutation, CreateBudgetCategoryMutationVariables>;
 export const CreateBudgetRecordDocument = gql`
-    mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
+    mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $currencySlug: String!, $date: String!) {
   createBudgetRecord(
-    input: {amount: $amount, categoryId: $categoryId, date: $date}
+    input: {amount: $amount, categoryId: $categoryId, currencySlug: $currencySlug, date: $date}
   ) {
     ...budgetRecordFields
   }
@@ -273,6 +275,7 @@ export type CreateBudgetRecordMutationFn = Apollo.MutationFunction<CreateBudgetR
  *   variables: {
  *      amount: // value for 'amount'
  *      categoryId: // value for 'categoryId'
+ *      currencySlug: // value for 'currencySlug'
  *      date: // value for 'date'
  *   },
  * });
@@ -389,9 +392,9 @@ export type UpdateBudgetCategoryMutationHookResult = ReturnType<typeof useUpdate
 export type UpdateBudgetCategoryMutationResult = Apollo.MutationResult<UpdateBudgetCategoryMutation>;
 export type UpdateBudgetCategoryMutationOptions = Apollo.BaseMutationOptions<UpdateBudgetCategoryMutation, UpdateBudgetCategoryMutationVariables>;
 export const UpdateBudgetRecordDocument = gql`
-    mutation UpdateBudgetRecord($amount: Float, $categoryId: Int, $date: String, $id: Int!, $isTrashed: Boolean) {
+    mutation UpdateBudgetRecord($amount: Float, $categoryId: Int, $currencySlug: String, $date: String, $id: Int!, $isTrashed: Boolean) {
   updateBudgetRecord(
-    input: {amount: $amount, categoryId: $categoryId, date: $date, id: $id, isTrashed: $isTrashed}
+    input: {amount: $amount, categoryId: $categoryId, currencySlug: $currencySlug, date: $date, id: $id, isTrashed: $isTrashed}
   ) {
     ...budgetRecordFields
   }
@@ -414,6 +417,7 @@ export type UpdateBudgetRecordMutationFn = Apollo.MutationFunction<UpdateBudgetR
  *   variables: {
  *      amount: // value for 'amount'
  *      categoryId: // value for 'categoryId'
+ *      currencySlug: // value for 'currencySlug'
  *      date: // value for 'date'
  *      id: // value for 'id'
  *      isTrashed: // value for 'isTrashed'

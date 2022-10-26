@@ -8,7 +8,7 @@ import React from "react"
 import { useToggle } from "react-use"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
-import { Board, BudgetCategory, BudgetRecord } from "#api/types"
+import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
 import { theme } from "#styles/theme"
 
 import { RecordFormDialog } from "./RecordFormDialog"
@@ -33,6 +33,7 @@ interface IRecordTableRowProps {
       name: BudgetCategory["name"]
       type: BudgetCategory["type"]
     }
+    currency: Currency
     date: BudgetRecord["date"]
     id: BudgetRecord["id"]
     isTrashed: BudgetRecord["isTrashed"]
@@ -81,7 +82,9 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           sx={{
             color: amountColorByBudgetCategoryType.get(record.category.type.id),
             "&::before": {
-              content: `"${mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)}"`,
+              content: `"${mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)}${
+                record.currency.symbol
+              }"`,
             },
           }}
           width="23%"

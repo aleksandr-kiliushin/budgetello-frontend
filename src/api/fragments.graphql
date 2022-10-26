@@ -1,4 +1,4 @@
-fragment budgetCategoryTypesFields on BudgetCategoryType {
+fragment budgetCategoryTypeFields on BudgetCategoryType {
   id
   name
 }
@@ -29,6 +29,11 @@ fragment budgetRecordFields on BudgetRecord {
       id
       name
     }
+  }
+  currency {
+    name
+    slug
+    symbol
   }
   date
   id
@@ -87,4 +92,10 @@ fragment boardFields on Board {
     id
     name
   }
+}
+
+fragment currencyFields on Currency {
+  name
+  slug
+  symbol
 }

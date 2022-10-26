@@ -6,7 +6,7 @@ query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
 
 query GetBudgetCategoryTypes {
   budgetCategoryTypes {
-    ...budgetCategoryTypesFields
+    ...budgetCategoryTypeFields
   }
 }
 
@@ -44,8 +44,8 @@ mutation CreateBudgetCategory($boardId: Int!, $name: String!, $typeId: Int!) {
   }
 }
 
-mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $date: String!) {
-  createBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date }) {
+mutation CreateBudgetRecord($amount: Float!, $categoryId: Int!, $currencySlug: String!, $date: String!) {
+  createBudgetRecord(input: { amount: $amount, categoryId: $categoryId, currencySlug: $currencySlug, date: $date }) {
     ...budgetRecordFields
   }
 }
@@ -68,8 +68,24 @@ mutation UpdateBudgetCategory($boardId: Int, $id: Int!, $name: String, $typeId: 
   }
 }
 
-mutation UpdateBudgetRecord($amount: Float, $categoryId: Int, $date: String, $id: Int!, $isTrashed: Boolean) {
-  updateBudgetRecord(input: { amount: $amount, categoryId: $categoryId, date: $date, id: $id, isTrashed: $isTrashed }) {
+mutation UpdateBudgetRecord(
+  $amount: Float
+  $categoryId: Int
+  $currencySlug: String
+  $date: String
+  $id: Int!
+  $isTrashed: Boolean
+) {
+  updateBudgetRecord(
+    input: {
+      amount: $amount
+      categoryId: $categoryId
+      currencySlug: $currencySlug
+      date: $date
+      id: $id
+      isTrashed: $isTrashed
+    }
+  ) {
     ...budgetRecordFields
   }
 }

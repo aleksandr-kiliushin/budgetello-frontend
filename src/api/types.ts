@@ -76,6 +76,7 @@ export type BudgetRecord = {
   __typename?: 'BudgetRecord';
   amount: Scalars['Float'];
   category: BudgetCategory;
+  currency: Currency;
   date: Scalars['String'];
   id: Scalars['Int'];
   isTrashed: Scalars['Boolean'];
@@ -115,12 +116,20 @@ export type CreateBudgetCategoryInput = {
 export type CreateBudgetRecordInput = {
   amount: Scalars['Float'];
   categoryId: Scalars['Int'];
+  currencySlug: Scalars['String'];
   date: Scalars['String'];
 };
 
 export type CreateUserInput = {
   password: Scalars['String'];
   username: Scalars['String'];
+};
+
+export type Currency = {
+  __typename?: 'Currency';
+  name: Scalars['String'];
+  slug: Scalars['String'];
+  symbol: Scalars['String'];
 };
 
 export type Mutation = {
@@ -271,6 +280,8 @@ export type Query = {
   budgetCategoryTypes: Array<BudgetCategoryType>;
   budgetRecord: BudgetRecord;
   budgetRecords: Array<BudgetRecord>;
+  currencies: Array<Currency>;
+  currency: Currency;
   user: User;
   users: Array<User>;
 };
@@ -364,6 +375,11 @@ export type QueryBudgetRecordsArgs = {
 };
 
 
+export type QueryCurrencyArgs = {
+  slug: Scalars['String'];
+};
+
+
 export type QueryUserArgs = {
   id?: InputMaybe<Scalars['Int']>;
   username?: InputMaybe<Scalars['String']>;
@@ -413,6 +429,7 @@ export type UpdateBudgetCategoryInput = {
 export type UpdateBudgetRecordInput = {
   amount?: InputMaybe<Scalars['Float']>;
   categoryId?: InputMaybe<Scalars['Int']>;
+  currencySlug?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
   isTrashed?: InputMaybe<Scalars['Boolean']>;

@@ -1,0 +1,5 @@
+query GetCurrencies {
+  currencies {
+    ...currencyFields
+  }
+}
