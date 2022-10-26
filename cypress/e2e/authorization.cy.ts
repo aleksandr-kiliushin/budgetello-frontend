@@ -15,6 +15,7 @@ describe("Authorization", () => {
     cy.contains("Log in").should("not.exist")
     cy.contains("Log out").should("be.visible")
     cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.url().should("equal", "http://localhost:3000/")
   })
 
   it("case: user enters unexisting username", () => {
@@ -27,6 +28,7 @@ describe("Authorization", () => {
     cy.get('input[name="username"]').clear().type("john-doe")
     cy.contains("Log in").click()
     cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.url().should("equal", "http://localhost:3000/")
   })
 
   it("case: user enters invalid password", () => {
@@ -39,6 +41,7 @@ describe("Authorization", () => {
     cy.get('input[name="password"]').clear().type("john-doe-password")
     cy.contains("Log in").click()
     cy.contains("You are logged in as john-doe.").should("be.visible")
+    cy.url().should("equal", "http://localhost:3000/")
   })
 
   it("logs out successfully", (done) => {

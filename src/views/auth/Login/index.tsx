@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, TextField, Typography } from "@mui/material"
 import React from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 
 import { useCreateAuthorizationTokenMutation } from "#api/authorization"
 import { GetUserDocument } from "#api/users"
@@ -12,6 +13,7 @@ import { Container } from "../components"
 import { FormField, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Login: React.FC = () => {
+  const navigate = useNavigate()
   const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
   const {
@@ -40,6 +42,7 @@ export const Login: React.FC = () => {
         query: GetUserDocument,
         variables: { id: 0 },
       })
+      setTimeout(() => navigate("/"), 1000)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
