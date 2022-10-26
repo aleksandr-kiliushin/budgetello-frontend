@@ -13,7 +13,7 @@ import { theme } from "#styles/theme"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 
-const mapCategoryTypeIdToPseudoElementContent = new Map([
+const amountSignByCategoryTypeId = new Map([
   [1, "-"],
   [2, "+"],
 ])
@@ -82,9 +82,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           sx={{
             color: amountColorByBudgetCategoryType.get(record.category.type.id),
             "&::before": {
-              content: `"${mapCategoryTypeIdToPseudoElementContent.get(record.category.type.id)}${
-                record.currency.symbol
-              }"`,
+              content: `"${amountSignByCategoryTypeId.get(record.category.type.id)}${record.currency.symbol} "`,
             },
           }}
           width="23%"
