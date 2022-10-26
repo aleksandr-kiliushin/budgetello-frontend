@@ -1,7 +1,7 @@
 import { testUsers } from "#cypress/constants/test-users"
 
 describe("Authorization", () => {
-  it("logs in successfully", () => {
+  it.only("logs in successfully", () => {
     cy.visit("/auth")
 
     expect(localStorage.authorizationToken).to.be.equal(undefined)
@@ -11,7 +11,7 @@ describe("Authorization", () => {
     cy.get('input[name="password"]').type("john-doe-password")
     cy.contains("Log in").should("be.enabled").click()
     cy.contains("Welcome").should("not.exist")
-    expect(localStorage.authorizationToken).to.match(/.+/)
+    cy.should(() => expect(localStorage.authorizationToken).to.match(/.+/))
     cy.contains("Log in").should("not.exist")
     cy.contains("Log out").should("be.visible")
     cy.contains("Hello, john-doe.").should("be.visible")
@@ -44,19 +44,15 @@ describe("Authorization", () => {
     cy.url().should("equal", "http://localhost:3000/")
   })
 
-  it("logs out successfully", (done) => {
+  it("logs out successfully", () => {
     cy.on("uncaught:exception", (error) => {
       expect(error.message).to.include("Invalid token.")
-      done()
       return false
     })
-
     cy.authorize(testUsers.johnDoe.id)
-    cy.visit("/auth")
-
-    expect(localStorage.authorizationToken).to.match(/.+/)
+    cy.visit("/auth").should(() => expect(localStorage.authorizationToken).to.match(/.+/))
     cy.contains("Log out").click()
     cy.contains("Log in").should("be.visible")
-    expect(localStorage.authorizationToken).to.be.equal(undefined)
+    cy.should(() => expect(localStorage.authorizationToken).to.be.equal(undefined))
   })
 })
