@@ -4,7 +4,7 @@ export const Header = styled("div")({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  maxWidth: "100vw",
+  maxWidth: "100%",
 })
 
 export const StyledTableContainer = styled(TableContainer)({

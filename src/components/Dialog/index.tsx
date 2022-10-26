@@ -19,8 +19,8 @@ const DialogWindow = styled("div")(({ theme }) => ({
     outline: "none",
   },
   [theme.breakpoints.down("s")]: {
-    height: "100vh",
-    width: "100vw",
+    height: "100%",
+    width: "100%",
   },
 }))
 

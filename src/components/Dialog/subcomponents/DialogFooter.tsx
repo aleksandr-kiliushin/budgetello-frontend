@@ -16,7 +16,7 @@ const DialogFooter = styled("div")(({ theme }) => ({
     position: "absolute",
     bottom: "0",
     gridAutoFlow: "row",
-    width: "100vw",
+    width: "100%",
   },
 }))
 
