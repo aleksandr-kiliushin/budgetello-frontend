@@ -16,14 +16,14 @@ export const MuiOutlinedInput: NonNullable<Components<Theme>["MuiOutlinedInput"]
       // A hack to set backgound-color when selected a suggested autofill value.
       "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active": {
         boxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
-        "-webkit-box-shadow": `0 0 0 30px ${palette.background.default} inset !important`,
-        "-webkit-text-fill-color": `${palette.text.primary} !important`,
+        WebkitBoxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
+        WebkitTextFillColor: `${palette.text.primary} !important`,
       },
       "&:disabled:-webkit-autofill, &:disabled:-webkit-autofill:hover, &:disabled:-webkit-autofill:focus, &:disabled:-webkit-autofill:active":
         {
           boxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
-          "-webkit-box-shadow": `0 0 0 30px ${palette.background.default} inset !important`,
-          "-webkit-text-fill-color": `${palette.text.primary} !important`,
+          WebkitBoxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
+          WebkitTextFillColor: `${palette.text.primary} !important`,
         },
     },
     root: {

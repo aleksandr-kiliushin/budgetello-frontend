@@ -12,9 +12,14 @@ export const Logout: React.FC = () => {
 
   if (!getAuthorizedUserResult.data) return null
 
-  const onLogout = (): void => {
+  const logout = () => {
     localStorage.removeItem("authorizationToken")
     apolloClient.resetStore()
+  }
+
+  const switchColorMode = () => {
+    localStorage.colorMode = localStorage.colorMode === "dark" ? "light" : "dark"
+    window.location.reload()
   }
 
   return (
@@ -22,10 +27,8 @@ export const Logout: React.FC = () => {
       <Typography textAlign="center">
         Hello, <b>{getAuthorizedUserResult.data.user.username}</b>.
       </Typography>
-      <Button startIcon={<DarkModeSharpIcon />} variant="outlined">
-        Switch theme
-      </Button>
-      <Button color="error" onClick={onLogout} variant="outlined">
+      <Button onClick={switchColorMode} startIcon={<DarkModeSharpIcon />} variant="outlined" />
+      <Button color="error" onClick={logout} variant="outlined">
         Log out
       </Button>
     </Container>
