@@ -49,10 +49,10 @@ describe("Budget records", () => {
     cy.get("#mui-component-select-currencySlug").click()
     cy.get("[role='option']").contains("USD $").click()
     cy.get("p").contains("amount must be a positive number").should("be.visible")
-    cy.get("input[name='amount']").clear().type("2000")
+    cy.get("input[name='amount']").clear().type("4.53")
     // TODO: Enter a date.
     cy.get("button").contains("Add").click()
-    cy.contains("2000").should("be.visible")
+    cy.contains("4.53").should("be.visible")
     cy.contains("education").should("be.visible")
     // TODO: Check the date.
   })
@@ -62,13 +62,13 @@ describe("Budget records", () => {
     cy.visit("/boards/1/records")
 
     cy.get("#2022-08-01-expense-education-25-edit-button").click()
-    cy.get("input[name='amount']").clear().type("6666")
+    cy.get("input[name='amount']").clear().type("66.6")
     cy.get("#mui-component-select-categoryId").click() // TODO: Now it does not select previously selected value because of storing value as string in form.
     cy.get("[role='option']").contains("clothes").click()
     cy.get("#mui-component-select-currencySlug").click()
     cy.get("[role='option']").contains("GEL ₾").click()
     cy.get("button").contains("Save").click()
-    cy.contains("6666").should("be.visible")
+    cy.contains("66.6").should("be.visible")
     cy.contains("clothes").should("be.visible")
     cy.contains("22-08-01").should("be.visible")
   })
