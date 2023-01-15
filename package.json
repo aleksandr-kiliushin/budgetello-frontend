@@ -53,6 +53,10 @@
     "webpack-dev-server": "4.11.1",
     "whatwg-fetch": "3.6.2"
   },
+  "engines": {
+    "node": "18.13.0",
+    "npm": "8.17.0"
+  },
   "license": "ISC",
   "name": "personal-app-frontend",
   "scripts": {
