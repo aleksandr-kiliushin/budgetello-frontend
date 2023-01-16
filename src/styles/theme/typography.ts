@@ -6,14 +6,15 @@ import { palette } from "./palette"
 export const typography = createTypography(palette, {
   allVariants: {
     color: palette.text.primary,
-    fontFamily: "monospace",
     lineHeight: "1",
   },
   body1: {
     fontSize: "1.6rem",
   },
+  fontFamily: ["SofiaSans", "Arial"].join(","),
   h1: {
     fontSize: "2.7rem",
+    fontWeight: "500",
     [breakpoints.down("l")]: {
       fontSize: "2.6rem",
     },
@@ -26,6 +27,7 @@ export const typography = createTypography(palette, {
   },
   h2: {
     fontSize: "2.5rem",
+    fontWeight: "500",
     [breakpoints.down("l")]: {
       fontSize: "2.4rem",
     },
@@ -38,6 +40,7 @@ export const typography = createTypography(palette, {
   },
   h3: {
     fontSize: "2.3rem",
+    fontWeight: "500",
     [breakpoints.down("l")]: {
       fontSize: "2.2rem",
     },
@@ -50,6 +53,7 @@ export const typography = createTypography(palette, {
   },
   h4: {
     fontSize: "2.1rem",
+    fontWeight: "500",
     [breakpoints.down("l")]: {
       fontSize: "2.0rem",
     },

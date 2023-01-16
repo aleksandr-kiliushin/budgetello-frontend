@@ -70,9 +70,7 @@ export const BoardRecords: React.FC = () => {
         </Link>
       </Breadcrumbs>
       <br />
-      <Typography variant="h1">
-        Board #{board.id}: {board.name}
-      </Typography>
+      <Typography variant="h1">Board «{board.name}»</Typography>
       <br />
       <ControlsPanel>
         <FormControlLabel
