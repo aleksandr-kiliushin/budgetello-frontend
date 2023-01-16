@@ -1,6 +1,6 @@
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
-import { TableCell, TableRow } from "@mui/material"
+import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { useToggle } from "react-use"
 
@@ -20,13 +20,23 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
   return (
     <>
       <TableRow>
-        <TableCell width="38%">{category.name}</TableCell>
-        <TableCell width="38%">{category.type.name}</TableCell>
-        <TableCell onClick={toggleIsCategoryEditingDialogShown} width="12%">
-          <EditOutlinedIcon id={`${category.name}-${category.type.name}-category-edit-button`} />
+        <TableCell width="40%">{category.name}</TableCell>
+        <TableCell width="40%">{category.type.name}</TableCell>
+        <TableCell width="10%">
+          <Button
+            id={`${category.name}-${category.type.name}-category-edit-button`}
+            onClick={toggleIsCategoryEditingDialogShown}
+            size="small"
+            startIcon={<EditOutlinedIcon />}
+          />
         </TableCell>
-        <TableCell onClick={toggleIsCategoryDeletionDialogShown} width="12%">
-          <DeleteOutlineIcon id={`${category.name}-${category.type.name}-category-delete-button`} />
+        <TableCell width="10%">
+          <Button
+            id={`${category.name}-${category.type.name}-category-delete-button`}
+            onClick={toggleIsCategoryDeletionDialogShown}
+            size="small"
+            startIcon={<DeleteOutlineIcon />}
+          />
         </TableCell>
       </TableRow>
       {isCategoryEditingDialogShown && (

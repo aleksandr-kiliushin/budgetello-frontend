@@ -3,7 +3,7 @@ import {
   EditOutlined as EditOutlinedIcon,
   Restore as RestoreIcon,
 } from "@mui/icons-material"
-import { TableCell, TableRow } from "@mui/material"
+import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { useToggle } from "react-use"
 
@@ -54,23 +54,25 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     [
       false,
       // eslint-disable-next-line react/jsx-key
-      <TableCell
-        id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
-        onClick={toggleIsRecordEditingDialogShown}
-        width="10%"
-      >
-        <EditOutlinedIcon />
+      <TableCell width="10%">
+        <Button
+          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
+          onClick={toggleIsRecordEditingDialogShown}
+          size="small"
+          startIcon={<EditOutlinedIcon />}
+        />
       </TableCell>,
     ],
     [
       true,
       // eslint-disable-next-line react/jsx-key
-      <TableCell
-        id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
-        onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
-        width="10%"
-      >
-        <RestoreIcon />
+      <TableCell width="10%">
+        <Button
+          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
+          onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
+          size="small"
+          startIcon={<RestoreIcon />}
+        />
       </TableCell>,
     ],
   ])
@@ -92,19 +94,20 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
         <TableCell width="33%">{record.category.name}</TableCell>
         <TableCell width="24%">{record.date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
-        <TableCell
-          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
-          onClick={() => {
-            // TODO: Replace recordId with id.
-            if (record.isTrashed) {
-              deleteBudgetRecord({ variables: { recordId: record.id } })
-            } else {
-              updateBudgetRecord({ variables: { id: record.id, isTrashed: true } })
-            }
-          }}
-          width="12%"
-        >
-          <DeleteOutlineIcon />
+        <TableCell width="10%">
+          <Button
+            id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
+            onClick={() => {
+              // TODO: Replace recordId with id.
+              if (record.isTrashed) {
+                deleteBudgetRecord({ variables: { recordId: record.id } })
+              } else {
+                updateBudgetRecord({ variables: { id: record.id, isTrashed: true } })
+              }
+            }}
+            size="small"
+            startIcon={<DeleteOutlineIcon />}
+          />
         </TableCell>
       </TableRow>
       {isRecordEditingDialogShown && (
