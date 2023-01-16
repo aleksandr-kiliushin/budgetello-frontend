@@ -63,8 +63,8 @@ export const BoardRecords: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs aria-label="breadcrumb" sx={{ fontSize: "18px" }}>
-        <Link to="/boards">boards</Link>
+      <Breadcrumbs>
+        <Link to="/boards">Boards</Link>
         <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/records`}>
           {board.name}
         </Link>

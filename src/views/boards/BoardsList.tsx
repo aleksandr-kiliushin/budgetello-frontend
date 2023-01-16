@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material"
+import { Breadcrumbs, Typography } from "@mui/material"
 import React from "react"
 import { Link } from "react-router-dom"
 
@@ -18,14 +18,23 @@ export const BoardsList: React.FC = () => {
 
   return (
     <>
+      <Breadcrumbs>
+        <Link css={{ fontWeight: "bold" }} to="/boards">
+          Boards
+        </Link>
+      </Breadcrumbs>
+      <br />
       <Typography variant="h3">Your boards</Typography>
+      <br />
       {getParticipatedBoardsResult.data.boards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}
           {board.admins.some((admin) => admin.id === authorizedUser.id) && "(YOU ARE ADMIN)"}
         </Link>
       ))}
+      <br />
       <Typography variant="h3">Other boards</Typography>
+      <br />
       {getNonParticipatedBoardsResult.data.boards.map((board) => (
         <Link css={{ display: "block" }} key={board.id} to={`/boards/${board.id}/records`}>
           {board.name}
