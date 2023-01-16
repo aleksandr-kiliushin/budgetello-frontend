@@ -6,7 +6,7 @@ export const MuiTableCell: NonNullable<Components<Theme>["MuiTableCell"]> = {
       fontWeight: "bold",
     },
     root: {
-      fontSize: "1.2rem",
+      fontSize: "1.4rem",
       "&:not(:first-of-type)": {
         paddingLeft: "4px",
       },

@@ -16,14 +16,14 @@ export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
 export const bottomNavigationActionSx: SxProps<Theme> = ({ palette }) => ({
   "& .MuiSvgIcon-root": {
     fill: palette.primary.light,
-    height: "1.5rem",
+    height: "2rem",
     transition: "height 0.2s linear, width 0.2s linear, fill 0.2s linear",
-    width: "1.5rem",
+    width: "2rem",
   },
   "&.Mui-selected .MuiSvgIcon-root": {
     fill: palette.primary.dark,
-    height: "2.2rem",
-    width: "2.2rem",
+    height: "3rem",
+    width: "3rem",
   },
   "&:hover .MuiSvgIcon-root": {
     fill: palette.primary.dark,
