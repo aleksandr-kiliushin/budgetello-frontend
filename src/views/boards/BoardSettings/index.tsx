@@ -50,9 +50,12 @@ export const BoardSettings: React.FC = () => {
       <Typography variant="h2">Budget categories</Typography>
       <br />
       <div>
-        <Button onClick={toggleIsCategoryCreatingDialogShown} startIcon={<AddIcon />} variant="outlined">
-          New category
-        </Button>
+        <Button
+          id="add-category"
+          onClick={toggleIsCategoryCreatingDialogShown}
+          startIcon={<AddIcon />}
+          variant="outlined"
+        />
       </div>
       <br />
       <TableContainer>
