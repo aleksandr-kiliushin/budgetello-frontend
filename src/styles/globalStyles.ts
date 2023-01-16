@@ -3,6 +3,8 @@ import { css } from "@mui/material"
 import SofiaSansFont from "./fonts/SofiaSans.ttf"
 import { theme } from "./theme"
 
+console.log("theme.palette >>", theme.palette)
+
 export const globalStyles = css`
   @font-face {
     font-family: "SofiaSans";
@@ -39,6 +41,11 @@ export const globalStyles = css`
   }
 
   a {
+    color: ${theme.palette.primary.main};
     font-size: 1.6rem;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
   }
 `
