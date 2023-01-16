@@ -32,9 +32,11 @@ export const BoardsList: React.FC = () => {
       <ul>
         {getNonParticipatedBoardsResult.data.boards.length === 0 && "None"}
         {getNonParticipatedBoardsResult.data.boards.map((board) => (
-          <Link key={board.id} to={`/boards/${board.id}/records`}>
-            {board.name}
-          </Link>
+          <li key={board.id}>
+            <Link key={board.id} to={`/boards/${board.id}/records`}>
+              {board.name}
+            </Link>
+          </li>
         ))}
       </ul>
     </>
