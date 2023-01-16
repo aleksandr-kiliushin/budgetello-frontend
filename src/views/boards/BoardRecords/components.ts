@@ -16,7 +16,7 @@ export const StyledTableContainer = styled(TableContainer)({
 export const StyledTableHead = styled(TableHead)(({ theme }) => ({
   zIndex: 1,
   position: "sticky",
-  top: "0",
+  top: "-12px",
   backgroundColor: theme.palette.background.default,
   boxShadow: `0px 14px 24px -13px ${theme.palette.text.primary}`,
 }))

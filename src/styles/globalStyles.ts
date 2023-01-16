@@ -26,6 +26,7 @@ export const globalStyles = css`
 
   main {
     height: calc(100% - 60px);
+    padding: 12px;
     overflow-y: scroll;
     ${theme.breakpoints.down("s")} {
       height: calc(100% - 48px);
