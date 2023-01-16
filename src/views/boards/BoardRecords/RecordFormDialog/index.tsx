@@ -131,7 +131,11 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
             />
             <FormControl fullWidth>
               <InputLabel>Currency</InputLabel>
-              <Select {...register(FormField.CurrencySlug)} label="Currency">
+              <Select
+                {...register(FormField.CurrencySlug)}
+                defaultValue={formState.defaultValues?.currencySlug}
+                label="Currency"
+              >
                 {getCurrenciesResult.data.currencies.map((currency) => (
                   <MenuItem key={currency.slug} value={currency.slug}>
                     {currency.name} {currency.symbol}
@@ -142,7 +146,11 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
             <FormControl fullWidth>
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}
-              <Select {...register(FormField.CategoryId, { valueAsNumber: true })} label="Category">
+              <Select
+                {...register(FormField.CategoryId, { valueAsNumber: true })}
+                defaultValue={formState.defaultValues?.categoryId}
+                label="Category"
+              >
                 {getBoardBudgetCategoriesResult.data.budgetCategories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
                     {category.name}
