@@ -13,7 +13,7 @@ describe("Budget categories settings", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
-    cy.contains("+New").click()
+    cy.contains("New").click()
     cy.get('[role="dialog"]').should("be.visible")
     cy.contains("Cancel").click()
     cy.get('[role="dialog"]').should("not.exist")
@@ -23,7 +23,7 @@ describe("Budget categories settings", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
-    cy.contains("+New").click()
+    cy.contains("New").click()
     cy.get("button").contains("Add").should("be.disabled")
     cy.get('input[name="name"]').type("travel")
     cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
@@ -36,7 +36,7 @@ describe("Budget categories settings", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/settings")
 
-    cy.contains("+New").click()
+    cy.contains("New").click()
     cy.get('input[name="name"]').type("education")
     cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
     cy.get("button").contains("Add").click()

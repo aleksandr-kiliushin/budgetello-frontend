@@ -57,7 +57,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       <TableCell
         id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
         onClick={toggleIsRecordEditingDialogShown}
-        width="12%"
+        width="10%"
       >
         <EditOutlinedIcon />
       </TableCell>,
@@ -68,7 +68,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       <TableCell
         id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
         onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
-        width="12%"
+        width="10%"
       >
         <RestoreIcon />
       </TableCell>,
@@ -89,7 +89,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
         >
           {record.amount}
         </TableCell>
-        <TableCell width="29%">{record.category.name}</TableCell>
+        <TableCell width="33%">{record.category.name}</TableCell>
         <TableCell width="24%">{record.date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
         <TableCell

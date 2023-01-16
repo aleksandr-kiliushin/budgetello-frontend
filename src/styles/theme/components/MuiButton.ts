@@ -6,21 +6,22 @@ export const MuiButton: NonNullable<Components<Theme>["MuiButton"]> = {
   },
   styleOverrides: {
     root: {
-      minWidth: "unset",
       width: "fit-content",
+      minWidth: "unset",
       borderRadius: 0,
+      fontSize: "1.6rem",
       "&, &:hover": {
         boxShadow: "none",
       },
       "&.MuiButton-sizeSmall": {
         columnGap: "4px",
         height: "28px",
-        padding: "0 5px",
+        padding: "0 4px",
       },
       "&.MuiButton-sizeMedium": {
         columnGap: "8px",
         height: "38px",
-        padding: "0 10px",
+        padding: "0 8px",
       },
     },
     startIcon: {

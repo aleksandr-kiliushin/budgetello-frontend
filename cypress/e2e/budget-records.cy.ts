@@ -42,7 +42,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
-    cy.get("button").contains("+New").click()
+    cy.get("button").contains("New").click()
     cy.get("input[name='amount']").type("0")
     cy.get("#mui-component-select-categoryId").click()
     cy.get("[role='option']").contains("education").click()

@@ -1,3 +1,4 @@
+import { Add as AddIcon } from "@mui/icons-material"
 import {
   Breadcrumbs,
   Button,
@@ -69,7 +70,7 @@ export const BoardRecords: React.FC = () => {
         </Link>
       </Breadcrumbs>
       <Link
-        css={{ display: "block", width: "fit-content", marginLeft: "auto", fontSize: "18px" }}
+        css={{ display: "block", width: "fit-content", marginLeft: "auto" }}
         to={`/boards/${params.boardId}/settings`}
       >
         Board settings
@@ -93,16 +94,21 @@ export const BoardRecords: React.FC = () => {
               <TableCell variant="head" width="23%">
                 Amount
               </TableCell>
-              <TableCell variant="head" width="29%">
+              <TableCell variant="head" width="33%">
                 Category
               </TableCell>
               <TableCell variant="head" width="24%">
                 Date
               </TableCell>
-              <TableCell colSpan={2} width="24%">
+              <TableCell colSpan={2} width="20%">
                 {isTrash === false && (
-                  <Button id="add-record" onClick={toggleIsRecordCreatingDialogShown} variant="outlined">
-                    +New
+                  <Button
+                    id="add-record"
+                    onClick={toggleIsRecordCreatingDialogShown}
+                    startIcon={<AddIcon />}
+                    variant="outlined"
+                  >
+                    New
                   </Button>
                 )}
               </TableCell>

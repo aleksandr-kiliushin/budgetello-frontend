@@ -1,3 +1,4 @@
+import { Add as AddIcon } from "@mui/icons-material"
 import {
   Breadcrumbs,
   Button,
@@ -57,8 +58,8 @@ export const BoardSettings: React.FC = () => {
                 Type
               </TableCell>
               <TableCell colSpan={2} width="24%">
-                <Button onClick={toggleIsCategoryCreatingDialogShown} variant="outlined">
-                  +New
+                <Button onClick={toggleIsCategoryCreatingDialogShown} startIcon={<AddIcon />} variant="outlined">
+                  New
                 </Button>
               </TableCell>
             </TableRow>

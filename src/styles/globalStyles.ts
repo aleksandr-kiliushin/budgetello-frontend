@@ -7,6 +7,7 @@ export const globalStyles = css`
   body {
     height: 100%;
     margin: 0;
+    font-size: 10px;
   }
 
   body {
@@ -31,6 +32,6 @@ export const globalStyles = css`
   }
 
   a {
-    color: ${theme.palette.text.primary};
+    font-size: 1.6rem;
   }
 `
