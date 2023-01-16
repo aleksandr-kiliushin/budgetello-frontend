@@ -38,11 +38,11 @@ export const globalStyles = css`
 
   * {
     box-sizing: border-box;
+    font-size: 1.6rem;
   }
 
   a {
     color: ${theme.palette.primary.main};
-    font-size: 1.6rem;
     text-decoration: none;
   }
   a:hover {
