@@ -82,18 +82,14 @@ export const BoardRecords: React.FC = () => {
           name="isTrash"
           sx={{ margin: 0 }}
         />
-        <Button href={`/boards/${params.boardId}/settings`} startIcon={<SettingsIcon />} variant="outlined">
-          Settings
-        </Button>
+        <Button href={`/boards/${params.boardId}/settings`} startIcon={<SettingsIcon />} variant="outlined" />
         {isTrash === false && (
           <Button
             id="add-record"
             onClick={toggleIsRecordCreatingDialogShown}
             startIcon={<AddIcon />}
             variant="outlined"
-          >
-            New record
-          </Button>
+          />
         )}
       </ControlsPanel>
       <br />
