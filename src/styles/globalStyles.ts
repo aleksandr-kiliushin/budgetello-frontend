@@ -4,16 +4,17 @@ import SofiaSansFont from "./fonts/SofiaSans.ttf"
 import { theme } from "./theme"
 
 export const globalStyles = css`
+  @font-face {
+    font-family: "SofiaSans";
+    src: local("SofiaSans"), url(${SofiaSansFont}) format("woff2-variations");
+  }
+
   html,
   body {
     height: 100%;
     margin: 0;
     font-family: SofiaSans, Arial;
     font-size: 10px;
-    @font-face {
-      font-family: "SofiaSans";
-      src: local("SofiaSans"), url(${SofiaSansFont}) format("woff2-variations");
-    }
   }
 
   body {
