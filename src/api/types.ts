@@ -365,6 +365,7 @@ export type QueryBudgetRecordsArgs = {
   amount?: InputMaybe<Scalars['Float']>;
   boardsIds?: InputMaybe<Array<Scalars['Int']>>;
   categoriesIds?: InputMaybe<Array<Scalars['Int']>>;
+  currenciesSlugs?: InputMaybe<Array<Scalars['String']>>;
   dates?: InputMaybe<Array<Scalars['String']>>;
   ids?: InputMaybe<Array<Scalars['Int']>>;
   isTrashed?: InputMaybe<Scalars['Boolean']>;
