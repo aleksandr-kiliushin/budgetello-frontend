@@ -1,4 +1,4 @@
-import { Add as AddIcon } from "@mui/icons-material"
+import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
 import {
   Breadcrumbs,
   Button,
@@ -20,7 +20,7 @@ import { IBoardsRouteParams } from "#views/boards/types"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
-import { Header, StyledTableContainer, StyledTableHead } from "./components"
+import { ControlsPanel, StyledTableContainer, StyledTableHead } from "./components"
 
 export const BoardRecords: React.FC = () => {
   const location = useLocation()
@@ -69,16 +69,12 @@ export const BoardRecords: React.FC = () => {
           {board.name}
         </Link>
       </Breadcrumbs>
-      <Link
-        css={{ display: "block", width: "fit-content", marginLeft: "auto" }}
-        to={`/boards/${params.boardId}/settings`}
-      >
-        Board settings
-      </Link>
+      <br />
       <Typography variant="h1">
         Board #{board.id}: {board.name}
       </Typography>
-      <Header>
+      <br />
+      <ControlsPanel>
         <FormControlLabel
           control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
           label="Trash"
@@ -86,7 +82,21 @@ export const BoardRecords: React.FC = () => {
           name="isTrash"
           sx={{ margin: 0 }}
         />
-      </Header>
+        <Button href={`/boards/${params.boardId}/settings`} startIcon={<SettingsIcon />} variant="outlined">
+          Settings
+        </Button>
+        {isTrash === false && (
+          <Button
+            id="add-record"
+            onClick={toggleIsRecordCreatingDialogShown}
+            startIcon={<AddIcon />}
+            variant="outlined"
+          >
+            New record
+          </Button>
+        )}
+      </ControlsPanel>
+      <br />
       <StyledTableContainer>
         <Table size="small">
           <StyledTableHead>
@@ -100,18 +110,8 @@ export const BoardRecords: React.FC = () => {
               <TableCell variant="head" width="24%">
                 Date
               </TableCell>
-              <TableCell colSpan={2} width="20%">
-                {isTrash === false && (
-                  <Button
-                    id="add-record"
-                    onClick={toggleIsRecordCreatingDialogShown}
-                    startIcon={<AddIcon />}
-                    variant="outlined"
-                  >
-                    New
-                  </Button>
-                )}
-              </TableCell>
+              <TableCell width="10%" />
+              <TableCell width="10%" />
             </TableRow>
           </StyledTableHead>
           <TableBody>

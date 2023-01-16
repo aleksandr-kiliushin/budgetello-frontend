@@ -46,22 +46,27 @@ export const BoardSettings: React.FC = () => {
           Settings
         </Link>
       </Breadcrumbs>
+      <br />
       <Typography variant="h2">Budget categories</Typography>
+      <br />
+      <div>
+        <Button onClick={toggleIsCategoryCreatingDialogShown} startIcon={<AddIcon />} variant="outlined">
+          New category
+        </Button>
+      </div>
+      <br />
       <TableContainer>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell variant="head" width="38%">
+              <TableCell variant="head" width="40%">
                 Category
               </TableCell>
-              <TableCell variant="head" width="38%">
+              <TableCell variant="head" width="40%">
                 Type
               </TableCell>
-              <TableCell colSpan={2} width="24%">
-                <Button onClick={toggleIsCategoryCreatingDialogShown} startIcon={<AddIcon />} variant="outlined">
-                  New
-                </Button>
-              </TableCell>
+              <TableCell width="10%" />
+              <TableCell width="10%" />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -71,10 +76,11 @@ export const BoardSettings: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <br />
+      <Members />
       {isCategoryCreatingDialogShown && (
         <CategoryFormDialog category={undefined} closeDialog={toggleIsCategoryCreatingDialogShown} />
       )}
-      <Members />
     </>
   )
 }

@@ -1,14 +1,16 @@
 import { TableContainer, TableHead, styled } from "@mui/material"
 
-export const Header = styled("div")({
-  display: "flex",
+export const ControlsPanel = styled("div")({
+  display: "grid",
+  gridAutoFlow: "column",
   alignItems: "center",
-  justifyContent: "space-between",
+  justifyContent: "start",
+  columnGap: "8px",
   maxWidth: "100%",
 })
 
 export const StyledTableContainer = styled(TableContainer)({
-  overflowX: "visible", // Make thead sticky.
+  overflowX: "visible", // Makes thead sticky.
 })
 
 export const StyledTableHead = styled(TableHead)(({ theme }) => ({

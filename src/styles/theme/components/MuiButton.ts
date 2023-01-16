@@ -10,6 +10,7 @@ export const MuiButton: NonNullable<Components<Theme>["MuiButton"]> = {
       minWidth: "unset",
       borderRadius: 0,
       fontSize: "1.6rem",
+      whiteSpace: "nowrap",
       "&, &:hover": {
         boxShadow: "none",
       },
