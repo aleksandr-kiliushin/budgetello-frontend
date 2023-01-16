@@ -32,6 +32,7 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
         </TableCell>
         <TableCell width="10%">
           <Button
+            color="error"
             id={`${category.name}-${category.type.name}-category-delete-button`}
             onClick={toggleIsCategoryDeletionDialogShown}
             size="small"

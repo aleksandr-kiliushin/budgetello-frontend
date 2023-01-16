@@ -68,6 +68,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       // eslint-disable-next-line react/jsx-key
       <TableCell width="10%">
         <Button
+          color="success"
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
           onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
           size="small"
@@ -96,6 +97,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
         {mapIsTrashToActionCell.get(isTrash)}
         <TableCell width="10%">
           <Button
+            color="error"
             id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
             onClick={() => {
               // TODO: Replace recordId with id.
