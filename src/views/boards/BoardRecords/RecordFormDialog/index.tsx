@@ -159,7 +159,10 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
               >
                 {getBoardBudgetCategoriesResult.data.budgetCategories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
-                    <Typography sx={{ color: budgetCategoryIndicatorColorByBudgetCategoryType.get(category.type.id) }}>
+                    <Typography
+                      component="span"
+                      sx={{ color: budgetCategoryIndicatorColorByBudgetCategoryType.get(category.type.id) }}
+                    >
                       ●
                     </Typography>
                     &nbsp;
