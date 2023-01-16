@@ -14,9 +14,15 @@ import { useGetCurrenciesQuery } from "#api/currencies"
 import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
+import { theme } from "#styles/theme"
 import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
+
+const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
+  [1, theme.palette.error.main],
+  [2, theme.palette.success.main],
+])
 
 interface IRecordFormDialogProps {
   closeDialog(): void
@@ -153,6 +159,10 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
               >
                 {getBoardBudgetCategoriesResult.data.budgetCategories.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
+                    <Typography sx={{ color: budgetCategoryIndicatorColorByBudgetCategoryType.get(category.type.id) }}>
+                      ●
+                    </Typography>
+                    &nbsp;
                     {category.name}
                   </MenuItem>
                 ))}
