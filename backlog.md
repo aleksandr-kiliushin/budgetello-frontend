@@ -9,3 +9,4 @@
 - add components to storybook;
 - make lighthouse metrics better;
 - make profile metrics better;
+- eliminate blinking (`if (data === undefined) return null`);
