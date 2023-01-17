@@ -54,7 +54,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     [
       false,
       // eslint-disable-next-line react/jsx-key
-      <TableCell width="10%">
+      <TableCell>
         <Button
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
           onClick={toggleIsRecordEditingDialogShown}
@@ -66,7 +66,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     [
       true,
       // eslint-disable-next-line react/jsx-key
-      <TableCell width="10%">
+      <TableCell>
         <Button
           color="success"
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
@@ -88,14 +88,13 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
               content: `"${amountSignByCategoryTypeId.get(record.category.type.id)}${record.currency.symbol} "`,
             },
           }}
-          width="23%"
         >
           {record.amount}
         </TableCell>
-        <TableCell width="33%">{record.category.name}</TableCell>
-        <TableCell width="24%">{record.date.slice(2)}</TableCell>
+        <TableCell>{record.category.name}</TableCell>
+        <TableCell>{record.date.slice(2)}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
-        <TableCell width="10%">
+        <TableCell>
           <Button
             color="error"
             id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}

@@ -20,9 +20,9 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
   return (
     <>
       <TableRow>
-        <TableCell width="40%">{category.name}</TableCell>
-        <TableCell width="40%">{category.type.name}</TableCell>
-        <TableCell width="10%">
+        <TableCell>{category.name}</TableCell>
+        <TableCell>{category.type.name}</TableCell>
+        <TableCell>
           <Button
             id={`${category.name}-${category.type.name}-category-edit-button`}
             onClick={toggleIsCategoryEditingDialogShown}
@@ -30,7 +30,7 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
             startIcon={<EditOutlinedIcon />}
           />
         </TableCell>
-        <TableCell width="10%">
+        <TableCell>
           <Button
             color="error"
             id={`${category.name}-${category.type.name}-category-delete-button`}

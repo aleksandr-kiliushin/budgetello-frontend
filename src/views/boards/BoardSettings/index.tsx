@@ -1,15 +1,5 @@
 import { Add as AddIcon } from "@mui/icons-material"
-import {
-  Breadcrumbs,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material"
+import { Breadcrumbs, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
 import React from "react"
 import { Link, useParams } from "react-router-dom"
 import { useToggle } from "react-use"
@@ -21,6 +11,7 @@ import { IBoardsRouteParams } from "../types"
 import { CategoryFormDialog } from "./CategoryFormDialog"
 import { CategoryTableRow } from "./CategoryTableRow"
 import { Members } from "./Members"
+import { StyledCategoriesTableContainer } from "./components"
 
 export const BoardSettings: React.FC = () => {
   const params = useParams<IBoardsRouteParams>()
@@ -58,18 +49,14 @@ export const BoardSettings: React.FC = () => {
         />
       </div>
       <br />
-      <TableContainer>
+      <StyledCategoriesTableContainer>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell variant="head" width="40%">
-                Category
-              </TableCell>
-              <TableCell variant="head" width="40%">
-                Type
-              </TableCell>
-              <TableCell width="10%" />
-              <TableCell width="10%" />
+              <TableCell variant="head">Category</TableCell>
+              <TableCell variant="head">Type</TableCell>
+              <TableCell />
+              <TableCell />
             </TableRow>
           </TableHead>
           <TableBody>
@@ -78,7 +65,7 @@ export const BoardSettings: React.FC = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </StyledCategoriesTableContainer>
       <br />
       <Members />
       {isCategoryCreatingDialogShown && (

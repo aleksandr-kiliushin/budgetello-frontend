@@ -11,6 +11,11 @@ export const ControlsPanel = styled("div")({
 
 export const StyledTableContainer = styled(TableContainer)({
   overflowX: "visible", // Makes thead sticky.
+  "& td:nth-of-type(1)": { width: "23%" },
+  "& td:nth-of-type(2)": { width: "33%" },
+  "& td:nth-of-type(3)": { width: "24%" },
+  "& td:nth-of-type(4)": { width: "10%" },
+  "& td:nth-of-type(5)": { width: "10%" },
 })
 
 export const StyledTableHead = styled(TableHead)(({ theme }) => ({

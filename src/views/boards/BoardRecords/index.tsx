@@ -95,17 +95,11 @@ export const BoardRecords: React.FC = () => {
         <Table size="small">
           <StyledTableHead>
             <TableRow>
-              <TableCell variant="head" width="23%">
-                Amount
-              </TableCell>
-              <TableCell variant="head" width="33%">
-                Category
-              </TableCell>
-              <TableCell variant="head" width="24%">
-                Date
-              </TableCell>
-              <TableCell width="10%" />
-              <TableCell width="10%" />
+              <TableCell variant="head">Amount</TableCell>
+              <TableCell variant="head">Category</TableCell>
+              <TableCell variant="head">Date</TableCell>
+              <TableCell />
+              <TableCell />
             </TableRow>
           </StyledTableHead>
           <TableBody>
