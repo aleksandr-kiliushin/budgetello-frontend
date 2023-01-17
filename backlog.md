@@ -1,7 +1,6 @@
 # Backlog
 
 - reflect AddRecord, EditRecord, AddCategory, EditCategory processes in URL;
-- try to move AddRecord, EditRecord, AddCategory, EditCategory from dialogs;
 - fix the issue with number-to-string convertation in form fields;
 - add a test user to the production DB, fill their data;
 - add info about the testing credential to the main screen;
