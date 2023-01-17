@@ -12,3 +12,4 @@
 - eliminate blinking (`if (data === undefined) return null`);
 - make somethings with Home page: prettify or remove;
 - handle appearance of groups you are not a member in;
+- use `date-fns` instead of `record.date.slice(2)`;
