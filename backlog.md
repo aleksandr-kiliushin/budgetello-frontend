@@ -10,3 +10,5 @@
 - make lighthouse metrics better;
 - make profile metrics better;
 - eliminate blinking (`if (data === undefined) return null`);
+- make somethings with Home page: prettify or remove;
+- handle appearance of groups you are not a member in;
