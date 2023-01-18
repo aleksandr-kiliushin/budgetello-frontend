@@ -42,10 +42,10 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
           />
         </TableCell>
       </TableRow>
-      {new RegExp(`/edit-budget-category/${category.id}$`).test(location.pathname) && (
+      {location.pathname.endsWith(`/edit-budget-category/${category.id}`) && (
         <CategoryFormDialog category={category} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
-      {new RegExp(`/delete-budget-category/${category.id}$`).test(location.pathname) && (
+      {location.pathname.endsWith(`/delete-budget-category/${category.id}`) && (
         <CategoryDeletionDialog category={category} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
     </>

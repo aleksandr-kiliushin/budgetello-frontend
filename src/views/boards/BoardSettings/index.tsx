@@ -53,7 +53,7 @@ export const BoardSettings: React.FC = () => {
       </StyledCategoriesTableContainer>
       <br />
       <Members />
-      {new RegExp("/add-budget-category").test(location.pathname) && (
+      {location.pathname.endsWith("/add-budget-category") && (
         <CategoryFormDialog category={undefined} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
     </>

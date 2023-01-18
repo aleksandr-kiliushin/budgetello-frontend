@@ -109,7 +109,7 @@ export const BoardRecords: React.FC = () => {
           </TableBody>
         </Table>
       </StyledTableContainer>
-      {location.pathname.includes("add") && (
+      {location.pathname.endsWith("/add") && (
         <RecordFormDialog closeDialogHref={`/boards/${params.boardId}/records${location.search}`} record={undefined} />
       )}
     </>
