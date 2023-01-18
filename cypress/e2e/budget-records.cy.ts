@@ -30,10 +30,12 @@ describe("Budget records", () => {
     cy.contains("80").should("be.visible")
     cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
     cy.contains("30").should("exist").should("not.be.visible")
+    cy.contains("Fetch more").should("not.be.visible") // Is used as an indicator that the loading of the new records page is done. TODO: To be deleted after infinite scroll is implemented.
     cy.get("main").scrollTo("bottom")
     cy.contains("30").should("be.visible")
     cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
     cy.get("td").contains("1").should("exist").should("not.be.visible")
+    cy.contains("Fetch more").should("not.be.visible") // Is used as an indicator that the loading of the new records page is done. TODO: To be deleted after infinite scroll is implemented.
     cy.get("main").scrollTo("bottom")
     cy.contains("education").should("be.visible")
   })
@@ -42,7 +44,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
-    cy.get("button#add-record").click()
+    cy.get("#add-record").click()
     cy.get("input[name='amount']").type("0")
     cy.get("#mui-component-select-categoryId").click()
     cy.get("[role='option']").contains("education").click()
