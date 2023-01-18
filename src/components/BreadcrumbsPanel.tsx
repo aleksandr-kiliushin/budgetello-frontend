@@ -13,7 +13,7 @@ const useBoardId = () => {
   const location = useLocation()
 
   const boardId = useMemo(() => {
-    const parsingResults = location.pathname.match(/(?<=^\/boards\/)\d+/g)
+    const parsingResults = location.pathname.match(/\d+/g)
     if (parsingResults === null) return 0
     return parseInt(parsingResults[0])
   }, [location.pathname])
