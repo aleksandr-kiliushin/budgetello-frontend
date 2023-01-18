@@ -1,6 +1,6 @@
 import { CloseOutlined } from "@mui/icons-material"
 import { Button, Modal as MuiModal, styled } from "@mui/material"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 
@@ -53,14 +53,25 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDial
       <DialogWindow role="dialog">
         <HeaderWithCloseButton>
           {header}
-          <Button
-            {...(closeDialog !== undefined && { onClick: closeDialog })}
-            {...(closeDialogHref !== undefined && { href: closeDialogHref })}
-            color="secondary"
-            id="close-dialog"
-            startIcon={<CloseOutlined />}
-            variant="contained"
-          />
+          {closeDialogHref === undefined ? (
+            <Button
+              color="secondary"
+              id="close-dialog"
+              onClick={closeDialog}
+              startIcon={<CloseOutlined />}
+              variant="contained"
+            />
+          ) : (
+            <Button
+              color="secondary"
+              component={Link}
+              id="close-dialog"
+              onClick={closeDialog}
+              startIcon={<CloseOutlined />}
+              to={closeDialogHref}
+              variant="contained"
+            />
+          )}
         </HeaderWithCloseButton>
         {body}
         {footer}

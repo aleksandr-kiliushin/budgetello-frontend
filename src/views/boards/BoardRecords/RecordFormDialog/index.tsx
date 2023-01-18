@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 import {
   GetBudgetRecordsDocument,
@@ -177,7 +177,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button color="secondary" href={closeDialogHref} variant="contained">
+        <Button color="secondary" component={Link} to={closeDialogHref} variant="contained">
           Cancel
         </Button>
         <Button color="primary" disabled={!formState.isValid} onClick={submitRecordForm} variant="contained">

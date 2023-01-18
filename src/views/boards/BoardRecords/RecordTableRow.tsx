@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
-import { useLocation, useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
@@ -57,10 +57,11 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       // eslint-disable-next-line react/jsx-key
       <TableCell>
         <Button
-          href={`/boards/${params.boardId}/records/edit/${record.id}${location.search}`}
+          component={Link}
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
           size="small"
           startIcon={<EditOutlinedIcon />}
+          to={`/boards/${params.boardId}/records/edit/${record.id}${location.search}`}
         />
       </TableCell>,
     ],

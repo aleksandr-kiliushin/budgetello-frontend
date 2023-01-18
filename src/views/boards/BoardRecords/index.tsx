@@ -75,12 +75,18 @@ export const BoardRecords: React.FC = () => {
           name="isTrash"
           sx={{ margin: 0 }}
         />
-        <Button href={`/boards/${params.boardId}/settings`} startIcon={<SettingsIcon />} variant="outlined" />
+        <Button
+          component={Link}
+          startIcon={<SettingsIcon />}
+          to={`/boards/${params.boardId}/settings`}
+          variant="outlined"
+        />
         {isTrash === false && (
           <Button
-            href={`/boards/${params.boardId}/records/add${location.search}`}
+            component={Link}
             id="add-record"
             startIcon={<AddIcon />}
+            to={`/boards/${params.boardId}/records/add${location.search}`}
             variant="outlined"
           />
         )}
