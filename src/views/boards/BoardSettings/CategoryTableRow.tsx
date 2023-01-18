@@ -2,7 +2,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
 import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
-import { useToggle } from "react-use"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 import { BudgetCategory } from "#api/types"
 
@@ -14,8 +14,8 @@ interface ICategoryTableRowProps {
 }
 
 export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category }) => {
-  const [isCategoryEditingDialogShown, toggleIsCategoryEditingDialogShown] = useToggle(false)
-  const [isCategoryDeletionDialogShown, toggleIsCategoryDeletionDialogShown] = useToggle(false)
+  const params = useParams<{ boardId: string }>()
+  const location = useLocation()
 
   return (
     <>
@@ -24,27 +24,29 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
         <TableCell>{category.type.name}</TableCell>
         <TableCell>
           <Button
+            component={Link}
             id={`${category.name}-${category.type.name}-category-edit-button`}
-            onClick={toggleIsCategoryEditingDialogShown}
             size="small"
             startIcon={<EditOutlinedIcon />}
+            to={`/boards/${params.boardId}/settings/edit-budget-category/${category.id}`}
           />
         </TableCell>
         <TableCell>
           <Button
             color="error"
+            component={Link}
             id={`${category.name}-${category.type.name}-category-delete-button`}
-            onClick={toggleIsCategoryDeletionDialogShown}
             size="small"
             startIcon={<DeleteOutlineIcon />}
+            to={`/boards/${params.boardId}/settings/delete-budget-category/${category.id}`}
           />
         </TableCell>
       </TableRow>
-      {isCategoryEditingDialogShown && (
-        <CategoryFormDialog category={category} closeDialog={toggleIsCategoryEditingDialogShown} />
+      {new RegExp(`/edit-budget-category/${category.id}$`).test(location.pathname) && (
+        <CategoryFormDialog category={category} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
-      {isCategoryDeletionDialogShown && (
-        <CategoryDeletionDialog category={category} closeDialog={toggleIsCategoryDeletionDialogShown} />
+      {new RegExp(`/delete-budget-category/${category.id}$`).test(location.pathname) && (
+        <CategoryDeletionDialog category={category} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
     </>
   )

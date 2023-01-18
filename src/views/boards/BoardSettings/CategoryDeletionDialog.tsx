@@ -1,17 +1,18 @@
 import { Button, Typography } from "@mui/material"
 import React from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#api/budget"
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
+import { IDialogProps } from "#components/Dialog/types"
 
 interface ICategoryDeletionDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
-  closeDialog(): void
+  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
 }
 
-export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category, closeDialog }) => {
+export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category, closeDialogHref }) => {
   const params = useParams<{ boardId: string }>()
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
 
@@ -23,7 +24,7 @@ export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({
   }
 
   return (
-    <Dialog closeDialog={closeDialog}>
+    <Dialog closeDialogHref={closeDialogHref}>
       <Dialog.Header>
         <Typography variant="h2">Delete category</Typography>
       </Dialog.Header>
@@ -33,7 +34,7 @@ export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({
         </Typography>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button color="secondary" onClick={closeDialog} variant="contained">
+        <Button color="secondary" component={Link} to={closeDialogHref} variant="contained">
           Cancel
         </Button>
         <Button color="error" onClick={onDeleteButtonClick} variant="contained">

@@ -38,7 +38,12 @@ const breadcrumbsByPathnamePattern: Map<RegExp[], IBreadcrumb[]> = new Map([
     ],
   ],
   [
-    [/^\/boards\/\d+\/settings$/],
+    [
+      /^\/boards\/\d+\/settings$/,
+      /^\/boards\/\d+\/settings\/add-budget-category$/,
+      /^\/boards\/\d+\/settings\/delete-budget-category\/\d+$/,
+      /^\/boards\/\d+\/settings\/edit-budget-category\/\d+$/,
+    ],
     [
       { element: "Boards", hrefTemplate: "/boards" },
       { element: <BoardName />, hrefTemplate: "/boards/$boardId/records" },

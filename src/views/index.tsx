@@ -33,6 +33,12 @@ export const App: React.FC = () => {
           <Route element={<BoardRecords />} path="/boards/:boardId/records/add" />
           <Route element={<BoardRecords />} path="/boards/:boardId/records/edit/:recordId" />
           <Route element={<BoardSettings />} path="/boards/:boardId/settings" />
+          <Route element={<BoardSettings />} path="/boards/:boardId/settings/add-budget-category" />
+          <Route
+            element={<BoardSettings />}
+            path="/boards/:boardId/settings/delete-budget-category/:budgetCategoryId"
+          />
+          <Route element={<BoardSettings />} path="/boards/:boardId/settings/edit-budget-category/:budgetCategoryId" />
         </Routes>
       </Box>
       <Navbar />

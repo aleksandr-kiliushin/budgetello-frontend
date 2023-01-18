@@ -1,8 +1,7 @@
 import { Add as AddIcon } from "@mui/icons-material"
 import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
 import React from "react"
-import { useParams } from "react-router-dom"
-import { useToggle } from "react-use"
+import { Link, useLocation, useParams } from "react-router-dom"
 
 import { useGetBudgetCategoriesQuery } from "#api/budget"
 
@@ -12,8 +11,8 @@ import { Members } from "./Members"
 import { StyledCategoriesTableContainer } from "./components"
 
 export const BoardSettings: React.FC = () => {
+  const location = useLocation()
   const params = useParams<{ boardId: string }>()
-  const [isCategoryCreatingDialogShown, toggleIsCategoryCreatingDialogShown] = useToggle(false)
 
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
@@ -27,9 +26,10 @@ export const BoardSettings: React.FC = () => {
       <br />
       <div>
         <Button
+          component={Link}
           id="add-category"
-          onClick={toggleIsCategoryCreatingDialogShown}
           startIcon={<AddIcon />}
+          to={`/boards/${params.boardId}/settings/add-budget-category`}
           variant="outlined"
         />
       </div>
@@ -53,8 +53,8 @@ export const BoardSettings: React.FC = () => {
       </StyledCategoriesTableContainer>
       <br />
       <Members />
-      {isCategoryCreatingDialogShown && (
-        <CategoryFormDialog category={undefined} closeDialog={toggleIsCategoryCreatingDialogShown} />
+      {new RegExp("/add-budget-category").test(location.pathname) && (
+        <CategoryFormDialog category={undefined} closeDialogHref={`/boards/${params.boardId}/settings`} />
       )}
     </>
   )

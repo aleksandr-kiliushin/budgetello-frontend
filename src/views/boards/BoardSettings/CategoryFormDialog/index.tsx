@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, TextField, Typography } from "@mui/material"
 import React from "react"
 import { useForm } from "react-hook-form"
-import { useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 import {
   GetBudgetCategoriesDocument,
@@ -12,6 +12,7 @@ import {
 } from "#api/budget"
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
+import { IDialogProps } from "#components/Dialog/types"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 
@@ -19,13 +20,14 @@ import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
-  closeDialog(): void
+  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
 }
 
-export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category, closeDialog }) => {
+export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category, closeDialogHref }) => {
+  const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 
-  // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
+  // TODO: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
   const defaultValues = category === undefined ? { name: "" } : { name: category.name, typeId: category.type.id }
 
@@ -48,7 +50,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
   })
   const [updateCategory] = useUpdateBudgetCategoryMutation()
 
-  if (!getBudgetCategoryTypesResult.data) return null
+  const budgetCategoryTypes = getBudgetCategoryTypesResult.data?.budgetCategoryTypes ?? []
 
   const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return
@@ -73,7 +75,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
         })
         if (result.errors !== undefined) throw errors
       }
-      closeDialog()
+      navigate(closeDialogHref)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
@@ -85,7 +87,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
   })
 
   return (
-    <Dialog closeDialog={closeDialog}>
+    <Dialog closeDialogHref={closeDialogHref}>
       <Dialog.Header>
         <Typography variant="h2">{category === undefined ? "Add a category" : "Edit category"}</Typography>
       </Dialog.Header>
@@ -103,7 +105,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
               helperText={errors.typeId?.message}
               label="Category type"
               name={FormField.TypeId}
-              options={getBudgetCategoryTypesResult.data.budgetCategoryTypes.map(({ id, name }) => ({
+              options={budgetCategoryTypes.map(({ id, name }) => ({
                 label: name,
                 value: id,
               }))}
@@ -114,7 +116,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button color="secondary" onClick={closeDialog} variant="contained">
+        <Button color="secondary" component={Link} to={closeDialogHref} variant="contained">
           Cancel
         </Button>
         <Button disabled={!isValid} onClick={submitCategoryForm} variant="contained">
