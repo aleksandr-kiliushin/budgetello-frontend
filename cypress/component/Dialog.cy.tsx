@@ -29,9 +29,9 @@ const SampleComponentWithDialog: React.FC = () => {
   )
 }
 
-describe("useDialog", () => {
+describe("Dialog", () => {
   it("open-close works", () => {
-    cy.viewport(800, 800)
+    cy.viewport(600, 600)
     cy.mount(<SampleComponentWithDialog />)
     cy.contains("My dialog heading").should("not.exist")
     cy.contains("My dialog body.").should("not.exist")
