@@ -46,8 +46,9 @@ export const BoardRecords: React.FC = () => {
 
   return (
     <>
-      <Typography variant="h1">Board «{board?.name}»</Typography>
-      <br />
+      <Typography gutterBottom variant="h1">
+        Board «{board?.name}»
+      </Typography>
       <ControlsPanel>
         <FormControlLabel
           control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
