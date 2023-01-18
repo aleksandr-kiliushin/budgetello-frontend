@@ -12,11 +12,9 @@ import {
 } from "@mui/material"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
-import { useToggle } from "react-use"
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
-import { IBoardsRouteParams } from "#views/boards/types"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
@@ -25,9 +23,7 @@ import { ControlsPanel, StyledTableContainer, StyledTableHead } from "./componen
 export const BoardRecords: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
-  const params = useParams<IBoardsRouteParams>()
-
-  const [isRecordCreatingDialogShown, toggleIsRecordCreatingDialogShown] = useToggle(false)
+  const params = useParams<{ boardId: string }>()
 
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
@@ -83,8 +79,8 @@ export const BoardRecords: React.FC = () => {
         <Button href={`/boards/${params.boardId}/settings`} startIcon={<SettingsIcon />} variant="outlined" />
         {isTrash === false && (
           <Button
+            href={`/boards/${params.boardId}/records/add${location.search}`}
             id="add-record"
-            onClick={toggleIsRecordCreatingDialogShown}
             startIcon={<AddIcon />}
             variant="outlined"
           />
@@ -127,8 +123,8 @@ export const BoardRecords: React.FC = () => {
           </TableBody>
         </Table>
       </StyledTableContainer>
-      {isRecordCreatingDialogShown && (
-        <RecordFormDialog closeDialog={toggleIsRecordCreatingDialogShown} record={undefined} />
+      {location.pathname.includes("add") && (
+        <RecordFormDialog closeDialogHref={`/boards/${params.boardId}/records${location.search}`} record={undefined} />
       )}
     </>
   )

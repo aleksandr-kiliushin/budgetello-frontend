@@ -6,15 +6,13 @@ import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#a
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
 
-import { IBoardsRouteParams } from "../types"
-
 interface ICategoryDeletionDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
   closeDialog(): void
 }
 
 export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category, closeDialog }) => {
-  const params = useParams<IBoardsRouteParams>()
+  const params = useParams<{ boardId: string }>()
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
 
   const onDeleteButtonClick = async () => {

@@ -5,12 +5,11 @@ import { useParams } from "react-router-dom"
 
 import { useAddBoardMemberMutation, useGetBoardQuery, useRemoveBoardMemberMutation } from "#api/boards"
 import { useGetUsersQuery } from "#api/users"
-import { IBoardsRouteParams } from "#views/boards/types"
 
 import { StyledMembersTableContainer } from "./components"
 
 export const Members: React.FC = () => {
-  const params = useParams<IBoardsRouteParams>()
+  const params = useParams<{ boardId: string }>()
 
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const getAllUsersResult = useGetUsersQuery()

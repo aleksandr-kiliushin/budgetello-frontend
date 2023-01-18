@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 import {
   GetBudgetRecordsDocument,
@@ -13,9 +13,9 @@ import {
 import { useGetCurrenciesQuery } from "#api/currencies"
 import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
 import { Dialog } from "#components/Dialog"
+import { IDialogProps } from "#components/Dialog/types"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
-import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, IFormValues, validationSchema } from "./form-helpers"
 
@@ -25,7 +25,7 @@ const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
 ])
 
 interface IRecordFormDialogProps {
-  closeDialog(): void
+  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
   record:
     | {
         amount: BudgetRecord["amount"]
@@ -43,8 +43,9 @@ interface IRecordFormDialogProps {
     | undefined
 }
 
-export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog, record }) => {
-  const params = useParams<IBoardsRouteParams>()
+export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialogHref, record }) => {
+  const params = useParams<{ boardId: string }>()
+  const navigate = useNavigate()
 
   const defaultValues = record
     ? {
@@ -116,11 +117,11 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
       })
     }
 
-    closeDialog()
+    navigate(closeDialogHref)
   })
 
   return (
-    <Dialog closeDialog={closeDialog}>
+    <Dialog closeDialogHref={closeDialogHref}>
       <Dialog.Header>
         <Typography variant="h2">{record === undefined ? "Add a record" : "Edit record"}</Typography>
       </Dialog.Header>
@@ -176,7 +177,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
         </form>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button color="secondary" onClick={closeDialog} variant="contained">
+        <Button color="secondary" href={closeDialogHref} variant="contained">
           Cancel
         </Button>
         <Button color="primary" disabled={!formState.isValid} onClick={submitRecordForm} variant="contained">

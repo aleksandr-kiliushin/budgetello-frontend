@@ -30,6 +30,8 @@ export const App: React.FC = () => {
           <Route element={<Auth />} path="/auth" />
           <Route element={<BoardsList />} path="/boards" />
           <Route element={<BoardRecords />} path="/boards/:boardId/records" />
+          <Route element={<BoardRecords />} path="/boards/:boardId/records/add" />
+          <Route element={<BoardRecords />} path="/boards/:boardId/records/edit/:recordId" />
           <Route element={<BoardSettings />} path="/boards/:boardId/settings" />
         </Routes>
       </Box>

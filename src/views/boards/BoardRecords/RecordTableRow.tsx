@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
-import { useToggle } from "react-use"
+import { useLocation, useParams } from "react-router-dom"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
 import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
@@ -41,7 +41,8 @@ interface IRecordTableRowProps {
 }
 
 export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
-  const [isRecordEditingDialogShown, toggleIsRecordEditingDialogShown] = useToggle(false)
+  const location = useLocation()
+  const params = useParams<{ boardId: string; recordId: string }>()
 
   const [deleteBudgetRecord] = useDeleteBudgetRecordMutation({
     update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
@@ -56,8 +57,8 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
       // eslint-disable-next-line react/jsx-key
       <TableCell>
         <Button
+          href={`/boards/${params.boardId}/records/edit/${record.id}${location.search}`}
           id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
-          onClick={toggleIsRecordEditingDialogShown}
           size="small"
           startIcon={<EditOutlinedIcon />}
         />
@@ -111,8 +112,8 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           />
         </TableCell>
       </TableRow>
-      {isRecordEditingDialogShown && (
-        <RecordFormDialog closeDialog={toggleIsRecordEditingDialogShown} record={record} />
+      {location.pathname.includes(`edit/${record.id}`) && (
+        <RecordFormDialog closeDialogHref={`/boards/${params.boardId}/records${location.search}`} record={record} />
       )}
     </>
   )

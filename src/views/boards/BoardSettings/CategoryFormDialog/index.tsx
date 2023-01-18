@@ -14,7 +14,6 @@ import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
-import { IBoardsRouteParams } from "#views/boards/types"
 
 import { FormField, FormValues, validationSchema } from "./form-helpers"
 
@@ -24,7 +23,7 @@ interface ICategoryFormDialogProps {
 }
 
 export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category, closeDialog }) => {
-  const params = useParams<IBoardsRouteParams>()
+  const params = useParams<{ boardId: string }>()
 
   // ToDo: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).

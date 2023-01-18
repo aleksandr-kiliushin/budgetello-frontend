@@ -1,5 +1,6 @@
 import { CloseOutlined } from "@mui/icons-material"
 import { Button, Modal as MuiModal, styled } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 
@@ -30,20 +31,33 @@ const HeaderWithCloseButton = styled("div")({
   gridTemplateColumns: "auto min-content",
 })
 
-const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog }) => {
+const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDialogHref }) => {
+  const navigate = useNavigate()
+
   const header = getChildByDisplayName({ children, displayName: "DialogHeader" })
   const body = getChildByDisplayName({ children, displayName: "DialogBody" })
   const footer = getChildByDisplayName({ children, displayName: "DialogFooter" })
 
+  const _closeDialog = () => {
+    if (closeDialog !== undefined) {
+      closeDialog()
+      return
+    }
+    if (closeDialogHref !== undefined) {
+      navigate(closeDialogHref)
+    }
+  }
+
   return (
-    <MuiModal onClose={closeDialog} open>
+    <MuiModal onClose={_closeDialog} open>
       <DialogWindow role="dialog">
         <HeaderWithCloseButton>
           {header}
           <Button
+            {...(closeDialog !== undefined && { onClick: closeDialog })}
+            {...(closeDialogHref !== undefined && { href: closeDialogHref })}
             color="secondary"
             id="close-dialog"
-            onClick={closeDialog}
             startIcon={<CloseOutlined />}
             variant="contained"
           />

@@ -4,11 +4,11 @@ const DialogFooter = styled("div")(({ theme }) => ({
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "repeat(auto-fill, 1fr)",
-  "& > button": {
+  "& > button, & > a": {
     width: "auto",
   },
   [theme.breakpoints.up("s")]: {
-    "& > button:only-of-type": {
+    "& > button:only-child, & > a:only-child": {
       marginLeft: "50%",
     },
   },

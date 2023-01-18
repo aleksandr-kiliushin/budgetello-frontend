@@ -7,14 +7,13 @@ import { useToggle } from "react-use"
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetCategoriesQuery } from "#api/budget"
 
-import { IBoardsRouteParams } from "../types"
 import { CategoryFormDialog } from "./CategoryFormDialog"
 import { CategoryTableRow } from "./CategoryTableRow"
 import { Members } from "./Members"
 import { StyledCategoriesTableContainer } from "./components"
 
 export const BoardSettings: React.FC = () => {
-  const params = useParams<IBoardsRouteParams>()
+  const params = useParams<{ boardId: string }>()
   const [isCategoryCreatingDialogShown, toggleIsCategoryCreatingDialogShown] = useToggle(false)
 
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })

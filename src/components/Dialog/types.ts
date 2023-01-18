@@ -4,8 +4,9 @@ import { DialogBody } from "./subcomponents/DialogBody"
 import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
 
-interface IDialogProps {
-  closeDialog(): void
+export interface IDialogProps {
+  closeDialog?: () => void
+  closeDialogHref?: string
 }
 type IDialogComponent = React.FC<React.PropsWithChildren<IDialogProps>>
 
