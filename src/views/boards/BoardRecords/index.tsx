@@ -1,15 +1,5 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
-import {
-  Breadcrumbs,
-  Button,
-  FormControlLabel,
-  Switch,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-  Typography,
-} from "@mui/material"
+import { Button, FormControlLabel, Switch, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
@@ -56,15 +46,6 @@ export const BoardRecords: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs>
-        <Link to="/boards">Boards</Link>
-        {board !== undefined && (
-          <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/records`}>
-            {board.name}
-          </Link>
-        )}
-      </Breadcrumbs>
-      <br />
       <Typography variant="h1">Board «{board?.name}»</Typography>
       <br />
       <ControlsPanel>

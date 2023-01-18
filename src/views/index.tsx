@@ -1,9 +1,10 @@
-import { Box, Typography, css } from "@mui/material"
+import { Box } from "@mui/material"
 import React from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
 import { useGetUserQuery } from "#api/users"
+import { BreadcrumbsPanel } from "#components/BreadcrumbsPanel"
 import { Navbar } from "#components/Navbar"
 import { Auth } from "#views/auth"
 import { BoardRecords } from "#views/boards/BoardRecords"
@@ -23,6 +24,7 @@ export const App: React.FC = () => {
   return (
     <>
       <Box component="main">
+        <BreadcrumbsPanel />
         <Routes>
           <Route element={<Home />} path="/" />
           <Route element={<Auth />} path="/auth" />

@@ -1,10 +1,9 @@
 import { Add as AddIcon } from "@mui/icons-material"
-import { Breadcrumbs, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
 import React from "react"
-import { Link, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { useToggle } from "react-use"
 
-import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetCategoriesQuery } from "#api/budget"
 
 import { CategoryFormDialog } from "./CategoryFormDialog"
@@ -16,26 +15,14 @@ export const BoardSettings: React.FC = () => {
   const params = useParams<{ boardId: string }>()
   const [isCategoryCreatingDialogShown, toggleIsCategoryCreatingDialogShown] = useToggle(false)
 
-  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
     variables: { boardsIds: [Number(params.boardId)] },
   })
 
-  const board = getBoardResult.data?.board
   const boardBudgetCategories = getBoardBudgetCategoriesResult.data?.budgetCategories
 
   return (
     <>
-      <Breadcrumbs>
-        <Link to="/boards">Boards</Link>
-        {board !== undefined && <Link to={`/boards/${board.id}/records`}>{board.name}</Link>}
-        {board !== undefined && (
-          <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/settings`}>
-            Settings
-          </Link>
-        )}
-      </Breadcrumbs>
-      <br />
       <Typography variant="h2">Budget categories</Typography>
       <br />
       <div>

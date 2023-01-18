@@ -1,4 +1,4 @@
-import { Breadcrumbs, Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import React from "react"
 import { Link } from "react-router-dom"
 
@@ -13,12 +13,6 @@ export const BoardsList: React.FC = () => {
 
   return (
     <>
-      <Breadcrumbs>
-        <Link css={{ fontWeight: "bold" }} to="/boards">
-          Boards
-        </Link>
-      </Breadcrumbs>
-      <br />
       <Typography variant="h3">Your boards</Typography>
       <ul>
         {participatedBoards?.length === 0 && "None"}
