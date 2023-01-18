@@ -1,5 +1,6 @@
 # Backlog
 
+- add boards creating;
 - fix the issue with number-to-string convertation in form fields;
 - add a demo user to the production DB, fill their data;
 - add info about the demo credentials to the main screen;
