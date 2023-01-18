@@ -3,8 +3,6 @@ import { css } from "@mui/material"
 import SofiaSansFont from "./fonts/SofiaSans.ttf"
 import { theme } from "./theme"
 
-console.log("theme.palette >>", theme.palette)
-
 export const globalStyles = css`
   @font-face {
     font-family: "SofiaSans";
