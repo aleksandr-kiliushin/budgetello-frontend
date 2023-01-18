@@ -5,14 +5,12 @@ import { Link, useParams } from "react-router-dom"
 import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#api/budget"
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
-import { IDialogProps } from "#components/Dialog/types"
 
 interface ICategoryDeletionDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
-  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
 }
 
-export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category, closeDialogHref }) => {
+export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category }) => {
   const params = useParams<{ boardId: string }>()
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
 
@@ -22,6 +20,8 @@ export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({
       variables: { categoryId: category.id },
     })
   }
+
+  const closeDialogHref = `/boards/${params.boardId}/settings`
 
   return (
     <Dialog closeDialogHref={closeDialogHref}>

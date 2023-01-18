@@ -12,7 +12,6 @@ import {
 } from "#api/budget"
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
-import { IDialogProps } from "#components/Dialog/types"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 
@@ -20,10 +19,9 @@ import { FormField, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
-  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
 }
 
-export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category, closeDialogHref }) => {
+export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category }) => {
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 
@@ -51,6 +49,8 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
   const [updateCategory] = useUpdateBudgetCategoryMutation()
 
   const budgetCategoryTypes = getBudgetCategoryTypesResult.data?.budgetCategoryTypes ?? []
+
+  const closeDialogHref = `/boards/${params.boardId}/settings`
 
   const submitCategoryForm = handleSubmit(async (formValues) => {
     if (params.boardId === undefined) return

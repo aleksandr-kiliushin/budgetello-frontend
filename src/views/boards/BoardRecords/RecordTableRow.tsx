@@ -113,9 +113,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           />
         </TableCell>
       </TableRow>
-      {location.pathname.endsWith(`/edit/${record.id}`) && (
-        <RecordFormDialog closeDialogHref={`/boards/${params.boardId}/records${location.search}`} record={record} />
-      )}
+      {location.pathname.endsWith(`/edit/${record.id}`) && <RecordFormDialog record={record} />}
     </>
   )
 }

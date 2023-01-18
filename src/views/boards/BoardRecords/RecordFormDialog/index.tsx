@@ -13,7 +13,6 @@ import {
 import { useGetCurrenciesQuery } from "#api/currencies"
 import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
 import { Dialog } from "#components/Dialog"
-import { IDialogProps } from "#components/Dialog/types"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
 
@@ -25,7 +24,6 @@ const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
 ])
 
 interface IRecordFormDialogProps {
-  closeDialogHref: NonNullable<IDialogProps["closeDialogHref"]>
   record:
     | {
         amount: BudgetRecord["amount"]
@@ -43,7 +41,7 @@ interface IRecordFormDialogProps {
     | undefined
 }
 
-export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialogHref, record }) => {
+export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) => {
   const params = useParams<{ boardId: string }>()
   const navigate = useNavigate()
 
@@ -91,6 +89,8 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
 
   const currencies = getCurrenciesResult.data?.currencies
   const boardBudgetCategories = getBoardBudgetCategoriesResult.data?.budgetCategories
+
+  const closeDialogHref = `/boards/${params.boardId}/records${location.search}`
 
   const submitRecordForm = handleSubmit((formValues) => {
     if (formValues.amount === null) return
