@@ -10,7 +10,7 @@ import { Container } from "./components"
 export const Logout: React.FC = () => {
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (!getAuthorizedUserResult.data) return null
+  const user = getAuthorizedUserResult.data?.user
 
   const logout = () => {
     localStorage.removeItem("authorizationToken")
@@ -25,7 +25,7 @@ export const Logout: React.FC = () => {
   return (
     <Container>
       <Typography textAlign="center">
-        Hello, <b>{getAuthorizedUserResult.data.user.username}</b>.
+        Hello, <b>{user?.username}</b>.
       </Typography>
       <Button onClick={switchColorMode} startIcon={<DarkModeSharpIcon />} variant="outlined">
         Switch mode

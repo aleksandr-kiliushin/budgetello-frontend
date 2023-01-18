@@ -16,8 +16,6 @@ export const App: React.FC = () => {
 
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (getAuthorizedUserResult.loading) return <Typography>Loading ...</Typography>
-
   if (getAuthorizedUserResult.error !== undefined && location.pathname !== "/auth") {
     return <Navigate to="/auth" />
   }

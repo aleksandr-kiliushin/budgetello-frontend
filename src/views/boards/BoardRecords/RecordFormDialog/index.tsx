@@ -89,8 +89,8 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
   })
   const [updateBudgetRecord] = useUpdateBudgetRecordMutation()
 
-  if (!getCurrenciesResult.data) return null
-  if (!getBoardBudgetCategoriesResult.data) return null
+  const currencies = getCurrenciesResult.data?.currencies
+  const boardBudgetCategories = getBoardBudgetCategoriesResult.data?.budgetCategories
 
   const submitRecordForm = handleSubmit((formValues) => {
     if (formValues.amount === null) return
@@ -143,7 +143,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
                 defaultValue={formState.defaultValues?.currencySlug}
                 label="Currency"
               >
-                {getCurrenciesResult.data.currencies.map((currency) => (
+                {currencies?.map((currency) => (
                   <MenuItem key={currency.slug} value={currency.slug}>
                     {currency.name} {currency.symbol}
                   </MenuItem>
@@ -158,7 +158,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ closeDialog
                 defaultValue={formState.defaultValues?.categoryId}
                 label="Category"
               >
-                {getBoardBudgetCategoriesResult.data.budgetCategories.map((category) => (
+                {boardBudgetCategories?.map((category) => (
                   <MenuItem key={category.id} value={category.id}>
                     <Typography
                       component="span"

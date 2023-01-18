@@ -43,11 +43,8 @@ export const BoardRecords: React.FC = () => {
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
 
-  if (!getBoardResult.data) return null
-  if (!getRecordsResult.data) return null
-
-  const board = getBoardResult.data.board
-  const records = getRecordsResult.data.budgetRecords
+  const board = getBoardResult.data?.board
+  const records = getRecordsResult.data?.budgetRecords
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
     return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />
@@ -61,12 +58,14 @@ export const BoardRecords: React.FC = () => {
     <>
       <Breadcrumbs>
         <Link to="/boards">Boards</Link>
-        <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/records`}>
-          {board.name}
-        </Link>
+        {board !== undefined && (
+          <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/records`}>
+            {board.name}
+          </Link>
+        )}
       </Breadcrumbs>
       <br />
-      <Typography variant="h1">Board «{board.name}»</Typography>
+      <Typography variant="h1">Board «{board?.name}»</Typography>
       <br />
       <ControlsPanel>
         <FormControlLabel
@@ -99,7 +98,7 @@ export const BoardRecords: React.FC = () => {
             </TableRow>
           </StyledTableHead>
           <TableBody>
-            {records.map((record) => (
+            {records?.map((record) => (
               <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
             ))}
             <tr>

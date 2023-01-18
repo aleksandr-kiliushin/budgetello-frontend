@@ -21,20 +21,19 @@ export const BoardSettings: React.FC = () => {
     variables: { boardsIds: [Number(params.boardId)] },
   })
 
-  if (!getBoardResult.data) return null
-  if (!getBoardBudgetCategoriesResult.data) return null
-
-  const board = getBoardResult.data.board
-  const boardBudgetCategories = getBoardBudgetCategoriesResult.data.budgetCategories
+  const board = getBoardResult.data?.board
+  const boardBudgetCategories = getBoardBudgetCategoriesResult.data?.budgetCategories
 
   return (
     <>
       <Breadcrumbs>
         <Link to="/boards">Boards</Link>
-        <Link to={`/boards/${board.id}/records`}>{board.name}</Link>
-        <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/settings`}>
-          Settings
-        </Link>
+        {board !== undefined && <Link to={`/boards/${board.id}/records`}>{board.name}</Link>}
+        {board !== undefined && (
+          <Link css={{ fontWeight: "bold" }} to={`/boards/${board.id}/settings`}>
+            Settings
+          </Link>
+        )}
       </Breadcrumbs>
       <br />
       <Typography variant="h2">Budget categories</Typography>
@@ -59,7 +58,7 @@ export const BoardSettings: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {boardBudgetCategories.map((category) => (
+            {boardBudgetCategories?.map((category) => (
               <CategoryTableRow category={category} key={category.id} />
             ))}
           </TableBody>

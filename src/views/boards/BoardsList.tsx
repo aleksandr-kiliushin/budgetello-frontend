@@ -8,8 +8,8 @@ export const BoardsList: React.FC = () => {
   const getParticipatedBoardsResult = useGetBoardsQuery({ variables: { iAmMemberOf: true } })
   const getNonParticipatedBoardsResult = useGetBoardsQuery({ variables: { iAmMemberOf: false } })
 
-  if (!getParticipatedBoardsResult.data) return null
-  if (!getNonParticipatedBoardsResult.data) return null
+  const participatedBoards = getParticipatedBoardsResult.data?.boards
+  const nonParticipatedBoards = getNonParticipatedBoardsResult.data?.boards
 
   return (
     <>
@@ -21,8 +21,8 @@ export const BoardsList: React.FC = () => {
       <br />
       <Typography variant="h3">Your boards</Typography>
       <ul>
-        {getParticipatedBoardsResult.data.boards.length === 0 && "None"}
-        {getParticipatedBoardsResult.data.boards.map((board) => (
+        {participatedBoards?.length === 0 && "None"}
+        {participatedBoards?.map((board) => (
           <li key={board.id}>
             <Link to={`/boards/${board.id}/records`}>{board.name}</Link>
           </li>
@@ -30,8 +30,8 @@ export const BoardsList: React.FC = () => {
       </ul>
       <Typography variant="h3">Other boards</Typography>
       <ul>
-        {getNonParticipatedBoardsResult.data.boards.length === 0 && "None"}
-        {getNonParticipatedBoardsResult.data.boards.map((board) => (
+        {nonParticipatedBoards?.length === 0 && "None"}
+        {nonParticipatedBoards?.map((board) => (
           <li key={board.id}>
             <Link key={board.id} to={`/boards/${board.id}/records`}>
               {board.name}

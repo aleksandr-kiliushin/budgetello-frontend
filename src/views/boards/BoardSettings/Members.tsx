@@ -11,15 +11,16 @@ import { StyledMembersTableContainer } from "./components"
 export const Members: React.FC = () => {
   const params = useParams<{ boardId: string }>()
 
+  const getUsersResult = useGetUsersQuery()
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-  const getAllUsersResult = useGetUsersQuery()
 
   const [addBoardMember] = useAddBoardMemberMutation()
   const [removeBoardMember] = useRemoveBoardMemberMutation()
 
-  if (!getBoardResult.data) return null
-  if (!getAllUsersResult.data) return null
+  if (getUsersResult.data === undefined) return null
+  if (getBoardResult.data === undefined) return null
 
+  const users = getUsersResult.data.users
   const board = getBoardResult.data.board
 
   return (
@@ -34,7 +35,7 @@ export const Members: React.FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {getAllUsersResult.data.users.map((user) => (
+            {users?.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>
