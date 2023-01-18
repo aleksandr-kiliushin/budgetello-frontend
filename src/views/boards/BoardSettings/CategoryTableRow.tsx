@@ -43,9 +43,7 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
         </TableCell>
       </TableRow>
       {location.pathname.endsWith(`/edit-budget-category/${category.id}`) && <CategoryFormDialog category={category} />}
-      {location.pathname.endsWith(`/delete-budget-category/${category.id}`) && (
-        <CategoryDeletionDialog category={category} />
-      )}
+      {location.pathname.endsWith(`/delete-budget-category/${category.id}`) && <CategoryDeletionDialog />}
     </>
   )
 }

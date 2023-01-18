@@ -1,23 +1,26 @@
 import { Button, Typography } from "@mui/material"
-import React from "react"
+import React, { FC } from "react"
 import { Link, useParams } from "react-router-dom"
 
-import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation } from "#api/budget"
-import { BudgetCategory } from "#api/types"
+import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation, useGetBudgetCategoryQuery } from "#api/budget"
 import { Dialog } from "#components/Dialog"
 
-interface ICategoryDeletionDialogProps {
-  category: Pick<BudgetCategory, "id" | "name" | "type">
-}
+export const CategoryDeletionDialog: FC = () => {
+  const params = useParams<{ boardId: string; budgetCategoryId?: string }>()
 
-export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({ category }) => {
-  const params = useParams<{ boardId: string }>()
+  const getBudgetCategoryResult = useGetBudgetCategoryQuery({
+    variables: { id: Number(params.budgetCategoryId) },
+  })
+  const budgetCategory = getBudgetCategoryResult.data?.budgetCategory
+
   const [deleteCategory] = useDeleteBudgetCategoryMutation()
 
   const onDeleteButtonClick = async () => {
+    if (budgetCategory === undefined) return
+
     await deleteCategory({
       refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
-      variables: { categoryId: category.id },
+      variables: { categoryId: budgetCategory.id },
     })
   }
 
@@ -30,7 +33,7 @@ export const CategoryDeletionDialog: React.FC<ICategoryDeletionDialogProps> = ({
       </Dialog.Header>
       <Dialog.Body>
         <Typography>
-          Are you sure you want to delete <b>{category.name}</b> category?
+          Are you sure you want to delete the <b>{budgetCategory?.name}</b> category?
         </Typography>
       </Dialog.Body>
       <Dialog.Footer>

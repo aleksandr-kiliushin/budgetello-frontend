@@ -4,6 +4,12 @@ query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
   }
 }
 
+query GetBudgetCategory($id: Int!) {
+  budgetCategory(id: $id) {
+    ...budgetCategoryFields
+  }
+}
+
 query GetBudgetCategoryTypes {
   budgetCategoryTypes {
     ...budgetCategoryTypeFields

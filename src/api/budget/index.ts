@@ -12,6 +12,13 @@ export type GetBudgetCategoriesQueryVariables = Types.Exact<{
 
 export type GetBudgetCategoriesQuery = { __typename?: 'Query', budgetCategories: Array<{ __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }> };
 
+export type GetBudgetCategoryQueryVariables = Types.Exact<{
+  id: Types.Scalars['Int'];
+}>;
+
+
+export type GetBudgetCategoryQuery = { __typename?: 'Query', budgetCategory: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } } };
+
 export type GetBudgetCategoryTypesQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
@@ -125,6 +132,41 @@ export function useGetBudgetCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type GetBudgetCategoriesQueryHookResult = ReturnType<typeof useGetBudgetCategoriesQuery>;
 export type GetBudgetCategoriesLazyQueryHookResult = ReturnType<typeof useGetBudgetCategoriesLazyQuery>;
 export type GetBudgetCategoriesQueryResult = Apollo.QueryResult<GetBudgetCategoriesQuery, GetBudgetCategoriesQueryVariables>;
+export const GetBudgetCategoryDocument = gql`
+    query GetBudgetCategory($id: Int!) {
+  budgetCategory(id: $id) {
+    ...budgetCategoryFields
+  }
+}
+    ${BudgetCategoryFieldsFragmentDoc}`;
+
+/**
+ * __useGetBudgetCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetBudgetCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBudgetCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBudgetCategoryQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetBudgetCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetBudgetCategoryQuery, GetBudgetCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetBudgetCategoryQuery, GetBudgetCategoryQueryVariables>(GetBudgetCategoryDocument, options);
+      }
+export function useGetBudgetCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBudgetCategoryQuery, GetBudgetCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetBudgetCategoryQuery, GetBudgetCategoryQueryVariables>(GetBudgetCategoryDocument, options);
+        }
+export type GetBudgetCategoryQueryHookResult = ReturnType<typeof useGetBudgetCategoryQuery>;
+export type GetBudgetCategoryLazyQueryHookResult = ReturnType<typeof useGetBudgetCategoryLazyQuery>;
+export type GetBudgetCategoryQueryResult = Apollo.QueryResult<GetBudgetCategoryQuery, GetBudgetCategoryQueryVariables>;
 export const GetBudgetCategoryTypesDocument = gql`
     query GetBudgetCategoryTypes {
   budgetCategoryTypes {
