@@ -8,15 +8,15 @@ describe("Budget records", () => {
     cy.url().should("include", "/records?isTrash=false")
     cy.contains("25").should("be.visible")
     cy.contains("education").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
     cy.get("input[name='isTrash']").click()
     cy.url().should("include", "/records?isTrash=true")
     cy.contains("400").should("be.visible")
     cy.contains("education").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
     cy.contains("100").should("be.visible")
     cy.contains("clothes").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
   })
 
   it("are paginated correctly", () => {
@@ -72,7 +72,7 @@ describe("Budget records", () => {
     cy.get("button").contains("Save").click()
     cy.contains("66.6").should("be.visible")
     cy.contains("clothes").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
   })
 
   it("is moved to trash correctly", () => {
@@ -84,7 +84,7 @@ describe("Budget records", () => {
     cy.get("input[name='isTrash']").click()
     cy.contains("25").should("be.visible")
     cy.contains("education").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
   })
 
   it("is restored correctly", () => {
@@ -96,7 +96,7 @@ describe("Budget records", () => {
     cy.get("input[name='isTrash']").click()
     cy.contains("100").should("be.visible")
     cy.contains("clothes").should("be.visible")
-    cy.contains("22-08-01").should("be.visible")
+    cy.contains("01 Aug 22").should("be.visible")
   })
 
   it("is deleted from trash correctly", () => {
