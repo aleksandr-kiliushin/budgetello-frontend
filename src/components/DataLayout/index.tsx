@@ -7,7 +7,7 @@ import { DataLayoutHeading } from "./subcomponents/DataLayoutHeading"
 import { DataLayoutTableContainer } from "./subcomponents/DataLayoutTableContainer"
 import { IDataLayoutWithSubcomponents, IDataLayoutWithoutSubcomponents } from "./types"
 
-const HeadingAndControls = styled("div")({
+const Header = styled("div")({
   display: "flex",
   alignItems: "center",
   flexWrap: "wrap",
@@ -21,11 +21,11 @@ const _DataLayout: IDataLayoutWithoutSubcomponents = ({ children }) => {
   const heading = getChildByDisplayName({ children, displayName: "DataLayoutHeading" })
 
   return (
-    <Box sx={{ display: "grid", rowGap: "8px" }}>
-      <HeadingAndControls>
+    <Box sx={{ display: "grid", rowGap: "4px" }}>
+      <Header>
         {heading}
         {controls}
-      </HeadingAndControls>
+      </Header>
       {table}
     </Box>
   )
