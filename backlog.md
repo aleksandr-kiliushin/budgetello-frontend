@@ -11,10 +11,10 @@
 - prettify or remove the Home page;
 - make somethings with Home page: prettify or remove;
 - handle appearance of groups you are not a member in;
-- use `date-fns` instead of `record.date.slice(2)`;
 - replace «Fetch more» button with infinite scroll;
 - allow to edit board name;
 - allow to select default currency for a board;
+- create from board settings single form with "Save" button;
 
 - add readme;
 - refactor files for each of them to be understandable;

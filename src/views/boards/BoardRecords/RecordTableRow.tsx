@@ -4,6 +4,7 @@ import {
   Restore as RestoreIcon,
 } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
+import { format as formatDate, parse as parseDate } from "date-fns"
 import React from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
@@ -80,6 +81,9 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
     ],
   ])
 
+  const parsedDate = parseDate(record.date, "yyyy-MM-dd", new Date())
+  const prettifiedDate = formatDate(parsedDate, "dd MMM yy")
+
   return (
     <>
       <TableRow>
@@ -94,7 +98,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
           {record.amount}
         </TableCell>
         <TableCell>{record.category.name}</TableCell>
-        <TableCell>{record.date.slice(2)}</TableCell>
+        <TableCell>{prettifiedDate}</TableCell>
         {mapIsTrashToActionCell.get(isTrash)}
         <TableCell>
           <Button
