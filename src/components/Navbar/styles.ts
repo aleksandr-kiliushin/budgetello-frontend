@@ -5,8 +5,7 @@ export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
   bottom: "0px",
   height: "60px",
   width: "100%",
-  borderTop: `1px solid ${theme.palette.primary.light}`,
-  boxShadow: `0px 20px 20px 8px ${theme.palette.text.primary}`,
+  borderTop: `1px solid ${theme.palette.primary.main}`,
   [theme.breakpoints.down("s")]: {
     height: "48px",
   },
@@ -17,7 +16,7 @@ export const bottomNavigationActionSx: SxProps<Theme> = ({ palette }) => ({
   "& .MuiSvgIcon-root": {
     fill: palette.primary.light,
     height: "2.5rem",
-    transition: "height 0.2s linear, width 0.2s linear, fill 0.2s linear",
+    transition: "height 0.25s, width 0.25s, fill 0.25s",
     width: "2.5rem",
   },
   "&.Mui-selected .MuiSvgIcon-root": {
@@ -27,7 +26,7 @@ export const bottomNavigationActionSx: SxProps<Theme> = ({ palette }) => ({
   },
   "&:hover .MuiSvgIcon-root": {
     fill: palette.primary.dark,
-    transition: "fill 0.2s linear",
+    transition: "fill 0.25s",
   },
   maxWidth: "100%",
   minWidth: "40px",
