@@ -84,8 +84,8 @@ export const BoardRecords: React.FC = () => {
                 <TableCell variant="head">Amount</TableCell>
                 <TableCell variant="head">Category</TableCell>
                 <TableCell variant="head">Date</TableCell>
-                <TableCell />
-                <TableCell />
+                <TableCell variant="head" />
+                <TableCell variant="head" />
               </TableRow>
             </TableHead>
             <TableBody>

@@ -38,8 +38,8 @@ export const BudgetCategoriesSettings: FC = () => {
               <TableRow>
                 <TableCell variant="head">Category</TableCell>
                 <TableCell variant="head">Type</TableCell>
-                <TableCell />
-                <TableCell />
+                <TableCell variant="head" />
+                <TableCell variant="head" />
               </TableRow>
             </TableHead>
             <TableBody>
