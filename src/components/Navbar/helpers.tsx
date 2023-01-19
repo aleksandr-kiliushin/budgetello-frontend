@@ -1,6 +1,4 @@
-import DashboardIcon from "@mui/icons-material/Dashboard"
-import HomeIcon from "@mui/icons-material/Home"
-import PersonIcon from "@mui/icons-material/Person"
+import { Dashboard as DashboardIcon, Home as HomeIcon, Person as PersonIcon } from "@mui/icons-material"
 
 interface ISection {
   icon: React.ReactElement

@@ -16,11 +16,8 @@ export const MembersSettings: FC = () => {
   const [addBoardMember] = useAddBoardMemberMutation()
   const [removeBoardMember] = useRemoveBoardMemberMutation()
 
-  if (getUsersResult.data === undefined) return null
-  if (getBoardResult.data === undefined) return null
-
-  const users = getUsersResult.data.users
-  const board = getBoardResult.data.board
+  const users = getUsersResult.data?.users ?? []
+  const boardMembers = getBoardResult.data?.board.members ?? []
 
   return (
     <>
@@ -39,17 +36,21 @@ export const MembersSettings: FC = () => {
                 <TableRow key={user.id}>
                   <TableCell>{user.username}</TableCell>
                   <TableCell>
-                    {board.members.some((member) => member.id === user.id) ? (
+                    {boardMembers.some((member) => member.id === user.id) ? (
                       <Button
                         color="error"
-                        onClick={() => removeBoardMember({ variables: { boardId: board.id, memberId: user.id } })}
+                        onClick={() => {
+                          removeBoardMember({ variables: { boardId: Number(params.boardId), memberId: user.id } })
+                        }}
                         size="small"
                         startIcon={<DeleteOutlineIcon />}
                       />
                     ) : (
                       <Button
                         color="success"
-                        onClick={() => addBoardMember({ variables: { boardId: board.id, userId: user.id } })}
+                        onClick={() => {
+                          addBoardMember({ variables: { boardId: Number(params.boardId), userId: user.id } })
+                        }}
                         size="small"
                         startIcon={<AddIcon />}
                       />

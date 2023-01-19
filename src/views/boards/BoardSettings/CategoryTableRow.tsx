@@ -1,5 +1,4 @@
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline"
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined"
+import { DeleteOutline as DeleteOutlineIcon, EditOutlined as EditOutlinedIcon } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
