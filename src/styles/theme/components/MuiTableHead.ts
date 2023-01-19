@@ -9,7 +9,10 @@ export const MuiTableHead: NonNullable<Components<Theme>["MuiTableHead"]> = {
       position: "sticky",
       top: "-8px",
       backgroundColor: palette.background.default,
-      boxShadow: `0px 16px 20px -19px ${palette.text.primary}`,
+      boxShadow: `0 1px ${palette.text.primary}`, // For Chromium.
+      "& th": {
+        boxShadow: `0 1px ${palette.text.primary}`, // For Safari.
+      },
     },
   },
 }
