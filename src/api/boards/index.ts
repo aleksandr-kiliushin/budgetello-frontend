@@ -38,6 +38,15 @@ export type RemoveBoardMemberMutationVariables = Types.Exact<{
 
 export type RemoveBoardMemberMutation = { __typename?: 'Mutation', removeBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
+export type UpdateBoardMutationVariables = Types.Exact<{
+  id: Types.Scalars['Int'];
+  name?: Types.InputMaybe<Types.Scalars['String']>;
+  subjectId?: Types.InputMaybe<Types.Scalars['Int']>;
+}>;
+
+
+export type UpdateBoardMutation = { __typename?: 'Mutation', updateBoard: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+
 
 export const GetBoardsDocument = gql`
     query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
@@ -187,3 +196,38 @@ export function useRemoveBoardMemberMutation(baseOptions?: Apollo.MutationHookOp
 export type RemoveBoardMemberMutationHookResult = ReturnType<typeof useRemoveBoardMemberMutation>;
 export type RemoveBoardMemberMutationResult = Apollo.MutationResult<RemoveBoardMemberMutation>;
 export type RemoveBoardMemberMutationOptions = Apollo.BaseMutationOptions<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>;
+export const UpdateBoardDocument = gql`
+    mutation UpdateBoard($id: Int!, $name: String, $subjectId: Int) {
+  updateBoard(input: {id: $id, name: $name, subjectId: $subjectId}) {
+    ...boardFields
+  }
+}
+    ${BoardFieldsFragmentDoc}`;
+export type UpdateBoardMutationFn = Apollo.MutationFunction<UpdateBoardMutation, UpdateBoardMutationVariables>;
+
+/**
+ * __useUpdateBoardMutation__
+ *
+ * To run a mutation, you first call `useUpdateBoardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateBoardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateBoardMutation, { data, loading, error }] = useUpdateBoardMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      subjectId: // value for 'subjectId'
+ *   },
+ * });
+ */
+export function useUpdateBoardMutation(baseOptions?: Apollo.MutationHookOptions<UpdateBoardMutation, UpdateBoardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateBoardMutation, UpdateBoardMutationVariables>(UpdateBoardDocument, options);
+      }
+export type UpdateBoardMutationHookResult = ReturnType<typeof useUpdateBoardMutation>;
+export type UpdateBoardMutationResult = Apollo.MutationResult<UpdateBoardMutation>;
+export type UpdateBoardMutationOptions = Apollo.BaseMutationOptions<UpdateBoardMutation, UpdateBoardMutationVariables>;

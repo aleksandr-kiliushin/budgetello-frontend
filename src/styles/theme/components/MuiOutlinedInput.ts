@@ -6,13 +6,6 @@ import { palette } from "../palette"
 export const MuiOutlinedInput: NonNullable<Components<Theme>["MuiOutlinedInput"]> = {
   styleOverrides: {
     input: {
-      padding: "0 14px",
-      fontSize: "16px",
-      height: "22px",
-      "& ~ fieldset": {
-        height: "43px",
-        transform: "translateY(1px)",
-      },
       // A hack to set backgound-color when selected a suggested autofill value.
       "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active": {
         boxShadow: `0 0 0 30px ${palette.background.default} inset !important`,
@@ -29,6 +22,9 @@ export const MuiOutlinedInput: NonNullable<Components<Theme>["MuiOutlinedInput"]
     root: {
       height: "40px",
       borderRadius: "0px",
+    },
+    sizeSmall: {
+      height: "28px",
     },
   },
 }

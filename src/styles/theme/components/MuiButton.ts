@@ -21,7 +21,7 @@ export const MuiButton: NonNullable<Components<Theme>["MuiButton"]> = {
       },
       "&.MuiButton-sizeMedium": {
         columnGap: "8px",
-        height: "38px",
+        height: "40px",
         padding: "0 8px",
       },
     },
