@@ -4,7 +4,7 @@ import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 
 import { DataLayoutControls } from "./subcomponents/DataLayoutControls"
 import { DataLayoutHeading } from "./subcomponents/DataLayoutHeading"
-import { DataLayoutTable } from "./subcomponents/DataLayoutTable"
+import { DataLayoutTableContainer } from "./subcomponents/DataLayoutTableContainer"
 import { IDataLayoutWithSubcomponents, IDataLayoutWithoutSubcomponents } from "./types"
 
 const HeadingAndControls = styled("div")({
@@ -16,7 +16,7 @@ const HeadingAndControls = styled("div")({
 })
 
 const _DataLayout: IDataLayoutWithoutSubcomponents = ({ children }) => {
-  const table = getChildByDisplayName({ children, displayName: "DataLayoutTable" })
+  const table = getChildByDisplayName({ children, displayName: "DataLayoutTableContainer" })
   const controls = getChildByDisplayName({ children, displayName: "DataLayoutControls" })
   const heading = getChildByDisplayName({ children, displayName: "DataLayoutHeading" })
 
@@ -33,7 +33,7 @@ const _DataLayout: IDataLayoutWithoutSubcomponents = ({ children }) => {
 
 _DataLayout.Controls = DataLayoutControls
 _DataLayout.Heading = DataLayoutHeading
-_DataLayout.Table = DataLayoutTable
+_DataLayout.TableContainer = DataLayoutTableContainer
 
 const DataLayout = _DataLayout as IDataLayoutWithSubcomponents
 

@@ -5,8 +5,7 @@ import { useParams } from "react-router-dom"
 
 import { useAddBoardMemberMutation, useGetBoardQuery, useRemoveBoardMemberMutation } from "#api/boards"
 import { useGetUsersQuery } from "#api/users"
-
-import { StyledMembersTableContainer } from "./components"
+import { DataLayout } from "#components/DataLayout"
 
 export const MembersSettings: FC = () => {
   const params = useParams<{ boardId: string }>()
@@ -25,43 +24,43 @@ export const MembersSettings: FC = () => {
 
   return (
     <>
-      <Typography gutterBottom variant="h2">
-        Members
-      </Typography>
-      <StyledMembersTableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell variant="head">Username</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {users?.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>
-                  {board.members.some((member) => member.id === user.id) ? (
-                    <Button
-                      color="error"
-                      onClick={() => removeBoardMember({ variables: { boardId: board.id, memberId: user.id } })}
-                      size="small"
-                      startIcon={<DeleteOutlineIcon />}
-                    />
-                  ) : (
-                    <Button
-                      color="success"
-                      onClick={() => addBoardMember({ variables: { boardId: board.id, userId: user.id } })}
-                      size="small"
-                      startIcon={<AddIcon />}
-                    />
-                  )}
-                </TableCell>
+      <DataLayout>
+        <DataLayout.Heading variant="h2">Members</DataLayout.Heading>
+        <DataLayout.TableContainer columnsWidths={["90%", "10%"]}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell variant="head">Username</TableCell>
+                <TableCell variant="head" />
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </StyledMembersTableContainer>
+            </TableHead>
+            <TableBody>
+              {users?.map((user) => (
+                <TableRow key={user.id}>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>
+                    {board.members.some((member) => member.id === user.id) ? (
+                      <Button
+                        color="error"
+                        onClick={() => removeBoardMember({ variables: { boardId: board.id, memberId: user.id } })}
+                        size="small"
+                        startIcon={<DeleteOutlineIcon />}
+                      />
+                    ) : (
+                      <Button
+                        color="success"
+                        onClick={() => addBoardMember({ variables: { boardId: board.id, userId: user.id } })}
+                        size="small"
+                        startIcon={<AddIcon />}
+                      />
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </DataLayout.TableContainer>
+      </DataLayout>
     </>
   )
 }

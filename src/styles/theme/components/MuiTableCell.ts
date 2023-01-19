@@ -5,14 +5,10 @@ export const MuiTableCell: NonNullable<Components<Theme>["MuiTableCell"]> = {
     head: {
       fontWeight: "bold",
     },
-    root: {
+    sizeMedium: {
+      height: "40px",
+      padding: "4px",
       fontSize: "1.4rem",
-      "&:not(:first-of-type)": {
-        paddingLeft: "4px",
-      },
-      "&:not(:last-of-type)": {
-        paddingRight: "4px",
-      },
     },
   },
 }

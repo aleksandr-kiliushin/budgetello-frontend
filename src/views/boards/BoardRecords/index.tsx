@@ -1,14 +1,14 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
-import { Button, FormControlLabel, Switch, Table, TableBody, TableCell, TableRow, Typography } from "@mui/material"
+import { Button, FormControlLabel, Switch, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
+import { DataLayout } from "#components/DataLayout"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
-import { ControlsPanel, StyledTableContainer, StyledTableHead } from "./components"
 
 export const BoardRecords: React.FC = () => {
   const location = useLocation()
@@ -46,70 +46,74 @@ export const BoardRecords: React.FC = () => {
 
   return (
     <>
-      <Typography gutterBottom variant="h1">
-        Board «{board?.name}»
-      </Typography>
-      <ControlsPanel>
-        <FormControlLabel
-          control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
-          label="Trash"
-          labelPlacement="start"
-          name="isTrash"
-          sx={{ margin: 0 }}
-        />
-        <Button
-          component={Link}
-          startIcon={<SettingsIcon />}
-          to={`/boards/${params.boardId}/settings`}
-          variant="outlined"
-        />
-        {isTrash === false && (
+      <DataLayout>
+        <DataLayout.Heading variant="h1">Board «{board?.name}»</DataLayout.Heading>
+        <DataLayout.Controls>
+          <FormControlLabel
+            control={<Switch checked={isTrash} onChange={onIsTrashClick} />}
+            label="Trash"
+            labelPlacement="start"
+            name="isTrash"
+            sx={{ margin: 0 }}
+          />
           <Button
             component={Link}
-            id="add-record"
-            startIcon={<AddIcon />}
-            to={`/boards/${params.boardId}/records/add${location.search}`}
+            startIcon={<SettingsIcon />}
+            to={`/boards/${params.boardId}/settings`}
             variant="outlined"
           />
-        )}
-      </ControlsPanel>
-      <br />
-      <StyledTableContainer>
-        <Table size="small">
-          <StyledTableHead>
-            <TableRow>
-              <TableCell variant="head">Amount</TableCell>
-              <TableCell variant="head">Category</TableCell>
-              <TableCell variant="head">Date</TableCell>
-              <TableCell />
-              <TableCell />
-            </TableRow>
-          </StyledTableHead>
-          <TableBody>
-            {records?.map((record) => (
-              <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
-            ))}
-            <tr>
-              <td>
-                <button
-                  onClick={() => {
-                    getRecordsResult.fetchMore({
-                      variables: {
-                        skip: getRecordsResult.data ? getRecordsResult.data.budgetRecords.length : 0,
-                      },
-                      updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
-                        budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],
-                      }),
-                    })
-                  }}
-                >
-                  Fetch more
-                </button>
-              </td>
-            </tr>
-          </TableBody>
-        </Table>
-      </StyledTableContainer>
+          {isTrash === false && (
+            <Button
+              component={Link}
+              id="add-record"
+              startIcon={<AddIcon />}
+              to={`/boards/${params.boardId}/records/add${location.search}`}
+              variant="outlined"
+            />
+          )}
+        </DataLayout.Controls>
+        <DataLayout.TableContainer
+          columnsWidths={["23%", "33%", "24%", "10%", "10%"]}
+          sx={{
+            overflowX: "visible", // Makes thead sticky.
+          }}
+        >
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell variant="head">Amount</TableCell>
+                <TableCell variant="head">Category</TableCell>
+                <TableCell variant="head">Date</TableCell>
+                <TableCell />
+                <TableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {records?.map((record) => (
+                <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
+              ))}
+              <tr>
+                <td>
+                  <button
+                    onClick={() => {
+                      getRecordsResult.fetchMore({
+                        variables: {
+                          skip: getRecordsResult.data ? getRecordsResult.data.budgetRecords.length : 0,
+                        },
+                        updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
+                          budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],
+                        }),
+                      })
+                    }}
+                  >
+                    Fetch more
+                  </button>
+                </td>
+              </tr>
+            </TableBody>
+          </Table>
+        </DataLayout.TableContainer>
+      </DataLayout>
       {location.pathname.endsWith("/add") && <RecordFormDialog record={undefined} />}
     </>
   )

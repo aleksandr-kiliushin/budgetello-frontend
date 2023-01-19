@@ -1,4 +1,4 @@
-import { Button, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { FC } from "react"
 
 import { DataLayout } from "#components/DataLayout"
@@ -25,30 +25,32 @@ const SampleComponentWithDataLayout: FC = () => {
         <Button variant="outlined">Settings</Button>
         <Button variant="outlined">Refresh</Button>
       </DataLayout.Controls>
-      <DataLayout.Table columnsWidths={["40%", "15%", "15%", "15%", "15%"]}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+      <DataLayout.TableContainer columnsWidths={["40%", "15%", "15%", "15%", "15%"]}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Dessert (100g serving)</TableCell>
+              <TableCell align="right">Calories</TableCell>
+              <TableCell align="right">Fat&nbsp;(g)</TableCell>
+              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+              <TableCell align="right">Protein&nbsp;(g)</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </DataLayout.Table>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.name}>
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.carbs}</TableCell>
+                <TableCell align="right">{row.protein}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </DataLayout.TableContainer>
     </DataLayout>
   )
 }
