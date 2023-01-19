@@ -5,7 +5,7 @@ export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
   bottom: "0px",
   height: "60px",
   width: "100%",
-  borderTop: `1px solid ${theme.palette.primary.main}`,
+  borderTop: `1px solid ${theme.palette.primary.dark}`,
   [theme.breakpoints.down("s")]: {
     height: "48px",
   },
