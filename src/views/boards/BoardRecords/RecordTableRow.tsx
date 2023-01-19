@@ -1,5 +1,5 @@
 import {
-  DeleteOutline as DeleteOutlineIcon,
+  DeleteOutlined as DeleteOutlinedIcon,
   EditOutlined as EditOutlinedIcon,
   Restore as RestoreIcon,
 } from "@mui/icons-material"
@@ -113,7 +113,7 @@ export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record
               }
             }}
             size="small"
-            startIcon={<DeleteOutlineIcon />}
+            startIcon={<DeleteOutlinedIcon />}
           />
         </TableCell>
       </TableRow>

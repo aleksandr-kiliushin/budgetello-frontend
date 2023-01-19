@@ -1,4 +1,4 @@
-import { DeleteOutline as DeleteOutlineIcon, EditOutlined as EditOutlinedIcon } from "@mui/icons-material"
+import { DeleteOutlined as DeleteOutlinedIcon, EditOutlined as EditOutlinedIcon } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
 import React from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
@@ -36,7 +36,7 @@ export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category })
             component={Link}
             id={`${category.name}-${category.type.name}-category-delete-button`}
             size="small"
-            startIcon={<DeleteOutlineIcon />}
+            startIcon={<DeleteOutlinedIcon />}
             to={`/boards/${params.boardId}/settings/delete-budget-category/${category.id}`}
           />
         </TableCell>

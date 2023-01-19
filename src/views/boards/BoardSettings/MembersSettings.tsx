@@ -1,5 +1,5 @@
-import { Add as AddIcon, DeleteOutline as DeleteOutlineIcon } from "@mui/icons-material"
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Add as AddIcon, DeleteOutlined as DeleteOutlinedIcon } from "@mui/icons-material"
+import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { FC } from "react"
 import { useParams } from "react-router-dom"
 
@@ -43,7 +43,7 @@ export const MembersSettings: FC = () => {
                           removeBoardMember({ variables: { boardId: Number(params.boardId), memberId: user.id } })
                         }}
                         size="small"
-                        startIcon={<DeleteOutlineIcon />}
+                        startIcon={<DeleteOutlinedIcon />}
                       />
                     ) : (
                       <Button
