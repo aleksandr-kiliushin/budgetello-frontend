@@ -50,7 +50,13 @@ export const DefaultCurrencyRow: FC = () => {
       <TableRow>
         <TableCell>Default currency</TableCell>
         <TableCell>
-          {board?.defaultCurrency?.name} {board?.defaultCurrency?.symbol}
+          {board?.defaultCurrency ? (
+            <>
+              {board.defaultCurrency.name} {board.defaultCurrency.symbol}
+            </>
+          ) : (
+            "Not selected"
+          )}
         </TableCell>
         <TableCell>
           <Button onClick={() => setMode("edit")} size="small" startIcon={<EditOutlinedIcon />} />
