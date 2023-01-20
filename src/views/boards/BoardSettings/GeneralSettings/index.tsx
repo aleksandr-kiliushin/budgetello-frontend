@@ -4,6 +4,7 @@ import React, { FC } from "react"
 import { DataLayout } from "#components/DataLayout"
 
 import { BoardNameRow } from "./BoardNameRow"
+import { DefaultCurrencyRow } from "./DefaultCurrencyRow"
 
 export const GeneralSettings: FC = () => {
   return (
@@ -21,6 +22,7 @@ export const GeneralSettings: FC = () => {
           </TableHead>
           <TableBody>
             <BoardNameRow />
+            <DefaultCurrencyRow />
           </TableBody>
         </Table>
       </DataLayout.TableContainer>

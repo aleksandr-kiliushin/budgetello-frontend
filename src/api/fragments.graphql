@@ -82,6 +82,11 @@ fragment boardFields on Board {
     id
     username
   }
+  defaultCurrency {
+    name
+    slug
+    symbol
+  }
   id
   members {
     id

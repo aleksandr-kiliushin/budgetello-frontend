@@ -13,14 +13,14 @@ export type GetBoardsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetBoardsQuery = { __typename?: 'Query', boards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> };
+export type GetBoardsQuery = { __typename?: 'Query', boards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> };
 
 export type GetBoardQueryVariables = Types.Exact<{
   id: Types.Scalars['Int'];
 }>;
 
 
-export type GetBoardQuery = { __typename?: 'Query', board: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+export type GetBoardQuery = { __typename?: 'Query', board: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
 export type AddBoardMemberMutationVariables = Types.Exact<{
   boardId: Types.Scalars['Int'];
@@ -28,7 +28,7 @@ export type AddBoardMemberMutationVariables = Types.Exact<{
 }>;
 
 
-export type AddBoardMemberMutation = { __typename?: 'Mutation', addBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+export type AddBoardMemberMutation = { __typename?: 'Mutation', addBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
 export type RemoveBoardMemberMutationVariables = Types.Exact<{
   boardId: Types.Scalars['Int'];
@@ -36,16 +36,17 @@ export type RemoveBoardMemberMutationVariables = Types.Exact<{
 }>;
 
 
-export type RemoveBoardMemberMutation = { __typename?: 'Mutation', removeBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+export type RemoveBoardMemberMutation = { __typename?: 'Mutation', removeBoardMember: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
 export type UpdateBoardMutationVariables = Types.Exact<{
+  defaultCurrencySlug?: Types.InputMaybe<Types.Scalars['String']>;
   id: Types.Scalars['Int'];
   name?: Types.InputMaybe<Types.Scalars['String']>;
   subjectId?: Types.InputMaybe<Types.Scalars['Int']>;
 }>;
 
 
-export type UpdateBoardMutation = { __typename?: 'Mutation', updateBoard: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+export type UpdateBoardMutation = { __typename?: 'Mutation', updateBoard: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
 
 export const GetBoardsDocument = gql`
@@ -197,8 +198,10 @@ export type RemoveBoardMemberMutationHookResult = ReturnType<typeof useRemoveBoa
 export type RemoveBoardMemberMutationResult = Apollo.MutationResult<RemoveBoardMemberMutation>;
 export type RemoveBoardMemberMutationOptions = Apollo.BaseMutationOptions<RemoveBoardMemberMutation, RemoveBoardMemberMutationVariables>;
 export const UpdateBoardDocument = gql`
-    mutation UpdateBoard($id: Int!, $name: String, $subjectId: Int) {
-  updateBoard(input: {id: $id, name: $name, subjectId: $subjectId}) {
+    mutation UpdateBoard($defaultCurrencySlug: String, $id: Int!, $name: String, $subjectId: Int) {
+  updateBoard(
+    input: {defaultCurrencySlug: $defaultCurrencySlug, id: $id, name: $name, subjectId: $subjectId}
+  ) {
     ...boardFields
   }
 }
@@ -218,6 +221,7 @@ export type UpdateBoardMutationFn = Apollo.MutationFunction<UpdateBoardMutation,
  * @example
  * const [updateBoardMutation, { data, loading, error }] = useUpdateBoardMutation({
  *   variables: {
+ *      defaultCurrencySlug: // value for 'defaultCurrencySlug'
  *      id: // value for 'id'
  *      name: // value for 'name'
  *      subjectId: // value for 'subjectId'

@@ -46,6 +46,7 @@ export type AddMemberInput = {
 export type Board = {
   __typename?: 'Board';
   admins: Array<User>;
+  defaultCurrency?: Maybe<Currency>;
   id: Scalars['Int'];
   members: Array<User>;
   name: Scalars['String'];
@@ -103,6 +104,7 @@ export type CreateAuthorizationTokenInput = {
 };
 
 export type CreateBoardInput = {
+  defaultCurrencySlug?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   subjectId: Scalars['Int'];
 };
@@ -415,6 +417,7 @@ export type UpdateActivityRecordInput = {
 };
 
 export type UpdateBoardInput = {
+  defaultCurrencySlug?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];
   name?: InputMaybe<Scalars['String']>;
   subjectId?: InputMaybe<Scalars['Int']>;

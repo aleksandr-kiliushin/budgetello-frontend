@@ -9,7 +9,7 @@ export type BudgetRecordFieldsFragment = { __typename?: 'BudgetRecord', amount: 
 
 export type UserFieldsFragment = { __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }>, participatedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> };
 
-export type BoardFieldsFragment = { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } };
+export type BoardFieldsFragment = { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } };
 
 export type CurrencyFieldsFragment = { __typename?: 'Currency', name: string, slug: string, symbol: string };
 
@@ -101,6 +101,11 @@ export const BoardFieldsFragmentDoc = gql`
   admins {
     id
     username
+  }
+  defaultCurrency {
+    name
+    slug
+    symbol
   }
   id
   members {

@@ -22,8 +22,8 @@ mutation RemoveBoardMember($boardId: Int!, $memberId: Int!) {
   }
 }
 
-mutation UpdateBoard($id: Int!, $name: String, $subjectId: Int) {
-  updateBoard(input: { id: $id, name: $name, subjectId: $subjectId }) {
+mutation UpdateBoard($defaultCurrencySlug: String, $id: Int!, $name: String, $subjectId: Int) {
+  updateBoard(input: { defaultCurrencySlug: $defaultCurrencySlug, id: $id, name: $name, subjectId: $subjectId }) {
     ...boardFields
   }
 }
