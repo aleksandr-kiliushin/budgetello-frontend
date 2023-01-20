@@ -72,12 +72,7 @@ export const BoardRecords: React.FC = () => {
             />
           )}
         </DataLayout.Controls>
-        <DataLayout.TableContainer
-          columnsWidths={["23%", "33%", "24%", "10%", "10%"]}
-          sx={{
-            overflowX: "visible", // Makes thead sticky.
-          }}
-        >
+        <DataLayout.TableContainer columnsWidths={["23%", "33%", "24%", "10%", "10%"]}>
           <Table>
             <TableHead>
               <TableRow>
