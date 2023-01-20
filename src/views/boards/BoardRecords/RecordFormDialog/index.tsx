@@ -4,6 +4,7 @@ import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
+import { useGetBoardQuery } from "#api/boards"
 import {
   GetBudgetRecordsDocument,
   useCreateBudgetRecordMutation,
@@ -45,6 +46,9 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
   const params = useParams<{ boardId: string }>()
   const navigate = useNavigate()
 
+  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
+  const board = getBoardResult.data?.board
+
   const defaultValues = record
     ? {
         amount: record.amount,
@@ -55,7 +59,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
     : {
         amount: null,
         categoryId: null,
-        currencySlug: "gel",
+        currencySlug: board?.defaultCurrency?.slug ?? "",
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
