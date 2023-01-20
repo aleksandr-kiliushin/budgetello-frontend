@@ -4,7 +4,7 @@ import {
   UndoOutlined as UndoOutlinedIcon,
 } from "@mui/icons-material"
 import { Button, MenuItem, Select, TableCell, TableRow } from "@mui/material"
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
@@ -24,16 +24,7 @@ export const DefaultCurrencyRow: FC = () => {
 
   const [updateBoard] = useUpdateBoardMutation()
 
-  const { register, handleSubmit, formState, resetField } = useForm<{ defaultCurrencySlug: string }>({
-    defaultValues: { defaultCurrencySlug: "" },
-  })
-
-  useEffect(() => {
-    if (board === undefined) return
-    if (board.defaultCurrency === null) return
-    if (board.defaultCurrency === undefined) return
-    resetField("defaultCurrencySlug", { defaultValue: board.defaultCurrency.slug })
-  }, [board, mode, resetField])
+  const { register, handleSubmit, formState } = useForm<{ defaultCurrencySlug: string }>()
 
   const updateBoardDefaultCurrency = handleSubmit(async (formValues) => {
     await updateBoard({
@@ -71,14 +62,10 @@ export const DefaultCurrencyRow: FC = () => {
       <TableRow>
         <TableCell>Default currency</TableCell>
         <TableCell>
-          <Select
-            {...register("defaultCurrencySlug")}
-            defaultValue={formState.defaultValues?.defaultCurrencySlug}
-            size="small"
-          >
-            {currencies?.map((currency) => (
-              <MenuItem key={currency.slug} value={currency.slug}>
-                {currency.name} {currency.symbol}
+          <Select {...register("defaultCurrencySlug")} defaultValue={board?.defaultCurrency?.slug ?? ""} size="small">
+            {currencies?.map((option) => (
+              <MenuItem key={option.slug} value={option.slug}>
+                {option.name} {option.symbol}
               </MenuItem>
             ))}
           </Select>

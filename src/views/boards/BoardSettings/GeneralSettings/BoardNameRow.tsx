@@ -4,7 +4,7 @@ import {
   UndoOutlined as UndoOutlinedIcon,
 } from "@mui/icons-material"
 import { Button, TableCell, TableRow, TextField } from "@mui/material"
-import React, { FC, useEffect, useState } from "react"
+import React, { FC, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
@@ -20,14 +20,7 @@ export const BoardNameRow: FC = () => {
 
   const [updateBoard] = useUpdateBoardMutation()
 
-  const { register, handleSubmit, formState, resetField } = useForm<{ name: string }>({
-    defaultValues: { name: "" },
-  })
-
-  useEffect(() => {
-    if (board === undefined) return
-    resetField("name", { defaultValue: board.name })
-  }, [board, mode, resetField])
+  const { register, handleSubmit, formState } = useForm<{ name: string }>()
 
   const updateBoardName = handleSubmit(async (formValues) => {
     await updateBoard({
@@ -57,7 +50,7 @@ export const BoardNameRow: FC = () => {
       <TableRow>
         <TableCell>Name</TableCell>
         <TableCell>
-          <TextField {...register("name")} size="small" />
+          <TextField {...register("name")} defaultValue={board?.name} size="small" />
         </TableCell>
         <TableCell>
           <Button onClick={() => setMode("view")} size="small" startIcon={<UndoOutlinedIcon />} />
