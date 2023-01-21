@@ -1,3 +1,9 @@
+mutation CreateUser($username: String!, $password: String!, $passwordConfirmation: String!) {
+  createUser(input: { username: $username, password: $password, passwordConfirmation: $passwordConfirmation }) {
+    ...userFields
+  }
+}
+
 query GetUsers($ids: [Int!], $username: String) {
   users(ids: $ids, username: $username) {
     ...userFields

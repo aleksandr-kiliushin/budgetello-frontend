@@ -11,6 +11,7 @@ import { BoardRecords } from "#views/boards/BoardRecords"
 import { BoardSettings } from "#views/boards/BoardSettings"
 import { BoardsList } from "#views/boards/BoardsList"
 import { Home } from "#views/home"
+import { Registration } from "#views/registration"
 
 export const App: React.FC = () => {
   const location = useLocation()
@@ -19,7 +20,11 @@ export const App: React.FC = () => {
 
   if (getAuthorizedUserResult.loading) return null
 
-  if (getAuthorizedUserResult.error !== undefined && location.pathname !== "/auth") {
+  if (
+    getAuthorizedUserResult.error !== undefined &&
+    location.pathname !== "/auth" &&
+    location.pathname !== "/registration"
+  ) {
     return <Navigate to="/auth" />
   }
 
@@ -41,6 +46,7 @@ export const App: React.FC = () => {
             path="/boards/:boardId/settings/delete-budget-category/:budgetCategoryId"
           />
           <Route element={<BoardSettings />} path="/boards/:boardId/settings/edit-budget-category/:budgetCategoryId" />
+          <Route element={<Registration />} path="/registration" />
         </Routes>
       </Box>
       <Navbar />

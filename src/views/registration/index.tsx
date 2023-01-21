@@ -4,17 +4,15 @@ import React, { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useCreateAuthorizationTokenMutation } from "#api/authorization"
-import { GetUserDocument } from "#api/users"
+import { useCreateUserMutation } from "#api/users"
 import { RowGroup } from "#components/RowGroup"
-import { apolloClient } from "#utils/apolloClient"
 
-import { Container } from "../components"
+import { Container } from "../auth/components"
 import { FieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
-export const Login: FC = () => {
+export const Registration: FC = () => {
   const navigate = useNavigate()
-  const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
+  const [createUser] = useCreateUserMutation()
 
   const {
     formState: { isValid, errors },
@@ -27,22 +25,11 @@ export const Login: FC = () => {
     resolver: yupResolver(validationSchema),
   })
 
-  const onSubmit = handleSubmit(async ({ password, username }) => {
+  const onSubmit = handleSubmit(async ({ password, passwordConfirmation, username }) => {
     try {
-      localStorage.removeItem("authorizationToken")
-      const result = await createAuthorizationToken({ variables: { password, username } })
+      const result = await createUser({ variables: { password, passwordConfirmation, username } })
       if (result.errors !== undefined) throw errors
-      if (!result.data) return
-      const authorizationToken = result.data.createAuthorizationToken
-      if (authorizationToken === undefined) {
-        return
-      }
-      localStorage.authorizationToken = authorizationToken
-      await apolloClient.query({
-        query: GetUserDocument,
-        variables: { id: 0 },
-      })
-      navigate("/")
+      navigate("/auth")
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
@@ -56,7 +43,7 @@ export const Login: FC = () => {
   return (
     <Container>
       <Typography textAlign="center" variant="h1">
-        Welcome
+        Registration
       </Typography>
       <form onSubmit={onSubmit}>
         <RowGroup>
@@ -73,11 +60,18 @@ export const Login: FC = () => {
             label="Password"
             type="password"
           />
-          <Button disabled={!isValid} sx={{ width: "auto" }} type="submit" variant="contained">
-            Log in
+          <TextField
+            {...register(FieldName.PasswordConfirmation)}
+            error={errors.passwordConfirmation !== undefined}
+            helperText={errors.passwordConfirmation?.message}
+            label="Confirm password"
+            type="password"
+          />
+          <Button disabled={!isValid} fullWidth sx={{ width: "auto" }} type="submit" variant="contained">
+            Register
           </Button>
-          <Button component={Link} sx={{ width: "auto" }} to="/registration" variant="outlined">
-            Registration
+          <Button component={Link} sx={{ width: "auto" }} to="/auth" variant="outlined">
+            Login
           </Button>
         </RowGroup>
       </form>
