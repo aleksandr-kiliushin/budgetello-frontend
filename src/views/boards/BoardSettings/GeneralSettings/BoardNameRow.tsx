@@ -38,7 +38,7 @@ export const BoardNameRow: FC = () => {
         <TableCell>Name</TableCell>
         <TableCell>{board?.name}</TableCell>
         <TableCell>
-          <Button onClick={() => setMode("edit")} size="small" startIcon={<EditOutlinedIcon />} />
+          <Button id="edit-board-name" onClick={() => setMode("edit")} size="small" startIcon={<EditOutlinedIcon />} />
         </TableCell>
         <TableCell />
       </TableRow>
@@ -53,12 +53,18 @@ export const BoardNameRow: FC = () => {
           <TextField {...register("name")} defaultValue={board?.name} size="small" />
         </TableCell>
         <TableCell>
-          <Button onClick={() => setMode("view")} size="small" startIcon={<UndoOutlinedIcon />} />
+          <Button
+            id="cancel-board-name-editing"
+            onClick={() => setMode("view")}
+            size="small"
+            startIcon={<UndoOutlinedIcon />}
+          />
         </TableCell>
         <TableCell>
           <Button
             color="success"
             disabled={!formState.isDirty}
+            id="submit-board-name-editing"
             onClick={updateBoardName}
             size="small"
             startIcon={<DoneOutlinedIcon />}
