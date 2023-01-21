@@ -1,5 +1,6 @@
 # Backlog
 
+- add custom table component with empty content indicator;
 - test boards creating;
 - handle appearance of groups you are not a member of;
 - restrict access to board Settings for non-admins;

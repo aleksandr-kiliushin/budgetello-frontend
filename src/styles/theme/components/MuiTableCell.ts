@@ -6,6 +6,9 @@ export const MuiTableCell: NonNullable<Components<Theme>["MuiTableCell"]> = {
       height: "40px",
       padding: "4px",
       fontSize: "1.4rem",
+      "& a": {
+        fontSize: "1.4rem",
+      },
     },
   },
 }

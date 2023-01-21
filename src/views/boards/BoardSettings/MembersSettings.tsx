@@ -1,4 +1,7 @@
-import { Add as AddIcon, DeleteOutlined as DeleteOutlinedIcon } from "@mui/icons-material"
+import {
+  PersonAddOutlined as PersonAddOutlinedIcon,
+  PersonRemoveOutlined as PersonRemoveOutlinedIcon,
+} from "@mui/icons-material"
 import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { FC } from "react"
 import { useParams } from "react-router-dom"
@@ -43,7 +46,7 @@ export const MembersSettings: FC = () => {
                           removeBoardMember({ variables: { boardId: Number(params.boardId), memberId: user.id } })
                         }}
                         size="small"
-                        startIcon={<DeleteOutlinedIcon />}
+                        startIcon={<PersonRemoveOutlinedIcon />}
                       />
                     ) : (
                       <Button
@@ -52,7 +55,7 @@ export const MembersSettings: FC = () => {
                           addBoardMember({ variables: { boardId: Number(params.boardId), userId: user.id } })
                         }}
                         size="small"
-                        startIcon={<AddIcon />}
+                        startIcon={<PersonAddOutlinedIcon />}
                       />
                     )}
                   </TableCell>
