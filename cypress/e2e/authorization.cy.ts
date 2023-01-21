@@ -1,7 +1,7 @@
 import { testUsers } from "#cypress/constants/test-users"
 
 describe("Authorization", () => {
-  it.only("logs in successfully", () => {
+  it("logs in successfully", () => {
     cy.visit("/auth")
 
     expect(localStorage.authorizationToken).to.be.equal(undefined)

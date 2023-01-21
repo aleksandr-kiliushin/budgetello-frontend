@@ -11,11 +11,11 @@ describe("Budget board settings", () => {
         cy.get("button#edit-board-name").click()
         cy.get("input[name='name']").clear().type("money-makers")
         cy.get("button#cancel-board-name-editing").click()
-        cy.get("td").contains("clever-budgetiers").should("be.visible")
         cy.get("td").contains("money-makers").should("not.exist")
+        cy.get("td").contains("clever-budgetiers").should("be.visible")
       })
 
-      it("budget category name is edited correctly", () => {
+      it("board name is edited correctly", () => {
         cy.authorize(testUsers.johnDoe.id)
         cy.visit("/boards/1/settings")
 
@@ -28,6 +28,42 @@ describe("Budget board settings", () => {
         cy.visit("/boards/1/records")
         cy.get("h1").contains("clever-budgetiers").should("not.exist")
         cy.get("h1").contains("money-makers").should("be.visible")
+      })
+    })
+
+    describe("Default currency settings", () => {
+      it("case: the user edits default currency name, but does not save it", () => {
+        cy.authorize(testUsers.johnDoe.id)
+        cy.visit("/boards/1/settings")
+
+        cy.get("td").contains("GEL ₾").should("be.visible")
+        cy.get("button#edit-board-default-currency").click()
+        cy.get("#mui-component-select-defaultCurrencySlug").click()
+        cy.get("[role='option']").contains("USD $").click()
+        cy.get("button#cancel-board-default-currency-editing").click()
+        cy.get("td").contains("USD $").should("not.exist")
+        cy.get("td").contains("GEL ₾").should("be.visible")
+      })
+
+      it("board default currency is edited correctly", () => {
+        cy.authorize(testUsers.johnDoe.id)
+
+        cy.visit("/boards/1/records")
+        cy.get("#add-record").click()
+        cy.get("#mui-component-select-currencySlug").should("contain", "GEL ₾")
+
+        cy.visit("/boards/1/settings")
+        cy.get("td").contains("GEL ₾").should("be.visible")
+        cy.get("button#edit-board-default-currency").click()
+        cy.get("#mui-component-select-defaultCurrencySlug").click()
+        cy.get("[role='option']").contains("USD $").click()
+        cy.get("button#submit-board-default-currency-editing").click()
+        cy.get("td").contains("GEL ₾").should("not.exist")
+        cy.get("td").contains("USD $").should("be.visible")
+
+        cy.visit("/boards/1/records")
+        cy.get("#add-record").click()
+        cy.get("#mui-component-select-currencySlug").should("contain", "USD $")
       })
     })
   })
