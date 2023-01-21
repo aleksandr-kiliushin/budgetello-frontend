@@ -1,3 +1,9 @@
+mutation CreateBoard($defaultCurrencySlug: String!, $name: String!, $subjectId: Int!) {
+  createBoard(input: { defaultCurrencySlug: $defaultCurrencySlug, name: $name, subjectId: $subjectId }) {
+    ...boardFields
+  }
+}
+
 query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
   boards(iAmAdminOf: $iAmAdminOf, iAmMemberOf: $iAmMemberOf, ids: $ids, name: $name, subjectsIds: $subjectsIds) {
     ...boardFields

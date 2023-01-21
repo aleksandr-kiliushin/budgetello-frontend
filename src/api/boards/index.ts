@@ -4,6 +4,15 @@ import { gql } from '@apollo/client';
 import { BoardFieldsFragmentDoc } from '../fragments';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
+export type CreateBoardMutationVariables = Types.Exact<{
+  defaultCurrencySlug: Types.Scalars['String'];
+  name: Types.Scalars['String'];
+  subjectId: Types.Scalars['Int'];
+}>;
+
+
+export type CreateBoardMutation = { __typename?: 'Mutation', createBoard: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
+
 export type GetBoardsQueryVariables = Types.Exact<{
   iAmAdminOf?: Types.InputMaybe<Types.Scalars['Boolean']>;
   iAmMemberOf?: Types.InputMaybe<Types.Scalars['Boolean']>;
@@ -49,6 +58,43 @@ export type UpdateBoardMutationVariables = Types.Exact<{
 export type UpdateBoardMutation = { __typename?: 'Mutation', updateBoard: { __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, defaultCurrency?: { __typename?: 'Currency', name: string, slug: string, symbol: string } | null, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } } };
 
 
+export const CreateBoardDocument = gql`
+    mutation CreateBoard($defaultCurrencySlug: String!, $name: String!, $subjectId: Int!) {
+  createBoard(
+    input: {defaultCurrencySlug: $defaultCurrencySlug, name: $name, subjectId: $subjectId}
+  ) {
+    ...boardFields
+  }
+}
+    ${BoardFieldsFragmentDoc}`;
+export type CreateBoardMutationFn = Apollo.MutationFunction<CreateBoardMutation, CreateBoardMutationVariables>;
+
+/**
+ * __useCreateBoardMutation__
+ *
+ * To run a mutation, you first call `useCreateBoardMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBoardMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBoardMutation, { data, loading, error }] = useCreateBoardMutation({
+ *   variables: {
+ *      defaultCurrencySlug: // value for 'defaultCurrencySlug'
+ *      name: // value for 'name'
+ *      subjectId: // value for 'subjectId'
+ *   },
+ * });
+ */
+export function useCreateBoardMutation(baseOptions?: Apollo.MutationHookOptions<CreateBoardMutation, CreateBoardMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateBoardMutation, CreateBoardMutationVariables>(CreateBoardDocument, options);
+      }
+export type CreateBoardMutationHookResult = ReturnType<typeof useCreateBoardMutation>;
+export type CreateBoardMutationResult = Apollo.MutationResult<CreateBoardMutation>;
+export type CreateBoardMutationOptions = Apollo.BaseMutationOptions<CreateBoardMutation, CreateBoardMutationVariables>;
 export const GetBoardsDocument = gql`
     query GetBoards($iAmAdminOf: Boolean, $iAmMemberOf: Boolean, $ids: [Int!], $name: String, $subjectsIds: [Int!]) {
   boards(
