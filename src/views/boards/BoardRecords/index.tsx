@@ -37,7 +37,7 @@ export const BoardRecords: React.FC = () => {
   const records = getRecordsResult.data?.budgetRecords
 
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
-    return <Navigate replace to={`/boards/${params.boardId}/records?isTrash=false`} />
+    return <Navigate replace to={`${location.pathname}?isTrash=false`} />
   }
 
   const onIsTrashClick = (event: React.ChangeEvent<HTMLInputElement>): void => {

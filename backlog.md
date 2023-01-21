@@ -1,12 +1,12 @@
 # Backlog
 
-- add boards creating;
+- test boards creating;
 - handle appearance of groups you are not a member of;
 - restrict access to board Settings for non-admins;
 - restrict budget categories changing for non-admins;
 - replace «Fetch more» button with infinite scroll;
 - prettify or remove the Home page;
-- add users registration;
+- test users registration;
 
 - add a demo user to the production DB, fill their data;
 - add info about the demo credentials to the main screen;
