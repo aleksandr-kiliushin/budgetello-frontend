@@ -124,6 +124,7 @@ export type CreateBudgetRecordInput = {
 
 export type CreateUserInput = {
   password: Scalars['String'];
+  passwordConfirmation: Scalars['String'];
   username: Scalars['String'];
 };
 
@@ -442,6 +443,7 @@ export type UpdateBudgetRecordInput = {
 export type UpdateUserInput = {
   id: Scalars['Int'];
   password?: InputMaybe<Scalars['String']>;
+  passwordConfirmation?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
 };
 

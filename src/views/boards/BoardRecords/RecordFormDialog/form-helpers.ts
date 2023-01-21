@@ -2,7 +2,7 @@ import * as Yup from "yup"
 
 import { BudgetRecord } from "#api/types"
 
-export enum FormField {
+export enum FieldName {
   Amount = "amount",
   CategoryId = "categoryId",
   CurrencySlug = "currencySlug",
@@ -10,14 +10,14 @@ export enum FormField {
 }
 
 export interface IFormValues {
-  [FormField.Amount]: BudgetRecord["amount"] | null
-  [FormField.CategoryId]: BudgetRecord["category"]["id"] | null
-  [FormField.CurrencySlug]: BudgetRecord["currency"]["slug"]
-  [FormField.Date]: BudgetRecord["date"]
+  [FieldName.Amount]: BudgetRecord["amount"] | null
+  [FieldName.CategoryId]: BudgetRecord["category"]["id"] | null
+  [FieldName.CurrencySlug]: BudgetRecord["currency"]["slug"]
+  [FieldName.Date]: BudgetRecord["date"]
 }
 
 export const validationSchema = Yup.object({
-  [FormField.Amount]: Yup.number().required().positive(),
-  [FormField.CategoryId]: Yup.number().required(),
-  [FormField.Date]: Yup.string().required(),
+  [FieldName.Amount]: Yup.number().required().positive(),
+  [FieldName.CategoryId]: Yup.number().required(),
+  [FieldName.Date]: Yup.string().required(),
 })

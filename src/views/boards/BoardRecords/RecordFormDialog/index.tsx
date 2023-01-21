@@ -17,7 +17,7 @@ import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
 
-import { FormField, IFormValues, validationSchema } from "./form-helpers"
+import { FieldName, IFormValues, validationSchema } from "./form-helpers"
 
 const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
   [1, theme.palette.error.main],
@@ -133,7 +133,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
         <form>
           <RowGroup>
             <TextField
-              {...register(FormField.Amount, { valueAsNumber: true })}
+              {...register(FieldName.Amount, { valueAsNumber: true })}
               error={formState.errors.amount !== undefined}
               fullWidth
               helperText={formState.errors.amount?.message}
@@ -143,7 +143,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
             <FormControl fullWidth>
               <InputLabel>Currency</InputLabel>
               <Select
-                {...register(FormField.CurrencySlug)}
+                {...register(FieldName.CurrencySlug)}
                 defaultValue={formState.defaultValues?.currencySlug}
                 label="Currency"
               >
@@ -158,7 +158,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
               <InputLabel>Category</InputLabel>
               {/* TODO: Fix converting value to string. */}
               <Select
-                {...register(FormField.CategoryId, { valueAsNumber: true })}
+                {...register(FieldName.CategoryId, { valueAsNumber: true })}
                 defaultValue={formState.defaultValues?.categoryId}
                 label="Category"
               >
@@ -176,7 +176,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
                 ))}
               </Select>
             </FormControl>
-            <TextField {...register(FormField.Date, { required: true })} label="Date" type="date" />
+            <TextField {...register(FieldName.Date, { required: true })} label="Date" type="date" />
           </RowGroup>
         </form>
       </Dialog.Body>

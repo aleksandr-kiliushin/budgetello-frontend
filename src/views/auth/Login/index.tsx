@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, TextField, Typography } from "@mui/material"
-import React from "react"
+import React, { FC } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
@@ -10,9 +10,9 @@ import { RowGroup } from "#components/RowGroup"
 import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "../components"
-import { FormField, FormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
 
-export const Login: React.FC = () => {
+export const Login: FC = () => {
   const navigate = useNavigate()
   const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
@@ -48,7 +48,7 @@ export const Login: React.FC = () => {
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
 
       Object.entries(errorFields).forEach(([fieldName, error]) => {
-        setError(fieldName as FormField, { type: "custom", message: error as string })
+        setError(fieldName as FieldName, { type: "custom", message: error as string })
       })
     }
   })
@@ -61,13 +61,13 @@ export const Login: React.FC = () => {
       <form onSubmit={onSubmit}>
         <RowGroup>
           <TextField
-            {...register(FormField.Username)}
+            {...register(FieldName.Username)}
             error={errors.username !== undefined}
             helperText={errors.username?.message}
             label="Username"
           />
           <TextField
-            {...register(FormField.Password)}
+            {...register(FieldName.Password)}
             error={errors.password !== undefined}
             helperText={errors.password?.message}
             label="Password"

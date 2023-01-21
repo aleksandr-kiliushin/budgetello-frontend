@@ -15,7 +15,7 @@ import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 
-import { FormField, FormValues, validationSchema } from "./form-helpers"
+import { FieldName, FormValues, validationSchema } from "./form-helpers"
 
 interface ICategoryFormDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
@@ -81,7 +81,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
 
       Object.entries(errorFields).forEach(([fieldName, error]) => {
-        setError(fieldName as FormField, { type: "custom", message: error as string })
+        setError(fieldName as FieldName, { type: "custom", message: error as string })
       })
     }
   })
@@ -95,7 +95,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
         <form>
           <RowGroup>
             <TextField
-              {...register(FormField.Name)}
+              {...register(FieldName.Name)}
               error={errors.name !== undefined}
               helperText={errors.name?.message}
               label="Name"
@@ -104,7 +104,7 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
               fieldValue={watch("typeId")}
               helperText={errors.typeId?.message}
               label="Category type"
-              name={FormField.TypeId}
+              name={FieldName.TypeId}
               options={budgetCategoryTypes.map(({ id, name }) => ({
                 label: name,
                 value: id,

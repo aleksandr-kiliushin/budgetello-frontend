@@ -1,6 +1,6 @@
 import * as yup from "yup"
 
-export enum FormField {
+export enum FieldName {
   Name = "name",
   TypeId = "typeId",
 }

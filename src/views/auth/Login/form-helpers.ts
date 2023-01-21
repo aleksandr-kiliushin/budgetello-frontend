@@ -1,14 +1,14 @@
 import * as yup from "yup"
 
-export enum FormField {
+export enum FieldName {
   Password = "password",
   Username = "username",
 }
 
 export const validationSchema = yup
   .object({
-    [FormField.Password]: yup.string().required(),
-    [FormField.Username]: yup.string().required(),
+    [FieldName.Password]: yup.string().required(),
+    [FieldName.Username]: yup.string().required(),
   })
   .required()
 
