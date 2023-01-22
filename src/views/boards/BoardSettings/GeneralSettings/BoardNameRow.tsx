@@ -10,6 +10,10 @@ import { useParams } from "react-router-dom"
 
 import { useGetBoardQuery, useUpdateBoardMutation } from "#api/boards"
 
+enum FieldName {
+  Name = "name",
+}
+
 export const BoardNameRow: FC = () => {
   const params = useParams<{ boardId: string }>()
 
@@ -20,16 +24,26 @@ export const BoardNameRow: FC = () => {
 
   const [updateBoard] = useUpdateBoardMutation()
 
-  const { register, handleSubmit, formState } = useForm<{ name: string }>()
+  const { formState, handleSubmit, register, setError } = useForm<{ [FieldName.Name]: string }>()
 
   const updateBoardName = handleSubmit(async (formValues) => {
-    await updateBoard({
-      variables: {
-        id: Number(params.boardId),
-        name: formValues.name,
-      },
-    })
-    setMode("view")
+    try {
+      const response = await updateBoard({
+        variables: {
+          id: Number(params.boardId),
+          name: formValues.name,
+        },
+      })
+      if (response.errors !== undefined) throw response.errors
+      setMode("view")
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
+
+      Object.entries(errorFields).forEach(([fieldName, error]) => {
+        setError(fieldName as FieldName.Name, { type: "custom", message: error as string })
+      })
+    }
   })
 
   if (mode === "view") {
@@ -50,7 +64,13 @@ export const BoardNameRow: FC = () => {
       <TableRow>
         <TableCell>Name</TableCell>
         <TableCell>
-          <TextField {...register("name")} defaultValue={board?.name} size="small" />
+          <TextField
+            {...register(FieldName.Name)}
+            defaultValue={board?.name}
+            error={formState.errors.name !== undefined}
+            helperText={formState.errors.name?.message}
+            size="small"
+          />
         </TableCell>
         <TableCell>
           <Button
