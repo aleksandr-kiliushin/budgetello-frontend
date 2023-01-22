@@ -2,8 +2,6 @@
 
 ## Level 1.
 
-- restrict access to board Settings for non-admins: remove Settings link at /board/\<board-id\>/records and redirect non-admins from settings (0.5 h);
-- test access to non-participated and non-administrated boards (0.5 h);
 - restrict budget categories changing for non-admins on backend (0.5 h);
 - replace «Fetch more» button with infinite scroll (1 h);
 - prettify or remove the Home page (0.5 h);

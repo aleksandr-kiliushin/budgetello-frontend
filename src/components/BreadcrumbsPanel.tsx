@@ -29,7 +29,7 @@ const BoardName: FC = () => {
 }
 
 const breadcrumbsByPathnamePattern: Map<RegExp[], IBreadcrumb[]> = new Map([
-  [[/^\/boards$/], [{ element: "Boards", hrefTemplate: "/boards" }]],
+  [[/^\/boards$/, /^\/boards\/create$/], [{ element: "Boards", hrefTemplate: "/boards" }]],
   [
     [/^\/boards\/\d+\/records$/, /^\/boards\/\d+\/records\/add$/, /^\/boards\/\d+\/records\/edit\/\d+$/],
     [
