@@ -26,7 +26,7 @@ export const BoardsList: React.FC = () => {
       <DataLayout>
         <DataLayout.Heading variant="h2">Your boards</DataLayout.Heading>
         <DataLayout.Controls>
-          <Button component={Link} startIcon={<AddIcon />} to="/boards/create" variant="outlined" />
+          <Button component={Link} id="create-board" startIcon={<AddIcon />} to="/boards/create" variant="outlined" />
         </DataLayout.Controls>
         <DataLayout.TableContainer columnsWidths={["90%", "10%"]}>
           <Table>
