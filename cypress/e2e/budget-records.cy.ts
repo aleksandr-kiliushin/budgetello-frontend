@@ -22,22 +22,23 @@ describe("Budget records", () => {
   it("are paginated correctly", () => {
     cy.exec(`docker exec -i personal-app-database /bin/bash < ${__dirname}/insert-many-records.sh`)
     cy.authorize(testUsers.johnDoe.id)
-    cy.visit("/boards/1/records")
 
+    cy.visit("/boards/1/records")
     cy.contains("129").should("be.visible")
     cy.contains("80").should("exist").should("not.be.visible")
     cy.get("main").scrollTo("bottom")
     cy.contains("80").should("be.visible")
-    cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
+    cy.get("[role='progressbar']").should("be.visible")
+    cy.get("[role='progressbar']").should("exist").should("not.be.visible")
     cy.contains("30").should("exist").should("not.be.visible")
-    cy.contains("Fetch more").should("not.be.visible") // Is used as an indicator that the loading of the new records page is done. TODO: To be deleted after infinite scroll is implemented.
     cy.get("main").scrollTo("bottom")
     cy.contains("30").should("be.visible")
-    cy.contains("Fetch more").click() // TODO: To be deleted after infinite scroll is implemented.
+    cy.get("[role='progressbar']").should("be.visible")
+    cy.get("[role='progressbar']").should("not.exist")
     cy.get("td").contains("1").should("exist").should("not.be.visible")
-    cy.contains("Fetch more").should("not.be.visible") // Is used as an indicator that the loading of the new records page is done. TODO: To be deleted after infinite scroll is implemented.
     cy.get("main").scrollTo("bottom")
     cy.contains("education").should("be.visible")
+    cy.get("[role='progressbar']").should("not.exist")
   })
 
   it("is created correctly", () => {

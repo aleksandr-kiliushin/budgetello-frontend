@@ -1,6 +1,15 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
-import { Button, FormControlLabel, Switch, Table, TableCell, TableHead, TableRow } from "@mui/material"
-import React from "react"
+import {
+  Button,
+  CircularProgress,
+  FormControlLabel,
+  Switch,
+  Table,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material"
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
@@ -12,16 +21,18 @@ import { TableBody } from "#components/TableBody"
 import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
 
-export const BoardRecords: React.FC = () => {
+export const BoardRecords: FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 
-  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
+  const [areAllRecordsLoaded, setAreAllRecordsLoaded] = useState(false)
 
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
 
+  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
+  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const getRecordsResult = useGetBudgetRecordsQuery({
     variables: {
       boardsIds: [Number(params.boardId)],
@@ -31,21 +42,47 @@ export const BoardRecords: React.FC = () => {
       skip: 0,
       take: 50,
     },
+    onCompleted: ({ budgetRecords }) => {
+      if (budgetRecords.length % 50 !== 0) {
+        setAreAllRecordsLoaded(true)
+      }
+    },
   })
-
-  const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
-
-  if (params.boardId === undefined) return <Navigate replace to="/boards" />
 
   const authorizedUser = getAuthorizedUserResult.data?.user
   const board = getBoardResult.data?.board
   const records = getRecordsResult.data?.budgetRecords
 
+  const containerRef = useRef<HTMLSpanElement | null>(null)
+  useEffect(() => {
+    const loadNextRecordsPage = (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries
+      if (!entry.isIntersecting) return
+      getRecordsResult.fetchMore({
+        variables: {
+          skip: records ? records.length : 0,
+        },
+        updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
+          budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],
+        }),
+      })
+    }
+
+    const container = containerRef.current
+    const observer = new IntersectionObserver(loadNextRecordsPage, { root: null, rootMargin: "0px", threshold: 1.0 })
+    if (container !== null) observer.observe(container)
+    return () => {
+      if (container !== null) observer.unobserve(container)
+    }
+  }, [containerRef, getRecordsResult, records])
+
+  if (params.boardId === undefined) return <Navigate replace to="/boards" />
+
   if (location.search !== "?isTrash=false" && location.search !== "?isTrash=true") {
     return <Navigate replace to={`${location.pathname}?isTrash=false`} />
   }
 
-  const onIsTrashClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const onIsTrashClick = (event: ChangeEvent<HTMLInputElement>) => {
     navigate(`/boards/${params.boardId}/records?isTrash=${event.target.checked}`, { replace: true })
   }
 
@@ -94,24 +131,13 @@ export const BoardRecords: React.FC = () => {
               {records?.map((record) => (
                 <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
               ))}
-              <tr>
-                <td>
-                  <button
-                    onClick={() => {
-                      getRecordsResult.fetchMore({
-                        variables: {
-                          skip: getRecordsResult.data ? getRecordsResult.data.budgetRecords.length : 0,
-                        },
-                        updateQuery: (previousQueryResult, { fetchMoreResult }) => ({
-                          budgetRecords: [...previousQueryResult.budgetRecords, ...fetchMoreResult.budgetRecords],
-                        }),
-                      })
-                    }}
-                  >
-                    Fetch more
-                  </button>
-                </td>
-              </tr>
+              {!areAllRecordsLoaded && !getRecordsResult.loading && (
+                <TableRow>
+                  <TableCell colSpan={5} sx={{ textAlign: "center" }}>
+                    <CircularProgress ref={containerRef} size={26} />
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </DataLayout.TableContainer>
