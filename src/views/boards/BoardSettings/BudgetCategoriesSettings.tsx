@@ -37,7 +37,7 @@ export const BudgetCategoriesSettings: FC = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell variant="head">Category</TableCell>
+                <TableCell variant="head">Name</TableCell>
                 <TableCell variant="head">Type</TableCell>
                 <TableCell variant="head" />
                 <TableCell variant="head" />
