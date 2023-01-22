@@ -2,7 +2,7 @@
 
 ## Level 1.
 
-- replace «Fetch more» button with infinite scroll (1 h);
+Done
 
 ## Level 2.
 
