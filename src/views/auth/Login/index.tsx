@@ -42,7 +42,7 @@ export const Login: FC = () => {
         query: GetUserDocument,
         variables: { id: 0 },
       })
-      navigate("/")
+      navigate("/boards")
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields

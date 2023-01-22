@@ -10,7 +10,6 @@ import { Auth } from "#views/auth"
 import { BoardRecords } from "#views/boards/BoardRecords"
 import { BoardSettings } from "#views/boards/BoardSettings"
 import { BoardsList } from "#views/boards/BoardsList"
-import { Home } from "#views/home"
 import { Registration } from "#views/registration"
 
 export const App: React.FC = () => {
@@ -28,12 +27,13 @@ export const App: React.FC = () => {
     return <Navigate to="/auth" />
   }
 
+  if (location.pathname === "/") return <Navigate to="/boards" />
+
   return (
     <>
       <Box component="main">
         <BreadcrumbsPanel />
         <Routes>
-          <Route element={<Home />} path="/" />
           <Route element={<Auth />} path="/auth" />
           <Route element={<BoardsList />} path="/boards" />
           <Route element={<BoardsList />} path="/boards/create" />

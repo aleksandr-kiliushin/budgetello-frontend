@@ -2,9 +2,7 @@
 
 ## Level 1.
 
-- restrict budget categories changing for non-admins on backend (0.5 h);
 - replace «Fetch more» button with infinite scroll (1 h);
-- prettify or remove the Home page (0.5 h);
 
 ## Level 2.
 
