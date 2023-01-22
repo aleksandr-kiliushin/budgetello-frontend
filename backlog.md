@@ -7,7 +7,6 @@
 - restrict budget categories changing for non-admins on backend (0.5 h);
 - replace «Fetch more» button with infinite scroll (1 h);
 - prettify or remove the Home page (0.5 h);
-- restrict to rename a board to a name that is already taken (0.5 h);
 
 ## Level 2.
 
