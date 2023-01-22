@@ -15,7 +15,7 @@ export const BudgetCategoriesSettings: FC = () => {
   const params = useParams<{ boardId: string }>()
 
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
-    variables: { boardsIds: [Number(params.boardId)] },
+    variables: { boardsIds: [Number(params.boardId)], orderingById: "DESC" },
   })
 
   const boardBudgetCategories = getBoardBudgetCategoriesResult.data?.budgetCategories

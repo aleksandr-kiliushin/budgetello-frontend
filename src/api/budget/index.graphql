@@ -1,5 +1,5 @@
-query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
-  budgetCategories(boardsIds: $boardsIds, ids: $ids) {
+query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!], $orderingById: String) {
+  budgetCategories(boardsIds: $boardsIds, ids: $ids, orderingById: $orderingById) {
     ...budgetCategoryFields
   }
 }

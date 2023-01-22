@@ -346,6 +346,7 @@ export type QueryBoardsArgs = {
 export type QueryBudgetCategoriesArgs = {
   boardsIds?: InputMaybe<Array<Scalars['Int']>>;
   ids?: InputMaybe<Array<Scalars['Int']>>;
+  orderingById?: InputMaybe<Scalars['String']>;
 };
 
 

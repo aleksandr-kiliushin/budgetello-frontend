@@ -7,6 +7,7 @@ const defaultOptions = {} as const;
 export type GetBudgetCategoriesQueryVariables = Types.Exact<{
   boardsIds?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
   ids?: Types.InputMaybe<Array<Types.Scalars['Int']> | Types.Scalars['Int']>;
+  orderingById?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
@@ -97,8 +98,8 @@ export type UpdateBudgetRecordMutation = { __typename?: 'Mutation', updateBudget
 
 
 export const GetBudgetCategoriesDocument = gql`
-    query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!]) {
-  budgetCategories(boardsIds: $boardsIds, ids: $ids) {
+    query GetBudgetCategories($boardsIds: [Int!], $ids: [Int!], $orderingById: String) {
+  budgetCategories(boardsIds: $boardsIds, ids: $ids, orderingById: $orderingById) {
     ...budgetCategoryFields
   }
 }
@@ -118,6 +119,7 @@ export const GetBudgetCategoriesDocument = gql`
  *   variables: {
  *      boardsIds: // value for 'boardsIds'
  *      ids: // value for 'ids'
+ *      orderingById: // value for 'orderingById'
  *   },
  * });
  */
