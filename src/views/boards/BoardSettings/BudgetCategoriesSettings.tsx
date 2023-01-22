@@ -1,10 +1,11 @@
 import { Add as AddIcon } from "@mui/icons-material"
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Button, Table, TableCell, TableHead, TableRow, Typography } from "@mui/material"
 import React, { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
 import { useGetBudgetCategoriesQuery } from "#api/budget"
 import { DataLayout } from "#components/DataLayout"
+import { TableBody } from "#components/TableBody"
 
 import { CategoryFormDialog } from "./CategoryFormDialog"
 import { CategoryTableRow } from "./CategoryTableRow"
@@ -42,7 +43,7 @@ export const BudgetCategoriesSettings: FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody columnsWidths={["40%", "40%", "10%", "10%"]}>
               {boardBudgetCategories?.map((category) => (
                 <CategoryTableRow category={category} key={category.id} />
               ))}

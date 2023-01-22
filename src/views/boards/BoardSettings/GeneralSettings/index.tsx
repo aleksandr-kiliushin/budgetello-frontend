@@ -1,7 +1,8 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { Table, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { FC } from "react"
 
 import { DataLayout } from "#components/DataLayout"
+import { TableBody } from "#components/TableBody"
 
 import { BoardNameRow } from "./BoardNameRow"
 import { DefaultCurrencyRow } from "./DefaultCurrencyRow"
@@ -20,7 +21,7 @@ export const GeneralSettings: FC = () => {
               <TableCell variant="head" />
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody columnsWidths={["30%", "50%", "10%", "10%"]}>
             <BoardNameRow />
             <DefaultCurrencyRow />
           </TableBody>

@@ -2,13 +2,14 @@ import {
   PersonAddOutlined as PersonAddOutlinedIcon,
   PersonRemoveOutlined as PersonRemoveOutlinedIcon,
 } from "@mui/icons-material"
-import { Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import React, { FC } from "react"
 import { useParams } from "react-router-dom"
 
 import { useAddBoardMemberMutation, useGetBoardQuery, useRemoveBoardMemberMutation } from "#api/boards"
 import { useGetUsersQuery } from "#api/users"
 import { DataLayout } from "#components/DataLayout"
+import { TableBody } from "#components/TableBody"
 
 export const MembersSettings: FC = () => {
   const params = useParams<{ boardId: string }>()
@@ -34,7 +35,7 @@ export const MembersSettings: FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody columnsWidths={["90%", "10%"]}>
               {users?.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.username}</TableCell>

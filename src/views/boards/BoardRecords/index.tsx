@@ -1,11 +1,12 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
-import { Button, FormControlLabel, Switch, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material"
+import { Button, FormControlLabel, Switch, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import React from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
 import { DataLayout } from "#components/DataLayout"
+import { TableBody } from "#components/TableBody"
 
 import { RecordFormDialog } from "./RecordFormDialog"
 import { RecordTableRow } from "./RecordTableRow"
@@ -83,7 +84,7 @@ export const BoardRecords: React.FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody columnsWidths={["23%", "33%", "24%", "10%", "10%"]}>
               {records?.map((record) => (
                 <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
               ))}

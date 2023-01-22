@@ -1,11 +1,12 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
-import { Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material"
+import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import React from "react"
 import { Link, useLocation } from "react-router-dom"
 
 import { useGetBoardsQuery } from "#api/boards"
 import { useGetUserQuery } from "#api/users"
 import { DataLayout } from "#components/DataLayout"
+import { TableBody } from "#components/TableBody"
 
 import { CreateBoardFormDialog } from "./CreateBoardFormDialog"
 
@@ -35,7 +36,7 @@ export const BoardsList: React.FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody columnsWidths={["90%", "10%"]}>
               {participatedBoards?.map((board) => (
                 <TableRow key={board.id}>
                   <TableCell>
@@ -67,7 +68,7 @@ export const BoardsList: React.FC = () => {
                 <TableCell variant="head">Name</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody columnsWidths={["100%"]}>
               {nonParticipatedBoards?.map((board) => (
                 <TableRow key={board.id}>
                   <TableCell>{board.name}</TableCell>
