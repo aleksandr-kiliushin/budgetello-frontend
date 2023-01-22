@@ -44,7 +44,15 @@ export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ categor
 
   const getBudgetCategoryTypesResult = useGetBudgetCategoryTypesQuery()
   const [createCategory] = useCreateBudgetCategoryMutation({
-    refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
+    refetchQueries: [
+      {
+        query: GetBudgetCategoriesDocument,
+        variables: {
+          boardsIds: [Number(params.boardId)],
+          orderingById: "DESC",
+        },
+      },
+    ],
   })
   const [updateCategory] = useUpdateBudgetCategoryMutation()
 

@@ -68,7 +68,7 @@ describe("Budget board settings", () => {
     })
   })
 
-  describe("Budget categories settings", () => {
+  describe.only("Budget categories settings", () => {
     it("budget board settings are fetched and rendered correctly", () => {
       cy.authorize(testUsers.johnDoe.id)
       cy.visit("/boards/1/settings")

@@ -19,7 +19,15 @@ export const CategoryDeletionDialog: FC = () => {
     if (budgetCategory === undefined) return
 
     await deleteCategory({
-      refetchQueries: [{ query: GetBudgetCategoriesDocument, variables: { boardsIds: [Number(params.boardId)] } }],
+      refetchQueries: [
+        {
+          query: GetBudgetCategoriesDocument,
+          variables: {
+            boardsIds: [Number(params.boardId)],
+            orderingById: "DESC",
+          },
+        },
+      ],
       variables: { categoryId: budgetCategory.id },
     })
   }
