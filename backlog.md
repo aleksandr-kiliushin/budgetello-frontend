@@ -1,8 +1,6 @@
 # Backlog
 
-## Level 1.
-
-Done
+## Level 1 (Done).
 
 ## Level 2.
 
