@@ -1,5 +1,12 @@
 import { TableContainer } from "@mui/material"
-import React, { FC, PropsWithChildren } from "react"
+import React, { FC, PropsWithChildren, createContext } from "react"
+
+interface IDataLayoutTableContainerContext {
+  columnsAmount: number
+}
+export const DateLayoutTableContainerContext = createContext<IDataLayoutTableContainerContext>({
+  columnsAmount: 0,
+})
 
 interface IDataLayoutTableProps {
   columnsWidths: string[]
@@ -11,7 +18,11 @@ const DataLayoutTableContainer: FC<PropsWithChildren<IDataLayoutTableProps>> = (
     columnWidthByCellSelector[`& td:nth-of-type(${columnWidthIndex + 1})`] = { width: columnWidth }
   })
 
-  return <TableContainer css={{ ...columnWidthByCellSelector }}>{children}</TableContainer>
+  return (
+    <DateLayoutTableContainerContext.Provider value={{ columnsAmount: columnsWidths.length }}>
+      <TableContainer css={{ ...columnWidthByCellSelector }}>{children}</TableContainer>
+    </DateLayoutTableContainerContext.Provider>
+  )
 }
 
 DataLayoutTableContainer.displayName = "DataLayoutTableContainer"

@@ -43,7 +43,7 @@ export const BudgetCategoriesSettings: FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody columnsWidths={["40%", "40%", "10%", "10%"]}>
+            <TableBody>
               {boardBudgetCategories?.map((category) => (
                 <CategoryTableRow category={category} key={category.id} />
               ))}

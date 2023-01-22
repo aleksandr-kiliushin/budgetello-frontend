@@ -21,7 +21,7 @@ export const GeneralSettings: FC = () => {
               <TableCell variant="head" />
             </TableRow>
           </TableHead>
-          <TableBody columnsWidths={["30%", "50%", "10%", "10%"]}>
+          <TableBody>
             <BoardNameRow />
             <DefaultCurrencyRow />
           </TableBody>

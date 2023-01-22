@@ -36,7 +36,7 @@ export const BoardsList: React.FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody columnsWidths={["90%", "10%"]}>
+            <TableBody>
               {participatedBoards?.map((board) => (
                 <TableRow key={board.id}>
                   <TableCell>
@@ -68,7 +68,7 @@ export const BoardsList: React.FC = () => {
                 <TableCell variant="head">Name</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody columnsWidths={["100%"]}>
+            <TableBody>
               {nonParticipatedBoards?.map((board) => (
                 <TableRow key={board.id}>
                   <TableCell>{board.name}</TableCell>

@@ -35,7 +35,7 @@ export const MembersSettings: FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody columnsWidths={["90%", "10%"]}>
+            <TableBody>
               {users?.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell>{user.username}</TableCell>

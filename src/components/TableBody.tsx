@@ -1,23 +1,18 @@
 import { TableBody as MuiTableBody, TableCell as MuiTableCell, TableRow as MuiTableRow } from "@mui/material"
-import React, { Children, FC, PropsWithChildren } from "react"
+import React, { Children, FC, PropsWithChildren, useContext } from "react"
 
-interface ITableBodyProps {
-  columnsWidths: string[]
-}
+import { DateLayoutTableContainerContext } from "./DataLayout/subcomponents/DataLayoutTableContainer"
 
-export const TableBody: FC<PropsWithChildren<ITableBodyProps>> = ({ children, columnsWidths }) => {
-  const passedRowsAmount = Children.toArray(children).length
+export const TableBody: FC<PropsWithChildren> = ({ children }) => {
+  const { columnsAmount } = useContext(DateLayoutTableContainerContext)
 
-  const columnWidthByCellSelector: Record<string, { width: string }> = {}
-  columnsWidths.forEach((columnWidth, columnWidthIndex) => {
-    columnWidthByCellSelector[`& td:nth-of-type(${columnWidthIndex + 1})`] = { width: columnWidth }
-  })
+  const rowsAmount = Children.toArray(children).length
 
-  if (passedRowsAmount === 0) {
+  if (rowsAmount === 0) {
     return (
-      <MuiTableBody css={{ ...columnWidthByCellSelector }}>
+      <MuiTableBody>
         <MuiTableRow>
-          <MuiTableCell colSpan={columnsWidths.length} sx={{ color: "GrayText", textAlign: "center" }}>
+          <MuiTableCell colSpan={columnsAmount} sx={{ color: "GrayText", textAlign: "center" }}>
             Empty
           </MuiTableCell>
         </MuiTableRow>
@@ -25,5 +20,5 @@ export const TableBody: FC<PropsWithChildren<ITableBodyProps>> = ({ children, co
     )
   }
 
-  return <MuiTableBody css={{ ...columnWidthByCellSelector }}>{children}</MuiTableBody>
+  return <MuiTableBody>{children}</MuiTableBody>
 }

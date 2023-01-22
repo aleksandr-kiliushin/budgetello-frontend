@@ -84,7 +84,7 @@ export const BoardRecords: React.FC = () => {
                 <TableCell variant="head" />
               </TableRow>
             </TableHead>
-            <TableBody columnsWidths={["23%", "33%", "24%", "10%", "10%"]}>
+            <TableBody>
               {records?.map((record) => (
                 <RecordTableRow isTrash={isTrash} key={record.id} record={record} />
               ))}
