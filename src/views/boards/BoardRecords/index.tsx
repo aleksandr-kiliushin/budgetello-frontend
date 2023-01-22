@@ -5,6 +5,7 @@ import { Link, Navigate, useLocation, useNavigate, useParams } from "react-route
 
 import { useGetBoardQuery } from "#api/boards"
 import { useGetBudgetRecordsQuery } from "#api/budget"
+import { useGetUserQuery } from "#api/users"
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"
 
@@ -15,6 +16,8 @@ export const BoardRecords: React.FC = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
+
+  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
   const searchParams = new URLSearchParams(location.search)
   const isTrash = searchParams.get("isTrash") === "true"
@@ -34,6 +37,7 @@ export const BoardRecords: React.FC = () => {
 
   if (params.boardId === undefined) return <Navigate replace to="/boards" />
 
+  const authorizedUser = getAuthorizedUserResult.data?.user
   const board = getBoardResult.data?.board
   const records = getRecordsResult.data?.budgetRecords
 
@@ -57,12 +61,14 @@ export const BoardRecords: React.FC = () => {
             name="isTrash"
             sx={{ margin: 0 }}
           />
-          <Button
-            component={Link}
-            startIcon={<SettingsIcon />}
-            to={`/boards/${params.boardId}/settings`}
-            variant="outlined"
-          />
+          {board?.admins.some((admin) => admin.id === authorizedUser?.id) && (
+            <Button
+              component={Link}
+              startIcon={<SettingsIcon />}
+              to={`/boards/${params.boardId}/settings`}
+              variant="outlined"
+            />
+          )}
           {isTrash === false && (
             <Button
               component={Link}
