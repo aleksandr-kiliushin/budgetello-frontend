@@ -43,7 +43,7 @@ export const BoardRecords: FC = () => {
       take: 50,
     },
     onCompleted: ({ budgetRecords }) => {
-      if (budgetRecords.length % 50 !== 0) {
+      if (budgetRecords.length === 0 || budgetRecords.length % 50 !== 0) {
         setAreAllRecordsLoaded(true)
       }
     },
