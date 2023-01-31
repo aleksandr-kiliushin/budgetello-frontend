@@ -1,4 +1,4 @@
-import { CloseOutlined } from "@mui/icons-material"
+import { CloseOutlined as CloseOutlinedIcon } from "@mui/icons-material"
 import { Button, Modal as MuiModal, styled } from "@mui/material"
 import { Link, useNavigate } from "react-router-dom"
 
@@ -58,7 +58,7 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDial
               color="secondary"
               id="close-dialog"
               onClick={closeDialog}
-              startIcon={<CloseOutlined />}
+              startIcon={<CloseOutlinedIcon />}
               variant="contained"
             />
           ) : (
@@ -67,7 +67,7 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDial
               component={Link}
               id="close-dialog"
               onClick={closeDialog}
-              startIcon={<CloseOutlined />}
+              startIcon={<CloseOutlinedIcon />}
               to={closeDialogHref}
               variant="contained"
             />
