@@ -60,6 +60,7 @@
     "build": "rm -rf dist && MODE=production webpack",
     "check-types": "tsc --noEmit",
     "check-types:watch": "tsc --noEmit --watch",
+    "generate-webpack-bundle-report": "npm run build && webpack --profile --json > ./dist/webpack-bundle-report.json; npx webpack-bundle-analyzer ./dist/webpack-bundle-report.json",
     "graphql-codegen": "graphql-codegen --config ./codegen.ts",
     "graphql-codegen:watch": "graphql-codegen --config ./codegen.ts --watch",
     "cypress": "MODE=development cypress",
