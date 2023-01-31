@@ -2,13 +2,11 @@
 
 ## Level 1 (Done).
 
-## Level 2.
-
-- refactor files for each of them to be understandable;
+## Level 2 (Done).
 
 ## Level 3.
 
-- learn LightHouse, make the metrics best (5 h);
+- learn Performance, make the metrics best (5 h);
 - learn Profiler, make the metrics best (5 h);
 
 ## Level 4.
