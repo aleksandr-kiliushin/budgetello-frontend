@@ -137,7 +137,7 @@ export const BoardRecords: FC = () => {
               {!areAllRecordsLoaded && !getRecordsResult.loading && (
                 <TableRow>
                   <TableCell colSpan={5} sx={{ textAlign: "center" }}>
-                    <CircularProgress ref={containerRef} size={26} />
+                    <CircularProgress aria-label="Loading more records" ref={containerRef} size={26} />
                   </TableCell>
                 </TableRow>
               )}
