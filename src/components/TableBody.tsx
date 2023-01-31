@@ -1,5 +1,5 @@
 import { TableBody as MuiTableBody, TableCell as MuiTableCell, TableRow as MuiTableRow } from "@mui/material"
-import React, { Children, FC, PropsWithChildren, useContext } from "react"
+import { Children, FC, PropsWithChildren, useContext } from "react"
 
 import { DateLayoutTableContainerContext } from "./DataLayout/subcomponents/DataLayoutTableContainer"
 

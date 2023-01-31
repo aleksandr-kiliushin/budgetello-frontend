@@ -1,7 +1,7 @@
 import { ApolloProvider } from "@apollo/client"
 import { Global } from "@emotion/react"
 import { ThemeProvider } from "@mui/material"
-import React from "react"
+import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router-dom"
 
@@ -20,7 +20,7 @@ if (rootNode === null) {
 const root = createRoot(rootNode)
 
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <BrowserRouter>
       <ApolloProvider client={apolloClient}>
         <ThemeProvider theme={theme}>
@@ -29,5 +29,5 @@ root.render(
         </ThemeProvider>
       </ApolloProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </StrictMode>
 )

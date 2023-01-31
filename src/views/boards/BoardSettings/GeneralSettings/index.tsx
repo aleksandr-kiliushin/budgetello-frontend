@@ -1,5 +1,5 @@
 import { Table, TableCell, TableHead, TableRow } from "@mui/material"
-import React, { FC } from "react"
+import { FC } from "react"
 
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"

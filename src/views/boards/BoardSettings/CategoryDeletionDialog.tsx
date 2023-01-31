@@ -1,5 +1,5 @@
 import { Button, Typography } from "@mui/material"
-import React, { FC } from "react"
+import { FC } from "react"
 import { Link, useParams } from "react-router-dom"
 
 import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation, useGetBudgetCategoryQuery } from "#api/budget"

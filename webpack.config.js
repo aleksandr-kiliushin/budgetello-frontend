@@ -11,18 +11,6 @@ module.exports = {
       "/graphql": {
         target: "http://localhost:3080/graphql",
       },
-      // "/encrypted_data/*": {
-      //   target: "http://127.0.0.1:8180/",
-      //   rewrite: function (req) {
-      //     req.url = "http://127.0.0.1:8180/" + req.url
-      //   },
-      // },
-      // "/media/*": {
-      //   target: "http://127.0.0.1:8585",
-      //   rewrite: function (req) {
-      //     req.url = "http://127.0.0.1:8585" + req.url
-      //   },
-      // },
     },
   },
   devtool: "source-map",
@@ -48,8 +36,9 @@ module.exports = {
     sourceMapFilename: "[name].js.map",
   },
   plugins: [
-    new webpack.SourceMapDevToolPlugin({ filename: "[file].map[query]" }),
     new webpack.EnvironmentPlugin({ MODE: process.env.MODE }),
+    new webpack.ProvidePlugin({ React: "react" }),
+    new webpack.SourceMapDevToolPlugin({ filename: "[file].map[query]" }),
     new HtmlWebpackPlugin({ template: "public/index.html" }),
   ],
   resolve: {

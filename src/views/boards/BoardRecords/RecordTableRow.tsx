@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
 import { format as formatDate, parse as parseDate } from "date-fns"
-import React from "react"
+import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
@@ -41,7 +41,7 @@ interface IRecordTableRowProps {
   }
 }
 
-export const RecordTableRow: React.FC<IRecordTableRowProps> = ({ isTrash, record }) => {
+export const RecordTableRow: FC<IRecordTableRowProps> = ({ isTrash, record }) => {
   const location = useLocation()
   const params = useParams<{ boardId: string; recordId: string }>()
 

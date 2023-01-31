@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Button, TextField, Typography } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
@@ -21,7 +21,7 @@ interface ICategoryFormDialogProps {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
 }
 
-export const CategoryFormDialog: React.FC<ICategoryFormDialogProps> = ({ category }) => {
+export const CategoryFormDialog: FC<ICategoryFormDialogProps> = ({ category }) => {
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 

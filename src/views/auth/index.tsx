@@ -1,11 +1,11 @@
-import React from "react"
+import { FC } from "react"
 
 import { useGetUserQuery } from "#api/users"
 
 import { Login } from "./Login"
 import { Logout } from "./Logout"
 
-export const Auth: React.FC = () => {
+export const Auth: FC = () => {
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
   if (getAuthorizedUserResult.loading) return null

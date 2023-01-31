@@ -1,6 +1,6 @@
 import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
 import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 import { useGetBoardsQuery } from "#api/boards"
@@ -10,7 +10,7 @@ import { TableBody } from "#components/TableBody"
 
 import { CreateBoardFormDialog } from "./CreateBoardFormDialog"
 
-export const BoardsList: React.FC = () => {
+export const BoardsList: FC = () => {
   const location = useLocation()
 
   const getParticipatedBoardsResult = useGetBoardsQuery({ variables: { iAmMemberOf: true } })

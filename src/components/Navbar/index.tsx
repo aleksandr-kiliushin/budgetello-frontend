@@ -1,11 +1,11 @@
 import { BottomNavigation, BottomNavigationAction } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 import { getActiveNavigationIndex, section } from "./helpers"
 import { bottomNavigationActionSx, bottomNavigationSx } from "./styles"
 
-export const Navbar: React.FC = () => {
+export const Navbar: FC = () => {
   const { pathname } = useLocation()
 
   return (

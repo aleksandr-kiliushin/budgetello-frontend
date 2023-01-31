@@ -1,13 +1,13 @@
 import { DarkModeSharp as DarkModeSharpIcon } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 
 import { useGetUserQuery } from "#api/users"
 import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "./components"
 
-export const Logout: React.FC = () => {
+export const Logout: FC = () => {
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
   const user = getAuthorizedUserResult.data?.user

@@ -1,5 +1,4 @@
 import { Button, Typography } from "@mui/material"
-import React from "react"
 import { useToggle } from "react-use"
 
 import { Dialog } from "#components/Dialog"

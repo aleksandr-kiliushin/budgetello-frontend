@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
@@ -12,7 +12,7 @@ import { BoardSettings } from "#views/boards/BoardSettings"
 import { BoardsList } from "#views/boards/BoardsList"
 import { Registration } from "#views/registration"
 
-export const App: React.FC = () => {
+export const App: FC = () => {
   const location = useLocation()
 
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })

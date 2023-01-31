@@ -1,5 +1,5 @@
 import { TableContainer } from "@mui/material"
-import React, { FC, PropsWithChildren, createContext } from "react"
+import { FC, PropsWithChildren, createContext } from "react"
 
 interface IDataLayoutTableContainerContext {
   columnsAmount: number

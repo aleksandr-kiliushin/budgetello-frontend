@@ -1,6 +1,6 @@
 import { DeleteOutlined as DeleteOutlinedIcon, EditOutlined as EditOutlinedIcon } from "@mui/icons-material"
 import { Button, TableCell, TableRow } from "@mui/material"
-import React from "react"
+import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
 import { BudgetCategory } from "#api/types"
@@ -12,7 +12,7 @@ interface ICategoryTableRowProps {
   category: Pick<BudgetCategory, "id" | "name" | "type">
 }
 
-export const CategoryTableRow: React.FC<ICategoryTableRowProps> = ({ category }) => {
+export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
   const params = useParams<{ boardId: string }>()
   const location = useLocation()
 

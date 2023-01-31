@@ -9,7 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react"
+import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"

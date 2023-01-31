@@ -1,5 +1,5 @@
 import { Breadcrumbs } from "@mui/material"
-import React, { FC, ReactNode, useMemo } from "react"
+import { FC, ReactNode, useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
