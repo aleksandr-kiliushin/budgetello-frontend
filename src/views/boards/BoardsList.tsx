@@ -26,7 +26,13 @@ export const BoardsList: FC = () => {
       <DataLayout>
         <DataLayout.Heading variant="h2">Your boards</DataLayout.Heading>
         <DataLayout.Controls>
-          <Button component={Link} id="create-board" startIcon={<AddIcon />} to="/boards/create" variant="outlined" />
+          <Button
+            aria-label="Create board"
+            component={Link}
+            startIcon={<AddIcon />}
+            to="/boards/create"
+            variant="outlined"
+          />
         </DataLayout.Controls>
         <DataLayout.TableContainer columnsWidths={["90%", "10%"]}>
           <Table>
@@ -45,6 +51,7 @@ export const BoardsList: FC = () => {
                   <TableCell>
                     {board.admins.some((admin) => admin.id === authorizedUser?.id) && (
                       <Button
+                        aria-label={`Open ${board.name} settings`}
                         component={Link}
                         size="small"
                         startIcon={<SettingsIcon />}

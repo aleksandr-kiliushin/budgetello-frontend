@@ -5,7 +5,7 @@ describe("Budget board creating", () => {
     cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards")
-    cy.get("a#create-board").click()
+    cy.get("a[aria-label='Create board']").click()
     cy.get("input[name='name']").type("clever-budgetiers")
     cy.get("#mui-component-select-defaultCurrencySlug").click()
     cy.get("[role='option']").contains("USD $").click()
@@ -17,7 +17,7 @@ describe("Budget board creating", () => {
     cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards")
-    cy.get("a#create-board").click()
+    cy.get("a[aria-label='Create board']").click()
     cy.get("input[name='name']").type("money-makers")
     cy.get("#mui-component-select-defaultCurrencySlug").click()
     cy.get("[role='option']").contains("USD $").click()
