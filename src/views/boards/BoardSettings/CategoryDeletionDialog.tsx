@@ -45,7 +45,7 @@ export const CategoryDeletionDialog: FC = () => {
         </Typography>
       </Dialog.Body>
       <Dialog.Footer>
-        <Button color="secondary" component={Link} to={closeDialogHref} variant="contained">
+        <Button color="secondary" component={Link} role="button" to={closeDialogHref} variant="contained">
           Cancel
         </Button>
         <Button color="error" onClick={onDeleteButtonClick} variant="contained">

@@ -23,8 +23,9 @@ export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
         <TableCell>{category.type.name}</TableCell>
         <TableCell>
           <Button
+            aria-label={`Edit ${category.name} (${category.type.name}) budget category`}
             component={Link}
-            id={`${category.name}-${category.type.name}-category-edit-button`}
+            role="button"
             size="small"
             startIcon={<EditOutlinedIcon />}
             to={`/boards/${params.boardId}/settings/edit-budget-category/${category.id}`}
@@ -32,9 +33,10 @@ export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
         </TableCell>
         <TableCell>
           <Button
+            aria-label={`Delete ${category.name} (${category.type.name}) budget category`}
             color="error"
             component={Link}
-            id={`${category.name}-${category.type.name}-category-delete-button`}
+            role="button"
             size="small"
             startIcon={<DeleteOutlinedIcon />}
             to={`/boards/${params.boardId}/settings/delete-budget-category/${category.id}`}

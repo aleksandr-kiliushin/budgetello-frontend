@@ -76,7 +76,7 @@ export const Login: FC = () => {
           <Button disabled={!isValid} sx={{ width: "auto" }} type="submit" variant="contained">
             Log in
           </Button>
-          <Button component={Link} sx={{ width: "auto" }} to="/registration" variant="outlined">
+          <Button component={Link} role="button" sx={{ width: "auto" }} to="/registration" variant="outlined">
             Registration
           </Button>
         </RowGroup>

@@ -70,7 +70,7 @@ export const Registration: FC = () => {
           <Button disabled={!isValid} fullWidth sx={{ width: "auto" }} type="submit" variant="contained">
             Register
           </Button>
-          <Button component={Link} sx={{ width: "auto" }} to="/auth" variant="outlined">
+          <Button component={Link} role="button" sx={{ width: "auto" }} to="/auth" variant="outlined">
             Login
           </Button>
         </RowGroup>

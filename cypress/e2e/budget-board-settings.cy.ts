@@ -8,9 +8,9 @@ describe("Budget board settings", () => {
         cy.visit("/boards/1/settings")
 
         cy.get("td").contains("clever-budgetiers").should("be.visible")
-        cy.get("button#edit-board-name").click()
+        cy.get("[aria-label='Edit board name']").click()
         cy.get("input[name='name']").clear().type("money-makers")
-        cy.get("button#cancel-board-name-editing").click()
+        cy.get("[aria-label='Cancel board name editing']").click()
         cy.get("td").contains("money-makers").should("not.exist")
         cy.get("td").contains("clever-budgetiers").should("be.visible")
       })
@@ -20,9 +20,9 @@ describe("Budget board settings", () => {
         cy.visit("/boards/1/settings")
 
         cy.get("td").contains("clever-budgetiers").should("be.visible")
-        cy.get("button#edit-board-name").click()
+        cy.get("[aria-label='Edit board name']").click()
         cy.get("input[name='name']").clear().type("money-makers")
-        cy.get("button#submit-board-name-editing").click()
+        cy.get("[aria-label='Submit board name editing']").click()
         cy.get("td").contains("money-makers").should("be.visible")
         cy.get("td").contains("clever-budgetiers").should("not.exist")
         cy.visit("/boards/1/records")
@@ -37,10 +37,10 @@ describe("Budget board settings", () => {
         cy.visit("/boards/1/settings")
 
         cy.get("td").contains("GEL ₾").should("be.visible")
-        cy.get("button#edit-board-default-currency").click()
+        cy.get("[aria-label='Edit board default currency']").click()
         cy.get("#mui-component-select-defaultCurrencySlug").click()
         cy.get("[role='option']").contains("USD $").click()
-        cy.get("button#cancel-board-default-currency-editing").click()
+        cy.get("[aria-label='Cancel board default currency editing']").click()
         cy.get("td").contains("USD $").should("not.exist")
         cy.get("td").contains("GEL ₾").should("be.visible")
       })
@@ -49,20 +49,20 @@ describe("Budget board settings", () => {
         cy.authorize(testUsers.johnDoe.id)
 
         cy.visit("/boards/1/records")
-        cy.get("#add-record").click()
+        cy.get("[aria-label='Add record']").click()
         cy.get("#mui-component-select-currencySlug").should("contain", "GEL ₾")
 
         cy.visit("/boards/1/settings")
         cy.get("td").contains("GEL ₾").should("be.visible")
-        cy.get("button#edit-board-default-currency").click()
+        cy.get("[aria-label='Edit board default currency']").click()
         cy.get("#mui-component-select-defaultCurrencySlug").click()
         cy.get("[role='option']").contains("USD $").click()
-        cy.get("button#submit-board-default-currency-editing").click()
+        cy.get("[aria-label='Submit board default currency editing']").click()
         cy.get("td").contains("GEL ₾").should("not.exist")
         cy.get("td").contains("USD $").should("be.visible")
 
         cy.visit("/boards/1/records")
-        cy.get("#add-record").click()
+        cy.get("[aria-label='Add record']").click()
         cy.get("#mui-component-select-currencySlug").should("contain", "USD $")
       })
     })
@@ -81,7 +81,7 @@ describe("Budget board settings", () => {
       cy.authorize(testUsers.johnDoe.id)
       cy.visit("/boards/1/settings")
 
-      cy.get("#add-category").click()
+      cy.get("[aria-label='Add budget category']").click()
       cy.get('[role="dialog"]').should("be.visible")
       cy.contains("Cancel").click()
       cy.get('[role="dialog"]').should("not.exist")
@@ -91,7 +91,7 @@ describe("Budget board settings", () => {
       cy.authorize(testUsers.johnDoe.id)
       cy.visit("/boards/1/settings")
 
-      cy.get("#add-category").click()
+      cy.get("[aria-label='Add budget category']").click()
       cy.get("button").contains("Add").should("be.disabled")
       cy.get('input[name="name"]').type("travel")
       cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
@@ -104,7 +104,7 @@ describe("Budget board settings", () => {
       cy.authorize(testUsers.johnDoe.id)
       cy.visit("/boards/1/settings")
 
-      cy.get("#add-category").click()
+      cy.get("[aria-label='Add budget category']").click()
       cy.get('input[name="name"]').type("education")
       cy.get('input[name="typeId"][value="1"]').click() // Select "Expense" category type.
       cy.get("button").contains("Add").click()
@@ -134,7 +134,7 @@ describe("Budget board settings", () => {
       cy.visit("/boards/2/settings")
 
       cy.contains("salary").should("be.visible")
-      cy.get("#salary-income-category-edit-button").click()
+      cy.get("[aria-label='Edit salary (income) budget category']").click()
       cy.get('[role="dialog"]').should("be.visible")
       cy.get('input[name="name"]').should("have.value", "salary")
       cy.get('input[name="typeId"][value="2"]').should("be.checked") // "Income" category type is selected.
@@ -144,7 +144,7 @@ describe("Budget board settings", () => {
       cy.get('[role="dialog"]').should("not.exist")
       cy.contains("salary").should("not.exist")
       cy.contains("casino").should("be.visible")
-      cy.get("#casino-expense-category-edit-button").should("be.visible")
+      cy.get("[aria-label='Edit casino (expense) budget category']").should("be.visible")
     })
 
     it("case: user tries to update a budget category but resulting category already exists, then the user fixes form values", () => {
@@ -152,7 +152,7 @@ describe("Budget board settings", () => {
       cy.visit("/boards/1/settings")
 
       cy.contains("education").should("be.visible")
-      cy.get("#education-expense-category-edit-button").click()
+      cy.get("[aria-label='Edit education (expense) budget category']").click()
       cy.get('[role="dialog"]').should("be.visible")
       cy.get('input[name="name"]').should("have.value", "education")
       cy.get('input[name="typeId"][value="1"]').should("be.checked") // "Expense" category type is selected.
@@ -177,7 +177,7 @@ describe("Budget board settings", () => {
       cy.visit("/boards/1/settings")
 
       cy.contains("clothes").should("be.visible")
-      cy.get("#clothes-expense-category-delete-button").click()
+      cy.get("[aria-label='Delete clothes (expense) budget category']").click()
       cy.get('[role="dialog"]').should("be.visible")
       cy.contains("Yes, delete").click()
       cy.get('[role="dialog"]').should("not.exist")

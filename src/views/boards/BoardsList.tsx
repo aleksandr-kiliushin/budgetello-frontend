@@ -29,6 +29,7 @@ export const BoardsList: FC = () => {
           <Button
             aria-label="Create board"
             component={Link}
+            role="button"
             startIcon={<AddIcon />}
             to="/boards/create"
             variant="outlined"
@@ -53,6 +54,7 @@ export const BoardsList: FC = () => {
                       <Button
                         aria-label={`Open ${board.name} settings`}
                         component={Link}
+                        role="button"
                         size="small"
                         startIcon={<SettingsIcon />}
                         to={`/boards/${board.id}/settings`}

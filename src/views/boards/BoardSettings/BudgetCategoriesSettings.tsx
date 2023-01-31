@@ -26,8 +26,9 @@ export const BudgetCategoriesSettings: FC = () => {
         <DataLayout.Heading variant="h2">Budget categories</DataLayout.Heading>
         <DataLayout.Controls>
           <Button
+            aria-label="Add budget category"
             component={Link}
-            id="add-category"
+            role="button"
             startIcon={<AddIcon />}
             to={`/boards/${params.boardId}/settings/add-budget-category`}
             variant="outlined"

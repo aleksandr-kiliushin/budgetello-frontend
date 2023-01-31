@@ -100,7 +100,9 @@ export const BoardRecords: FC = () => {
           />
           {board?.admins.some((admin) => admin.id === authorizedUser?.id) && (
             <Button
+              aria-label="Open board settings"
               component={Link}
+              role="button"
               startIcon={<SettingsIcon />}
               to={`/boards/${params.boardId}/settings`}
               variant="outlined"
@@ -108,8 +110,9 @@ export const BoardRecords: FC = () => {
           )}
           {isTrash === false && (
             <Button
+              aria-label="Add record"
               component={Link}
-              id="add-record"
+              role="button"
               startIcon={<AddIcon />}
               to={`/boards/${params.boardId}/records/add${location.search}`}
               variant="outlined"

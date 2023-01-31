@@ -16,6 +16,7 @@ export const Navbar: FC = () => {
           component={Link}
           icon={section.icon}
           key={section.id}
+          role="button"
           sx={bottomNavigationActionSx}
           to={section.path}
           value={section.id}

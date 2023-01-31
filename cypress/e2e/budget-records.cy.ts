@@ -45,7 +45,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
-    cy.get("#add-record").click()
+    cy.get("[aria-label='Add record']").click()
     cy.get("input[name='amount']").type("0")
     cy.get("#mui-component-select-categoryId").click()
     cy.get("[role='option']").contains("education").click()
@@ -62,9 +62,9 @@ describe("Budget records", () => {
 
   it("is edited correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
-    cy.visit("/boards/1/records")
 
-    cy.get("#2022-08-01-expense-education-25-edit-button").click()
+    cy.visit("/boards/1/records")
+    cy.get("[aria-label='Edit record of education (expense) category, of amount 25, dated 2022-08-01']").click()
     cy.get("input[name='amount']").clear().type("66.6")
     cy.get("#mui-component-select-categoryId").click() // TODO: Now it does not select previously selected value because of storing value as string in form.
     cy.get("[role='option']").contains("clothes").click()
@@ -80,7 +80,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
-    cy.get("#2022-08-01-expense-education-25-delete-button").click()
+    cy.get("[aria-label='Delete record of education (expense) category, of amount 25, dated 2022-08-01']").click()
     cy.contains("25").should("not.exist")
     cy.get("input[name='isTrash']").click()
     cy.contains("25").should("be.visible")
@@ -92,7 +92,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records?isTrash=true")
 
-    cy.get("#2022-08-01-expense-clothes-100-restore-button").click()
+    cy.get("[aria-label='Restore record of clothes (expense) category, of amount 100, dated 2022-08-01']").click()
     cy.contains("100").should("not.exist")
     cy.get("input[name='isTrash']").click()
     cy.contains("100").should("be.visible")
@@ -104,7 +104,7 @@ describe("Budget records", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records?isTrash=true")
 
-    cy.get("#2022-08-01-expense-clothes-100-delete-button").click()
+    cy.get("[aria-label='Delete record of clothes (expense) category, of amount 100, dated 2022-08-01']").click()
     cy.contains("100").should("not.exist")
   })
 })

@@ -52,14 +52,15 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ isTrash, record }) =>
     update: (cache) => cache.modify({ fields: { budgetRecords() {} } }),
   })
 
-  const mapIsTrashToActionCell = new Map([
+  const actionCellByIsTrash = new Map([
     [
       false,
       // eslint-disable-next-line react/jsx-key
       <TableCell>
         <Button
+          aria-label={`Edit record of ${record.category.name} (${record.category.type.name}) category, of amount ${record.amount}, dated ${record.date}`}
           component={Link}
-          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-edit-button`}
+          role="button"
           size="small"
           startIcon={<EditOutlinedIcon />}
           to={`/boards/${params.boardId}/records/edit/${record.id}${location.search}`}
@@ -71,8 +72,8 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ isTrash, record }) =>
       // eslint-disable-next-line react/jsx-key
       <TableCell>
         <Button
+          aria-label={`Restore record of ${record.category.name} (${record.category.type.name}) category, of amount ${record.amount}, dated ${record.date}`}
           color="success"
-          id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-restore-button`}
           onClick={() => updateBudgetRecord({ variables: { id: record.id, isTrashed: false } })}
           size="small"
           startIcon={<RestoreIcon />}
@@ -99,11 +100,11 @@ export const RecordTableRow: FC<IRecordTableRowProps> = ({ isTrash, record }) =>
         </TableCell>
         <TableCell>{record.category.name}</TableCell>
         <TableCell>{prettifiedDate}</TableCell>
-        {mapIsTrashToActionCell.get(isTrash)}
+        {actionCellByIsTrash.get(isTrash)}
         <TableCell>
           <Button
+            aria-label={`Delete record of ${record.category.name} (${record.category.type.name}) category, of amount ${record.amount}, dated ${record.date}`}
             color="error"
-            id={`${record.date}-${record.category.type.name}-${record.category.name}-${record.amount}-delete-button`}
             onClick={() => {
               // TODO: Replace recordId with id.
               if (record.isTrashed) {

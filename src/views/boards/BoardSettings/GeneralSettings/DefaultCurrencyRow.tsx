@@ -51,7 +51,7 @@ export const DefaultCurrencyRow: FC = () => {
         </TableCell>
         <TableCell>
           <Button
-            id="edit-board-default-currency"
+            aria-label="Edit board default currency"
             onClick={() => setMode("edit")}
             size="small"
             startIcon={<EditOutlinedIcon />}
@@ -77,7 +77,7 @@ export const DefaultCurrencyRow: FC = () => {
         </TableCell>
         <TableCell>
           <Button
-            id="cancel-board-default-currency-editing"
+            aria-label="Cancel board default currency editing"
             onClick={() => setMode("view")}
             size="small"
             startIcon={<UndoOutlinedIcon />}
@@ -85,9 +85,9 @@ export const DefaultCurrencyRow: FC = () => {
         </TableCell>
         <TableCell>
           <Button
+            aria-label="Submit board default currency editing"
             color="success"
             disabled={!formState.isDirty}
-            id="submit-board-default-currency-editing"
             onClick={updateBoardDefaultCurrency}
             size="small"
             startIcon={<DoneOutlinedIcon />}

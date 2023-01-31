@@ -55,18 +55,19 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDial
           {header}
           {closeDialogHref === undefined ? (
             <Button
+              aria-label="Close dialog"
               color="secondary"
-              id="close-dialog"
               onClick={closeDialog}
               startIcon={<CloseOutlinedIcon />}
               variant="contained"
             />
           ) : (
             <Button
+              aria-label="Close dialog"
               color="secondary"
               component={Link}
-              id="close-dialog"
               onClick={closeDialog}
+              role="button"
               startIcon={<CloseOutlinedIcon />}
               to={closeDialogHref}
               variant="contained"

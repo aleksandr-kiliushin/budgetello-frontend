@@ -52,7 +52,12 @@ export const BoardNameRow: FC = () => {
         <TableCell>Name</TableCell>
         <TableCell>{board?.name}</TableCell>
         <TableCell>
-          <Button id="edit-board-name" onClick={() => setMode("edit")} size="small" startIcon={<EditOutlinedIcon />} />
+          <Button
+            aria-label="Edit board name"
+            onClick={() => setMode("edit")}
+            size="small"
+            startIcon={<EditOutlinedIcon />}
+          />
         </TableCell>
         <TableCell />
       </TableRow>
@@ -74,7 +79,7 @@ export const BoardNameRow: FC = () => {
         </TableCell>
         <TableCell>
           <Button
-            id="cancel-board-name-editing"
+            aria-label="Cancel board name editing"
             onClick={() => setMode("view")}
             size="small"
             startIcon={<UndoOutlinedIcon />}
@@ -82,9 +87,9 @@ export const BoardNameRow: FC = () => {
         </TableCell>
         <TableCell>
           <Button
+            aria-label="Submit board name editing"
             color="success"
             disabled={!formState.isDirty}
-            id="submit-board-name-editing"
             onClick={updateBoardName}
             size="small"
             startIcon={<DoneOutlinedIcon />}
