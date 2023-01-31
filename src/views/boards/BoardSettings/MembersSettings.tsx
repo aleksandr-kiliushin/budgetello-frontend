@@ -42,6 +42,7 @@ export const MembersSettings: FC = () => {
                   <TableCell>
                     {boardMembers.some((member) => member.id === user.id) ? (
                       <Button
+                        aria-label={`Remove ${user.username} member from board`}
                         color="error"
                         onClick={() => {
                           removeBoardMember({ variables: { boardId: Number(params.boardId), memberId: user.id } })
@@ -51,6 +52,7 @@ export const MembersSettings: FC = () => {
                       />
                     ) : (
                       <Button
+                        aria-label={`Add ${user.username} member to board`}
                         color="success"
                         onClick={() => {
                           addBoardMember({ variables: { boardId: Number(params.boardId), userId: user.id } })
