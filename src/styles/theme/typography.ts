@@ -11,7 +11,7 @@ export const typography = createTypography(palette, {
   body1: {
     fontSize: "1.6rem",
   },
-  fontFamily: ["SofiaSans", "Arial"].join(","),
+  fontFamily: ["Sofia Sans", "sans-serif"].join(","),
   h1: {
     fontSize: "2.7rem",
     fontWeight: "500",
