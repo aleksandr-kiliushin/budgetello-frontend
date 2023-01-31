@@ -17,10 +17,8 @@ export const App: FC = () => {
 
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
 
-  if (getAuthorizedUserResult.loading) return null
-
   if (
-    getAuthorizedUserResult.error !== undefined &&
+    (localStorage.authorizationToken === undefined || getAuthorizedUserResult.error !== undefined) &&
     location.pathname !== "/auth" &&
     location.pathname !== "/registration"
   ) {
