@@ -12,6 +12,7 @@ export const Navbar: FC = () => {
     <BottomNavigation sx={bottomNavigationSx} value={getActiveNavigationIndex(pathname)}>
       {section.map((section) => (
         <BottomNavigationAction
+          aria-label={section.id}
           component={Link}
           icon={section.icon}
           key={section.id}
