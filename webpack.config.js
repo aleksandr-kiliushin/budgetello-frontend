@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const path = require("path")
-const HTMLWebpackPlugin = require("html-webpack-plugin")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 const webpack = require("webpack")
 
 module.exports = {
@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new webpack.SourceMapDevToolPlugin({ filename: "[file].map[query]" }),
     new webpack.EnvironmentPlugin({ MODE: process.env.MODE }),
-    new HTMLWebpackPlugin({ template: "public/index.html" }),
+    new HtmlWebpackPlugin({ template: "public/index.html" }),
   ],
   resolve: {
     alias: {
