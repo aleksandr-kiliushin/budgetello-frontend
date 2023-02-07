@@ -28,50 +28,58 @@ const BoardName: FC = () => {
   return <>{getBoardResult.data?.board.name}</>
 }
 
-const breadcrumbsByPathnamePattern: Map<RegExp[], IBreadcrumb[]> = new Map([
-  [[/^\/boards$/, /^\/boards\/create$/], [{ element: "Boards", hrefTemplate: "/boards" }]],
-  [
-    [/^\/boards\/\d+\/records$/, /^\/boards\/\d+\/records\/add$/, /^\/boards\/\d+\/records\/edit\/\d+$/],
-    [
+const breadcrumbsByPathnamePatterns: { pathnamePatterns: RegExp[]; breadcrumbs: IBreadcrumb[] }[] = [
+  {
+    pathnamePatterns: [/^\/boards$/, /^\/boards\/create$/],
+    breadcrumbs: [{ element: "Boards", hrefTemplate: "/boards" }],
+  },
+  {
+    pathnamePatterns: [
+      /^\/boards\/\d+\/records$/,
+      /^\/boards\/\d+\/records\/add$/,
+      /^\/boards\/\d+\/records\/edit\/\d+$/,
+    ],
+    breadcrumbs: [
       { element: "Boards", hrefTemplate: "/boards" },
       { element: <BoardName />, hrefTemplate: "/boards/$boardId/records" },
     ],
-  ],
-  [
-    [
+  },
+  {
+    pathnamePatterns: [
       /^\/boards\/\d+\/settings$/,
       /^\/boards\/\d+\/settings\/add-budget-category$/,
       /^\/boards\/\d+\/settings\/delete-budget-category\/\d+$/,
       /^\/boards\/\d+\/settings\/edit-budget-category\/\d+$/,
     ],
-    [
+    breadcrumbs: [
       { element: "Boards", hrefTemplate: "/boards" },
       { element: <BoardName />, hrefTemplate: "/boards/$boardId/records" },
       { element: "Settings", hrefTemplate: "/boards/$boardId/settings" },
     ],
-  ],
-  [
-    [/^\/boards\/\d+\/statistics$/],
-    [
+  },
+  {
+    pathnamePatterns: [/^\/boards\/\d+\/statistics$/],
+    breadcrumbs: [
       { element: "Boards", hrefTemplate: "/boards" },
       { element: <BoardName />, hrefTemplate: "/boards/$boardId/records" },
       { element: "Statistics", hrefTemplate: "/boards/$boardId/statistics" },
     ],
-  ],
-])
+  },
+]
 
 export const BreadcrumbsPanel: FC = () => {
   const location = useLocation()
-
   const boardId = useBoardId()
 
-  let breadcrumbs: IBreadcrumb[] | undefined = undefined
-  for (const [pathnamePatterns, _breadcrumbs] of breadcrumbsByPathnamePattern) {
-    if (breadcrumbs !== undefined) continue
-    if (pathnamePatterns.some((pathnamePattern) => pathnamePattern.test(location.pathname))) {
-      breadcrumbs = _breadcrumbs
+  const breadcrumbs = useMemo<IBreadcrumb[] | undefined>(() => {
+    for (const group of breadcrumbsByPathnamePatterns) {
+      const doesPathnameMatchGroupPathnamePatterns = group.pathnamePatterns.some((pathnamePattern) => {
+        return pathnamePattern.test(location.pathname)
+      })
+      if (doesPathnameMatchGroupPathnamePatterns) return group.breadcrumbs
     }
-  }
+    return undefined
+  }, [location.pathname])
 
   if (breadcrumbs === undefined) return null
   const lastBreadcrumbIndex = breadcrumbs.length - 1
