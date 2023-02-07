@@ -10,6 +10,7 @@ import { Auth } from "#views/auth"
 import { BoardRecords } from "#views/boards/BoardRecords"
 import { BoardSettings } from "#views/boards/BoardSettings"
 import { BoardsList } from "#views/boards/BoardsList"
+import { BudgetBoardStatistics } from "#views/boards/BudgetBoardStatistics"
 import { Registration } from "#views/registration"
 
 export const App: FC = () => {
@@ -45,6 +46,7 @@ export const App: FC = () => {
             path="/boards/:boardId/settings/delete-budget-category/:budgetCategoryId"
           />
           <Route element={<BoardSettings />} path="/boards/:boardId/settings/edit-budget-category/:budgetCategoryId" />
+          <Route element={<BudgetBoardStatistics />} path="/boards/:boardId/statistics" />
           <Route element={<Registration />} path="/registration" />
         </Routes>
       </Box>

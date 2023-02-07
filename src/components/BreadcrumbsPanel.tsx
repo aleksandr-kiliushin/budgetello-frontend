@@ -50,6 +50,14 @@ const breadcrumbsByPathnamePattern: Map<RegExp[], IBreadcrumb[]> = new Map([
       { element: "Settings", hrefTemplate: "/boards/$boardId/settings" },
     ],
   ],
+  [
+    [/^\/boards\/\d+\/statistics$/],
+    [
+      { element: "Boards", hrefTemplate: "/boards" },
+      { element: <BoardName />, hrefTemplate: "/boards/$boardId/records" },
+      { element: "Statistics", hrefTemplate: "/boards/$boardId/statistics" },
+    ],
+  ],
 ])
 
 export const BreadcrumbsPanel: FC = () => {

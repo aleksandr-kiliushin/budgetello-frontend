@@ -1,4 +1,4 @@
-import { Add as AddIcon, Settings as SettingsIcon } from "@mui/icons-material"
+import { Add as AddIcon, Settings as SettingsIcon, SsidChart as SsidChartIcon } from "@mui/icons-material"
 import {
   Button,
   CircularProgress,
@@ -105,6 +105,16 @@ export const BoardRecords: FC = () => {
               role="button"
               startIcon={<SettingsIcon />}
               to={`/boards/${params.boardId}/settings`}
+              variant="outlined"
+            />
+          )}
+          {isTrash === false && (
+            <Button
+              aria-label="Open board statistics"
+              component={Link}
+              role="button"
+              startIcon={<SsidChartIcon />}
+              to={`/boards/${params.boardId}/statistics`}
               variant="outlined"
             />
           )}
