@@ -49,8 +49,6 @@ export const BudgetBoardStatistics: FC = () => {
       })
   }, [currencies])
 
-  console.log(usdRates)
-
   const chartBuildingData = useMemo<IDateData[]>(() => {
     if (records === undefined) return []
     if (currencies === undefined) return []
