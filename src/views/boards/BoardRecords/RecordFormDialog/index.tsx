@@ -71,7 +71,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
 
   const getCurrenciesResult = useGetCurrenciesQuery()
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
-    variables: { boardsIds: [Number(params.boardId)] },
+    variables: { boardsIds: [Number(params.boardId)], orderingByType: "ASC" },
   })
 
   const [createBudgetRecord] = useCreateBudgetRecordMutation({
