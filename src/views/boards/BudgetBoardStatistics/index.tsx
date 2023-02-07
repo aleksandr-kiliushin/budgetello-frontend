@@ -1,7 +1,7 @@
 import { addDays, format as formatDate, isAfter, parse as parseDate } from "date-fns"
 import { FC, useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
 import { useGetBudgetRecordsQuery } from "#api/budget"
 import { useGetCurrenciesQuery } from "#api/currencies"
@@ -92,13 +92,12 @@ export const BudgetBoardStatistics: FC = () => {
   }, [currencies, usdRates, records])
 
   return (
-    <ResponsiveContainer height="100%" width="100%">
-      <LineChart data={chartBuildingData} height={300} margin={{ top: 5, right: 30, left: 20, bottom: 5 }} width={500}>
+    <ResponsiveContainer height="96%" width="100%">
+      <LineChart data={chartBuildingData} height={300} margin={{ top: 4, right: 0, left: 0, bottom: 0 }} width={500}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis angle={45} dataKey="date" tickMargin={30} />
+        <XAxis angle={5} dataKey="date" tickMargin={0} />
         <YAxis />
         <Tooltip />
-        <Legend />
         {currencies?.map((currency, index) => (
           <Line
             dataKey={`sumByCurrencySlug.${currency.name}`}
