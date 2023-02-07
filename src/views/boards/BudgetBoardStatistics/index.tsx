@@ -12,8 +12,6 @@ interface IDateData {
   sumByCurrencySlug: Record<Currency["slug"], number>
 }
 
-const colors = ["red", "magenta", "violet", "#8884d8", "#82ca9d", "blue"]
-
 export const BudgetBoardStatistics: FC = () => {
   const params = useParams<{ boardId: string }>()
 
@@ -105,7 +103,7 @@ export const BudgetBoardStatistics: FC = () => {
             // @ts-ignore
             dot={() => null}
             key={currency.name}
-            stroke={colors[index]}
+            stroke={["red", "magenta", "violet", "#8884d8", "#82ca9d", "blue"][index]}
             strokeWidth="2px"
           />
         ))}
