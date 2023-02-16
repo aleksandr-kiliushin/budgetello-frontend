@@ -5,7 +5,7 @@ export type BudgetCategoryTypeFieldsFragment = { __typename?: 'BudgetCategoryTyp
 
 export type BudgetCategoryFieldsFragment = { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } };
 
-export type BudgetRecordFieldsFragment = { __typename?: 'BudgetRecord', amount: number, date: string, id: number, isTrashed: boolean, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } };
+export type BudgetRecordFieldsFragment = { __typename?: 'BudgetRecord', amount: number, comment: string, date: string, id: number, isTrashed: boolean, author: { __typename?: 'User', id: number, username: string }, category: { __typename?: 'BudgetCategory', id: number, name: string, board: { __typename?: 'Board', id: number, name: string }, type: { __typename?: 'BudgetCategoryType', id: number, name: string } }, currency: { __typename?: 'Currency', name: string, slug: string, symbol: string } };
 
 export type UserFieldsFragment = { __typename?: 'User', id: number, username: string, administratedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }>, participatedBoards: Array<{ __typename?: 'Board', id: number, name: string, admins: Array<{ __typename?: 'User', id: number, username: string }>, members: Array<{ __typename?: 'User', id: number, username: string }>, subject: { __typename?: 'BoardSubject', id: number, name: string } }> };
 
@@ -36,6 +36,10 @@ export const BudgetCategoryFieldsFragmentDoc = gql`
 export const BudgetRecordFieldsFragmentDoc = gql`
     fragment budgetRecordFields on BudgetRecord {
   amount
+  author {
+    id
+    username
+  }
   category {
     board {
       id
@@ -48,6 +52,7 @@ export const BudgetRecordFieldsFragmentDoc = gql`
       name
     }
   }
+  comment
   currency {
     name
     slug

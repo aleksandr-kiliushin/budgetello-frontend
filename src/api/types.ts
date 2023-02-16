@@ -76,7 +76,9 @@ export type BudgetCategoryType = {
 export type BudgetRecord = {
   __typename?: 'BudgetRecord';
   amount: Scalars['Float'];
+  author: User;
   category: BudgetCategory;
+  comment: Scalars['String'];
   currency: Currency;
   date: Scalars['String'];
   id: Scalars['Int'];
@@ -118,6 +120,7 @@ export type CreateBudgetCategoryInput = {
 export type CreateBudgetRecordInput = {
   amount: Scalars['Float'];
   categoryId: Scalars['Int'];
+  comment: Scalars['String'];
   currencySlug: Scalars['String'];
   date: Scalars['String'];
 };
@@ -436,6 +439,7 @@ export type UpdateBudgetCategoryInput = {
 export type UpdateBudgetRecordInput = {
   amount?: InputMaybe<Scalars['Float']>;
   categoryId?: InputMaybe<Scalars['Int']>;
+  comment?: InputMaybe<Scalars['String']>;
   currencySlug?: InputMaybe<Scalars['String']>;
   date?: InputMaybe<Scalars['String']>;
   id: Scalars['Int'];

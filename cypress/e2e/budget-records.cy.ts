@@ -41,7 +41,7 @@ describe("Budget records", () => {
     cy.get("[role='progressbar'][aria-label='Loading more records']").should("not.exist")
   })
 
-  it("is created correctly", () => {
+  it.only("is created correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
@@ -57,7 +57,8 @@ describe("Budget records", () => {
     cy.get("button").contains("Add").click()
     cy.contains("4.53").should("be.visible")
     cy.contains("education").should("be.visible")
-    // TODO: Check the date.
+    // TODO: Test date, maybe by opening details.
+    // TODO: Test comment, maybe by opening details.
   })
 
   it("is edited correctly", () => {
@@ -74,6 +75,8 @@ describe("Budget records", () => {
     cy.contains("66.6").should("be.visible")
     cy.contains("clothes").should("be.visible")
     cy.contains("01 Aug 22").should("be.visible")
+    // TODO: Test date, maybe by opening details.
+    // TODO: Test comment, maybe by opening details.
   })
 
   it("is moved to trash correctly", () => {

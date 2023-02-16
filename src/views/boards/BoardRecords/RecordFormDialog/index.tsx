@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -12,7 +12,8 @@ import {
   useUpdateBudgetRecordMutation,
 } from "#api/budget"
 import { useGetCurrenciesQuery } from "#api/currencies"
-import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
+import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types"
+import { useGetUserQuery } from "#api/users"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
@@ -27,6 +28,7 @@ const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
 interface IRecordFormDialogProps {
   record:
     | {
+        author: Pick<User, "id" | "username">
         amount: BudgetRecord["amount"]
         category: {
           board: Pick<Board, "id" | "name">
@@ -34,6 +36,7 @@ interface IRecordFormDialogProps {
           name: BudgetCategory["name"]
           type: BudgetCategory["type"]
         }
+        comment: BudgetRecord["comment"]
         currency: Currency
         date: BudgetRecord["date"]
         id: BudgetRecord["id"]
@@ -49,16 +52,21 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
   const getBoardResult = useGetBoardQuery({ variables: { id: Number(params.boardId) } })
   const board = getBoardResult.data?.board
 
+  const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
+  const authorizedUser = getAuthorizedUserResult.data?.user
+
   const defaultValues = record
     ? {
         amount: record.amount,
         categoryId: record.category.id,
+        comment: record.comment,
         currencySlug: record.currency.slug,
         date: record.date,
       }
     : {
         amount: null,
         categoryId: null,
+        comment: "",
         currencySlug: board?.defaultCurrency?.slug ?? "",
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
@@ -105,6 +113,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
         variables: {
           amount: formValues.amount,
           categoryId: formValues.categoryId,
+          comment: formValues.comment,
           currencySlug: formValues.currencySlug,
           date: formValues.date,
         },
@@ -114,6 +123,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
         variables: {
           amount: formValues.amount,
           categoryId: formValues.categoryId,
+          comment: formValues.comment,
           currencySlug: formValues.currencySlug,
           date: formValues.date,
           id: Number(record.id),
@@ -132,6 +142,9 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
       <Dialog.Body>
         <form>
           <RowGroup>
+            <Box sx={{ display: "grid", gridAutoFlow: "column", justifyContent: "start", columnGap: "4px" }}>
+              Author: <strong>{record === undefined ? authorizedUser?.username : record.author.username}</strong>
+            </Box>
             <TextField
               {...register(FieldName.Amount, { valueAsNumber: true })}
               error={formState.errors.amount !== undefined}
@@ -177,6 +190,10 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
               </Select>
             </FormControl>
             <TextField {...register(FieldName.Date, { required: true })} label="Date" type="date" />
+            <Box sx={{ display: "grid" }}>
+              <label htmlFor={FieldName.Comment}>Comment</label>
+              <textarea {...register(FieldName.Comment)} />
+            </Box>
           </RowGroup>
         </form>
       </Dialog.Body>

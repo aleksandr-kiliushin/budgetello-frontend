@@ -18,6 +18,10 @@ fragment budgetCategoryFields on BudgetCategory {
 
 fragment budgetRecordFields on BudgetRecord {
   amount
+  author {
+    id
+    username
+  }
   category {
     board {
       id
@@ -30,6 +34,7 @@ fragment budgetRecordFields on BudgetRecord {
       name
     }
   }
+  comment
   currency {
     name
     slug

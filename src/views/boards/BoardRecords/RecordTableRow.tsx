@@ -9,7 +9,7 @@ import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
 import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
-import { Board, BudgetCategory, BudgetRecord, Currency } from "#api/types"
+import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types"
 import { theme } from "#styles/theme"
 
 import { RecordFormDialog } from "./RecordFormDialog"
@@ -27,6 +27,7 @@ const amountColorByBudgetCategoryType = new Map([
 interface IRecordTableRowProps {
   isTrash: boolean
   record: {
+    author: Pick<User, "id" | "username">
     amount: BudgetRecord["amount"]
     category: {
       board: Pick<Board, "id" | "name">
@@ -34,6 +35,7 @@ interface IRecordTableRowProps {
       name: BudgetCategory["name"]
       type: BudgetCategory["type"]
     }
+    comment: BudgetRecord["comment"]
     currency: Currency
     date: BudgetRecord["date"]
     id: BudgetRecord["id"]
