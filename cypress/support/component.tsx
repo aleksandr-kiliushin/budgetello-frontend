@@ -18,6 +18,7 @@
 import { Global } from "@emotion/react"
 import { ThemeProvider } from "@mui/material"
 import { mount } from "cypress/react18"
+import { BrowserRouter } from "react-router-dom"
 
 import { globalStyles } from "#styles/globalStyles"
 import { theme } from "#styles/theme"
@@ -40,9 +41,11 @@ declare global {
 
 Cypress.Commands.add("mount", (component) => {
   mount(
-    <ThemeProvider theme={theme}>
-      <Global styles={globalStyles} />
-      {component}
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <Global styles={globalStyles} />
+        {component}
+      </ThemeProvider>
+    </BrowserRouter>
   )
 })
