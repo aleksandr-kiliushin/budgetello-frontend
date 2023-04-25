@@ -11,7 +11,7 @@ if (process.env.MODE !== "development" && process.env.MODE !== "production" && p
 
 const httpLinkUriByMode = {
   development: "/graphql",
-  production: "https://personal-app-server.onrender.com/graphql",
+  production: "https://personal-app-backend.onrender.com/graphql",
   test: "/graphql",
 }
 
