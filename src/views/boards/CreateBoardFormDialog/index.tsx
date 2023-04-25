@@ -14,6 +14,7 @@ import { FieldName, IFormValues, defaultValues, validationSchema } from "./form-
 export const CreateBoardFormDialog: FC = () => {
   const navigate = useNavigate()
 
+  // TODO: Remove destructuring.
   const { formState, handleSubmit, register, setError } = useForm<IFormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),

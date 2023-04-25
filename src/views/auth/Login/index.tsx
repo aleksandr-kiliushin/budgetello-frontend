@@ -16,6 +16,7 @@ export const Login: FC = () => {
   const navigate = useNavigate()
   const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
+  // TODO: Remove destructuring.
   const {
     formState: { isValid, errors },
     handleSubmit,

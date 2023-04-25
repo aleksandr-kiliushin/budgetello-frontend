@@ -24,6 +24,7 @@ export const DefaultCurrencyRow: FC = () => {
 
   const [updateBoard] = useUpdateBoardMutation()
 
+  // TODO: Remove destructuring.
   const { register, handleSubmit, formState } = useForm<{ defaultCurrencySlug: string }>()
 
   const updateBoardDefaultCurrency = handleSubmit(async (formValues) => {

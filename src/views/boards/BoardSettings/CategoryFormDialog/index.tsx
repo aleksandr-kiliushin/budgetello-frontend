@@ -29,6 +29,7 @@ export const CategoryFormDialog: FC<ICategoryFormDialogProps> = ({ category }) =
   // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
   const defaultValues = category === undefined ? { name: "" } : { name: category.name, typeId: category.type.id }
 
+  // TODO: Remove destructuring.
   const {
     formState: { errors, isValid },
     handleSubmit,

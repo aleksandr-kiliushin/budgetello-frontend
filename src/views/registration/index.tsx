@@ -14,6 +14,7 @@ export const Registration: FC = () => {
   const navigate = useNavigate()
   const [createUser] = useCreateUserMutation()
 
+  // TODO: Remove destructuring.
   const {
     formState: { isValid, errors },
     handleSubmit,
