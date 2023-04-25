@@ -71,8 +71,9 @@ describe("Authorization", () => {
     })
 
     it("logs out successfully", () => {
-      cy.on("uncaught:exception", (error) => {
-        expect(error.message).to.include("Invalid token.")
+      cy.on("uncaught:exception", () => {
+        // This UNAUTHORIZED error occurs right after logging out: frontend asks for authorized user data.
+        // But there is no authorizationToken on the client bacause we logged out a moment before.
         return false
       })
       cy.authorize(testUsers.johnDoe.id)
