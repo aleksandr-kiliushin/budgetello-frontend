@@ -7,7 +7,6 @@ import {
   Radio,
 } from "@mui/material"
 import { UseFormRegister } from "react-hook-form"
-import { AssertsShape } from "yup/lib/object"
 
 interface IRadioGroupOption {
   label: string
@@ -19,7 +18,7 @@ interface IRadioGroupProps {
   label: string
   name: string
   options: IRadioGroupOption[]
-  register: UseFormRegister<AssertsShape<any>> // eslint-disable-line @typescript-eslint/no-explicit-any
+  register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   setValue(fieldName: string, newValue: string | number): void
 }
 
