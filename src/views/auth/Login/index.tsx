@@ -16,7 +16,6 @@ export const Login: FC = () => {
   const navigate = useNavigate()
   const [createAuthorizationToken] = useCreateAuthorizationTokenMutation()
 
-  // TODO: Remove destructuring.
   const {
     formState: { isValid, errors },
     handleSubmit,
@@ -31,10 +30,10 @@ export const Login: FC = () => {
   const onSubmit = handleSubmit(async ({ password, username }) => {
     try {
       localStorage.removeItem("authorizationToken")
-      const result = await createAuthorizationToken({ variables: { password, username } })
-      if (result.errors !== undefined) throw errors
-      if (!result.data) return
-      const authorizationToken = result.data.createAuthorizationToken
+      const response = await createAuthorizationToken({ variables: { password, username } })
+      if (response.errors !== undefined) throw response.errors
+      if (!response.data) return
+      const authorizationToken = response.data.createAuthorizationToken
       if (authorizationToken === undefined) {
         return
       }

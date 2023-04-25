@@ -24,7 +24,6 @@ export const BoardNameRow: FC = () => {
 
   const [updateBoard] = useUpdateBoardMutation()
 
-  // TODO: Remove destructuring.
   const { formState, handleSubmit, register, setError } = useForm<{ [FieldName.Name]: string }>()
 
   const updateBoardName = handleSubmit(async (formValues) => {

@@ -14,7 +14,6 @@ export const Registration: FC = () => {
   const navigate = useNavigate()
   const [createUser] = useCreateUserMutation()
 
-  // TODO: Remove destructuring.
   const {
     formState: { isValid, errors },
     handleSubmit,
@@ -28,8 +27,8 @@ export const Registration: FC = () => {
 
   const onSubmit = handleSubmit(async ({ password, passwordConfirmation, username }) => {
     try {
-      const result = await createUser({ variables: { password, passwordConfirmation, username } })
-      if (result.errors !== undefined) throw errors
+      const response = await createUser({ variables: { password, passwordConfirmation, username } })
+      if (response.errors !== undefined) throw response.errors
       navigate("/auth")
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

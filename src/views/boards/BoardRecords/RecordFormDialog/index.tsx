@@ -71,7 +71,6 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
-  // TODO: Remove destructuring.
   const { formState, handleSubmit, register } = useForm<IFormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),

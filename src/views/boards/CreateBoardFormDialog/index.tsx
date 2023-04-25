@@ -14,7 +14,6 @@ import { FieldName, IFormValues, defaultValues, validationSchema } from "./form-
 export const CreateBoardFormDialog: FC = () => {
   const navigate = useNavigate()
 
-  // TODO: Remove destructuring.
   const { formState, handleSubmit, register, setError } = useForm<IFormValues>({
     defaultValues,
     resolver: yupResolver(validationSchema),
@@ -35,9 +34,9 @@ export const CreateBoardFormDialog: FC = () => {
   const submitRecordForm = handleSubmit(async ({ defaultCurrencySlug, name }) => {
     if (defaultCurrencySlug === null) return
     try {
-      const createBoardResult = await createBoard({ variables: { defaultCurrencySlug, name, subjectId: 1 } })
-      if (createBoardResult.errors !== undefined) throw createBoardResult.errors
-      navigate(`/boards/${createBoardResult.data?.createBoard.id}/records`)
+      const response = await createBoard({ variables: { defaultCurrencySlug, name, subjectId: 1 } })
+      if (response.errors !== undefined) throw response.errors
+      navigate(`/boards/${response.data?.createBoard.id}/records`)
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const errorFields = (error as any).graphQLErrors[0].extensions.exception.response.fields
