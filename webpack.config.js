@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/no-var-requires: "off" */
 const path = require("path")
 const webpack = require("webpack")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
   devServer: {
@@ -39,9 +39,8 @@ module.exports = {
     new webpack.EnvironmentPlugin({ MODE: process.env.MODE }),
     new webpack.ProvidePlugin({ React: "react" }),
     new webpack.SourceMapDevToolPlugin({ filename: "[file].map[query]" }),
-    new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      favicon: "./public/logo/32px.png",
+    new CopyWebpackPlugin({
+      patterns: [{ from: "./public", to: "./" }],
     }),
   ],
   resolve: {
