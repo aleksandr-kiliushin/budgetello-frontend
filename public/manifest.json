@@ -15,5 +15,6 @@
   "id": "/?homescreen=1",
   "start_url": "/?homescreen=1",
   "background_color": "#ff0000",
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "#00ff11"
 }
