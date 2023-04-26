@@ -10,9 +10,9 @@ import { theme } from "#styles/theme"
 import { apolloClient } from "#utils/apolloClient"
 import { App } from "#views/index"
 
-const standalonePwaHeaderBackgroundColorMetaTag = document.head.querySelector("meta[name='theme-color']")
-if (standalonePwaHeaderBackgroundColorMetaTag instanceof HTMLMetaElement) {
-  standalonePwaHeaderBackgroundColorMetaTag.content = theme.palette.background.default
+const standalonePwaTitleBarBackgroundColorMetaTag = document.head.querySelector("meta[name='theme-color']")
+if (standalonePwaTitleBarBackgroundColorMetaTag instanceof HTMLMetaElement) {
+  standalonePwaTitleBarBackgroundColorMetaTag.content = theme.palette.background.default
 }
 
 let rootNode = document.querySelector("#root")
