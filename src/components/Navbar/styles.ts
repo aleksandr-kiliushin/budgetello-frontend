@@ -3,12 +3,18 @@ import { SxProps, Theme } from "@mui/material"
 export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
   position: "fixed",
   bottom: "0px",
-  height: "52px",
+  // height: "52px",
+  height: "60px",
   width: "100%",
   borderTop: `1px solid ${theme.palette.primary.dark}`,
-  // [theme.breakpoints.down("s")]: {
-  //   height: "48px",
-  // },
+  [theme.breakpoints.down("s")]: {
+    height: "48px",
+  },
+  "@supports (-webkit-touch-callout: none)": {
+    [`@media (max-width: ${theme.breakpoints.values.s}px) and (display-mode: standalone)`]: {
+      marginBottom: "12px",
+    },
+  },
 })
 
 // TODO: Move to theme.
