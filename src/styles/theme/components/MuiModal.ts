@@ -7,7 +7,7 @@ export const MuiModal: NonNullable<Components<Theme>["MuiModal"]> = {
     root: {
       "@supports (-webkit-touch-callout: none)": {
         [`@media (max-width: ${breakpoints.values.s}px) and (display-mode: standalone)`]: {
-          marginBottom: "12px",
+          marginBottom: "20px",
         },
       },
     },

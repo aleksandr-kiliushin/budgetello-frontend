@@ -12,7 +12,7 @@ export const bottomNavigationSx: SxProps<Theme> = (theme) => ({
   },
   "@supports (-webkit-touch-callout: none)": {
     [`@media (max-width: ${theme.breakpoints.values.s}px) and (display-mode: standalone)`]: {
-      marginBottom: "12px",
+      marginBottom: "20px",
     },
   },
 })
