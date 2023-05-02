@@ -11,5 +11,12 @@ export const MuiModal: NonNullable<Components<Theme>["MuiModal"]> = {
         },
       },
     },
+    backdrop: {
+      "@supports (-webkit-touch-callout: none)": {
+        [`@media (max-width: ${breakpoints.values.s}px) and (display-mode: standalone)`]: {
+          display: "none",
+        },
+      },
+    },
   },
 }
