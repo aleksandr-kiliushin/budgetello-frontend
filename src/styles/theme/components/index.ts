@@ -4,6 +4,7 @@ import { MuiButton } from "./MuiButton"
 import { MuiFormControl } from "./MuiFormControl"
 import { MuiFormHelperText } from "./MuiFormHelperText"
 import { MuiInputBase } from "./MuiInputBase"
+import { MuiModal } from "./MuiModal"
 import { MuiOutlinedInput } from "./MuiOutlinedInput"
 import { MuiSvgIcon } from "./MuiSvgIcon"
 import { MuiTableCell } from "./MuiTableCell"
@@ -15,6 +16,7 @@ export const components: NonNullable<Components<Theme>> = {
   MuiFormControl,
   MuiFormHelperText,
   MuiInputBase,
+  MuiModal,
   MuiOutlinedInput,
   MuiSvgIcon,
   MuiTableCell,

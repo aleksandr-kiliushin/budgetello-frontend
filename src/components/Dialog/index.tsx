@@ -41,7 +41,6 @@ const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDial
   const _closeDialog = () => {
     if (closeDialog !== undefined) {
       closeDialog()
-      return
     }
     if (closeDialogHref !== undefined) {
       navigate(closeDialogHref)
