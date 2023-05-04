@@ -23,10 +23,6 @@ module.exports = {
         test: /\.ts(x?)$/,
         use: ["babel-loader"],
       },
-      {
-        test: /\.ttf/,
-        type: "asset/resource",
-      },
     ],
   },
   output: {
