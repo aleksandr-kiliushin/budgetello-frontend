@@ -2,18 +2,13 @@
   "name": "Personal app",
   "icons": [
     {
-      "src": "./logo/192px.png",
+      "src": "./logo/pwa-icon.png",
       "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "./logo/512px.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "100x100"
     }
   ],
   "id": "/?homescreen=1",
   "start_url": "/?homescreen=1",
-  "background_color": "#ff0000",
+  "background_color": "white",
   "display": "standalone"
 }
