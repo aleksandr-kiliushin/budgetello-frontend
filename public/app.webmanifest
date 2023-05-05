@@ -1,14 +1,15 @@
 {
-  "name": "Personal app",
+  "background_color": "white",
+  "display": "standalone",
   "icons": [
     {
       "src": "./logo/pwa-icon.png",
       "type": "image/png",
-      "sizes": "100x100"
+      "sizes": "192x192"
     }
   ],
   "id": "/?homescreen=1",
-  "start_url": "/?homescreen=1",
-  "background_color": "white",
-  "display": "standalone"
+  "lang": "en",
+  "name": "Personal app",
+  "start_url": "/?homescreen=1"
 }
