@@ -1,0 +1,17 @@
+name: TypeScript checks and build
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18.13.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.13.0"
+      - name: Installing node modules
+        run: npm install
+      - name: Checking for TypeScript errors
+        run: npm run check-types
+      - name: Building app
+        run: npm run build
