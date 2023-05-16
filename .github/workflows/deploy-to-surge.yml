@@ -19,7 +19,7 @@ jobs:
         run: npm install
       - name: Building app
         run: npm run build
-      - name: Deploy to https://my-budgets.surge.sh/
+      - name: Deploy to https://my-budgets.surge.sh
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: "https://my-budgets.surge.sh"
