@@ -25,15 +25,11 @@ jobs:
         run: echo "${{ secrets.SERVER_DEV_ENV_FILE }}" > ./server-app/dev.env
       - name: Starting server app for tests
         run: npm --prefix ./server-app run dev:db-and-api -- --detach
-      - name: Waiting for DB to be initialized
-        run: sleep 30s
-      - name: TEMP Executing e2e tests for server app
-        run: npm --prefix ./server-app run test
       - name: Installing pm2
         run: npm install pm2 -g
       - name: Launching frontend app in background
         run: pm2 start npm --name "DOES_NOT_MATTER" -- run "dev"
       - name: Waiting for frontend to be launched
         run: sleep 5s
-      - name: Running components tests
+      - name: Running e2e tests
         run: npm run test:e2e
