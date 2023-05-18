@@ -1,0 +1,40 @@
+
+> personal-app-frontend@1.0.0 dev
+> MODE=development npx webpack serve
+
+<i> [webpack-dev-server] [HPM] Proxy created: /graphql  -> http://localhost:3080/graphql
+<i> [webpack-dev-server] Project is running at:
+<i> [webpack-dev-server] Loopback: http://localhost:3000/
+<i> [webpack-dev-server] On Your Network (IPv4): http://192.168.100.3:3000/
+<i> [webpack-dev-server] On Your Network (IPv6): http://[fe80::1]:3000/
+<i> [webpack-dev-server] Content not from webpack is served from '/Users/aleksandr/Documents/projects/personal-app-frontend/public' directory
+<i> [webpack-dev-server] 404s will fallback to '/index.html'
+assets by path logo/*.png 5.37 KiB
+  asset logo/pwa-icon.png 4.37 KiB [emitted] [from: public/logo/pwa-icon.png] [copied]
+  asset logo/browser-icon.png 1 KiB [emitted] [from: public/logo/browser-icon.png] [copied]
+asset main.js 5.79 MiB [emitted] (name: main) 1 related asset
+asset .DS_Store 6 KiB [emitted] [from: public/.DS_Store] [copied]
+asset index.html 770 bytes [emitted] [from: public/index.html] [copied]
+asset app.webmanifest 280 bytes [emitted] [from: public/app.webmanifest] [copied]
+orphan modules 8.16 MiB [orphan] 11757 modules
+runtime modules 27.7 KiB 14 modules
+cacheable modules 4.46 MiB
+  modules by path ./node_modules/ 4.35 MiB 938 modules
+  modules by path ./src/ 119 KiB
+    modules by path ./src/views/ 59.3 KiB 26 modules
+    modules by path ./src/styles/ 6.74 KiB 16 modules
+    modules by path ./src/components/ 20 KiB 15 modules
+    modules by path ./src/api/ 30.3 KiB
+      ./src/api/users/index.ts 3.82 KiB [built] [code generated]
+      + 5 modules
+    modules by path ./src/utils/*.ts 1.28 KiB
+      ./src/utils/apolloClient.ts 929 bytes [built] [code generated]
+      ./src/utils/getChildByDisplayName.ts 380 bytes [built] [code generated]
+    ./src/index.tsx 1.25 KiB [built] [code generated]
+webpack 5.80.0 compiled successfully in 4929 ms
+<e> [webpack-dev-server] [HPM] Error occurred while proxying request localhost:3000/graphql to http://localhost:3080/graphql [ECONNREFUSED] (https://nodejs.org/api/errors.html#errors_common_system_errors)
+<e> [webpack-dev-server] [HPM] Error occurred while proxying request localhost:3000/graphql to http://localhost:3080/graphql [ECONNREFUSED] (https://nodejs.org/api/errors.html#errors_common_system_errors)
+<e> [webpack-dev-server] [HPM] Error occurred while proxying request localhost:3000/graphql to http://localhost:3080/graphql [ECONNREFUSED] (https://nodejs.org/api/errors.html#errors_common_system_errors)
+<e> [webpack-dev-server] [HPM] Error occurred while proxying request localhost:3000/graphql to http://localhost:3080/graphql [ECONNREFUSED] (https://nodejs.org/api/errors.html#errors_common_system_errors)
+<i> [webpack-dev-server] Gracefully shutting down. To force exit, press ^C again. Please wait...
+<i> [webpack-dev-server] [HPM] server close signal received: closing proxy server
