@@ -27,5 +27,7 @@ jobs:
         run: npm --prefix ./server-app run dev:db-and-api -- --detach
       - name: Wait for DB to be initialized
         run: sleep 30s
-      - name: Running components tests
-        run: npm run test:e2e
+      - name: TEMP Executing e2e tests for server app
+        run: npm --prefix ./server-app run test
+      # - name: Running components tests
+      #   run: npm run test:e2e
