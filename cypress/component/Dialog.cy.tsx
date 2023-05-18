@@ -36,7 +36,7 @@ describe("Dialog", () => {
     cy.contains("My dialog body.").should("not.exist")
     cy.get("[aria-label='Close dialog']").should("not.exist")
     cy.contains("Open").click()
-    cy.contains("My dialog heaRding").should("be.visible")
+    cy.contains("My dialog heading").should("be.visible")
     cy.contains("My dialog body.").should("be.visible")
     cy.get("[aria-label='Close dialog']").click()
     cy.contains("My dialog heading").should("not.exist")
