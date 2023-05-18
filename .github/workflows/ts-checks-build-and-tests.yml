@@ -22,7 +22,7 @@ jobs:
       - name: Installing server app packages
         run: npm --prefix ./server-app install
       - name: Creating dev.env file for backend and DB
-        run: cp ./server-app/dev.env.example > ./server-app/dev.env
+        run: cp ./server-app/dev.env.example ./server-app/dev.env
       - name: Starting server app for tests
         run: npm --prefix ./server-app run dev:db-and-api -- --detach
       - name: Installing pm2
