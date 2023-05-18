@@ -19,7 +19,7 @@ jobs:
       #   run: npm run test:component
       - name: Clonning server app repository
         run: git clone https://github.com/aleksandr-kiliushin/personal-app-server.git ./server-app
-      # - name: Installing server dependencies
-      #   run: npm --prefix ${github.workspace}/server-app install
-      # - name: Creating SERVER_DEV_ENV_FILE for backend and DB
-      #   run: echo "${{ secrets.SERVER_DEV_ENV_FILE }}" > /var/server-app/dev.env
+      - name: Installing server app packages
+        run: npm --prefix ./server-app install
+      - name: Creating SERVER_DEV_ENV_FILE for backend and DB
+        run: echo "${{ secrets.SERVER_DEV_ENV_FILE }}" > ./server-app/dev.env
