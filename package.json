@@ -70,8 +70,8 @@
     "prepare": "husky install",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,json,md}\"",
     "start": "MODE=production npx webpack serve",
-    "test:e2e": "cypress run --e2e --browser chrome",
-    "test:component": "MODE=development cypress run --component --browser chrome"
+    "test:component": "MODE=development cypress run --component --browser chrome",
+    "test:e2e": "cypress run --e2e --browser chrome"
   },
   "version": "1.0.0"
 }
