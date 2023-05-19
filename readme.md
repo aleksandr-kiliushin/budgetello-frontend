@@ -32,3 +32,18 @@ Assuming that you already have already [launched backend locally](https://github
 Please note that running the Personal app frontend locally in its full functionality requires setting up and running the backend server as well.
 
 The [backend code repository](https://github.com/aleksandr-kiliushin/personal-app-server) includes detailed instructions on how to run the backend server locally. It provides step-by-step guidance on setting up the necessary dependencies and running the server on your machine.
+
+## Screenshots
+
+<div align="center">
+	<img src="./screenshots/pwa-mobile__register.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__login.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__budget-board.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__budget-board-dark.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__budget-board-settings.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__add-salary.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__add-expense.jpeg" width="240px"></img>
+	<img src="./screenshots/pwa-mobile__budget-board-statistics.jpeg" width="240px"></img>
+	<img src="./screenshots/safari-mobile__budget-board.jpeg" width="240px"></img>
+	<img src="./screenshots/chrome-desktop__budget-board.jpeg" width="720px"></img>
+</div>
