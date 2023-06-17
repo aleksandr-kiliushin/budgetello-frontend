@@ -1,4 +1,4 @@
-import * as yup from "yup"
+import { z } from "zod"
 
 export enum FieldName {
   Password = "password",
@@ -6,18 +6,18 @@ export enum FieldName {
   Username = "username",
 }
 
-export const validationSchema = yup
-  .object({
-    [FieldName.Password]: yup.string().required(),
-    [FieldName.PasswordConfirmation]: yup.string().required(),
-    [FieldName.Username]: yup.string().required(),
-  })
-  .required()
+export const validationSchema = z.object({
+  [FieldName.Password]: z.string().nonempty(),
+  [FieldName.PasswordConfirmation]: z.string().nonempty(),
+  [FieldName.Username]: z.string().nonempty(),
+})
 
-export const defaultValues: TFormValues = {
-  password: "",
-  passwordConfirmation: "",
-  username: "",
+export type TFormValidValues = z.infer<typeof validationSchema>
+
+export type TFormDefaultValues = TFormValidValues
+
+export const defaultValues: TFormDefaultValues = {
+  [FieldName.Password]: "",
+  [FieldName.PasswordConfirmation]: "",
+  [FieldName.Username]: "",
 }
-
-export type TFormValues = yup.InferType<typeof validationSchema>

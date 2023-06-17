@@ -48,8 +48,7 @@ describe("Budget board settings", () => {
       it("board default currency is edited correctly", () => {
         cy.authorize(testUsers.johnDoe.id)
 
-        cy.visit("/boards/1/records")
-        cy.get("[aria-label='Add record']").click()
+        cy.visit("/boards/1/records/add")
         cy.get("#mui-component-select-currencySlug").should("contain", "GEL ₾")
 
         cy.visit("/boards/1/settings")
@@ -61,14 +60,13 @@ describe("Budget board settings", () => {
         cy.get("td").contains("GEL ₾").should("not.exist")
         cy.get("td").contains("USD $").should("be.visible")
 
-        cy.visit("/boards/1/records")
-        cy.get("[aria-label='Add record']").click()
+        cy.visit("/boards/1/records/add")
         cy.get("#mui-component-select-currencySlug").should("contain", "USD $")
       })
     })
   })
 
-  describe.only("Budget categories settings", () => {
+  describe("Budget categories settings", () => {
     it("budget board settings are fetched and rendered correctly", () => {
       cy.authorize(testUsers.johnDoe.id)
       cy.visit("/boards/1/settings")

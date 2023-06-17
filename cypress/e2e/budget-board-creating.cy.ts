@@ -13,7 +13,7 @@ describe("Budget board creating", () => {
     cy.contains('"clever-budgetiers" budget board already exists.').should("be.visible")
   })
 
-  it("board craeted successfully", () => {
+  it("board created successfully", () => {
     cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards")
