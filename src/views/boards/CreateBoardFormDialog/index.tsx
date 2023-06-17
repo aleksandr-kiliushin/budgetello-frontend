@@ -16,6 +16,8 @@ export const CreateBoardFormDialog: FC = () => {
 
   const { formState, handleSubmit, register, setError } = useForm<IFormValues>({
     defaultValues,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: Migrate to zod.
     resolver: yupResolver(validationSchema),
     mode: "onChange",
   })

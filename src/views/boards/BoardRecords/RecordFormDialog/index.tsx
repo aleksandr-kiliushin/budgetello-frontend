@@ -73,6 +73,8 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
 
   const { formState, handleSubmit, register } = useForm<IFormValues>({
     defaultValues,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore TODO: Migrate to zod.
     resolver: yupResolver(validationSchema),
     mode: "onChange",
   })
