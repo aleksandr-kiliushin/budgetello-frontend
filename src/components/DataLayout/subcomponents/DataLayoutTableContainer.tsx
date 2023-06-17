@@ -1,18 +1,18 @@
 import { TableContainer } from "@mui/material"
 import { FC, PropsWithChildren, createContext } from "react"
 
-interface IDataLayoutTableContainerContext {
+type TDataLayoutTableContainerContext = {
   columnsAmount: number
 }
-export const DateLayoutTableContainerContext = createContext<IDataLayoutTableContainerContext>({
+export const DateLayoutTableContainerContext = createContext<TDataLayoutTableContainerContext>({
   columnsAmount: 0,
 })
 
-interface IDataLayoutTableProps {
+type TDataLayoutTableProps = {
   columnsWidths: string[]
 }
 
-const DataLayoutTableContainer: FC<PropsWithChildren<IDataLayoutTableProps>> = ({ children, columnsWidths }) => {
+const DataLayoutTableContainer: FC<PropsWithChildren<TDataLayoutTableProps>> = ({ children, columnsWidths }) => {
   const columnWidthByCellSelector: Record<string, { width: string }> = {}
   columnsWidths.forEach((columnWidth, columnWidthIndex) => {
     columnWidthByCellSelector[`& td:nth-of-type(${columnWidthIndex + 1})`] = { width: columnWidth }

@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
+import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
@@ -18,14 +19,14 @@ import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
 
-import { FieldName, IFormValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormValues, validationSchema } from "./form-helpers"
 
 const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
   [1, theme.palette.error.main],
   [2, theme.palette.success.main],
 ])
 
-interface IRecordFormDialogProps {
+type TRecordFormDialogProps = {
   record:
     | {
         author: Pick<User, "id" | "username">
@@ -45,7 +46,7 @@ interface IRecordFormDialogProps {
     | undefined
 }
 
-export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) => {
+export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
   const params = useParams<{ boardId: string }>()
   const navigate = useNavigate()
 
@@ -71,7 +72,7 @@ export const RecordFormDialog: React.FC<IRecordFormDialogProps> = ({ record }) =
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
-  const { formState, handleSubmit, register } = useForm<IFormValues>({
+  const { formState, handleSubmit, register } = useForm<TFormValues>({
     defaultValues,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore TODO: Migrate to zod.

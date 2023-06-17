@@ -7,7 +7,7 @@ export enum FieldName {
   Name = "name",
 }
 
-export interface IFormValues {
+export type TFormValues = {
   [FieldName.DefaultCurrencySlug]: Currency["slug"] | null
   [FieldName.Name]: Board["name"]
 }
@@ -17,7 +17,7 @@ export const validationSchema = Yup.object({
   [FieldName.Name]: Yup.string().required(),
 })
 
-export const defaultValues: IFormValues = {
+export const defaultValues: TFormValues = {
   [FieldName.DefaultCurrencySlug]: null,
   [FieldName.Name]: "",
 }

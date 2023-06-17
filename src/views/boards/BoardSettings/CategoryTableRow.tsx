@@ -8,11 +8,11 @@ import { BudgetCategory } from "#api/types"
 import { CategoryDeletionDialog } from "./CategoryDeletionDialog"
 import { CategoryFormDialog } from "./CategoryFormDialog"
 
-interface ICategoryTableRowProps {
+type TCategoryTableRowProps = {
   category: Pick<BudgetCategory, "id" | "name" | "type">
 }
 
-export const CategoryTableRow: FC<ICategoryTableRowProps> = ({ category }) => {
+export const CategoryTableRow: FC<TCategoryTableRowProps> = ({ category }) => {
   const params = useParams<{ boardId: string }>()
   const location = useLocation()
 

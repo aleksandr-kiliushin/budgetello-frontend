@@ -6,23 +6,24 @@ import {
   RadioGroup as MuiRadioGroup,
   Radio,
 } from "@mui/material"
+import { FC } from "react"
 import { UseFormRegister } from "react-hook-form"
 
-interface IRadioGroupOption {
+type TRadioGroupOption = {
   label: string
   value: number | string
 }
-interface IRadioGroupProps {
-  fieldValue: IRadioGroupOption["value"]
+type TRadioGroupProps = {
+  fieldValue: TRadioGroupOption["value"]
   helperText: string | undefined
   label: string
   name: string
-  options: IRadioGroupOption[]
+  options: TRadioGroupOption[]
   register: UseFormRegister<any> // eslint-disable-line @typescript-eslint/no-explicit-any
   setValue(fieldName: string, newValue: string | number): void
 }
 
-export const RadioGroup: React.FC<IRadioGroupProps> = ({
+export const RadioGroup: FC<TRadioGroupProps> = ({
   fieldValue,
   helperText,
   label,

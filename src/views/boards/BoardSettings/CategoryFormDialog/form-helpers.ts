@@ -12,4 +12,4 @@ export const validationSchema = yup
   })
   .required()
 
-export type FormValues = yup.InferType<typeof validationSchema>
+export type TFormValues = yup.InferType<typeof validationSchema>

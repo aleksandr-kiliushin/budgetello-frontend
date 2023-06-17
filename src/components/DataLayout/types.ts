@@ -4,16 +4,15 @@ import { DataLayoutControls } from "./subcomponents/DataLayoutControls"
 import { DataLayoutHeading } from "./subcomponents/DataLayoutHeading"
 import { DataLayoutTableContainer } from "./subcomponents/DataLayoutTableContainer"
 
-export interface IDataLayoutProps {}
-type IDataLayoutComponent = FC<PropsWithChildren<IDataLayoutProps>>
+type TDataLayoutComponent = FC<PropsWithChildren>
 
-export interface IDataLayoutWithoutSubcomponents extends IDataLayoutComponent {
+export type TDataLayoutWithoutSubcomponents = TDataLayoutComponent & {
   Controls?: typeof DataLayoutControls
   Heading?: typeof DataLayoutHeading
   TableContainer?: typeof DataLayoutTableContainer
 }
 
-export interface IDataLayoutWithSubcomponents extends IDataLayoutComponent {
+export type TDataLayoutWithSubcomponents = TDataLayoutComponent & {
   Controls: typeof DataLayoutControls
   Heading: typeof DataLayoutHeading
   TableContainer: typeof DataLayoutTableContainer

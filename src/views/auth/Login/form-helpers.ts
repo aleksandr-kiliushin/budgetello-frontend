@@ -12,9 +12,9 @@ export const validationSchema = yup
   })
   .required()
 
-export const defaultValues: FormValues = {
+export const defaultValues: TFormValues = {
   password: "",
   username: "",
 }
 
-export type FormValues = yup.InferType<typeof validationSchema>
+export type TFormValues = yup.InferType<typeof validationSchema>

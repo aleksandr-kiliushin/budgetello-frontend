@@ -8,7 +8,7 @@ import { useCreateUserMutation } from "#api/users"
 import { RowGroup } from "#components/RowGroup"
 
 import { Container } from "../auth/components"
-import { FieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Registration: FC = () => {
   const navigate = useNavigate()
@@ -19,7 +19,7 @@ export const Registration: FC = () => {
     handleSubmit,
     register,
     setError,
-  } = useForm<FormValues>({
+  } = useForm<TFormValues>({
     defaultValues,
     mode: "onChange",
     resolver: yupResolver(validationSchema),

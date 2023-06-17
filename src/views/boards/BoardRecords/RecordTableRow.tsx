@@ -24,7 +24,7 @@ const amountColorByBudgetCategoryType = new Map([
   [2, theme.palette.success.main],
 ])
 
-interface IRecordTableRowProps {
+type TRecordTableRowProps = {
   isTrash: boolean
   record: {
     author: Pick<User, "id" | "username">
@@ -43,7 +43,7 @@ interface IRecordTableRowProps {
   }
 }
 
-export const RecordTableRow: FC<IRecordTableRowProps> = ({ isTrash, record }) => {
+export const RecordTableRow: FC<TRecordTableRowProps> = ({ isTrash, record }) => {
   const location = useLocation()
   const params = useParams<{ boardId: string; recordId: string }>()
 

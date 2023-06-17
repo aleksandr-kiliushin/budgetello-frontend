@@ -9,12 +9,12 @@ import { useGetCurrenciesQuery } from "#api/currencies"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 
-import { FieldName, IFormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const CreateBoardFormDialog: FC = () => {
   const navigate = useNavigate()
 
-  const { formState, handleSubmit, register, setError } = useForm<IFormValues>({
+  const { formState, handleSubmit, register, setError } = useForm<TFormValues>({
     defaultValues,
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore TODO: Migrate to zod.

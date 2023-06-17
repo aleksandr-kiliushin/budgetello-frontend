@@ -7,7 +7,7 @@ import { getChildByDisplayName } from "#utils/getChildByDisplayName"
 import { DialogBody } from "./subcomponents/DialogBody"
 import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
-import { IDialogWithSubcomponents, IDialogWithoutSubcomponents } from "./types"
+import { TDialogWithSubcomponents, TDialogWithoutSubcomponents } from "./types"
 
 const DialogWindow = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -31,7 +31,7 @@ const HeaderWithCloseButton = styled("div")({
   gridTemplateColumns: "auto min-content",
 })
 
-const _Dialog: IDialogWithoutSubcomponents = ({ children, closeDialog, closeDialogHref }) => {
+const _Dialog: TDialogWithoutSubcomponents = ({ children, closeDialog, closeDialogHref }) => {
   const navigate = useNavigate()
 
   const header = getChildByDisplayName({ children, displayName: "DialogHeader" })
@@ -84,6 +84,6 @@ _Dialog.Body = DialogBody
 _Dialog.Footer = DialogFooter
 _Dialog.Header = DialogHeader
 
-const Dialog = _Dialog as IDialogWithSubcomponents
+const Dialog = _Dialog as TDialogWithSubcomponents
 
 export { Dialog }

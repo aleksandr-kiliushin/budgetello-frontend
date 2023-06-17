@@ -4,19 +4,19 @@ import { DialogBody } from "./subcomponents/DialogBody"
 import { DialogFooter } from "./subcomponents/DialogFooter"
 import { DialogHeader } from "./subcomponents/DialogHeader"
 
-export interface IDialogProps {
+export type TDialogProps = {
   closeDialog?: () => void
   closeDialogHref?: string
 }
-type IDialogComponent = FC<PropsWithChildren<IDialogProps>>
+type TDialogComponent = FC<PropsWithChildren<TDialogProps>>
 
-export interface IDialogWithoutSubcomponents extends IDialogComponent {
+export type TDialogWithoutSubcomponents = TDialogComponent & {
   Header?: typeof DialogHeader
   Body?: typeof DialogBody
   Footer?: typeof DialogFooter
 }
 
-export interface IDialogWithSubcomponents extends IDialogComponent {
+export type TDialogWithSubcomponents = TDialogComponent & {
   Header: typeof DialogHeader
   Body: typeof DialogBody
   Footer: typeof DialogFooter

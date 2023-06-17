@@ -11,7 +11,7 @@ module.exports = {
     "plugin:react/jsx-runtime",
     "plugin:react-hooks/recommended",
   ],
-  ignorePatterns: ["dist", "node_modules"],
+  ignorePatterns: ["dist", "node_modules", "src/api"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
@@ -25,6 +25,26 @@ module.exports = {
   plugins: ["react", "@typescript-eslint", "@typescript-eslint/eslint-plugin"],
   root: true,
   rules: {
+    "@typescript-eslint/consistent-type-definitions": ["warn", "type"],
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/naming-convention": [
+      1,
+      {
+        selector: "typeAlias",
+        format: ["StrictPascalCase"],
+        prefix: ["T"],
+      },
+      {
+        format: ["StrictPascalCase"],
+        prefix: ["are", "can", "did", "does", "has", "is", "should", "will"],
+        selector: "variable",
+        types: ["boolean"],
+      },
+    ],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-extra-semi": 1,
+    "@typescript-eslint/no-unused-vars": 0,
     "arrow-parens": 1,
     camelcase: 1,
     "max-params": ["error", 2],
@@ -39,44 +59,6 @@ module.exports = {
     "no-tabs": 1,
     "react/jsx-sort-props": ["warn", { ignoreCase: true }],
     "react/prop-types": 0,
-    "@typescript-eslint/explicit-function-return-type": 0,
-    "@typescript-eslint/no-empty-function": "off",
-    "@typescript-eslint/no-empty-interface": 0,
-    "@typescript-eslint/no-extra-semi": 1,
-    "@typescript-eslint/no-unused-vars": 0,
-    "@typescript-eslint/naming-convention": [
-      1,
-      {
-        format: ["StrictPascalCase"],
-        prefix: ["I"],
-        selector: "interface",
-      },
-      {
-        format: ["StrictPascalCase"],
-        prefix: ["are", "can", "did", "does", "has", "is", "should", "will"],
-        selector: "variable",
-        types: ["boolean"],
-      },
-    ],
-    // "sort-keys": [
-    //   "warn",
-    //   "asc",
-    //   {
-    //     caseSensitive: true,
-    //     minKeys: 2,
-    //     natural: false,
-    //   },
-    // ],
-    // 'sort-imports': [
-    //   'error',
-    //   {
-    //     allowSeparatedGroups: true,
-    //     ignoreCase: false,
-    //     ignoreDeclarationSort: false,
-    //     ignoreMemberSort: false,
-    //     memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
-    //   },
-    // ],
   },
   settings: {
     react: {

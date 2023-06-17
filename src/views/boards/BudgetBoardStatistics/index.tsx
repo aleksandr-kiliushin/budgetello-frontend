@@ -7,7 +7,7 @@ import { useGetBudgetRecordsQuery } from "#api/budget"
 import { useGetCurrenciesQuery } from "#api/currencies"
 import { Currency } from "#api/types"
 
-interface IDateData {
+type TDateData = {
   date: string
   sumByCurrencySlug: Record<Currency["slug"], number>
 }
@@ -49,7 +49,7 @@ export const BudgetBoardStatistics: FC = () => {
       })
   }, [currencies])
 
-  const chartBuildingData = useMemo<IDateData[]>(() => {
+  const chartBuildingData = useMemo<TDateData[]>(() => {
     if (records === undefined) return []
     if (currencies === undefined) return []
     if (Object.entries(usdRates).length === 0) return []
@@ -58,7 +58,7 @@ export const BudgetBoardStatistics: FC = () => {
     const endDate = new Date()
 
     let date = firstDate
-    const result: IDateData[] = []
+    const result: TDateData[] = []
     while (!isAfter(date, endDate)) {
       result.push({
         date: formatDate(date, "yyyy-MM-dd"),

@@ -11,9 +11,9 @@ export const testUsers = {
   },
 } as const
 
-export type ITestUser = typeof testUsers[keyof typeof testUsers]
+export type TTestUser = (typeof testUsers)[keyof typeof testUsers]
 
-export const credentialsByTestUserId: Record<ITestUser["id"], { password: string; username: ITestUser["username"] }> = {
+export const credentialsByTestUserId: Record<TTestUser["id"], { password: string; username: TTestUser["username"] }> = {
   "1": {
     username: testUsers.johnDoe.username,
     password: testUsers.johnDoe.password,

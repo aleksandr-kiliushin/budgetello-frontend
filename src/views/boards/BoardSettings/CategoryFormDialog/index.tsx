@@ -15,13 +15,13 @@ import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { RadioGroup } from "#components/form-contructor/RadioGroup"
 
-import { FieldName, FormValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormValues, validationSchema } from "./form-helpers"
 
-interface ICategoryFormDialogProps {
+type TCategoryFormDialogProps = {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
 }
 
-export const CategoryFormDialog: FC<ICategoryFormDialogProps> = ({ category }) => {
+export const CategoryFormDialog: FC<TCategoryFormDialogProps> = ({ category }) => {
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 
@@ -36,7 +36,7 @@ export const CategoryFormDialog: FC<ICategoryFormDialogProps> = ({ category }) =
     setError,
     setValue,
     watch,
-  } = useForm<FormValues>({
+  } = useForm<TFormValues>({
     defaultValues,
     mode: "onChange",
     resolver: yupResolver(validationSchema),

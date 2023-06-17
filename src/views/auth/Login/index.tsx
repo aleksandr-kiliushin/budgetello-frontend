@@ -10,7 +10,7 @@ import { RowGroup } from "#components/RowGroup"
 import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "../components"
-import { FieldName, FormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Login: FC = () => {
   const navigate = useNavigate()
@@ -21,7 +21,7 @@ export const Login: FC = () => {
     handleSubmit,
     register,
     setError,
-  } = useForm<FormValues>({
+  } = useForm<TFormValues>({
     defaultValues,
     mode: "onChange",
     resolver: yupResolver(validationSchema),

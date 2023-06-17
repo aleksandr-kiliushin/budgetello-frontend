@@ -1,12 +1,12 @@
 import { Dashboard as DashboardIcon, Person as PersonIcon } from "@mui/icons-material"
 
-interface ISection {
+type TSection = {
   icon: React.ReactElement
   id: string
   path: string
 }
 
-export const section: ISection[] = [
+export const section: TSection[] = [
   { icon: <DashboardIcon />, id: "boards", path: "/boards" },
   { icon: <PersonIcon />, id: "auth", path: "/auth" },
 ]

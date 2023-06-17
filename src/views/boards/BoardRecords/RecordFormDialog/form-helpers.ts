@@ -10,7 +10,7 @@ export enum FieldName {
   Date = "date",
 }
 
-export interface IFormValues {
+export type TFormValues = {
   [FieldName.Amount]: BudgetRecord["amount"] | null
   [FieldName.CategoryId]: BudgetRecord["category"]["id"] | null
   [FieldName.Comment]: BudgetRecord["comment"]

@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom"
 
 import { useGetBoardQuery } from "#api/boards"
 
-interface IBreadcrumb {
+type TBreadcrumb = {
   element: ReactNode
   hrefTemplate: string
 }
@@ -28,7 +28,7 @@ const BoardName: FC = () => {
   return <>{getBoardResult.data?.board.name}</>
 }
 
-const breadcrumbsByPathnamePatterns: { pathnamePatterns: RegExp[]; breadcrumbs: IBreadcrumb[] }[] = [
+const breadcrumbsByPathnamePatterns: { pathnamePatterns: RegExp[]; breadcrumbs: TBreadcrumb[] }[] = [
   {
     pathnamePatterns: [/^\/boards$/, /^\/boards\/create$/],
     breadcrumbs: [{ element: "Boards", hrefTemplate: "/boards" }],
@@ -71,7 +71,7 @@ export const BreadcrumbsPanel: FC = () => {
   const location = useLocation()
   const boardId = useBoardId()
 
-  const breadcrumbs = useMemo<IBreadcrumb[] | undefined>(() => {
+  const breadcrumbs = useMemo<TBreadcrumb[] | undefined>(() => {
     for (const group of breadcrumbsByPathnamePatterns) {
       const doesPathnameMatchGroupPathnamePatterns = group.pathnamePatterns.some((pathnamePattern) => {
         return pathnamePattern.test(location.pathname)

@@ -1,5 +1,5 @@
 /// <reference types="cypress" />
-import { ITestUser, credentialsByTestUserId } from "../constants/test-users"
+import { TTestUser, credentialsByTestUserId } from "../constants/test-users"
 
 // ***********************************************
 // This example commands.ts shows you how to
@@ -41,9 +41,9 @@ import { ITestUser, credentialsByTestUserId } from "../constants/test-users"
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface Chainable {
-      authorize(testUserId: ITestUser["id"]): Promise<void>
+      authorize(testUserId: TTestUser["id"]): Promise<void>
     }
   }
 }
