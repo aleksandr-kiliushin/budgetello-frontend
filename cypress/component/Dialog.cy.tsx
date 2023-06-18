@@ -1,9 +1,10 @@
 import { Button, Typography } from "@mui/material"
+import { FC } from "react"
 import { useToggle } from "react-use"
 
 import { Dialog } from "#components/Dialog"
 
-const SampleComponentWithDialog: React.FC = () => {
+const SampleComponentWithDialog: FC = () => {
   const [isMyDialogOpen, toggleIsMyDialogOpen] = useToggle(false)
 
   return (

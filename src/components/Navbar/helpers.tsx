@@ -1,7 +1,8 @@
 import { Dashboard as DashboardIcon, Person as PersonIcon } from "@mui/icons-material"
+import { ReactElement } from "react"
 
 type TSection = {
-  icon: React.ReactElement
+  icon: ReactElement
   id: string
   path: string
 }
