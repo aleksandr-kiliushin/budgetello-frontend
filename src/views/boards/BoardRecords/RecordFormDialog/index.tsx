@@ -1,7 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { format as formatDate } from "date-fns"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
@@ -19,7 +19,7 @@ import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"
 
-import { FieldName, TFormValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormDefaultValues, TFormValidValues, validationSchema } from "./form-helpers"
 
 const budgetCategoryIndicatorColorByBudgetCategoryType = new Map([
   [1, theme.palette.error.main],
@@ -56,7 +56,7 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
   const getAuthorizedUserResult = useGetUserQuery({ variables: { id: 0 } })
   const authorizedUser = getAuthorizedUserResult.data?.user
 
-  const defaultValues = record
+  const defaultValues: TFormDefaultValues = record
     ? {
         amount: record.amount,
         categoryId: record.category.id,
@@ -68,17 +68,22 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
         amount: null,
         categoryId: null,
         comment: "",
-        currencySlug: board?.defaultCurrency?.slug ?? "",
+        currencySlug: null,
         date: formatDate(new Date(), "yyyy-MM-dd"),
       }
 
-  const { formState, handleSubmit, register } = useForm<TFormValues>({
+  const { formState, handleSubmit, register, watch, setValue } = useForm<TFormDefaultValues, void, TFormValidValues>({
     defaultValues,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore TODO: Migrate to zod.
-    resolver: yupResolver(validationSchema),
     mode: "onChange",
+    resolver: zodResolver(validationSchema),
   })
+
+  useEffect(() => {
+    // Is it possible for a board to have default currency nul | undefined?
+    if (board?.defaultCurrency && watch("currencySlug") === null) {
+      setValue(FieldName.CurrencySlug, board.defaultCurrency.slug)
+    }
+  }, [board, setValue, watch])
 
   const getCurrenciesResult = useGetCurrenciesQuery()
   const getBoardBudgetCategoriesResult = useGetBudgetCategoriesQuery({
@@ -108,9 +113,6 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
   const closeDialogHref = `/boards/${params.boardId}/records${location.search}`
 
   const submitRecordForm = handleSubmit((formValues) => {
-    if (formValues.amount === null) return
-    if (formValues.categoryId === null) return
-
     if (record === undefined) {
       createBudgetRecord({
         variables: {
@@ -160,8 +162,8 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
               <InputLabel>Currency</InputLabel>
               <Select
                 {...register(FieldName.CurrencySlug)}
-                defaultValue={formState.defaultValues?.currencySlug}
                 label="Currency"
+                value={watch(FieldName.CurrencySlug)} // Initial value is not set up without this prop passed explicitly. But should not it be passwed as part of {...register()}?
               >
                 {currencies?.map((currency) => (
                   <MenuItem key={currency.slug} value={currency.slug}>

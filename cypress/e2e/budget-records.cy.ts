@@ -41,7 +41,7 @@ describe("Budget records", () => {
     cy.get("[role='progressbar'][aria-label='Loading more records']").should("not.exist")
   })
 
-  it.only("is created correctly", () => {
+  it("is created correctly", () => {
     cy.authorize(testUsers.johnDoe.id)
     cy.visit("/boards/1/records")
 
@@ -51,7 +51,7 @@ describe("Budget records", () => {
     cy.get("[role='option']").contains("education").click()
     cy.get("#mui-component-select-currencySlug").click()
     cy.get("[role='option']").contains("USD $").click()
-    cy.get("p").contains("amount must be a positive number").should("be.visible")
+    cy.get("p").contains("Number must be greater than 0").should("be.visible")
     cy.get("input[name='amount']").clear().type("4.53")
     // TODO: Enter a date.
     cy.get("button").contains("Add").click()
