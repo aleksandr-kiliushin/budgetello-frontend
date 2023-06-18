@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField, Typography } from "@mui/material"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
@@ -8,7 +8,7 @@ import { useCreateUserMutation } from "#api/users"
 import { RowGroup } from "#components/RowGroup"
 
 import { Container } from "../auth/components"
-import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormDefaultValues, TFormValidValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Registration: FC = () => {
   const navigate = useNavigate()
@@ -19,10 +19,10 @@ export const Registration: FC = () => {
     handleSubmit,
     register,
     setError,
-  } = useForm<TFormValues>({
+  } = useForm<TFormDefaultValues, void, TFormValidValues>({
     defaultValues,
     mode: "onChange",
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
   })
 
   const onSubmit = handleSubmit(async ({ password, passwordConfirmation, username }) => {

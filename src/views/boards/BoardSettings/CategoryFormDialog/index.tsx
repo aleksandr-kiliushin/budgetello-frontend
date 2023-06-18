@@ -1,5 +1,15 @@
-import { yupResolver } from "@hookform/resolvers/yup"
-import { Button, TextField, Typography } from "@mui/material"
+import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
@@ -13,9 +23,8 @@ import {
 import { BudgetCategory } from "#api/types"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
-import { RadioGroup } from "#components/form-contructor/RadioGroup"
 
-import { FieldName, TFormValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormDefaultValues, TFormValidValues, validationSchema } from "./form-helpers"
 
 type TCategoryFormDialogProps = {
   category: Pick<BudgetCategory, "id" | "name" | "type"> | undefined
@@ -25,9 +34,10 @@ export const CategoryFormDialog: FC<TCategoryFormDialogProps> = ({ category }) =
   const navigate = useNavigate()
   const params = useParams<{ boardId: string }>()
 
-  // TODO: Note: It is encouraged that you set a defaultValue for all inputs to non-undefined
-  // such as the empty string or null (https://react-hook-form.com/kr/v6/api/).
-  const defaultValues = category === undefined ? { name: "" } : { name: category.name, typeId: category.type.id }
+  const defaultValues: TFormDefaultValues = {
+    [FieldName.Name]: category === undefined ? "" : category.name,
+    [FieldName.TypeId]: category === undefined ? null : category.type.id,
+  }
 
   const {
     formState: { errors, isValid },
@@ -36,10 +46,10 @@ export const CategoryFormDialog: FC<TCategoryFormDialogProps> = ({ category }) =
     setError,
     setValue,
     watch,
-  } = useForm<TFormValues>({
+  } = useForm<TFormDefaultValues, void, TFormValidValues>({
     defaultValues,
     mode: "onChange",
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
   })
 
   const getBudgetCategoryTypesResult = useGetBudgetCategoryTypesQuery()
@@ -108,18 +118,23 @@ export const CategoryFormDialog: FC<TCategoryFormDialogProps> = ({ category }) =
               helperText={errors.name?.message}
               label="Name"
             />
-            <RadioGroup
-              fieldValue={watch("typeId")}
-              helperText={errors.typeId?.message}
-              label="Category type"
-              name={FieldName.TypeId}
-              options={budgetCategoryTypes.map(({ id, name }) => ({
-                label: name,
-                value: id,
-              }))}
-              register={register}
-              setValue={setValue}
-            />
+            <FormControl>
+              <FormLabel id={FieldName.TypeId}>Gender</FormLabel>
+              <RadioGroup
+                aria-labelledby={FieldName.TypeId}
+                defaultValue={null}
+                name={FieldName.TypeId}
+                onChange={(event) => {
+                  setValue(FieldName.TypeId, parseInt(event.target.value), { shouldValidate: true })
+                }}
+                value={watch("typeId")}
+              >
+                {budgetCategoryTypes.map((type) => (
+                  <FormControlLabel control={<Radio />} key={type.id} label={type.name} value={type.id} />
+                ))}
+              </RadioGroup>
+              {<FormHelperText error>{errors.typeId?.message}</FormHelperText>}
+            </FormControl>
           </RowGroup>
         </form>
       </Dialog.Body>

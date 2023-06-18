@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, TextField, Typography } from "@mui/material"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
@@ -10,7 +10,7 @@ import { RowGroup } from "#components/RowGroup"
 import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "../components"
-import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormDefaultValues, TFormValidValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const Login: FC = () => {
   const navigate = useNavigate()
@@ -21,10 +21,10 @@ export const Login: FC = () => {
     handleSubmit,
     register,
     setError,
-  } = useForm<TFormValues>({
+  } = useForm<TFormDefaultValues, void, TFormValidValues>({
     defaultValues,
     mode: "onChange",
-    resolver: yupResolver(validationSchema),
+    resolver: zodResolver(validationSchema),
   })
 
   const onSubmit = handleSubmit(async ({ password, username }) => {

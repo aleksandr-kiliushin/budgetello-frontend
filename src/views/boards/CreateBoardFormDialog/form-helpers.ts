@@ -1,23 +1,23 @@
-import * as Yup from "yup"
-
-import { Board, Currency } from "#api/types"
+import { z } from "zod"
 
 export enum FieldName {
   DefaultCurrencySlug = "defaultCurrencySlug",
   Name = "name",
 }
 
-export type TFormValues = {
-  [FieldName.DefaultCurrencySlug]: Currency["slug"] | null
-  [FieldName.Name]: Board["name"]
-}
-
-export const validationSchema = Yup.object({
-  [FieldName.DefaultCurrencySlug]: Yup.string().required(),
-  [FieldName.Name]: Yup.string().required(),
+export const validationSchema = z.object({
+  [FieldName.DefaultCurrencySlug]: z.string().nonempty(),
+  [FieldName.Name]: z.string().nonempty(),
 })
 
-export const defaultValues: TFormValues = {
+export type TFormValidValues = z.infer<typeof validationSchema>
+
+export type TFormDefaultValues = {
+  [FieldName.DefaultCurrencySlug]: null
+  [FieldName.Name]: string
+}
+
+export const defaultValues: TFormDefaultValues = {
   [FieldName.DefaultCurrencySlug]: null,
   [FieldName.Name]: "",
 }

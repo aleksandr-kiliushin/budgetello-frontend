@@ -16,7 +16,6 @@
     "react-router-dom": "6.13.0",
     "react-use": "17.4.0",
     "recharts": "2.7.1",
-    "yup": "1.2.0",
     "zod": "3.21.4"
   },
   "devDependencies": {

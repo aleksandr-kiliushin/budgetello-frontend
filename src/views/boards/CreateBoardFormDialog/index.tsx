@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material"
 import { FC } from "react"
 import { useForm } from "react-hook-form"
@@ -9,17 +9,15 @@ import { useGetCurrenciesQuery } from "#api/currencies"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 
-import { FieldName, TFormValues, defaultValues, validationSchema } from "./form-helpers"
+import { FieldName, TFormDefaultValues, TFormValidValues, defaultValues, validationSchema } from "./form-helpers"
 
 export const CreateBoardFormDialog: FC = () => {
   const navigate = useNavigate()
 
-  const { formState, handleSubmit, register, setError } = useForm<TFormValues>({
+  const { formState, handleSubmit, register, setError } = useForm<TFormDefaultValues, void, TFormValidValues>({
     defaultValues,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore TODO: Migrate to zod.
-    resolver: yupResolver(validationSchema),
     mode: "onChange",
+    resolver: zodResolver(validationSchema),
   })
 
   const getCurrenciesResult = useGetCurrenciesQuery()
