@@ -1,5 +1,12 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 
+const schemaUrlByMode = {
+  development: "http://localhost:3080/graphql",
+  production: "https://personal-app-backend.onrender.com/graphql"
+}
+
+const mode = (process.env.MODE as "development" | "production" | undefined) ?? "development"
+
 const config: CodegenConfig = {
   documents: "./src/api/**/*.graphql",
   generates: {
@@ -16,7 +23,7 @@ const config: CodegenConfig = {
     },
   },
   overwrite: true,
-  schema: "http://localhost:3080/graphql",
+  schema: schemaUrlByMode[mode],
 }
 
 // eslint-disable-next-line no-restricted-syntax
