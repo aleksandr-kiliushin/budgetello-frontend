@@ -3,7 +3,7 @@ import { FC } from "react"
 import { Routes } from "react-router"
 import { Navigate, Route, useLocation } from "react-router-dom"
 
-import { useGetUserQuery } from "#api/users"
+import { useGetUserQuery } from "#api/users/index.generated"
 import { BreadcrumbsPanel } from "#components/BreadcrumbsPanel"
 import { Navbar } from "#components/Navbar"
 import { Auth } from "#views/auth"

@@ -8,7 +8,7 @@ import { FC, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
-import { useGetBoardQuery, useUpdateBoardMutation } from "#api/boards"
+import { useGetBoardQuery, useUpdateBoardMutation } from "#api/boards/index.generated"
 
 enum FieldName {
   Name = "name",

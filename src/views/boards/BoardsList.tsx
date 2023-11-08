@@ -3,8 +3,8 @@ import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import { FC } from "react"
 import { Link, useLocation } from "react-router-dom"
 
-import { useGetBoardsQuery } from "#api/boards"
-import { useGetUserQuery } from "#api/users"
+import { useGetBoardsQuery } from "#api/boards/index.generated"
+import { useGetUserQuery } from "#api/users/index.generated"
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"
 

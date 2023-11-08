@@ -3,14 +3,14 @@ import type { CodegenConfig } from "@graphql-codegen/cli"
 const config: CodegenConfig = {
   documents: "./src/api/**/*.graphql",
   generates: {
-    "src/api/types.ts": {
+    "src/api/types.generated.ts": {
       plugins: ["typescript"],
     },
     "src/api": {
       preset: "near-operation-file",
       presetConfig: {
-        extension: ".ts",
-        baseTypesPath: "types.ts",
+        extension: ".generated.ts",
+        baseTypesPath: "types.generated.ts",
       },
       plugins: ["typescript-operations", "typescript-react-apollo"],
     },

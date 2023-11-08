@@ -1,8 +1,8 @@
 import { FC } from "react"
 import { Navigate, useParams } from "react-router-dom"
 
-import { useGetBoardQuery } from "#api/boards"
-import { useGetUserQuery } from "#api/users"
+import { useGetBoardQuery } from "#api/boards/index.generated"
+import { useGetUserQuery } from "#api/users/index.generated"
 
 import { BudgetCategoriesSettings } from "./BudgetCategoriesSettings"
 import { GeneralSettings } from "./GeneralSettings"

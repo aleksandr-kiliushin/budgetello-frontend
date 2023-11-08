@@ -19,8 +19,8 @@ import {
   useCreateBudgetCategoryMutation,
   useGetBudgetCategoryTypesQuery,
   useUpdateBudgetCategoryMutation,
-} from "#api/budget"
-import { BudgetCategory } from "#api/types"
+} from "#api/budget/index.generated"
+import { BudgetCategory } from "#api/types.generated"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 

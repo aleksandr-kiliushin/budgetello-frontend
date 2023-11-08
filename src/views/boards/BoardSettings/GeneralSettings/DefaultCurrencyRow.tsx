@@ -8,8 +8,8 @@ import { FC, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useParams } from "react-router-dom"
 
-import { useGetBoardQuery, useUpdateBoardMutation } from "#api/boards"
-import { useGetCurrenciesQuery } from "#api/currencies"
+import { useGetBoardQuery, useUpdateBoardMutation } from "#api/boards/index.generated"
+import { useGetCurrenciesQuery } from "#api/currencies/index.generated"
 
 export const DefaultCurrencyRow: FC = () => {
   const params = useParams<{ boardId: string }>()

@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-import { useGetUserQuery } from "#api/users"
+import { useGetUserQuery } from "#api/users/index.generated"
 
 import { Login } from "./Login"
 import { Logout } from "./Logout"

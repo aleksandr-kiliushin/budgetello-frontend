@@ -1,5 +1,6 @@
 **/.DS_Store
 **/*.env
+src/api/**/*.generated.ts
 cypress/downloads/downloads.html
 cypress/screenshots/**/*failed*
 cypress/videos

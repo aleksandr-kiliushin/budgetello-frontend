@@ -4,8 +4,8 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useCreateAuthorizationTokenMutation } from "#api/authorization"
-import { GetUserDocument } from "#api/users"
+import { useCreateAuthorizationTokenMutation } from "#api/authorization/index.generated"
+import { GetUserDocument } from "#api/users/index.generated"
 import { RowGroup } from "#components/RowGroup"
 import { apolloClient } from "#utils/apolloClient"
 

@@ -4,8 +4,8 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 
-import { GetBoardsDocument, useCreateBoardMutation } from "#api/boards"
-import { useGetCurrenciesQuery } from "#api/currencies"
+import { GetBoardsDocument, useCreateBoardMutation } from "#api/boards/index.generated"
+import { useGetCurrenciesQuery } from "#api/currencies/index.generated"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 

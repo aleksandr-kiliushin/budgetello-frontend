@@ -4,7 +4,7 @@ import { FC } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 
-import { useCreateUserMutation } from "#api/users"
+import { useCreateUserMutation } from "#api/users/index.generated"
 import { RowGroup } from "#components/RowGroup"
 
 import { Container } from "../auth/components"

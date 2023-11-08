@@ -2,7 +2,11 @@ import { Button, Typography } from "@mui/material"
 import { FC } from "react"
 import { Link, useParams } from "react-router-dom"
 
-import { GetBudgetCategoriesDocument, useDeleteBudgetCategoryMutation, useGetBudgetCategoryQuery } from "#api/budget"
+import {
+  GetBudgetCategoriesDocument,
+  useDeleteBudgetCategoryMutation,
+  useGetBudgetCategoryQuery,
+} from "#api/budget/index.generated"
 import { Dialog } from "#components/Dialog"
 
 export const CategoryDeletionDialog: FC = () => {

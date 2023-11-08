@@ -2,7 +2,7 @@ import { Breadcrumbs } from "@mui/material"
 import { FC, ReactNode, useMemo } from "react"
 import { Link, useLocation } from "react-router-dom"
 
-import { useGetBoardQuery } from "#api/boards"
+import { useGetBoardQuery } from "#api/boards/index.generated"
 
 type TBreadcrumb = {
   element: ReactNode

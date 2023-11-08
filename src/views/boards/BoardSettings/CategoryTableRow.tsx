@@ -3,7 +3,7 @@ import { Button, TableCell, TableRow } from "@mui/material"
 import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
-import { BudgetCategory } from "#api/types"
+import { BudgetCategory } from "#api/types.generated"
 
 import { CategoryDeletionDialog } from "./CategoryDeletionDialog"
 import { CategoryFormDialog } from "./CategoryFormDialog"

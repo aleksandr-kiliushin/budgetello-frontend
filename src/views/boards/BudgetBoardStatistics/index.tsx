@@ -3,9 +3,9 @@ import { FC, useEffect, useMemo, useState } from "react"
 import { useParams } from "react-router-dom"
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 
-import { useGetBudgetRecordsQuery } from "#api/budget"
-import { useGetCurrenciesQuery } from "#api/currencies"
-import { Currency } from "#api/types"
+import { useGetBudgetRecordsQuery } from "#api/budget/index.generated"
+import { useGetCurrenciesQuery } from "#api/currencies/index.generated"
+import { Currency } from "#api/types.generated"
 
 type TDateData = {
   date: string

@@ -6,8 +6,8 @@ import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import { FC } from "react"
 import { useParams } from "react-router-dom"
 
-import { useAddBoardMemberMutation, useGetBoardQuery, useRemoveBoardMemberMutation } from "#api/boards"
-import { useGetUsersQuery } from "#api/users"
+import { useAddBoardMemberMutation, useGetBoardQuery, useRemoveBoardMemberMutation } from "#api/boards/index.generated"
+import { useGetUsersQuery } from "#api/users/index.generated"
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"
 

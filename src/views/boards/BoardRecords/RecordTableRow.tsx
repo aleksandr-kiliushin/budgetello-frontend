@@ -8,8 +8,8 @@ import { format as formatDate, parse as parseDate } from "date-fns"
 import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
-import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget"
-import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types"
+import { useDeleteBudgetRecordMutation, useUpdateBudgetRecordMutation } from "#api/budget/index.generated"
+import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types.generated"
 import { theme } from "#styles/theme"
 
 import { RecordFormDialog } from "./RecordFormDialog"

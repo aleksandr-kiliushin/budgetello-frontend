@@ -5,16 +5,16 @@ import { FC, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate, useParams } from "react-router-dom"
 
-import { useGetBoardQuery } from "#api/boards"
+import { useGetBoardQuery } from "#api/boards/index.generated"
 import {
   GetBudgetRecordsDocument,
   useCreateBudgetRecordMutation,
   useGetBudgetCategoriesQuery,
   useUpdateBudgetRecordMutation,
-} from "#api/budget"
-import { useGetCurrenciesQuery } from "#api/currencies"
-import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types"
-import { useGetUserQuery } from "#api/users"
+} from "#api/budget/index.generated"
+import { useGetCurrenciesQuery } from "#api/currencies/index.generated"
+import { Board, BudgetCategory, BudgetRecord, Currency, User } from "#api/types.generated"
+import { useGetUserQuery } from "#api/users/index.generated"
 import { Dialog } from "#components/Dialog"
 import { RowGroup } from "#components/RowGroup"
 import { theme } from "#styles/theme"

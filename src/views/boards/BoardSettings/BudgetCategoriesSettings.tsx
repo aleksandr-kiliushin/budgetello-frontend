@@ -3,7 +3,7 @@ import { Button, Table, TableCell, TableHead, TableRow } from "@mui/material"
 import { FC } from "react"
 import { Link, useLocation, useParams } from "react-router-dom"
 
-import { useGetBudgetCategoriesQuery } from "#api/budget"
+import { useGetBudgetCategoriesQuery } from "#api/budget/index.generated"
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"
 

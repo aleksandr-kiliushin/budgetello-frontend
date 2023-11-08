@@ -2,7 +2,7 @@ import { DarkModeSharp as DarkModeSharpIcon } from "@mui/icons-material"
 import { Button, Typography } from "@mui/material"
 import { FC } from "react"
 
-import { useGetUserQuery } from "#api/users"
+import { useGetUserQuery } from "#api/users/index.generated"
 import { apolloClient } from "#utils/apolloClient"
 
 import { Container } from "./components"

@@ -12,9 +12,9 @@ import {
 import { ChangeEvent, FC, useEffect, useRef, useState } from "react"
 import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom"
 
-import { useGetBoardQuery } from "#api/boards"
-import { useGetBudgetRecordsQuery } from "#api/budget"
-import { useGetUserQuery } from "#api/users"
+import { useGetBoardQuery } from "#api/boards/index.generated"
+import { useGetBudgetRecordsQuery } from "#api/budget/index.generated"
+import { useGetUserQuery } from "#api/users/index.generated"
 import { DataLayout } from "#components/DataLayout"
 import { TableBody } from "#components/TableBody"
 
