@@ -26,7 +26,7 @@ describe("Budget records", () => {
    * A flaky test: Always passes locally but sometimes fails in CI.
    */
   it.skip("are paginated correctly", () => {
-    cy.exec(`docker exec -i personal-app-database /bin/bash < ${__dirname}/insert-many-records.sh`)
+    cy.exec(`docker exec -i budgetello-database /bin/bash < ${__dirname}/insert-many-records.sh`)
     cy.authorize(testUsers.johnDoe.id)
 
     cy.visit("/boards/1/records")
