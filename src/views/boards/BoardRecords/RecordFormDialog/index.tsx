@@ -159,12 +159,7 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
               type="number"
             />
             <FormControl fullWidth>
-              <InputLabel>Currency</InputLabel>
-              <Select
-                {...register(FieldName.CurrencySlug)}
-                label="Currency"
-                value={watch(FieldName.CurrencySlug)} // Initial value is not set up without this prop passed explicitly. But should not it be passwed as part of {...register()}?
-              >
+              <Select {...register(FieldName.CurrencySlug)} value={watch(FieldName.CurrencySlug)}>
                 {currencies?.map((currency) => (
                   <MenuItem key={currency.slug} value={currency.slug}>
                     {currency.name} {currency.symbol}
@@ -195,10 +190,7 @@ export const RecordFormDialog: FC<TRecordFormDialogProps> = ({ record }) => {
               </Select>
             </FormControl>
             <TextField {...register(FieldName.Date, { required: true })} label="Date" type="date" />
-            <Box sx={{ display: "grid" }}>
-              <label htmlFor={FieldName.Comment}>Comment</label>
-              <textarea {...register(FieldName.Comment)} />
-            </Box>
+            <TextField {...register(FieldName.Comment)} label="Comment" />
           </RowGroup>
         </form>
       </Dialog.Body>
